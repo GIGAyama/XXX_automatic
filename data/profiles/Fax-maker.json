@@ -1,0 +1,42 @@
+{
+  "name": "Fax-maker",
+  "sourceSha": "6a707d04627303a702a6f22725c668284c05e0b3",
+  "pagesUrl": null,
+  "hasPages": false,
+  "pushedAt": "2026-01-25T04:41:19Z",
+  "generatedAt": "2026-08-07T06:37:30.125Z",
+  "oneLine": "Google Apps Scriptを利用したFAX送信管理システム",
+  "catchCopy": "FAX送信をGASで管理！",
+  "targetGrade": "教員向け",
+  "subject": "校務",
+  "painPoints": [
+    "手書きでFAX用紙を準備するのに時間がかかる",
+    "FAX送信履歴が残らず、送ったかどうかわからなくなる",
+    "送信ミスがあった場合に、原因特定に手間がかかる"
+  ],
+  "howToUse": [
+    "必要な情報をシステムに入力する",
+    "送信ボタンを押してFAXを送る",
+    "送信履歴で内容を確認する"
+  ],
+  "strengths": [
+    "Google Apps Scriptで動作する",
+    "FAX送信の履歴をシステムで管理できる",
+    "手書き作業を削減し、業務を効率化する"
+  ],
+  "classroomScenes": [
+    "授業の合間に、保護者への連絡事項をFAXで送る時",
+    "放課後、研修会への参加申込書をFAXで送る時",
+    "職員室で、外部機関へ書類をFAX送信する時"
+  ],
+  "designDecisions": [],
+  "keywords": [
+    "FAX",
+    "GAS",
+    "校務",
+    "業務効率化",
+    "GoogleAppsScript",
+    "管理システム"
+  ],
+  "postability": 3
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Gmail_cleaner",
+  "sourceSha": "3dc030a0231a0ebb6897a0b8e643d6fa6c615c79",
+  "pagesUrl": null,
+  "hasPages": false,
+  "pushedAt": "2025-10-14T10:03:51Z",
+  "generatedAt": "2026-08-07T06:38:09.400Z",
+  "oneLine": "指定期間のGmailを自動/手動で削除するWebアプリ",
+  "catchCopy": "Gmailをスッキリ整理！",
+  "targetGrade": "教員向け",
+  "subject": "校務",
+  "painPoints": [
+    "古いメールが溜まり、受信トレイが見にくい",
+    "Gmailの容量が上限に近づき、メールが受信できない",
+    "手動で古いメールを探して削除するのが手間"
+  ],
+  "howToUse": [
+    "削除したい期間を設定する",
+    "手動か自動か削除方法を選ぶ",
+    "Gmailから古いメールを削除する"
+  ],
+  "strengths": [
+    "指定期間内のメールを一括で削除できる",
+    "手動と自動、選べる削除方法",
+    "Gmailの容量を効率的に管理できる"
+  ],
+  "classroomScenes": [
+    "放課後、翌日の準備の合間に、溜まったメールを整理する",
+    "長期休業中に、溜まったメールを整理する際"
+  ],
+  "designDecisions": [],
+  "keywords": [
+    "Gmail",
+    "メール整理",
+    "削除",
+    "自動化",
+    "校務効率化",
+    "教員向け"
+  ],
+  "postability": 3
+}
