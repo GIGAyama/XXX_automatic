@@ -67,7 +67,7 @@ jobs:
           INPUT_DATE: ${{ inputs.date }}
           INPUT_SLOT: ${{ inputs.slot }}
         run: |
-          # SLOT_BY_CRON: '<cron>=<slot id>' を1行ずつ
+          # どの cron から来たかで枠を決める。ここが config/slots.json との対応表になる。
           slot="$INPUT_SLOT"
           if [ -n "$SCHEDULE" ]; then
             case "$SCHEDULE" in
@@ -80,8 +80,21 @@ jobs:
             esac
           fi
 
-          args=""
-          [ -n "$INPUT_DATE" ] && args="$args --date $INPUT_DATE"
-          [ -n "$slot" ] && args="$args --slot $slot"
-          echo "notify-daily.mjs$args"
-          node scripts/notify-daily.mjs $args
+          # ⚠️ 配列で組む。`[ -n "$x" ] && args=...` の並びは、
+          #    最後の行に来た瞬間に set -e で落ちる書き方になる。順序に依存させない。
+          args=()
+          if [ -n "$INPUT_DATE" ]; then
+            case "$INPUT_DATE" in
+              [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) args+=(--date "$INPUT_DATE") ;;
+              *)
+                echo "::error title=日付の形が違います::'$INPUT_DATE' は YYYY-MM-DD で渡してください"
+                exit 1
+                ;;
+            esac
+          fi
+          if [ -n "$slot" ]; then
+            args+=(--slot "$slot")
+          fi
+
+          echo "notify-daily.mjs ${args[*]}"
+          node scripts/notify-daily.mjs "${args[@]}"

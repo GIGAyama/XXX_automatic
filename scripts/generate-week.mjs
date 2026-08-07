@@ -744,8 +744,13 @@ async function buildStock({ model, policy, plan, profiles, profileByName, accoun
         .sort((a, b) => (seedFrom(weekId + a.name) >>> 0) - (seedFrom(weekId + b.name) >>> 0))
         .slice(0, STOCK_SIZE);
 
+    // 再放送の枠は型の狙い（themeIntent）を持たない（生成を通さないため）。
+    // ここから型を借りると、指示が空のまま投げることになる。
+    const themeSource = plan.filter((p) => !p.reprise);
+    if (themeSource.length === 0) return [];
+
     const stockPlan = picked.map((profile, i) => {
-        const theme = plan[i % plan.length];
+        const theme = themeSource[i % themeSource.length];
         return {
             id: `stock-${weekId}-${i + 1}`,
             date: '',
