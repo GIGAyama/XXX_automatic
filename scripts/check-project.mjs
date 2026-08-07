@@ -695,6 +695,33 @@ try {
                 '.github/workflows/daily-notify.yml'
             );
         }
+
+        // 通知ワークフローは sparse-checkout で docs/ を取ってこない（29MB あるため）。
+        // あとから docs/ を読むようになると、手元では動くのに CI でだけ落ちる。
+        // しかも「ファイルが見つかりません」としか出ないので、
+        // sparse-checkout が原因だと気づくまでに時間がかかる。
+        const sparse = /sparse-checkout:\s*\|\n([\s\S]*?)\n\s*sparse-checkout-cone-mode/.exec(yaml);
+        if (sparse) {
+            const included = new Set(
+                sparse[1]
+                    .split('\n')
+                    .map((l) => l.trim())
+                    .filter(Boolean)
+            );
+            const source = readText(path.join(ROOT, 'scripts', 'notify-daily.mjs'), '');
+            for (const [, kind] of source.matchAll(/paths\.(docs|media)\(/g)) {
+                const needed = 'docs';
+                if (!included.has(needed)) {
+                    error(
+                        'SPARSE_CHECKOUT_TOO_NARROW',
+                        `scripts/notify-daily.mjs が paths.${kind}() を使っていますが、` +
+                            'daily-notify.yml の sparse-checkout に docs が入っていません。CI でだけファイルが見つかりません',
+                        '.github/workflows/daily-notify.yml'
+                    );
+                    break;
+                }
+            }
+        }
     }
 } catch (e) {
     error('CONFIG_UNREADABLE', e.message, 'config/slots.json');

@@ -25,7 +25,7 @@
  *
  * LINE Notify は 2025年3月で終了したので使っていない。
  */
-import { createIssue } from './lib/github.mjs';
+import { createIssue, listIssues, updateIssue } from './lib/github.mjs';
 import { fail, failWith, info, loadConfig, parseArgs, paths, readJson } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, weekdayLabelOf } from './lib/jst.mjs';
 
@@ -78,7 +78,7 @@ async function main() {
         const issue = await createIssue(accounts.githubOwner, accounts.repoName, {
             title,
             body,
-            labels: ['今日の投稿'],
+            labels: [DAILY_LABEL],
         });
         info(`✓ Issue を立てました: ${issue.html_url}`);
         notified += 1;
@@ -92,6 +92,9 @@ async function main() {
             console.error(`✖ Issue を立てられませんでした: ${retryError.message}`);
         }
     }
+
+    // 昨日までの知らせを閉じる。用は済んでいる。
+    await closeOldNotices(accounts, date);
 
     if (process.env.DISCORD_WEBHOOK) {
         try {
@@ -110,6 +113,73 @@ async function main() {
 /** 予備の引き出しから、その日に提案する本数。多いと選べない。 */
 const STOCK_SUGGESTIONS = 2;
 
+/** 毎日の知らせに付けるラベル。 */
+export const DAILY_LABEL = '今日の投稿';
+
+/** 下書きが無いことの知らせに付けるラベル。 */
+export const NO_DRAFT_LABEL = '下書きがありません';
+
+/**
+ * 本文に埋める日付の目印。
+ *
+ * 昨日までの知らせを閉じるのに使う。タイトル（【8/10（月）朝】…）から
+ * 読み取ることもできるが、年が入っていないので年をまたぐと判定できない。
+ * 機械が読むものは機械が読める形で置く（反応の記録と同じ考え方）。
+ */
+const STAMP = (date) => `<!-- notify-daily ${date} -->`;
+const STAMP_RE = /<!-- notify-daily (\d{4}-\d{2}-\d{2}) -->/;
+
+/**
+ * その知らせを閉じてよいか。
+ *
+ * ⚠️ 目印を持たないものは触らない。この仕組みより前に立てた知らせや、
+ *    人が手で立てた Issue に同じラベルが付いていることがある。
+ *    機械が消してよいのは、機械が立てたと分かるものだけである。
+ */
+export function shouldClose(body, today) {
+    const stamped = STAMP_RE.exec(String(body ?? ''))?.[1];
+    if (!stamped) return false;
+    return stamped < today;
+}
+
+/** 1回に閉じる上限。溜まっていても、1日ぶんずつ片づけば十分である。 */
+const MAX_CLOSE = 20;
+
+/**
+ * 昨日までの「今日の投稿」を閉じる。
+ *
+ * 閉じないと、1日2枠 × 365日で年に730件たまる。
+ * そうなると Issue の一覧が使いものにならなくなり、
+ * 「週次の失敗」や「反応の記録」といった、開いていることに意味がある知らせが埋もれる。
+ * その日の投稿を知らせるという役目は、翌日には終わっている。
+ *
+ * ⚠️ 同じ日のものは閉じない。朝の知らせは、夜の知らせが立ったあとも
+ *    「今日まだ出していないもの」を見るために開いていてほしい。
+ */
+async function closeOldNotices(accounts, today) {
+    let closed = 0;
+    try {
+        const issues = await listIssues(accounts.githubOwner, accounts.repoName, {
+            labels: [DAILY_LABEL],
+            state: 'open',
+        });
+
+        for (const issue of issues) {
+            if (!shouldClose(issue.body, today)) continue;
+            if (closed >= MAX_CLOSE) break;
+
+            await updateIssue(accounts.githubOwner, accounts.repoName, issue.number, { state: 'closed' });
+            closed += 1;
+        }
+    } catch (error) {
+        // 片づけに失敗しても、今日の知らせは届いている。ここで止めない。
+        console.error(`⚠ 古い知らせを閉じられませんでした: ${error.message}`);
+        return;
+    }
+
+    if (closed > 0) info(`   きのうまでの知らせを ${closed} 件閉じました`);
+}
+
 /**
  * その日ぶんの下書きが無いときの知らせ。
  *
@@ -119,6 +189,11 @@ const STOCK_SUGGESTIONS = 2;
  *
  * 予定が無いだけの日は静かにしておく。困るのは「あるはずのものが無い」ときなので、
  * その場合だけ知らせて、予備の引き出しから2件を提案する。
+ *
+ * ⚠️ 同じ知らせを重ねない。
+ *    週次が落ちたままだと、この知らせは枠のぶんだけ毎日立つ（1日2件）。
+ *    直すまで増えつづけるので、いちばん見てほしい知らせが自分で自分を埋めることになる。
+ *    開いているあいだは立てず、直したら本人が閉じる（「週次の失敗」と同じ扱い）。
  */
 async function notifyEmptyDay({ date, weekId, slotId, slotLabel, accounts, args, hasQueue }) {
     const stock = (readJson(paths.data('stock.json'), { posts: [] }).posts ?? []).slice(0, STOCK_SUGGESTIONS);
@@ -127,6 +202,22 @@ async function notifyEmptyDay({ date, weekId, slotId, slotLabel, accounts, args,
         // 今週ぶんはあるが、この日（この枠）には割り当てが無い。設定どおりなので静かにしておく。
         info(`${date}${slotLabel ? `（${slotLabel}）` : ''} に割り当てられた投稿はありません。`);
         return;
+    }
+
+    if (!args['dry-run']) {
+        // 取れなかったときは「立てる」側に倒す。知らせが重なるより、届かないほうが困る。
+        try {
+            const open = await listIssues(accounts.githubOwner, accounts.repoName, {
+                labels: [NO_DRAFT_LABEL],
+                state: 'open',
+            });
+            if (open.length > 0) {
+                info(`   すでに #${open[0].number} で知らせています。重ねて立てません: ${open[0].html_url}`);
+                return;
+            }
+        } catch (error) {
+            console.error(`⚠ 既存の知らせを確かめられませんでした（そのまま立てます）: ${error.message}`);
+        }
     }
 
     const where = slotLabel ? `${formatDate(date)}（${weekdayLabelOf(date)}）${slotLabel}` : `${formatDate(date)}（${weekdayLabelOf(date)}）`;
@@ -157,16 +248,28 @@ async function notifyEmptyDay({ date, weekId, slotId, slotLabel, accounts, args,
         lines.push('予備の引き出しも空です。復旧するまで、この日は出せるものがありません。', '');
     }
 
+    lines.push('<sub>直ったら、この Issue を閉じてください。開いているあいだは同じ知らせを重ねて出しません。</sub>');
+
     if (args['dry-run']) {
         info(`--- タイトル ---\n${title}\n\n--- 本文 ---\n${lines.join('\n')}`);
         return;
     }
 
     try {
-        const issue = await createIssue(accounts.githubOwner, accounts.repoName, { title, body: lines.join('\n') });
+        const issue = await createIssue(accounts.githubOwner, accounts.repoName, {
+            title,
+            body: lines.join('\n'),
+            labels: [NO_DRAFT_LABEL],
+        });
         info(`✓ 下書きが無いことを知らせました: ${issue.html_url}`);
     } catch (error) {
-        console.error(`✖ 知らせられませんでした: ${error.message}`);
+        // ラベルが無いリポジトリだと落ちることがある。ラベル無しでもう一度だけ試す。
+        try {
+            const issue = await createIssue(accounts.githubOwner, accounts.repoName, { title, body: lines.join('\n') });
+            info(`✓ 下書きが無いことを知らせました（ラベルなし）: ${issue.html_url}`);
+        } catch (retryError) {
+            console.error(`✖ 知らせられませんでした: ${retryError.message}`);
+        }
     }
 }
 
@@ -216,7 +319,9 @@ function buildBody({ date, todays, note, accounts }) {
         'そのあと **［反応をまとめて送る］** を押すと、記録を載せた Issue の作成画面が開きます。',
         '緑の［Create］を押せば送信完了です。日曜の週次が読み取って、翌週の下書きに反映します。',
         '',
-        '<sub>この Issue は閉じてしまってかまいません。</sub>'
+        '<sub>この Issue は、あすの知らせが立つときに自動で閉じます。</sub>',
+        '',
+        STAMP(date)
     );
 
     return lines.join('\n');
