@@ -20,6 +20,7 @@ import { ROOT, paths, readJson, readText, rel } from './lib/io.mjs';
 import { isoWeekId, jstDateString, nextWeekDates } from './lib/jst.mjs';
 import { extractUrls } from './lib/x-text.mjs';
 import { KEEP_WEEKS } from './archive-history.mjs';
+import { lintArticle } from './lib/note-lint.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
 
@@ -48,6 +49,7 @@ const REQUIRED = [
     'config/media.json',
     'config/audience.json',
     'config/calendar.json',
+    'config/note-style.json',
     'scripts/lib/jst.mjs',
     'docs/index.html',
     'docs/app.js',
@@ -578,6 +580,45 @@ try {
     }
 } catch (e) {
     error('CONFIG_UNREADABLE', e.message, 'config/accounts.json');
+}
+
+/* ── 19. note の記事が連載の形をしているか ──────────────
+ *
+ * 記事は数千字あるので、放っておくと「機能を並べただけの文章」になる。
+ * 連載として読まれるには、毎回同じ骨格で書かれている必要がある。
+ * 生成のときにも検査しているが（scripts/generate-note.mjs）、
+ * 基準（config/note-style.json）をあとから厳しくしたときに、
+ * 既にある下書きを見なおす入口がどこにも無い。 */
+
+try {
+    const style = readJson(paths.config('note-style.json'));
+    if ((style.sections ?? []).length === 0) {
+        error('EMPTY_NOTE_STYLE', 'sections が空です。この状態だと記事の骨格を何も見ていません', 'config/note-style.json');
+    }
+
+    const guardrails = readJson(paths.config('guardrails.json'));
+    const monetization = readJson(paths.config('monetization.json'));
+    const dir = paths.data('note');
+
+    if (fs.existsSync(dir)) {
+        // 今週と翌週ぶんだけ見る。過去の記事はもう出したあとなので直せない。
+        const wanted = new Set([isoWeekId(jstDateString()), isoWeekId(nextWeekDates()[0])]);
+        for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.md'))) {
+            if (!wanted.has(name.replace('.md', ''))) continue;
+            const markdown = readText(path.join(dir, name), '');
+            const meta = readJson(path.join(dir, name.replace('.md', '.json')), null);
+            const problems = lintArticle({
+                article: { title: meta?.title ?? markdown.split('\n')[0] },
+                markdown,
+                style,
+                guardrails,
+                monetization,
+            });
+            for (const problem of problems) warn('NOTE_STYLE', problem, `data/note/${name}`);
+        }
+    }
+} catch (e) {
+    error('CONFIG_UNREADABLE', e.message, 'config/note-style.json');
 }
 
 /* ── 18. 中間ファイルが溜まりすぎていないか ────────────

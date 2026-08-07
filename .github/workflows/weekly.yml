@@ -149,6 +149,13 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npm run generate
 
+      # ③' 記事に入れる画面。カード（③）とは別で、記事の本文に差しこむ操作中の画面を撮る。
+      # 撮れなくても記事は書ける（文字だけになる）ので、ここで週次を止めない。
+      # ⚠️ ④（X の生成）のあとに置くこと。その週の主題アプリは data/queue から決まる。
+      - name: ③' 素材 — 記事に入れる画面（失敗しても続行）
+        continue-on-error: true
+        run: npm run shots
+
       - name: ④' 生成 — note の下書き
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
