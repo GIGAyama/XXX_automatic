@@ -16,6 +16,7 @@
  * 「## 見出し」を貼ると「## 見出し」という文字列がそのまま残ってしまう。
  */
 import { generateJson, requireApiKey } from './lib/gemini.mjs';
+import { resolveGeminiModel } from './lib/gemini-models.mjs';
 import { fail, failWith, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson, writeText } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates } from './lib/jst.mjs';
 import fs from 'node:fs';
@@ -77,10 +78,13 @@ async function main() {
 
     info(`④' note の下書きを作ります（${jstStamp()}）`);
     info(`   対象週: ${weekId}`);
-    info(`   題材: ${featured.map((p) => p.name).join(', ')}\n`);
+    info(`   題材: ${featured.map((p) => p.name).join(', ')}`);
+
+    const { model, source } = await resolveGeminiModel(accounts);
+    info(`   モデル: ${model}（${source}）\n`);
 
     const article = await generateJson({
-        model: accounts.geminiModel,
+        model,
         system: buildSystem(loadPolicy(), monetization),
         prompt: buildPrompt(featured, accounts),
         schema: NOTE_SCHEMA,

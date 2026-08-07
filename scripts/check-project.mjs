@@ -15,6 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { shellFilesOf, versionOf } from './build-sw.mjs';
+import { describeModel, readPolicy } from './lib/gemini-models.mjs';
 import { ROOT, paths, readJson, readText, rel } from './lib/io.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
@@ -371,6 +372,53 @@ if (feedback) {
 const history = readJson(paths.data('history.json'), null);
 if (history && !Array.isArray(history.posts)) {
     error('BROKEN_HISTORY', 'posts が配列ではありません（scripts/archive-history.mjs が作ります）', 'data/history.json');
+}
+
+/* ── 13. Gemini のモデル設定 ────────────────────────
+ * ここが変だと、週次が走ってはじめて分かる（しかも生成の直前まで進んでから落ちる）。
+ * 形だけは先に見ておく。 */
+
+try {
+    const accounts = readJson(paths.config('accounts.json'));
+    const policy = readPolicy(accounts);
+
+    if (!policy.auto && !/^gemini-/.test(policy.pinned ?? '')) {
+        error(
+            'BAD_GEMINI_MODEL',
+            `geminiModel が "${policy.pinned}" です。'auto'（自動で最新を選ぶ）か、gemini- で始まるモデル名を書いてください`,
+            'config/accounts.json'
+        );
+    }
+    if (!['flash', 'pro', 'flash-lite'].includes(policy.prefer)) {
+        error(
+            'BAD_GEMINI_MODEL',
+            `geminiModelPrefer が "${policy.prefer}" です。flash / pro / flash-lite のどれかにしてください`,
+            'config/accounts.json'
+        );
+    }
+    if (!/^gemini-/.test(policy.fallback)) {
+        error(
+            'BAD_GEMINI_MODEL',
+            `geminiModelFallback が "${policy.fallback}" です。一覧を取れなかったときに使う名前なので、必ず動くモデル名を書いてください`,
+            'config/accounts.json'
+        );
+    }
+
+    // 自動選択にしているのに preview を掴んでいたら知らせる。
+    // 毎週の生成を、予告なく消えるものに預けている状態なので、意図したのかを確かめたい。
+    const chosen = readJson(paths.data('gemini-model.json'), null);
+    if (policy.auto && chosen?.model && !policy.allowPreview) {
+        const { stable } = describeModel(chosen.model);
+        if (!stable) {
+            warn(
+                'PREVIEW_GEMINI_MODEL',
+                `いま選ばれている ${chosen.model} は安定版ではありません（geminiAllowPreview は false）。\`node scripts/check-gemini.mjs\` で選びなおせます`,
+                'data/gemini-model.json'
+            );
+        }
+    }
+} catch (e) {
+    error('CONFIG_UNREADABLE', e.message, 'config/accounts.json');
 }
 
 /* ── 12. package.json と実行環境の食い違い ────────────

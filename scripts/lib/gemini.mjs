@@ -192,9 +192,12 @@ function hintFor(status, apiStatus, message) {
 
     if (status === 404 || text.includes('not found') || text.includes('is not supported')) {
         return [
-            '  → モデル名が使えません。',
-            '     config/accounts.json の geminiModel を見なおしてください。',
-            '     例: gemini-2.5-flash / gemini-flash-latest',
+            '  → そのモデルは使えません。古い版が止められたときにもここに来ます。',
+            '     いま選ばれているモデルは data/gemini-model.json に書いてあります。',
+            '     選びなおす:  node scripts/check-gemini.mjs',
+            '     何が選べるか: node scripts/check-gemini.mjs --models',
+            '     版を固定している場合は config/accounts.json の geminiModel を見なおしてください',
+            "     （'auto' にすると、使えるモデルのうちいちばん新しい安定版を自動で選びます）",
         ].join('\n');
     }
 

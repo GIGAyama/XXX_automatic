@@ -114,10 +114,33 @@ Discord サーバーの Webhook URL を `DISCORD_WEBHOOK` という名前の Sec
 | 投稿の型（切り口） | `config/themes.json` |
 | 禁止表現・字数の基準 | `config/guardrails.json` |
 | 題材にしないリポジトリ | `config/accounts.json` の `excludeRepos` |
+| 使う Gemini のモデル | `config/accounts.json` の `geminiModel`（既定は `auto`） |
 | 1投稿に複数枚の画像を付ける | `config/media.json` の `carousel.enabled` |
 | 収益化のオン/オフ | `config/monetization.json` |
 
 `CLAUDE.md` を直せば、翌週から投稿の雰囲気が変わります。
+
+### Gemini のモデルは自動で最新になります
+
+`config/accounts.json` の `geminiModel` は既定で `"auto"` です。
+毎週の実行時に「いま使えるモデル」を API に聞いて、**いちばん新しい安定版**を選びます。
+
+`gemini-3-flash` のような新しい版が出たら、**設定を書き換えなくてもそちらに移ります。**
+古い版が止められて 404 になる、という止まり方も防げます。
+
+```bash
+node scripts/check-gemini.mjs           # いま何が選ばれるかを確かめる（実際に1回投げる）
+node scripts/check-gemini.mjs --models  # 選べるモデルを良い順に並べる
+```
+
+選ばれた結果は `data/gemini-model.json` に残ります。コミットしているので、
+**いつどの版に切り替わったかが git の履歴で分かります。**
+
+| したいこと | どうするか |
+|---|---|
+| 版を固定したい | `geminiModel` にモデル名を直接書く（例: `"gemini-2.5-flash"`） |
+| 文章の質を上げたい | `geminiModelPrefer` を `"pro"` に（無料枠の上限に当たりやすくなります） |
+| 新しい版をいち早く試したい | `geminiAllowPreview` を `true` に（preview は予告なく変わります） |
 
 ---
 

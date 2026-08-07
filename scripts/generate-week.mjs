@@ -18,6 +18,7 @@
  */
 import fs from 'node:fs';
 import { generateJson, requireApiKey } from './lib/gemini.mjs';
+import { resolveGeminiModel } from './lib/gemini-models.mjs';
 import { fail, failWith, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf } from './lib/jst.mjs';
 import { lintPost } from './lib/lint.mjs';
@@ -110,9 +111,11 @@ async function main() {
     // ── 2. 本文を作らせる ──────────────────────────────
     const profileByName = new Map(profiles.map((p) => [p.name, p]));
     const policy = loadPolicy();
+    const { model, source } = await resolveGeminiModel(accounts);
+    info(`   モデル: ${model}（${source}）\n`);
 
     let drafts = await askForDrafts({
-        model: accounts.geminiModel,
+        model,
         policy,
         plan,
         profileByName,
@@ -136,7 +139,7 @@ async function main() {
         }, {});
 
         const retried = await askForDrafts({
-            model: accounts.geminiModel,
+            model,
             policy,
             plan: retryPlan,
             profileByName,

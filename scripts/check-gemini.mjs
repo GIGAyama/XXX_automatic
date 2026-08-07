@@ -14,13 +14,29 @@
  *   使えない場合は理由と、次にどこを触ればよいかまで出す。
  */
 import { generateText } from './lib/gemini.mjs';
-import { failWith, info, loadConfig } from './lib/io.mjs';
+import { resolveGeminiModel } from './lib/gemini-models.mjs';
+import { failWith, info, loadConfig, parseArgs } from './lib/io.mjs';
 
 async function main() {
+    const args = parseArgs();
     const { accounts } = loadConfig();
-    const model = accounts.geminiModel;
 
-    info(`Gemini API を確かめます（モデル: ${model}）`);
+    // ここで決めて data/gemini-model.json に書く。
+    // 以降の工程（②理解・④生成・④'note）は、その結果を読むだけになる。
+    // 週次のいちばん最初に走るステップなので、ここが「今週どのモデルを使うか」を決める場所である。
+    const { model, source, candidates } = await resolveGeminiModel(accounts, { refresh: true });
+
+    info(`Gemini API を確かめます（モデル: ${model} — ${source}）`);
+    if (candidates.length > 1) {
+        info(`   ほかの候補: ${candidates.slice(1, 5).join(', ')}`);
+    }
+
+    if (args['models']) {
+        // 何が選べる状態なのかを見たいときのための出口。
+        info('\n選べるモデル（良い順）:');
+        for (const [i, id] of candidates.entries()) info(`  ${i === 0 ? '→' : ' '} ${id}`);
+        return;
+    }
 
     // 中身はどうでもよい。通信と認証とモデル名が通ることだけを見る。
     // 短くしているのは、無料枠のトークンを確認のために使いたくないため。
