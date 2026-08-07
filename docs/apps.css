@@ -105,8 +105,22 @@ body {
   background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
   box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column;
 }
+/*
+ * 紹介カードは 1200×675（16:9）。その全体が見えるようにする。
+ *
+ * ⚠️ height: auto を消さないこと。
+ *    <img> の height="675" 属性が、CSS で height を指定しないかぎり
+ *    「高さ 675px」として効いてしまう。幅と高さが両方決まった時点で
+ *    aspect-ratio は無視されるので、画面では 356×675 の縦長の枠になり、
+ *    16:9 のカードが中央だけ切り取られて何のアプリか分からなくなる。
+ *    幅と高さの属性そのものは、読み込み前に場所を確保して
+ *    画面が飛び跳ねないようにするために要る。消すのは属性ではなくこちらではない。
+ *
+ * ⚠️ object-fit は contain。cover にすると、カードの縦横比が少しでもずれた日に
+ *    黙って切り取られる。ここは「全体が見えること」がいちばん大事な場所である。
+ */
 .app__thumb {
-  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain;
   background: var(--bg); border-bottom: 1px solid var(--line);
 }
 .app__body { padding: 13px 15px 15px; display: flex; flex-direction: column; gap: 7px; flex: 1; }

@@ -41,3 +41,23 @@ export function slotLabelMap(data) {
 export function overLimitMessage(length, max) {
   return `${max} 文字を超えています（${length - max} 字オーバー）。このままだと X で投稿できません。`;
 }
+
+/**
+ * 連投の各コマで、次に何をすればよいかの案内。
+ *
+ * X には「本文に外部リンクがあると表示されにくい」という性質がある。
+ * それを避けるためにリンクを返信へ回しているので、
+ * なぜ2回に分けるのかが分からないと、面倒になって1回でやめてしまう。理由も一緒に出す。
+ */
+export function stepGuide(step, index, total) {
+  if (step.kind === 'main') {
+    return total > 1
+      ? `まずこれを投稿します。このあと ${total - 1} 回、自分への返信として続けます。`
+      : 'これを投稿します。';
+  }
+  if (step.kind === 'thread') {
+    return `いま出した投稿に「返信」する形で続けます（${index + 1}/${total}）。`;
+  }
+  return 'いま出した投稿に「返信」する形でリンクを置きます。本文にリンクを入れると表示されにくくなるため、こちらに回しています。';
+}
+

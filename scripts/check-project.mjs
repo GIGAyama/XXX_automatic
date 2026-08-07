@@ -43,6 +43,8 @@ const REQUIRED = [
     'config/guardrails.json',
     'config/monetization.json',
     'config/media.json',
+    'config/audience.json',
+    'config/calendar.json',
     'scripts/lib/jst.mjs',
     'docs/index.html',
     'docs/app.js',
@@ -62,6 +64,7 @@ const REQUIRED = [
     '.github/workflows/weekly.yml',
     '.github/workflows/daily-notify.yml',
     '.github/workflows/deploy-pages.yml',
+    '.github/workflows/reply-draft.yml',
 ];
 
 for (const file of REQUIRED) {
@@ -374,7 +377,117 @@ if (history && !Array.isArray(history.posts)) {
     error('BROKEN_HISTORY', 'posts が配列ではありません（scripts/archive-history.mjs が作ります）', 'data/history.json');
 }
 
-/* ── 13. Gemini のモデル設定 ────────────────────────
+/* ── 13. 画像が切り取られる形になっていないか ──────────
+ *
+ * <img> の width / height 属性は、CSS で height を指定しないかぎり
+ * 「その高さのボックス」として効いてしまう。幅と高さが両方決まった時点で
+ * aspect-ratio は無視されるので、16:9 のつもりが縦長の枠になり、
+ * 紹介カードが中央だけ切り取られて何のアプリか分からなくなる（実際にそうなった）。
+ *
+ * 属性そのものは、読み込み前に場所を確保して画面が飛び跳ねないようにするために要る。
+ * 消すべきは属性ではなく、CSS 側の height の指定漏れである。 */
+
+{
+    // docs/*.html から「class と height 属性を両方持つ img」を集める
+    const withHeightAttr = new Map(); // class名 → 見つけた場所
+    for (const name of ['index.html', 'apps.html', 'offline.html']) {
+        const html = readText(paths.docs(name), null);
+        if (html === null) continue;
+        for (const tag of html.match(/<img\b[^>]*>/gi) ?? []) {
+            if (!/\bheight\s*=\s*["']?\d/.test(tag)) continue;
+            const className = /\bclass\s*=\s*"([^"]+)"/.exec(tag)?.[1] ?? '';
+            for (const cls of className.split(/\s+/).filter(Boolean)) {
+                if (!withHeightAttr.has(cls)) withHeightAttr.set(cls, `docs/${name}`);
+            }
+        }
+    }
+
+    for (const [cls, where] of withHeightAttr) {
+        for (const cssName of ['style.css', 'apps.css']) {
+            const css = readText(paths.docs(cssName), null);
+            if (css === null) continue;
+
+            // そのクラスだけを対象にした宣言ブロックを探す
+            const rule = new RegExp(`\\.${cls.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')}\\s*\\{([^}]*)\\}`).exec(css);
+            if (!rule) continue;
+            const block = rule[1];
+
+            if (/aspect-ratio\s*:/.test(block) && !/(^|[;{\s])height\s*:/.test(block)) {
+                error(
+                    'IMAGE_CROPPED',
+                    `.${cls} が aspect-ratio を持っていますが height を指定していません。` +
+                        `${where} の <img> に height 属性があるため、そちらが効いて縦長の枠になり、画像が切り取られます。` +
+                        '`height: auto;` を足してください',
+                    `docs/${cssName}`
+                );
+            }
+        }
+    }
+}
+
+/* ── 14. 配信する投稿の本文に URL が混ざっていないか ────
+ *
+ * X は本文に外部リンクがある投稿のリーチを大きく下げる。
+ * Premium でないアカウントだと、ほとんど誰にも表示されない。
+ * リンクは「自分への最初の返信」に回す設計にしてあるが、
+ * ここが破れても画面には何も出ない（ふつうに投稿できてしまう）。
+ * 出したあとで気づいても取り返せないので、配信物の側でも見る。
+ *
+ * 生成時の検査（lib/lint.mjs）と二重になっているが、
+ * 二重にする価値のある種類の失敗である。 */
+
+if (launcher && (launcher.urlPlacement ?? 'reply') === 'reply') {
+    const URL_RE = /https?:\/\/[^\s<>"'）】」]+/;
+    for (const post of launcher.posts ?? []) {
+        const main = (post.steps ?? [])[0];
+        if (!main) continue;
+        const hit = URL_RE.exec(main.text ?? '');
+        if (hit) {
+            error(
+                'URL_IN_MAIN_POST',
+                `${post.id} の本文に URL が入っています（${hit[0]}）。` +
+                    'X は本文に外部リンクがある投稿をほとんど表示しません。リンクは返信に回してください',
+                'docs/launcher.json'
+            );
+        }
+    }
+
+    // リンクの返信そのものが落ちていないか。
+    // 本文からリンクを外したのに返信も無いと、どこからもアプリに来られない。
+    const withoutLink = (launcher.posts ?? []).filter(
+        (p) => (p.steps ?? []).length > 0 && !(p.steps ?? []).some((s) => URL_RE.test(s.text ?? ''))
+    );
+    if (withoutLink.length > 0) {
+        warn(
+            'NO_LINK_ANYWHERE',
+            `${withoutLink.length} 件の投稿に URL がどこにもありません（${withoutLink.slice(0, 3).map((p) => p.id).join(', ')}）。` +
+                'アプリに来てもらう導線が無い状態です',
+            'docs/launcher.json'
+        );
+    }
+}
+
+/* ── 15. 誰に向けて書くかの定義 ─────────────────
+ * ここが空だと、当たりさわりのない文章になる。
+ * 当たりさわりの無い文章は誰の関心も引かない。 */
+
+try {
+    const audience = readJson(paths.config('audience.json'));
+    if (!audience.primary?.who) {
+        error('EMPTY_AUDIENCE', 'primary.who が空です。誰に向けて書くかが決まっていません', 'config/audience.json');
+    }
+    if ((audience.hooks ?? []).length === 0) {
+        error(
+            'EMPTY_HOOKS',
+            'hooks が空です。最初の1行の型が1つも無いと、生成が毎回同じ書き出しになります',
+            'config/audience.json'
+        );
+    }
+} catch (e) {
+    error('CONFIG_UNREADABLE', e.message, 'config/audience.json');
+}
+
+/* ── 16. Gemini のモデル設定 ────────────────────────
  * ここが変だと、週次が走ってはじめて分かる（しかも生成の直前まで進んでから落ちる）。
  * 形だけは先に見ておく。 */
 

@@ -1,0 +1,53 @@
+name: 返信の下書きを作る
+
+# ランチャーの［返信の下書きを頼む］が、相手の投稿を載せた Issue を立てる。
+# それを受けて返信案をコメントで返す。
+#
+# labeled も見ているのは、あとからラベルを付けて頼み直せるようにするため
+# （本文を書きなおしてから、もう一度ラベルを付ける、という使い方ができる）。
+on:
+  issues:
+    types: [opened, labeled]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: '対象の Issue 番号（空なら開いているものぜんぶ）'
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+# 同じ Issue に何度も反応しないように、1つずつ処理する。
+concurrency:
+  group: reply-draft-${{ github.event.issue.number || 'manual' }}
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    # ラベルが付いているときだけ動かす。ふつうの Issue にいちいち返信案を作らない。
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(join(github.event.issue.labels.*.name, ','), '返信の下書き')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 依存は入れない。ここで使うのは fetch と Node 標準だけなので、
+      # npm ci のぶんだけ返事が遅くなるのを避ける。
+      - name: 返信案を作る
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node scripts/draft-reply.mjs \
+            ${{ github.event.issue.number && format('--issue {0}', github.event.issue.number) || '' }} \
+            ${{ inputs.issue && format('--issue {0}', inputs.issue) || '' }}

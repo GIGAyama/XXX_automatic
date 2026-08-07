@@ -29,7 +29,7 @@ const ENDPOINT = process.env.GEMINI_BASE_URL || 'https://generativelanguage.goog
  * @param {number} [options.temperature]
  * @returns {Promise<object>} パース済みの JSON
  */
-export async function generateJson({ model, prompt, schema, system, temperature = 0.9 }) {
+export async function generateJson({ model, prompt, schema, system, temperature = 0.9, search = false }) {
     const body = {
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
@@ -39,6 +39,9 @@ export async function generateJson({ model, prompt, schema, system, temperature 
         },
     };
     if (system) body.systemInstruction = { parts: [{ text: system }] };
+    // ⚠️ 検索と構造化出力を同時に使えるのは Gemini 3 系から。
+    //    2系に投げると 400 で落ちる。呼び出し側が supportsSearch() で確かめること。
+    if (search) body.tools = [{ google_search: {} }];
 
     const text = await callGemini(model, body);
     try {
@@ -49,13 +52,27 @@ export async function generateJson({ model, prompt, schema, system, temperature 
 }
 
 /** ふつうのテキストを生成させる（note の本文など）。 */
-export async function generateText({ model, prompt, system, temperature = 0.9 }) {
+export async function generateText({ model, prompt, system, temperature = 0.9, search = false }) {
     const body = {
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: { temperature },
     };
     if (system) body.systemInstruction = { parts: [{ text: system }] };
+    if (search) body.tools = [{ google_search: {} }];
     return callGemini(model, body);
+}
+
+/**
+ * そのモデルが「検索しながら構造化出力する」ことに対応しているか。
+ *
+ * 検索グラウンディングと responseSchema の併用は Gemini 3 系から。
+ * 2系に投げると 400 INVALID_ARGUMENT で落ちる。
+ * モデルは自動で選ばれる（config/accounts.json の geminiModel: auto）ので、
+ * 使う側が毎回ここで確かめる。対応していなければ検索なしで動かす。
+ */
+export function supportsSearch(model) {
+    const major = Number(/^gemini-(\d+)/.exec(String(model ?? ''))?.[1] ?? 0);
+    return major >= 3;
 }
 
 /**

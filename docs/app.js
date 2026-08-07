@@ -35,7 +35,7 @@
  */
 
 import { jstDateString, jstStamp } from './lib/jst-client.js';
-import { overLimitMessage, slotLabelMap, themeLabelMap, truncate } from './lib/format.js';
+import { overLimitMessage, slotLabelMap, stepGuide, themeLabelMap, truncate } from './lib/format.js';
 import { activeWeekIds, emptyMessageFor, selectPosts, summaryOf, unsentRatings } from './lib/select.js';
 import { STORAGE_KEY, applyPatch, pruneState, traceOf } from './lib/state.js';
 import { MAX_WEIGHTED_LENGTH, weightedLength } from './lib/x-length.js';
@@ -104,12 +104,37 @@ function textOf(post, saved) {
   return typeof saved?.editedText === 'string' && saved.editedText.trim() ? saved.editedText : post.text;
 }
 
+/**
+ * その投稿の連投の手順。手で直した本文があれば1コマ目に反映する。
+ *
+ * launcher.json が古くて steps を持たないときは、本文1コマとして扱う。
+ * 画面側に「steps がある場合とない場合」の分岐を持ち込まないため。
+ */
+function stepsOf(post, saved) {
+  const base = Array.isArray(post.steps) && post.steps.length > 0
+    ? post.steps
+    : [{ kind: 'main', label: '本文', text: post.text, weightedLength: post.weightedLength }];
+
+  const edited = textOf(post, saved);
+  return base.map((step, i) =>
+    i === 0 && edited !== post.text
+      ? { ...step, text: edited, weightedLength: weightedLength(edited) }
+      : { ...step, weightedLength: step.weightedLength ?? weightedLength(step.text) }
+  );
+}
+
 function render() {
   const list = document.getElementById('list');
   list.innerHTML = '';
 
   if (view === 'note') {
     renderNotes(list);
+    updateSummary();
+    return;
+  }
+
+  if (view === 'now') {
+    renderNow(list);
     updateSummary();
     return;
   }
@@ -160,7 +185,9 @@ function postCard(post, saved, today) {
   const meta = document.createElement('div');
   meta.className = 'card__meta';
   meta.append(
-    chip(`${formatDate(post.date)}（${post.weekday}）${post.slotLabel}`, post.date === today ? 'chip--today' : ''),
+    post.date
+      ? chip(`${formatDate(post.date)}（${post.weekday}）${post.slotLabel}`, post.date === today ? 'chip--today' : '')
+      : chip('予備'),
     chip(post.themeLabel),
     chip(post.repo)
   );
@@ -195,30 +222,96 @@ function postCard(post, saved, today) {
     card.append(figure);
   }
 
+  // ── 連投の手順 ──
+  // ①本文 → ②つづき → ③リンクの返信、の順に1コマずつ出す。
+  // 全部いっぺんに並べると、どれをいま貼るのかが分からなくなる。
+  const steps = stepsOf(post, saved);
+  const at = Math.min(saved.step ?? 0, steps.length - 1);
+  const step = steps[at];
+
+  if (steps.length > 1) {
+    const nav = document.createElement('div');
+    nav.className = 'steps';
+    for (const [i, s] of steps.entries()) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'steps__dot' + (i === at ? ' is-on' : '') + (i < at ? ' is-done' : '');
+      dot.textContent = `${i + 1}. ${s.label}`;
+      dot.setAttribute('aria-label', `${i + 1}コマ目 ${s.label}へ`);
+      dot.addEventListener('click', () => {
+        patchState(post.id, { step: i, ...traceOf(post) });
+        render();
+      });
+      nav.append(dot);
+    }
+    card.append(nav);
+
+    const guide = document.createElement('p');
+    guide.className = 'steps__guide';
+    guide.textContent = stepGuide(step, at, steps.length);
+    card.append(guide);
+  }
+
   // ── 本文（その場で直せる）──
   const body = document.createElement('p');
   body.className = 'card__text';
-  body.textContent = text;
+  body.textContent = step.text;
   card.append(body);
 
   // ── ボタン ──
   const actions = document.createElement('div');
   actions.className = 'card__actions';
 
-  const shareBtn = button('𝕏 に共有（画像つき）', 'btn btn--x');
-  shareBtn.addEventListener('click', () => shareToX(post, shareBtn));
-  actions.append(shareBtn);
+  if (step.kind === 'main') {
+    const shareBtn = button(shots.length > 0 ? '𝕏 に共有（画像つき）' : '𝕏 に共有', 'btn btn--x');
+    shareBtn.addEventListener('click', () => shareToX(post, shareBtn, step, steps.length));
+    actions.append(shareBtn);
 
-  const copyBtn = button('コピーして X を開く', 'btn btn--sub');
-  copyBtn.addEventListener('click', () => openIntent(post));
-  actions.append(copyBtn);
+    const copyBtn = button('コピーして X を開く', 'btn btn--sub');
+    copyBtn.addEventListener('click', () => openIntent(post, step));
+    actions.append(copyBtn);
+  } else {
+    // 返信は共有シートからは出せない（共有すると新しい投稿になってしまう）。
+    // 本文をクリップボードに入れて、X で「返信」を押してから貼ってもらう。
+    const copyBtn = button('この文をコピーする', 'btn btn--x');
+    copyBtn.addEventListener('click', async () => {
+      const ok = await copyText(step.text);
+      toast(ok ? 'コピーしました。X で返信を押して貼り付けてください' : 'コピーできませんでした。長押しで選んでください');
+    });
+    actions.append(copyBtn);
 
-  const editBtn = button(saved.editedText ? '本文を直す（手直しずみ）' : '本文を直す', 'btn btn--sub');
-  editBtn.addEventListener('click', () => openEditor(card, post, body, lenChip));
-  actions.append(editBtn);
+    const openBtn = button('X で自分の投稿を開く', 'btn btn--sub');
+    openBtn.addEventListener('click', () => {
+      // ⚠️ window.open を同期で先に。await のあとだと iOS で開かない。
+      window.open(myTimelineUrl(), '_blank', 'noopener');
+      copyText(step.text);
+    });
+    actions.append(openBtn);
+  }
 
-  if (shots.length > 0) {
-    const saveBtn = button(shots.length > 1 ? '画像を保存' : '画像を保存', 'btn btn--sub');
+  if (at < steps.length - 1) {
+    const nextBtn = button(`次へ（${steps[at + 1].label}）`, 'btn btn--sub btn--next');
+    nextBtn.addEventListener('click', () => {
+      patchState(post.id, { step: at + 1, ...traceOf(post) });
+      render();
+    });
+    actions.append(nextBtn);
+  }
+
+  if (step.kind === 'main') {
+    const editBtn = button(saved.editedText ? '本文を直す（手直しずみ）' : '本文を直す', 'btn btn--sub');
+    editBtn.addEventListener('click', () => openEditor(card, post, body, lenChip));
+    actions.append(editBtn);
+
+    if ((post.alternatives ?? []).length > 0) {
+      const altBtn = button(`別の案（${post.alternatives.length}）`, 'btn btn--sub');
+      altBtn.addEventListener('click', () => openAlternatives(card, post, body));
+      actions.append(altBtn);
+    }
+  }
+
+  if (shots.length > 0 && step.kind === 'main') {
+    const saveBtn = button('画像を保存', 'btn btn--sub');
     saveBtn.addEventListener('click', () => saveMedia(post));
     actions.append(saveBtn);
   }
@@ -321,6 +414,67 @@ function openEditor(card, post, bodyEl, lenChip) {
   void lenChip;
 }
 
+/**
+ * 落選した案に差し替える。
+ *
+ * 生成のときに3案書かせて、編集者役が1つ選んでいる。
+ * 選ばれなかった案も持っているので、読み比べて選び直せるようにする。
+ * 選ぶ目は本人のほうが確かなので、機械の判断を最終決定にしない。
+ */
+function openAlternatives(card, post, bodyEl) {
+  if (card.querySelector('.alts')) {
+    card.querySelector('.alts').remove();
+    return;
+  }
+
+  const box = document.createElement('div');
+  box.className = 'alts';
+
+  if (post.pickReason) {
+    const why = document.createElement('p');
+    why.className = 'alts__why';
+    why.textContent = `いま出ている案が選ばれた理由: ${post.pickReason}`;
+    box.append(why);
+  }
+
+  for (const [i, alt] of post.alternatives.entries()) {
+    const item = document.createElement('div');
+    item.className = 'alts__item';
+
+    const p = document.createElement('p');
+    p.className = 'alts__text';
+    p.textContent = alt.body;
+    item.append(p);
+
+    const meta = document.createElement('p');
+    meta.className = 'alts__meta';
+    meta.textContent = `${weightedLength(alt.body)}/${MAX_WEIGHTED_LENGTH}` + (alt.thread?.length ? ` ・ つづき${alt.thread.length}コマ` : '');
+    item.append(meta);
+
+    const use = button(`この案にする（${i + 1}）`, 'btn btn--sub');
+    use.addEventListener('click', () => {
+      patchState(post.id, { editedText: alt.body, step: 0, ...traceOf(post) });
+      overLimitWarned.delete(post.id);
+      render();
+      toast('別の案に差し替えました');
+    });
+    item.append(use);
+    box.append(item);
+  }
+
+  const close = button('閉じる', 'btn btn--sub');
+  close.addEventListener('click', () => box.remove());
+  box.append(close);
+
+  bodyEl.after(box);
+}
+
+/** 自分のタイムライン。返信を付けたい投稿を探すために開く。 */
+function myTimelineUrl() {
+  const handle = String(data.xHandle ?? '').replace(/^@/, '').trim();
+  return handle ? `https://x.com/${encodeURIComponent(handle)}` : 'https://x.com/home';
+}
+
 /* ────────────────────────────────────────────
  *  反応の記録を送る
  * ──────────────────────────────────────────── */
@@ -389,6 +543,121 @@ function sendFeedback(pending) {
   } else {
     toast('GitHub の画面を開きました。緑の［Create］を押すと送信できます');
   }
+}
+
+/* ────────────────────────────────────────────
+ *  いま1本出す ／ 返信の下書き
+ * ──────────────────────────────────────────── */
+
+/**
+ * 予定に無い投稿をその場で出す。
+ *
+ * その場で文章を作るには、ブラウザから Gemini を呼ぶことになる。
+ * それには API キーを画面に置くしかなく、公開されるファイルに秘密情報は置けない。
+ * だから週次のときに作り置きしてある（data/stock.json）。押した瞬間に出せる。
+ */
+function renderNow(list) {
+  // ── 返信の下書きを頼む ──
+  list.append(replyBox());
+
+  const stock = data.stock ?? [];
+  if (stock.length === 0) {
+    list.append(
+      emptyBox('予備の下書きがまだありません。\n日曜の夜に、その週の予定に出ていないアプリぶんが用意されます。')
+    );
+    return;
+  }
+
+  const state = loadState();
+  const themes = [...new Set(stock.map((p) => p.themeLabel).filter(Boolean))];
+
+  const filter = document.createElement('div');
+  filter.className = 'jump';
+  const current = nowFilter;
+  for (const label of ['すべて', ...themes]) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tab' + (label === current ? ' is-on' : '');
+    b.textContent = label;
+    b.addEventListener('click', () => {
+      nowFilter = label;
+      render();
+    });
+    filter.append(b);
+  }
+  list.append(filter);
+
+  const shown = stock.filter((p) => current === 'すべて' || p.themeLabel === current);
+  for (const post of shown) list.append(postCard(post, state[post.id] || {}, todayJst()));
+  prefetchMedia(shown);
+}
+
+let nowFilter = 'すべて';
+
+/**
+ * 返信の下書きを頼む。
+ *
+ * X では、他人の投稿への返信が交流として評価される。
+ * 自分の投稿を並べるだけでは伸びない。ただし返信は相手のある行為なので、
+ * 機械が勝手に出すことはしない。案を作るところまでで止める。
+ *
+ * ここも Issue 経由。ブラウザに書き込み権限のトークンを持たせないため。
+ */
+function replyBox() {
+  const box = document.createElement('div');
+  box.className = 'card replybox';
+
+  const title = document.createElement('p');
+  title.className = 'sendbar__text';
+  title.textContent = '返信の下書きを頼む';
+  box.append(title);
+
+  const help = document.createElement('p');
+  help.className = 'steps__guide';
+  help.textContent =
+    '返したい相手の投稿を貼ってください。立ち位置の違う返信案を3つ作って、GitHub のコメントで返します（数十秒かかります）。';
+  box.append(help);
+
+  const area = document.createElement('textarea');
+  area.className = 'editor__area';
+  area.rows = 5;
+  area.placeholder = '相手の投稿の本文を貼り付けてください';
+  area.setAttribute('aria-label', '返信したい相手の投稿');
+  box.append(area);
+
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+
+  const ask = button('下書きを頼む', 'btn btn--x');
+  ask.addEventListener('click', () => {
+    const source = area.value.trim();
+    if (source.length < 10) {
+      toast('相手の投稿を貼り付けてください');
+      return;
+    }
+    if (!data.repoUrl) {
+      toast('送り先が分かりません（launcher.json が古い可能性があります）');
+      return;
+    }
+    // ⚠️ window.open を同期で先に。await のあとだと iOS で開かない。
+    window.open(replyIssueUrl(source), '_blank', 'noopener');
+    area.value = '';
+    toast('GitHub の画面を開きました。緑の［Create］を押すと下書きが届きます');
+  });
+  row.append(ask);
+  box.append(row);
+
+  return box;
+}
+
+function replyIssueUrl(source) {
+  const base = String(data.repoUrl).replace(/\/+$/, '');
+  const params = new URLSearchParams({
+    title: `[返信] ${source.replace(/\s+/g, ' ').slice(0, 30)}…`,
+    body: ['返したい投稿です。返信案をお願いします。', '', '```text', source.slice(0, 1200), '```'].join('\n'),
+    labels: '返信の下書き',
+  });
+  return `${base}/issues/new?${params.toString()}`;
 }
 
 /* ────────────────────────────────────────────
@@ -490,9 +759,9 @@ function mediaListOf(post) {
  * 共有シートを開く。ここがこのアプリの心臓部。
  * 画像は prefetchMedia で先に読んであるので、押してすぐ share() に入れる。
  */
-async function shareToX(post, btn) {
+async function shareToX(post, btn, step = null, totalSteps = 1) {
   const saved = loadState()[post.id] || {};
-  const text = textOf(post, saved);
+  const text = step ? step.text : textOf(post, saved);
 
   // 280字を超えていると X 側で投稿できない。ただし共有そのものを禁止はしない。
   // 出せなくすると詰むので、1度目は止めて理由を伝え、2度目は通す。
@@ -529,14 +798,17 @@ async function shareToX(post, btn) {
 
     // 共有シートを開いたところまでしか分からない（実際に投稿したかは取れない）。
     // 押した本人がいちばん分かっているので、投稿ずみの印は手で付けてもらう。
+    const label = btn.textContent;
     btn.textContent = '共有しました';
     setTimeout(() => {
-      btn.textContent = '𝕏 に共有（画像つき）';
+      btn.textContent = label;
     }, 2500);
     toast(
-      files.length === 0 && mediaFailed.has(post.id)
-        ? '画像を用意できなかったので本文だけ共有します'
-        : 'X を選んで投稿ボタンを押してください'
+      totalSteps > 1
+        ? 'X で投稿したら、［次へ］を押して返信を続けてください'
+        : files.length === 0 && mediaFailed.has(post.id)
+          ? '画像を用意できなかったので本文だけ共有します'
+          : 'X を選んで投稿ボタンを押してください'
     );
   } catch (error) {
     // 共有シートを閉じただけでも AbortError が来る。これは失敗ではない。
@@ -553,9 +825,9 @@ async function shareToX(post, btn) {
  *    引っかかる。shareToX が copyText を await しないのとまったく同じ理由である。
  *    しかもこの導線は「共有シートに X が出ないとき」の唯一の逃げ道なので、失うと詰む。
  */
-function openIntent(post) {
+function openIntent(post, step = null) {
   const saved = loadState()[post.id] || {};
-  const text = textOf(post, saved);
+  const text = step ? step.text : textOf(post, saved);
   // noopener を付けると window.open は必ず null を返すため、開けたかどうかは判定できない。
   // 逆タブナビング対策のほうを優先し、案内文は「開かなければ」の場合も含む書き方にする。
   window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
@@ -715,7 +987,7 @@ function updateSummary() {
  *  起動
  * ──────────────────────────────────────────── */
 
-const TABS = ['today', 'week', 'note', 'done', 'past'];
+const TABS = ['today', 'week', 'now', 'note', 'done', 'past'];
 
 function selectTab(name, { focus = false } = {}) {
   if (!TABS.includes(name)) name = 'today';
