@@ -16,7 +16,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 
-import { lintAlternative, pruneAlternatives } from '../scripts/lib/lint.mjs';
+import { lintAlternative, lintPost, pruneAlternatives } from '../scripts/lib/lint.mjs';
+import { swapToPassingAlternative } from '../scripts/lint-drafts.mjs';
 
 const guardrails = JSON.parse(fs.readFileSync(new URL('../config/guardrails.json', import.meta.url), 'utf8'));
 const monetizationOff = { enabled: false };
@@ -113,4 +114,87 @@ test('落選案の検査は本文の検査を書き換えない', () => {
     target.weightedLength = 261;
     pruneAlternatives(target, guardrails, monetizationOff);
     assert.equal(target.weightedLength, 261);
+});
+
+/* ── 基準を厳しくしたあとの直しかた ──────────────────
+ *
+ * guardrails.json を厳しくすると、既に作ってある週が落ちる。それは正しい動きだが、
+ * 直す手段が「その週をまるごと作りなおす」しかなかった。
+ * 作りなおすと通っていた枠まで別の文章になるし、API キーが要るので手元では直せない。
+ *
+ * 落ちた枠には、そのとき選ばれなかった案が残っている。
+ * そちらが基準を満たしていれば、生成を1回も呼ばずにその枠だけ直せる。 */
+
+const DANGEROUS = 'うちのクラスでは、休み時間に子どもたちが同じゲームばかりで飽きていました。だから作りなおしました。';
+
+function postWithBody(body, alternatives) {
+    return {
+        id: '2026-08-10-evening',
+        url: URL_,
+        hashtags: ['小学校', '算数'],
+        body,
+        hook: 'scene',
+        alternatives,
+        steps: [{ kind: 'main', label: '本文', text: body }],
+        text: body,
+        pickedBy: 'editor',
+    };
+}
+
+test('落ちた本文を、検査を通る別の案に差し替える', () => {
+    const post = postWithBody(DANGEROUS, [{ body: SAFE, thread: [], hook: 'number' }]);
+    assert.ok(lintPost(post, guardrails, monetizationOff).length > 0, '前提: いまの本文は落ちる');
+
+    assert.equal(swapToPassingAlternative(post, guardrails, monetizationOff), true);
+    assert.equal(post.body, SAFE);
+    assert.equal(post.hook, 'number', '案が持っていたフックに入れかわる');
+    assert.deepEqual(lintPost(post, guardrails, monetizationOff), [], '差し替えたあとは通る');
+});
+
+test('差し替えると連投も組みなおされる', () => {
+    // 本文だけ入れかえて steps を古いままにすると、
+    // ランチャーが出すのは古い文章になる（画面と data が食い違う）。
+    const post = postWithBody(DANGEROUS, [{ body: SAFE, thread: [], hook: 'number' }]);
+    swapToPassingAlternative(post, guardrails, monetizationOff);
+
+    assert.deepEqual(post.steps.map((s) => s.kind), ['main', 'link']);
+    assert.ok(post.steps[0].text.startsWith(SAFE));
+    assert.equal(post.text, post.steps[0].text);
+    assert.ok(post.steps.at(-1).text.includes(URL_), 'リンクの返信は残る');
+});
+
+test('落ちた本文は別の案としても残さない', () => {
+    // 基準を満たしていないものを、ワンタップで本文になる場所に置かない。
+    const post = postWithBody(DANGEROUS, [{ body: SAFE, thread: [], hook: 'number' }]);
+    swapToPassingAlternative(post, guardrails, monetizationOff);
+    assert.equal(post.alternatives.some((a) => a.body === DANGEROUS), false);
+});
+
+test('残った別の案のうち、基準を満たさないものも落とす', () => {
+    const post = postWithBody(DANGEROUS, [
+        { body: SAFE, thread: [], hook: 'number' },
+        { body: 'これを使えば学力が必ず上がります。毎日5分でクラスの空気が変わると思います。', thread: [] },
+    ]);
+    swapToPassingAlternative(post, guardrails, monetizationOff);
+    assert.deepEqual(post.alternatives, []);
+});
+
+test('通る案が1つも無ければ差し替えない', () => {
+    // ここで無理に何かを入れると、基準を満たさないものが出ていく。
+    const post = postWithBody(DANGEROUS, [{ body: 'みじかい。', thread: [] }]);
+    assert.equal(swapToPassingAlternative(post, guardrails, monetizationOff), false);
+    assert.equal(post.body, DANGEROUS, '本文はそのまま。呼び出し側が週を作りなおす');
+});
+
+test('別の案を持たない投稿でも落ちない', () => {
+    const post = postWithBody(DANGEROUS, undefined);
+    assert.equal(swapToPassingAlternative(post, guardrails, monetizationOff), false);
+});
+
+test('どこから来た本文かが残る', () => {
+    // 「なぜ編集者の選んだ案でないのか」をあとから追えるようにする。
+    const post = postWithBody(DANGEROUS, [{ body: SAFE, thread: [], hook: 'number' }]);
+    swapToPassingAlternative(post, guardrails, monetizationOff);
+    assert.equal(post.pickedBy, 'lint-fix');
+    assert.match(post.pickReason, /検査に落ちた/);
 });
