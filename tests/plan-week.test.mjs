@@ -231,3 +231,157 @@ test('「いまいち」が積み重なっても、重みが0や負にならな�
     assert.equal(plan.length, 14);
     assert.ok(plan.every((p) => p.repo && p.theme));
 });
+
+/* ── 再放送 ──────────────────────────────────
+ *
+ * タイムラインは流れる。1回出しただけではフォロワーの大半は見ていない。
+ * 反応がよかったものをもう一度出すのは、いちばん確実に効く1本である。
+ * しかも材料は手元にある——そのとき選ばれなかった案を本文にすれば、
+ * 生成を1回も呼ばずに1枠が埋まる。
+ *
+ * ⚠️ 勝手に増やさない。「反応よかった」を本人が押したものだけ、
+ *    しかも十分に日を置いたものだけを対象にする。 */
+
+function pastPost(over = {}) {
+    return {
+        id: '2026-06-01-morning',
+        date: '2026-06-01',
+        weekId: '2026-W23',
+        repo: 'App1',
+        theme: 'pain',
+        slot: 'morning',
+        hook: 'scene',
+        body: '算数の残り5分、やることが無くなった子から騒がしくなります。そこで作ったのがこれです。',
+        hashtags: ['小学校'],
+        alternatives: [{ body: '放課後の丸つけが終わらないので、その場で判定が出るようにしました。', thread: [] }],
+        ...over,
+    };
+}
+
+const GOOD = { '2026-06-01-morning': { rating: 'good' } };
+
+test('反応がよかった過去の投稿が、1枠だけ再放送になる', () => {
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles: makeProfiles(20),
+        history: [pastPost()],
+        postFeedback: GOOD,
+        weekId: '2026-W33',
+    });
+    const reprised = plan.filter((p) => p.reprise);
+    assert.equal(reprised.length, 1, '再放送は1枠だけ');
+    assert.equal(reprised[0].repo, 'App1');
+    assert.equal(reprised[0].reprise.ofDate, '2026-06-01');
+    // 本文は「そのとき選ばれなかった案」。同じ文章をもう一度は出さない。
+    assert.match(reprised[0].reprise.body, /放課後の丸つけ/);
+    assert.equal(plan.length, 14, '枠の数は変わらない');
+});
+
+test('再放送したアプリは、その週の他の枠に出てこない', () => {
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles: makeProfiles(20),
+        history: [pastPost()],
+        postFeedback: GOOD,
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.repo === 'App1').length, 1);
+});
+
+test('評価が付いていないものは再放送しない', () => {
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles: makeProfiles(20),
+        history: [pastPost()],
+        postFeedback: {},
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.reprise).length, 0);
+});
+
+test('「いまいち」だったものは再放送しない', () => {
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles: makeProfiles(20),
+        history: [pastPost()],
+        postFeedback: { '2026-06-01-morning': { rating: 'bad' } },
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.reprise).length, 0);
+});
+
+test('日が浅いものは再放送しない（出したばかりのものを出しなおさない）', () => {
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles: makeProfiles(20),
+        history: [pastPost({ id: '2026-08-05-morning', date: '2026-08-05' })],
+        postFeedback: { '2026-08-05-morning': { rating: 'good' } },
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.reprise).length, 0);
+});
+
+test('別の案を持っていないものは再放送しない（同じ文章をそのまま出さない）', () => {
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles: makeProfiles(20),
+        history: [pastPost({ alternatives: [] })],
+        postFeedback: GOOD,
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.reprise).length, 0);
+});
+
+test('本文を持たない古い履歴は再放送しない', () => {
+    // 履歴に本文を写すようにしたのは途中から。それ以前の記録には body が無い。
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles: makeProfiles(20),
+        history: [pastPost({ body: null })],
+        postFeedback: GOOD,
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.reprise).length, 0);
+});
+
+test('repriseAfterDays を 0 にすると再放送しない', () => {
+    const off = { ...themesConfig, rotation: { ...themesConfig.rotation, repriseAfterDays: 0 } };
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig: off,
+        profiles: makeProfiles(20),
+        history: [pastPost()],
+        postFeedback: GOOD,
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.reprise).length, 0);
+});
+
+test('同じ週IDなら、再放送の枠も毎回同じところに入る', () => {
+    const of = () =>
+        planWeek({
+            dates,
+            slots,
+            themesConfig,
+            profiles: makeProfiles(20),
+            history: [pastPost(), pastPost({ id: '2026-05-01-evening', date: '2026-05-01', repo: 'App2', slot: 'evening' })],
+            postFeedback: { ...GOOD, '2026-05-01-evening': { rating: 'good' } },
+            weekId: '2026-W33',
+        });
+    assert.deepEqual(of().map((p) => p.id + (p.reprise ? ':R' : '')), of().map((p) => p.id + (p.reprise ? ':R' : '')));
+});

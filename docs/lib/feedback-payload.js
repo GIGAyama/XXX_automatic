@@ -14,6 +14,8 @@
  *   費用も 0 円のまま。
  */
 
+import { weekdayOf } from './jst-client.js';
+
 export const SCHEMA_ID = 'feedback-v1';
 export const ISSUE_LABEL = 'feedback';
 export const MERGED_LABEL = 'feedback-merged';
@@ -43,19 +45,41 @@ export function newSubmissionId() {
   return `s-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
+/**
+ * 送る1件ぶんの形。
+ *
+ * ⚠️ SCHEMA_ID は上げない。
+ *    上げると、送信ずみで開いたままの Issue がまとめて拒否される。
+ *    hook と posted は「あれば使う」項目として足してある。
+ *    古い形（rating だけ）の記録は、これまでどおり読める。
+ *
+ * hook（最初の1行の型）を載せるのは、そこがいちばん効くからである。
+ * config/audience.json が書いているとおり、タイムラインで最初に見えるのは1行目だけで、
+ * そこで止まらなければ本文は読まれない。型（theme）とアプリ（repo）だけを
+ * 記録していたあいだ、いちばん効く軸のデータを毎週捨てていた。
+ *
+ * posted（出したかどうか）を載せるのは、出し忘れが誰にも見えなかったからである。
+ * ［投稿した］は端末のなかにしか無く、「用意したのに出せなかった枠」が
+ * どこにも残らなかった。評価を押さなくても、出したことだけは送れるようにする。
+ */
 export function buildPayload(entries, { submissionId, sentAtJst }) {
   return {
     schema: SCHEMA_ID,
     submissionId,
     sentAtJst,
-    entries: entries.map((e) => ({
-      id: e.id,
-      weekId: e.weekId ?? '',
-      date: e.date,
-      repo: e.repo,
-      theme: e.theme,
-      rating: e.rating,
-    })),
+    entries: entries.map((e) => {
+      const entry = {
+        id: e.id,
+        weekId: e.weekId ?? '',
+        date: e.date,
+        repo: e.repo,
+        theme: e.theme,
+      };
+      if (e.rating) entry.rating = e.rating;
+      if (e.hook) entry.hook = e.hook;
+      if (e.posted) entry.posted = true;
+      return entry;
+    }),
   };
 }
 
@@ -79,7 +103,9 @@ export function renderIssueBody(payload, { themeLabels = {}, slotLabels = {} } =
   for (const e of payload.entries) {
     const slot = slotLabels[slotIdOf(e.id)] ?? slotIdOf(e.id);
     const theme = themeLabels[e.theme] ?? e.theme;
-    const rating = e.rating === 'good' ? 'よかった' : 'いまいち';
+    // 評価がない記録もある（「出した」だけを送る場合）。何を送ろうとしているかが
+    // 送信ボタンを押す前に見えることが大事なので、そこも言葉にする。
+    const rating = e.rating === 'good' ? 'よかった' : e.rating === 'bad' ? 'いまいち' : '出した（評価なし）';
     lines.push(`- ${shortDate(e.date)} ${slot} ${e.repo}（${theme}）… ${rating}`);
   }
 
@@ -159,11 +185,13 @@ export function extractPayload(body) {
  * @param {object} opts
  * @param {Set<string>|string[]} opts.themeIds  config/themes.json にある型
  * @param {Set<string>|string[]} opts.repoNames data/profiles/ にあるアプリ
+ * @param {Set<string>|string[]} [opts.hookIds] config/audience.json にあるフックの型
  */
-export function validatePayload(payload, { themeIds, repoNames, maxEntries = MAX_ENTRIES } = {}) {
+export function validatePayload(payload, { themeIds, repoNames, hookIds, maxEntries = MAX_ENTRIES } = {}) {
   const errors = [];
   const themes = themeIds instanceof Set ? themeIds : new Set(themeIds ?? []);
   const repos = repoNames instanceof Set ? repoNames : new Set(repoNames ?? []);
+  const hooks = hookIds instanceof Set ? hookIds : new Set(hookIds ?? []);
 
   if (!payload || typeof payload !== 'object') return { ok: false, errors: ['本文に機械向けのブロックがありません'] };
   if (payload.schema !== SCHEMA_ID) errors.push(`schema が ${SCHEMA_ID} ではありません: ${payload.schema}`);
@@ -185,9 +213,22 @@ export function validatePayload(payload, { themeIds, repoNames, maxEntries = MAX
 
     if (!DATE_RE.test(e.date ?? '')) errors.push(`${at}.date の形が違います: ${e.date}`);
     if (e.weekId && !WEEK_RE.test(e.weekId)) errors.push(`${at}.weekId の形が違います: ${e.weekId}`);
-    if (!RATINGS.has(e.rating)) errors.push(`${at}.rating は good か bad です: ${e.rating}`);
+
+    // rating と posted のどちらも無い記録は、送る意味がない（何も言っていない）。
+    // rating があるならその値は good / bad だけ。
+    if (e.rating == null) {
+      if (e.posted !== true) errors.push(`${at} は rating も posted もありません`);
+    } else if (!RATINGS.has(e.rating)) {
+      errors.push(`${at}.rating は good か bad です: ${e.rating}`);
+    }
+    if (e.posted != null && typeof e.posted !== 'boolean') errors.push(`${at}.posted は true/false です: ${e.posted}`);
+
     if (themes.size > 0 && !themes.has(e.theme)) errors.push(`${at}.theme が config/themes.json にありません: ${e.theme}`);
     if (repos.size > 0 && !repos.has(e.repo)) errors.push(`${at}.repo が data/profiles/ にありません: ${e.repo}`);
+    // hook は任意。あるときだけ照合する（古い形の記録には入っていない）。
+    if (e.hook != null && hooks.size > 0 && !hooks.has(e.hook)) {
+      errors.push(`${at}.hook が config/audience.json にありません: ${e.hook}`);
+    }
   }
 
   return { ok: errors.length === 0, errors };
@@ -226,7 +267,11 @@ export function mergeFeedback(current, payloads) {
         theme: e.theme,
         date: e.date,
         weekId: e.weekId ?? '',
-        rating: e.rating,
+        rating: e.rating ?? null,
+        // 古い形の記録には hook / posted が無い。
+        // 評価が付いているということは出したということなので、posted は真とみなす。
+        hook: e.hook ?? null,
+        posted: e.posted === true || Boolean(e.rating),
         atJst: payload.sentAtJst ?? '',
       };
     }
@@ -241,6 +286,11 @@ export function mergeFeedback(current, payloads) {
       posts,
       themes: tally(posts, (p) => p.theme),
       repos: tally(posts, (p) => p.repo),
+      // 最初の1行の型。ここがいちばん効くので、型やアプリと同じように数える。
+      hooks: tally(posts, (p) => p.hook),
+      // 出せた枠。「用意したのに出せなかったのはどの枠か」を見るための数。
+      // 評価と違って、押し忘れではなく実績そのものである。
+      posted: postedTally(posts),
       seen: {
         // 際限なく伸ばさない。古い submissionId を覚えていても、
         // その Issue はとうに閉じていて二度と読まない。
@@ -257,12 +307,45 @@ function tally(posts, keyOf) {
   const out = {};
   for (const post of Object.values(posts)) {
     const key = keyOf(post);
-    if (!key) continue;
+    // 評価が無い記録（「出した」だけ）は、good/bad のどちらにも属さない。
+    // 0件の枠を作ってしまうと、生成側が「手応えが分かっている型」と読み違える。
+    if (!key || (post.rating !== 'good' && post.rating !== 'bad')) continue;
     out[key] ??= { good: 0, bad: 0 };
     if (post.rating === 'good') out[key].good += 1;
-    else if (post.rating === 'bad') out[key].bad += 1;
+    else out[key].bad += 1;
   }
   return out;
+}
+
+/**
+ * 出せた件数を枠ごと・曜日ごとに数える。
+ *
+ * 「どの枠なら実際に出せているか」は、config/slots.json を人が見なおすための材料になる。
+ * 数を足しこまず posts から毎回作りなおすのは、themes / repos とまったく同じ理由である。
+ */
+function postedTally(posts) {
+  const bySlot = {};
+  const byWeekday = {};
+  let total = 0;
+
+  for (const [id, post] of Object.entries(posts)) {
+    if (!post.posted) continue;
+    total += 1;
+
+    const slot = slotIdOf(id);
+    if (slot) bySlot[slot] = (bySlot[slot] ?? 0) + 1;
+
+    // 曜日の判定は jst-client.js に寄せる。ここで書き写すと、
+    // 日付の扱いが3か所目になって必ずずれる（形が違うものは投げるので、握る）。
+    try {
+      const weekday = weekdayOf(post.date);
+      byWeekday[weekday] = (byWeekday[weekday] ?? 0) + 1;
+    } catch {
+      // 日付の形が違う記録。数に入れないだけで、取り込み自体は続ける。
+    }
+  }
+
+  return { total, bySlot, byWeekday };
 }
 
 function slotIdOf(id) {

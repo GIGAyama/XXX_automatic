@@ -27,7 +27,15 @@ import { failWith, info, loadConfig, parseArgs, paths, readJson, rel, writeJson 
 import { jstStamp } from './lib/jst.mjs';
 import fs from 'node:fs';
 
-const EMPTY = { version: 1, posts: {}, themes: {}, repos: {}, seen: { submissionIds: [], issueNumbers: [] } };
+const EMPTY = {
+    version: 1,
+    posts: {},
+    themes: {},
+    repos: {},
+    hooks: {},
+    posted: { total: 0, bySlot: {}, byWeekday: {} },
+    seen: { submissionIds: [], issueNumbers: [] },
+};
 
 /** 取り込んでよい投稿者か。既定はリポジトリの持ち主だけ。 */
 export function isAllowedAuthor(login, accounts) {
@@ -67,6 +75,9 @@ async function main() {
 
     const themeIds = new Set(themes.themes.map((t) => t.id));
     const repoNames = knownRepoNames();
+    // フックの型も照合する。外から来る入力なので、知らない値は受け取らない。
+    const audience = readJson(paths.config('audience.json'), { hooks: [] });
+    const hookIds = new Set((audience.hooks ?? []).map((h) => h.id));
 
     const accepted = [];
     const rejected = [];
@@ -85,7 +96,7 @@ async function main() {
             continue;
         }
 
-        const { ok, errors } = validatePayload(payload, { themeIds, repoNames });
+        const { ok, errors } = validatePayload(payload, { themeIds, repoNames, hookIds });
         if (!ok) {
             // 一部だけ採り、残りを黙って捨てるのがいちばん悪い。Issue ごと拒否して開いたまま残す。
             rejected.push({ issue, errors });

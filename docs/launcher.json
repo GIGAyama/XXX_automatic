@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-07T10:22:50.894Z",
-  "generatedAtJst": "2026-08-07 19:22 JST",
+  "generatedAt": "2026-08-07T11:08:36.742Z",
+  "generatedAtJst": "2026-08-07 20:08 JST",
   "weekIds": [
     "2026-W32",
     "2026-W33"
@@ -73,7 +73,8 @@
         }
       ],
       "pickReason": "「配って説明するまで2分」という具体数字と端末買い替え時の移行準備という夏の困りごとに一致しています。",
-      "hook": "number"
+      "hook": "number",
+      "reprise": null
     },
     {
       "id": "2026-08-10-evening",
@@ -119,7 +120,8 @@
         }
       ],
       "pickReason": "休み時間に同じゲームで子どもが飽きるという教室の日常風景が自然に浮かび上がります。",
-      "hook": "scene"
+      "hook": "scene",
+      "reprise": null
     },
     {
       "id": "2026-08-11-morning",
@@ -165,7 +167,8 @@
         }
       ],
       "pickReason": "「準備と片付けだけで授業の導入が5分潰れる」という現場共通のタイムロスを端的に突いています。",
-      "hook": "confess"
+      "hook": "confess",
+      "reprise": null
     },
     {
       "id": "2026-08-11-evening",
@@ -211,7 +214,8 @@
         }
       ],
       "pickReason": "低学年がキーボード入力でつまずく具体的な困りごとに対し、音声入力というすぐ真似できる解決策を示しています。",
-      "hook": "scene"
+      "hook": "scene",
+      "reprise": null
     },
     {
       "id": "2026-08-12-morning",
@@ -257,7 +261,8 @@
         }
       ],
       "pickReason": "2学期初日に提出物確認で朝の会が遅れる不安に寄り添い、夏休み中の準備アイデアとして魅力的です。",
-      "hook": "scene"
+      "hook": "scene",
+      "reprise": null
     },
     {
       "id": "2026-08-12-evening",
@@ -303,7 +308,8 @@
         }
       ],
       "pickReason": "「印刷のたびに枠線がずれて作り直す夕方」という教員なら誰もが経験する超具体的な情景に共感できます。",
-      "hook": "scene"
+      "hook": "scene",
+      "reprise": null
     },
     {
       "id": "2026-08-13-morning",
@@ -349,7 +355,8 @@
         }
       ],
       "pickReason": "どこを修正したか見分けるのに苦労していたという国語の推敲指導における実務的な悩みを捉えています。",
-      "hook": "confess"
+      "hook": "confess",
+      "reprise": null
     },
     {
       "id": "2026-08-13-evening",
@@ -395,7 +402,8 @@
         }
       ],
       "pickReason": "81マスヒートマップでの可視化や「ふたりでもんだい」モードなど、授業での具体的活用イメージが湧きます。",
-      "hook": "number"
+      "hook": "number",
+      "reprise": null
     },
     {
       "id": "2026-08-14-morning",
@@ -441,7 +449,8 @@
         }
       ],
       "pickReason": "「配って集めるだけで朝の時間が終わる」という1年生担任のリアルな実情に直接刺さる内容です。",
-      "hook": "scene"
+      "hook": "scene",
+      "reprise": null
     },
     {
       "id": "2026-08-14-evening",
@@ -487,7 +496,8 @@
         }
       ],
       "pickReason": "漢字が読めずに「先生これなに？」と質問攻めにあう情景が実にリアルで、フリガナの必要性が一発で伝わります。",
-      "hook": "confess"
+      "hook": "confess",
+      "reprise": null
     },
     {
       "id": "2026-08-15-morning",
@@ -524,7 +534,8 @@
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "contrast"
+      "hook": "contrast",
+      "reprise": null
     },
     {
       "id": "2026-08-15-evening",
@@ -570,7 +581,8 @@
         }
       ],
       "pickReason": "「後ろの席の子から文字が小さくて見えないと言われた」という具体的な失敗談からの改善プロセスが素晴らしいです。",
-      "hook": "confess"
+      "hook": "confess",
+      "reprise": null
     },
     {
       "id": "2026-08-16-morning",
@@ -616,7 +628,8 @@
         }
       ],
       "pickReason": "雨の日の休み時間に奇数人数でグループゲームが遊べないという具体的な困りごとに焦点を当てています。",
-      "hook": "question"
+      "hook": "question",
+      "reprise": null
     },
     {
       "id": "2026-08-16-evening",
@@ -662,7 +675,8 @@
         }
       ],
       "pickReason": "「人差し指2本で打っていた子」という児童のリアルな姿から入ることで、指導効果が直感的に伝わります。",
-      "hook": "contrast"
+      "hook": "contrast",
+      "reprise": null
     }
   ],
   "notes": [

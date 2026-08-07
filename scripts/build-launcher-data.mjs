@@ -15,6 +15,7 @@
 import fs from 'node:fs';
 import { fail, info, loadConfig, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { addDays, isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf } from './lib/jst.mjs';
+import { lintAlternative } from './lib/lint.mjs';
 import { composeSteps, seedFrom, weightedLength } from './lib/x-text.mjs';
 
 /** 「今週ぶん」として扱う週のほかに、さかのぼって載せる週の数。 */
@@ -26,7 +27,7 @@ const PAST_WEEKS = 3;
  * steps（連投の手順）を持たない古い週の投稿は、本文1コマの連投として組み立てなおす。
  * ランチャー側に「steps がある場合とない場合」の分岐を持ち込まないためである。
  */
-function toLauncherPost(post, weekId, maxLength, placement = 'reply') {
+function toLauncherPost(post, weekId, maxLength, placement = 'reply', gate = null) {
     const mediaList = mediaPathsFor(post.repo);
     const steps = (post.steps ?? legacySteps(post, placement)).map((step) => ({
         kind: step.kind,
@@ -57,9 +58,19 @@ function toLauncherPost(post, weekId, maxLength, placement = 'reply') {
         weightedLength: main.weightedLength,
         overLimit: main.weightedLength > maxLength,
         // 落選案。ランチャーから差し替えられるようにする。本文だけ渡せば足りる。
-        alternatives: (post.alternatives ?? []).map((a) => ({ body: a.body, thread: a.thread ?? [] })),
+        //
+        // ⚠️ 配信の直前にもガードレール検査をかける。
+        //    ［別の案］はワンタップで本文になるので、本文と同じ基準を通っていないものを
+        //    押せる場所に置いてはいけない。生成側（generate-week.mjs）でも同じことをしているが、
+        //    data/queue/ には検査が無かったころの週が残りつづける。ここが最後の関所になる。
+        alternatives: (post.alternatives ?? [])
+            .filter((a) => !gate || gate(a, post))
+            .map((a) => ({ body: a.body, thread: a.thread ?? [] })),
         pickReason: post.pickReason ?? null,
         hook: post.hook ?? null,
+        // 出しなおしかどうか。画面で分かるようにしておかないと、
+        // 「前も見た気がする」が不安（同じものを二度出してしまったのでは）になる。
+        reprise: post.reprise ?? null,
     };
 }
 
@@ -101,7 +112,16 @@ function mediaPathsFor(repo) {
 }
 
 function main() {
-    const { accounts, slots, guardrails } = loadConfig();
+    const { accounts, slots, guardrails, monetization } = loadConfig();
+
+    // 落選案が本文と同じ基準を満たしているか。満たさないものは配信物に載せない。
+    // 何件外したかを数えて最後に出す（黙って減ると、案が3つのはずが2つでも気づけない）。
+    let droppedAlternatives = 0;
+    const altGate = (alt, post) => {
+        const ok = lintAlternative(alt, post, guardrails, monetization).length === 0;
+        if (!ok) droppedAlternatives += 1;
+        return ok;
+    };
 
     // 今週と翌週を載せる。日曜の夜に翌週分ができるので、
     // 週末は「今週の残り」と「来週の分」が両方見える状態になる。
@@ -126,7 +146,7 @@ function main() {
         const queue = readJson(paths.data('queue', `${weekId}.json`), null);
         if (queue) {
             for (const post of queue.posts) {
-                posts.push(toLauncherPost(post, weekId, maxLength, placement));
+                posts.push(toLauncherPost(post, weekId, maxLength, placement, altGate));
             }
         }
 
@@ -149,7 +169,7 @@ function main() {
 
     // 予備の引き出し。日付を持たないので、週の投稿とは別に置く。
     const stock = (readJson(paths.data('stock.json'), { posts: [] }).posts ?? []).map((post) =>
-        toLauncherPost(post, '', maxLength, placement)
+        toLauncherPost(post, '', maxLength, placement, altGate)
     );
 
     if (posts.length === 0 && notes.length === 0) {
@@ -189,6 +209,9 @@ function main() {
     const over = posts.filter((p) => p.overLimit).length;
     if (over > 0) {
         info(`   ※ ${over} 件が ${maxLength} 文字を超えています。ランチャーが共有の前に警告します`);
+    }
+    if (droppedAlternatives > 0) {
+        info(`   ※ 別の案 ${droppedAlternatives} 件は基準を満たさないので載せませんでした（\`npm run lint:drafts\` に理由が出ます）`);
     }
 }
 

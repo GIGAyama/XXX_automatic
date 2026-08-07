@@ -23,6 +23,10 @@ const SAMPLES = [
     '記号 ！？「」（）〜・',
     'a'.repeat(279),
     'あ'.repeat(139),
+    // スキームなしの URL。X は https:// が無くても自動でリンクにして t.co に短縮する。
+    '詳しくは gigayama.github.io/Typa/ をどうぞ',
+    'note.com/gigayama で書いています',
+    'app.js を直しました', // URL ではない。片方だけ URL 扱いすると数がずれる
 ];
 
 test('生成側と同じ長さを返す', () => {
@@ -39,6 +43,14 @@ test('日本語は1文字2カウント', () => {
 test('URL は長さに関係なく23カウント', () => {
     assert.equal(client('https://a.io/x'), URL_WEIGHT);
     assert.equal(client(`https://example.com/${'y'.repeat(200)}`), URL_WEIGHT);
+});
+
+test('スキームなしの URL も23カウント', () => {
+    // X は https:// が無くても自動でリンクにするので、実際の文字数では数えられない。
+    // ここがずれると、画面が「あと10字入る」と言っているのに X が弾く、が起きる。
+    assert.equal(client('gigayama.github.io/Typa/'), URL_WEIGHT);
+    assert.equal(client(`example.com/${'y'.repeat(200)}`), URL_WEIGHT);
+    assert.equal(server('gigayama.github.io/Typa/'), URL_WEIGHT);
 });
 
 test('空文字と null は 0', () => {

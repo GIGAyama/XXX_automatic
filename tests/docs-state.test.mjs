@@ -80,7 +80,20 @@ test('壊れた値は捨てる（画面を守るため）', () => {
     assert.deepEqual(Object.keys(kept), ['c']);
 });
 
-test('traceOf は評価を送るのに要る項目だけを抜き出す', () => {
-    const trace = traceOf({ id: 'x', repo: 'Typa', theme: 'intro', date: '2026-08-10', weekId: '2026-W33', text: '長い本文' });
-    assert.deepEqual(trace, { repo: 'Typa', theme: 'intro', date: '2026-08-10', weekId: '2026-W33' });
+test('traceOf は記録を送るのに要る項目だけを抜き出す', () => {
+    const trace = traceOf({
+        id: 'x',
+        repo: 'Typa',
+        theme: 'intro',
+        date: '2026-08-10',
+        weekId: '2026-W33',
+        hook: 'scene',
+        text: '長い本文',
+    });
+    assert.deepEqual(trace, { repo: 'Typa', theme: 'intro', date: '2026-08-10', weekId: '2026-W33', hook: 'scene' });
+});
+
+test('traceOf は hook を持たない古い launcher.json でも落ちない', () => {
+    const trace = traceOf({ repo: 'Typa', theme: 'intro', date: '2026-08-10', weekId: '2026-W33' });
+    assert.equal(trace.hook, null);
 });

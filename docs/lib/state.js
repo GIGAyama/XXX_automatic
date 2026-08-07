@@ -54,6 +54,12 @@ export function pruneState(state, { keepIds, today, maxAgeDays = 60 }) {
       next[id] = saved;
       continue;
     }
+    // ⚠️ ここで残すのは「評価」だけ。「出した」は残さない。
+    //    評価はわざわざ押した意思表示なので、何年たっても送る価値がある。
+    //    「出した」はほぼ全件に付くので、同じ扱いにすると localStorage が
+    //    捨てられないもので埋まる。しかも 60日より古い「出した」を送っても、
+    //    履歴（data/history.json）が 90 日で切れている以上、突き合わせる相手がいない。
+    //    60日以内のものは下の年齢判定で残るので、ふつうに使っていれば取りこぼさない。
     if (saved.rating && !saved.sent) {
       next[id] = saved;
       continue;
@@ -92,7 +98,12 @@ function idToDate(id) {
   return m ? m[1] : null;
 }
 
-/** 保存しておくべき項目だけを投稿から抜き出す。評価を送るときの材料になる。 */
+/**
+ * 保存しておくべき項目だけを投稿から抜き出す。記録を送るときの材料になる。
+ *
+ * hook（最初の1行の型）も控える。launcher.json から週が落ちたあとに送るとき、
+ * ここに無いと型が分からなくなる。いちばん効く軸なので取りこぼさない。
+ */
 export function traceOf(post) {
-  return { repo: post.repo, theme: post.theme, date: post.date, weekId: post.weekId };
+  return { repo: post.repo, theme: post.theme, date: post.date, weekId: post.weekId, hook: post.hook ?? null };
 }

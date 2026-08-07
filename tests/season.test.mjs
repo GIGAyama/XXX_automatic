@@ -75,6 +75,16 @@ test('曜日ごとの温度が取れる', () => {
     assert.equal(weekdayNoteOf('2026-08-10', {}), '');
 });
 
+test('日付を持たない枠でも落ちない（予備の引き出しがこれで作れなくなっていた）', () => {
+    // 予備の投稿（data/stock.json）は日付を持たない。
+    // ここが throw していたせいで buildStock が毎回まるごと失敗し、
+    // ［いま出す］タブは一度も中身を持ったことがなかった。
+    // 曜日の温度は「引けなければ無し」でよい規則である。日付の妥当性は jst.mjs の責務。
+    for (const bad of ['', null, undefined, '2026-8-1', 'stock']) {
+        assert.equal(weekdayNoteOf(bad, calendar), '', `${JSON.stringify(bad)} で落ちています`);
+    }
+});
+
 test('行事暦に書いてある時期は、すべて実際に当たる日がある', () => {
     // 書いたのに一度も選ばれない時期があると、書いた本人が気づけない。
     const seen = new Set();

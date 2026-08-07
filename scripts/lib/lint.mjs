@@ -11,7 +11,7 @@
  * ⚠️ この検査は「0件でした」だけでは信用できない。わざと危ない文字列を
  *    混ぜて落ちることを確かめてから信じること（tests/lint.test.mjs でやっている）。
  */
-import { countEmoji, extractHashtags, extractUrls, plainLength, weightedLength } from './x-text.mjs';
+import { composeSteps, countEmoji, extractHashtags, extractUrls, plainLength, seedFrom, weightedLength } from './x-text.mjs';
 
 /**
  * どのコマにも共通で当てる検査。
@@ -191,4 +191,56 @@ function lintSingle(post, guardrails, monetization) {
 /** 週分をまとめて検査する。 */
 export function lintPosts(posts, guardrails, monetization) {
     return posts.map((post) => ({ id: post.id, problems: lintPost(post, guardrails, monetization) }));
+}
+
+/**
+ * 落選案を1つ検査する。
+ *
+ * ⚠️ ここが無かったあいだ、落選案は一度も検査されていなかった。
+ *    生成では1枠につき3案書かせて編集者役が1つ選び、選ばれなかった案も
+ *    ランチャーに載せて［別の案］からワンタップで本文に差し替えられるようにしてある。
+ *    ところが lintPost が見るのは steps だけなので、
+ *    §3 の禁止事項を含む案が検査を通らないまま画面に出て、押せば本文になっていた。
+ *
+ * 検査の規則をここに書き写さない。本文と同じように composeSteps で組んでから
+ * lintPost にかける。二重に書くと、片方だけ直したときに黙って緩む。
+ *
+ * @param {object} alt          { body, thread }
+ * @param {object} post         差し替え先の投稿（url / hashtags / id を借りる）
+ * @param {object} guardrails
+ * @param {object} monetization
+ * @returns {string[]} 問題のメッセージ。空配列なら合格
+ */
+export function lintAlternative(alt, post, guardrails, monetization) {
+    const steps = composeSteps({
+        body: alt?.body,
+        thread: alt?.thread ?? [],
+        url: post?.url,
+        hashtags: post?.hashtags ?? [],
+        placement: guardrails?.urlPlacement ?? 'reply',
+        seed: seedFrom(post?.id ?? ''),
+    });
+    // lintPost は渡された投稿に weightedLength を書き戻す。
+    // 本物の投稿を渡すと、画面の文字数表示が別の案のものに入れかわってしまう。
+    return lintPost({ id: post?.id, steps }, guardrails, monetization);
+}
+
+/**
+ * 検査に落ちた落選案を投稿から取り除く。落とした案（と理由）を返す。
+ *
+ * 全部落ちたら空配列にする。本文そのものは別に検査されているので、ここでは触らない。
+ */
+export function pruneAlternatives(post, guardrails, monetization) {
+    const alternatives = Array.isArray(post?.alternatives) ? post.alternatives : [];
+    const kept = [];
+    const dropped = [];
+
+    for (const alt of alternatives) {
+        const problems = lintAlternative(alt, post, guardrails, monetization);
+        if (problems.length === 0) kept.push(alt);
+        else dropped.push({ alt, problems });
+    }
+
+    post.alternatives = kept;
+    return dropped;
 }
