@@ -1,0 +1,417 @@
+{
+  "generatedAt": "2026-08-07T20:03:32.963Z",
+  "generatedAtJst": "2026-08-08 05:03 JST",
+  "weekId": "2026-W33",
+  "posts": [
+    {
+      "id": "stock-2026-W33-1",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "SchoolPlan_Editor",
+      "body": "毎回の週案入力、過去の実験日を探すだけで15分消えていませんか。学期末や夏休みに過去の記録を遡る負担を減らしたくて、週案の全文検索ができる仕組みを入れました。配られた予定表PDFもAIで読み込めるため、手入力を大幅に減らせると思います。",
+      "hook": "number",
+      "hashtags": [
+        "週案",
+        "校務支援",
+        "小学校教員"
+      ],
+      "url": "https://gigayama.github.io/SchoolPlan_Editor/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "毎回の週案入力、過去の実験日を探すだけで15分消えていませんか。学期末や夏休みに過去の記録を遡る負担を減らしたくて、週案の全文検索ができる仕組みを入れました。配られた予定表PDFもAIで読み込めるため、手入力を大幅に減らせると思います。\n\n#週案 #校務支援 #小学校教員",
+          "weightedLength": 258
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/SchoolPlan_Editor/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "毎回の週案入力、過去の実験日を探すだけで15分消えていませんか。学期末や夏休みに過去の記録を遡る負担を減らしたくて、週案の全文検索ができる仕組みを入れました。配られた予定表PDFもAIで読み込めるため、手入力を大幅に減らせると思います。\n\n#週案 #校務支援 #小学校教員",
+      "media": "media/SchoolPlan_Editor-card.png",
+      "weightedLength": 258,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-2",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "update",
+      "themeLabel": "アップデート報告",
+      "repo": "MIRAI-Compass",
+      "body": "名前に頼る検索だと、同姓同名の子の記録が混ざる困りごとがありました。そこでメールアドレス基準の管理に修正しました。自由進度学習の進捗や振り返りを1台で正確に見とれるようになり、夏休みの単元設計にも役立つと考えています。",
+      "hook": "contrast",
+      "hashtags": [
+        "自由進度学習",
+        "GIGAスクール",
+        "小学校"
+      ],
+      "url": "https://gigayama.github.io/MIRAI-Compass/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "名前に頼る検索だと、同姓同名の子の記録が混ざる困りごとがありました。そこでメールアドレス基準の管理に修正しました。自由進度学習の進捗や振り返りを1台で正確に見とれるようになり、夏休みの単元設計にも役立つと考えています。\n\n#自由進度学習 #GIGAスクール #小学校",
+          "weightedLength": 254
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/MIRAI-Compass/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "名前に頼る検索だと、同姓同名の子の記録が混ざる困りごとがありました。そこでメールアドレス基準の管理に修正しました。自由進度学習の進捗や振り返りを1台で正確に見とれるようになり、夏休みの単元設計にも役立つと考えています。\n\n#自由進度学習 #GIGAスクール #小学校",
+      "media": "media/MIRAI-Compass-card.png",
+      "weightedLength": 254,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-3",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "insight",
+      "themeLabel": "教育×AIの気づき",
+      "repo": "online-manuscript-paper-pro",
+      "body": "以前はAI添削を使うとき、児童の個人情報が流出しないか不安でした。そこでAIに名前を一切送らない仕様にして教材を作ってみたところ、安心して個別アドバイスを生成できると気づきました。2学期の作文指導の準備に活かしたいと思います。",
+      "hook": "confess",
+      "hashtags": [
+        "作文指導",
+        "国語",
+        "AI活用"
+      ],
+      "url": "https://gigayama.github.io/online-manuscript-paper-pro/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "以前はAI添削を使うとき、児童の個人情報が流出しないか不安でした。そこでAIに名前を一切送らない仕様にして教材を作ってみたところ、安心して個別アドバイスを生成できると気づきました。2学期の作文指導の準備に活かしたいと思います。\n\n#作文指導 #国語 #AI活用",
+          "weightedLength": 246
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/online-manuscript-paper-pro/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "以前はAI添削を使うとき、児童の個人情報が流出しないか不安でした。そこでAIに名前を一切送らない仕様にして教材を作ってみたところ、安心して個別アドバイスを生成できると気づきました。2学期の作文指導の準備に活かしたいと思います。\n\n#作文指導 #国語 #AI活用",
+      "media": "media/online-manuscript-paper-pro-card.png",
+      "weightedLength": 246,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-4",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "Treasure_Words",
+      "body": "辞書で意味を調べても、次の日の作文で使えない子がたくさんいます。調べるだけで終わらせず、マイたからばこに保存して一文作文を作る流れにすると定着しやすいです。夏休みの語彙指導の準備として、このサイクルを組んでおくと効果的だと思います。",
+      "hook": "scene",
+      "hashtags": [
+        "国語",
+        "語彙力",
+        "作文"
+      ],
+      "url": "https://gigayama.github.io/Treasure_Words/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "辞書で意味を調べても、次の日の作文で使えない子がたくさんいます。調べるだけで終わらせず、マイたからばこに保存して一文作文を作る流れにすると定着しやすいです。夏休みの語彙指導の準備として、このサイクルを組んでおくと効果的だと思います。\n\n#国語 #語彙力 #作文",
+          "weightedLength": 253
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/Treasure_Words/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "辞書で意味を調べても、次の日の作文で使えない子がたくさんいます。調べるだけで終わらせず、マイたからばこに保存して一文作文を作る流れにすると定着しやすいです。夏休みの語彙指導の準備として、このサイクルを組んでおくと効果的だと思います。\n\n#国語 #語彙力 #作文",
+      "media": "media/Treasure_Words-card.png",
+      "weightedLength": 253,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-5",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "Digital_textbook",
+      "body": "教科書PDFの書き込みを共有する際、サーバー経由の漏洩が気になりませんか。そこで端末同士を直接つなぐPWAを作りました。配って画面を共有するまで2分で済み、外部通信も不要なので、2学期の一斉授業でも安心して使えると考えています。",
+      "hook": "question",
+      "hashtags": [
+        "デジタル教科書",
+        "授業支援",
+        "GIGAスクール"
+      ],
+      "url": "https://gigayama.github.io/Digital_textbook/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "教科書PDFの書き込みを共有する際、サーバー経由の漏洩が気になりませんか。そこで端末同士を直接つなぐPWAを作りました。配って画面を共有するまで2分で済み、外部通信も不要なので、2学期の一斉授業でも安心して使えると考えています。\n\n#デジタル教科書 #授業支援 #GIGAスクール",
+          "weightedLength": 261
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/Digital_textbook/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "教科書PDFの書き込みを共有する際、サーバー経由の漏洩が気になりませんか。そこで端末同士を直接つなぐPWAを作りました。配って画面を共有するまで2分で済み、外部通信も不要なので、2学期の一斉授業でも安心して使えると考えています。\n\n#デジタル教科書 #授業支援 #GIGAスクール",
+      "media": "media/Digital_textbook-card.png",
+      "weightedLength": 261,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-6",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "pain",
+      "themeLabel": "困りごと→解決",
+      "repo": "Reversi",
+      "body": "雨の日の休み時間、8×8の盤面だと集中が切れて騒がしくなることがあります。以前はカードゲーム等を配っていましたが準備が大変でした。今は4×4から盤面を選べるアプリで、低学年でもキーボード1つで5分でサクッと楽しめるようにしています。",
+      "hook": "scene",
+      "hashtags": [
+        "リバーシ",
+        "GIGAスクール",
+        "休み時間"
+      ],
+      "url": "https://gigayama.github.io/Reversi/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "雨の日の休み時間、8×8の盤面だと集中が切れて騒がしくなることがあります。以前はカードゲーム等を配っていましたが準備が大変でした。今は4×4から盤面を選べるアプリで、低学年でもキーボード1つで5分でサクッと楽しめるようにしています。\n\n#リバーシ #GIGAスクール #休み時間",
+          "weightedLength": 259
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/Reversi/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "雨の日の休み時間、8×8の盤面だと集中が切れて騒がしくなることがあります。以前はカードゲーム等を配っていましたが準備が大変でした。今は4×4から盤面を選べるアプリで、低学年でもキーボード1つで5分でサクッと楽しめるようにしています。\n\n#リバーシ #GIGAスクール #休み時間",
+      "media": "media/Reversi-card.png",
+      "weightedLength": 259,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-7",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "DigitalCloset",
+      "body": "学校の回線は外部通信が制限されやすいため、サーバー無しで設計しました。服の画像データはすべて端末内にだけ保存されます。生活科の身の回りの整理整頓などで、児童が安心して端末を使える環境づくりにつながればと考えています。",
+      "hook": "reason",
+      "hashtags": [
+        "生活科",
+        "オフライン",
+        "PWA"
+      ],
+      "url": "https://gigayama.github.io/DigitalCloset/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "学校の回線は外部通信が制限されやすいため、サーバー無しで設計しました。服の画像データはすべて端末内にだけ保存されます。生活科の身の回りの整理整頓などで、児童が安心して端末を使える環境づくりにつながればと考えています。\n\n#生活科 #オフライン #PWA",
+          "weightedLength": 242
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/DigitalCloset/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "学校の回線は外部通信が制限されやすいため、サーバー無しで設計しました。服の画像データはすべて端末内にだけ保存されます。生活科の身の回りの整理整頓などで、児童が安心して端末を使える環境づくりにつながればと考えています。\n\n#生活科 #オフライン #PWA",
+      "media": "media/DigitalCloset-card.png",
+      "weightedLength": 242,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-8",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "School_plan_note",
+      "body": "手動での転記は1回10分かかりますが、AIに任せると一瞬で終わります。学校配布の行事予定PDFを読み込ませて週案に反映し、準備物のリストまで自動生成する使い方がおすすめです。放課後の校務時間を減らし、教材研究の時間を確保できると思います。",
+      "hook": "contrast",
+      "hashtags": [
+        "週案",
+        "校務支援",
+        "小学校教員"
+      ],
+      "url": "https://gigayama.github.io/School_plan_note/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "手動での転記は1回10分かかりますが、AIに任せると一瞬で終わります。学校配布の行事予定PDFを読み込ませて週案に反映し、準備物のリストまで自動生成する使い方がおすすめです。放課後の校務時間を減らし、教材研究の時間を確保できると思います。\n\n#週案 #校務支援 #小学校教員",
+          "weightedLength": 259
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/School_plan_note/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "手動での転記は1回10分かかりますが、AIに任せると一瞬で終わります。学校配布の行事予定PDFを読み込ませて週案に反映し、準備物のリストまで自動生成する使い方がおすすめです。放課後の校務時間を減らし、教材研究の時間を確保できると思います。\n\n#週案 #校務支援 #小学校教員",
+      "media": "media/School_plan_note-card.png",
+      "weightedLength": 259,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-9",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "insight",
+      "themeLabel": "教育×AIの気づき",
+      "repo": "Shapes_Canvas",
+      "body": "以前は定規や分度器の操作指導だけで授業の15分を消費していました。デジタル上で直感的に図形を動かしながら手書きもできる教材を作ってみて、操作に慣れる前の試行錯誤にAIやデジタルがとても有効だと気づきました。2学期の算数で試してみます。",
+      "hook": "confess",
+      "hashtags": [
+        "算数",
+        "図形",
+        "GIGAスクール"
+      ],
+      "url": "https://gigayama.github.io/Shapes_Canvas/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "以前は定規や分度器の操作指導だけで授業の15分を消費していました。デジタル上で直感的に図形を動かしながら手書きもできる教材を作ってみて、操作に慣れる前の試行錯誤にAIやデジタルがとても有効だと気づきました。2学期の算数で試してみます。\n\n#算数 #図形 #GIGAスクール",
+          "weightedLength": 256
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/Shapes_Canvas/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "以前は定規や分度器の操作指導だけで授業の15分を消費していました。デジタル上で直感的に図形を動かしながら手書きもできる教材を作ってみて、操作に慣れる前の試行錯誤にAIやデジタルがとても有効だと気づきました。2学期の算数で試してみます。\n\n#算数 #図形 #GIGAスクール",
+      "media": "media/Shapes_Canvas-card.png",
+      "weightedLength": 256,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W33-10",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "pain",
+      "themeLabel": "困りごと→解決",
+      "repo": "yomikaki",
+      "body": "1年生の『促音や長音』の書き間違い、放課後の丸つけで頭を悩ませていませんか。以前はプリントの刷り直しで対応していましたが、自動で音声を鳴らしヒントが出るアプリを用意しました。間違いを責めずに一人で1分ずつ復習できると考えています。",
+      "hook": "question",
+      "hashtags": [
+        "国語",
+        "1年生",
+        "読み書き"
+      ],
+      "url": "https://gigayama.github.io/yomikaki/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "1年生の『促音や長音』の書き間違い、放課後の丸つけで頭を悩ませていませんか。以前はプリントの刷り直しで対応していましたが、自動で音声を鳴らしヒントが出るアプリを用意しました。間違いを責めずに一人で1分ずつ復習できると考えています。\n\n#国語 #1年生 #読み書き",
+          "weightedLength": 252
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/yomikaki/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "1年生の『促音や長音』の書き間違い、放課後の丸つけで頭を悩ませていませんか。以前はプリントの刷り直しで対応していましたが、自動で音声を鳴らしヒントが出るアプリを用意しました。間違いを責めずに一人で1分ずつ復習できると考えています。\n\n#国語 #1年生 #読み書き",
+      "media": "media/yomikaki-card.png",
+      "weightedLength": 252,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    }
+  ]
+}
