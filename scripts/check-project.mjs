@@ -371,6 +371,22 @@ if (feedback) {
         } catch {
             // themes.json の壊れは 5. で報告ずみ
         }
+
+        // フックの型も同じように見る。audience.json から型を消したのに
+        // 記録が残っていると、生成に渡す「手応え」に存在しない型が混ざる。
+        try {
+            const hookIds = new Set((readJson(paths.config('audience.json')).hooks ?? []).map((h) => h.id));
+            const unknown = Object.keys(feedback.hooks ?? {}).filter((id) => !hookIds.has(id));
+            if (unknown.length > 0) {
+                warn(
+                    'STALE_FEEDBACK_HOOK',
+                    `config/audience.json に無いフックの記録が残っています（${unknown.join(', ')}）。生成には効きませんが、消してよいものです`,
+                    'data/feedback.json'
+                );
+            }
+        } catch {
+            // audience.json の壊れは 15. で報告ずみ
+        }
     }
 }
 

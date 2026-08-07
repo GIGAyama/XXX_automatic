@@ -8,7 +8,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { emptyMessageFor, selectPosts, summaryOf, todaysPool, unsentRatings } from '../docs/lib/select.js';
+import { emptyMessageFor, selectPosts, summaryOf, todaysPool, unsentRatings, unsentRecords } from '../docs/lib/select.js';
 
 const WEEK = '2026-W33';
 const PAST = '2026-W32';
@@ -139,4 +139,63 @@ test('launcher.json から消えた投稿でも、控えてある情報から送
 test('手がかりが足りない記録は送らない（壊れた入力を投げ返さない）', () => {
     const state = { broken: { done: true, rating: 'good' } };
     assert.equal(unsentRatings({ posts: [], state }).length, 0);
+});
+
+/* ── 「出した」だけの記録も送る ─────────────────────
+ *
+ * 評価だけを送っていたころ、出し忘れはどこにも残らなかった。
+ * ［投稿した］は端末のなかにしかなく、「用意したのに出せなかった枠」を
+ * 誰も知らないままだった。config/slots.json を見なおすには、そこが要る。 */
+
+test('評価が無くても、出したものは送る対象になる', () => {
+    const posts = [post('a', '2026-08-10'), post('b', '2026-08-11')];
+    const state = {
+        a: { done: true }, // 出しただけ
+        b: { done: true, rating: 'good' }, // 出して評価も付けた
+    };
+    const got = unsentRecords({ posts, state });
+    assert.deepEqual(got.map((e) => e.id), ['a', 'b']);
+    assert.equal(got[0].rating, null);
+    assert.equal(got[0].posted, true);
+    assert.equal(got[1].rating, 'good');
+});
+
+test('unsentRatings は評価が付いているものだけを返す', () => {
+    // 送信バーの文言が「反応 n 件」と言い切れるように、数え方を分けてある。
+    const posts = [post('a', '2026-08-10'), post('b', '2026-08-11')];
+    const state = { a: { done: true }, b: { done: true, rating: 'bad' } };
+    assert.deepEqual(unsentRatings({ posts, state }).map((e) => e.id), ['b']);
+    assert.equal(unsentRecords({ posts, state }).length, 2);
+});
+
+test('出しても評価もしていないものは送らない', () => {
+    const posts = [post('a', '2026-08-10')];
+    assert.equal(unsentRecords({ posts, state: { a: { step: 1 } } }).length, 0);
+});
+
+test('送信ずみのものは送らない', () => {
+    const posts = [post('a', '2026-08-10')];
+    assert.equal(unsentRecords({ posts, state: { a: { done: true, sent: true } } }).length, 0);
+});
+
+test('hook を控えてあれば一緒に送る', () => {
+    const posts = [post('a', '2026-08-10', { hook: 'scene' })];
+    assert.equal(unsentRecords({ posts, state: { a: { done: true } } })[0].hook, 'scene');
+});
+
+test('launcher.json から消えていても、控えた hook から送れる', () => {
+    const state = {
+        'zzz-2026-01-01-morning': {
+            done: true,
+            repo: 'Qalc',
+            theme: 'pain',
+            date: '2026-01-01',
+            weekId: '2026-W01',
+            hook: 'confess',
+        },
+    };
+    const got = unsentRecords({ posts: [], state });
+    assert.equal(got.length, 1);
+    assert.equal(got[0].hook, 'confess');
+    assert.equal(got[0].posted, true);
 });

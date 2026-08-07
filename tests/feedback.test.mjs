@@ -198,3 +198,107 @@ test('submissionId は毎回ちがう', () => {
     const ids = new Set(Array.from({ length: 50 }, () => newSubmissionId()));
     assert.equal(ids.size, 50);
 });
+
+/* ── フックと「出したかどうか」──────────────────────
+ *
+ * 型（theme）とアプリ（repo）だけを記録していたあいだ、
+ * いちばん効く軸——最初の1行の型——のデータを毎週捨てていた。
+ * また「投稿した」は端末のなかにしか無く、出し忘れが誰にも見えなかった。
+ *
+ * ⚠️ SCHEMA_ID は上げていない。上げると送信ずみで開いたままの Issue が
+ *    まとめて拒否される。古い形（hook も posted も無い）が
+ *    引きつづき通ることを、ここで固定しておく。 */
+
+const HOOKS = new Set(['scene', 'confess', 'number']);
+
+test('古い形の記録（hook も posted も無い）はこれまでどおり通る', () => {
+    const old = {
+        schema: 'feedback-v1',
+        submissionId: 'old-11111111',
+        sentAtJst: '2026-08-14 21:03 JST',
+        entries: [{ id: '2026-08-10-morning', weekId: '2026-W33', date: '2026-08-10', repo: 'Typa', theme: 'intro', rating: 'good' }],
+    };
+    const { ok, errors } = validatePayload(old, { themeIds: THEMES, repoNames: REPOS, hookIds: HOOKS });
+    assert.ok(ok, JSON.stringify(errors));
+
+    // 評価が付いている＝出したということなので、posted は真とみなす
+    const { merged } = mergeFeedback(null, [{ payload: old, issueNumber: 1 }]);
+    assert.equal(merged.posts['2026-08-10-morning'].posted, true);
+    assert.equal(merged.posts['2026-08-10-morning'].hook, null);
+    assert.deepEqual(merged.hooks, {});
+});
+
+test('hook を載せると型ごとに集計される', () => {
+    const { merged } = mergeFeedback(null, [
+        {
+            payload: payloadOf([
+                entry(0, { hook: 'scene' }),
+                entry(1, { hook: 'scene' }),
+                entry(2, { hook: 'confess', rating: 'bad' }),
+            ]),
+            issueNumber: 1,
+        },
+    ]);
+    assert.deepEqual(merged.hooks.scene, { good: 2, bad: 0 });
+    assert.deepEqual(merged.hooks.confess, { good: 0, bad: 1 });
+});
+
+test('知らないフックの型は拒否する（外から来る入力なので確かめる）', () => {
+    const bad = payloadOf([entry(0, { hook: '../../etc/passwd' })]);
+    const { ok, errors } = validatePayload(bad, { themeIds: THEMES, repoNames: REPOS, hookIds: HOOKS });
+    assert.equal(ok, false);
+    assert.ok(errors.some((e) => e.includes('hook')), JSON.stringify(errors));
+});
+
+test('評価が無くても「出した」だけなら送れる', () => {
+    const payload = payloadOf([{ ...entry(0), rating: null, posted: true }]);
+    assert.equal(payload.entries[0].rating, undefined, 'rating は載せない');
+    assert.equal(payload.entries[0].posted, true);
+
+    const { ok, errors } = validatePayload(payload, { themeIds: THEMES, repoNames: REPOS });
+    assert.ok(ok, JSON.stringify(errors));
+
+    const { merged } = mergeFeedback(null, [{ payload, issueNumber: 1 }]);
+    assert.equal(merged.posted.total, 1);
+    assert.deepEqual(merged.themes, {}, '評価が無いものは good/bad に数えない');
+});
+
+test('rating も posted も無い記録は拒否する（何も言っていない）', () => {
+    const bad = payloadOf([{ ...entry(0), rating: null }]);
+    const { ok, errors } = validatePayload(bad, { themeIds: THEMES, repoNames: REPOS });
+    assert.equal(ok, false);
+    assert.ok(errors.some((e) => e.includes('posted')), JSON.stringify(errors));
+});
+
+test('出せた件数を枠ごと・曜日ごとに数える（slots を見なおす材料）', () => {
+    // 2026-08-10 は月曜（1）、2026-08-11 は火曜（2）
+    const { merged } = mergeFeedback(null, [
+        {
+            payload: payloadOf([
+                { ...entry(0), posted: true }, // 08-10 morning
+                { ...entry(1), posted: true }, // 08-11 evening
+                { ...entry(8), posted: true }, // 08-11 morning
+            ]),
+            issueNumber: 1,
+        },
+    ]);
+    assert.equal(merged.posted.total, 3);
+    assert.equal(merged.posted.bySlot.morning, 2);
+    assert.equal(merged.posted.bySlot.evening, 1);
+    assert.equal(merged.posted.byWeekday[1], 1, '月曜に1件');
+    assert.equal(merged.posted.byWeekday[2], 2, '火曜に2件');
+});
+
+test('人が読む要約に、評価なしの記録も言葉で出る', () => {
+    // 中身が見えないものを送らせない、という約束は評価なしの記録でも同じ。
+    const body = renderIssueBody(payloadOf([{ ...entry(0), rating: null, posted: true }]));
+    assert.match(body, /出した（評価なし）/);
+});
+
+test('集計は何度取り込んでも同じ値になる（hooks と posted も）', () => {
+    const payload = payloadOf([entry(0, { hook: 'scene' })], 'once-1234567');
+    const first = mergeFeedback(null, [{ payload, issueNumber: 3 }]);
+    const second = mergeFeedback(first.merged, [{ payload, issueNumber: 3 }]);
+    assert.deepEqual(second.merged.hooks, first.merged.hooks);
+    assert.deepEqual(second.merged.posted, first.merged.posted);
+});

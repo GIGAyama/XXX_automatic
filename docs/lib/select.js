@@ -106,22 +106,52 @@ export function emptyMessageFor({ view, posts, state, today, activeWeeks = null 
   return '今週ぶんはぜんぶ出し終わりました。おつかれさまでした。';
 }
 
-/** 未送信の評価（反応の記録）を集める。まとめて Issue にするために使う。 */
-export function unsentRatings({ posts, state }) {
+/**
+ * 未送信の記録を集める。まとめて Issue にするために使う。
+ *
+ * 「評価を押したもの」だけでなく「投稿したもの」も集める。
+ *
+ * 評価だけを送っていたころ、出し忘れはどこにも残らなかった。
+ * ［投稿した］は端末のなかにしかなく、「用意したのに出せなかった枠」を
+ * 誰も知らないままだった。config/slots.json を見なおすには、そこが要る。
+ * 評価を押す気になれない日でも、出したことだけは翌週に届く。
+ */
+export function unsentRecords({ posts, state }) {
   const byId = new Map(posts.map((p) => [p.id, p]));
   const out = [];
   for (const [id, saved] of Object.entries(state)) {
-    if (!saved || !saved.rating || saved.sent) continue;
+    if (!saved || saved.sent) continue;
+    if (!saved.rating && !saved.done) continue;
     const post = byId.get(id);
     // launcher.json から消えた古い投稿でも、保存時に repo/theme を控えてあるので送れる。
     const repo = post?.repo ?? saved.repo;
     const theme = post?.theme ?? saved.theme;
     const date = post?.date ?? saved.date;
     const weekId = post?.weekId ?? saved.weekId;
+    const hook = post?.hook ?? saved.hook ?? null;
     if (!repo || !theme || !date) continue;
-    out.push({ id, weekId: weekId ?? '', date, repo, theme, rating: saved.rating });
+    out.push({
+      id,
+      weekId: weekId ?? '',
+      date,
+      repo,
+      theme,
+      hook,
+      rating: saved.rating ?? null,
+      posted: Boolean(saved.done),
+    });
   }
   return out.sort((a, b) => (a.date === b.date ? a.id.localeCompare(b.id) : a.date < b.date ? -1 : 1));
+}
+
+/**
+ * 未送信のうち、評価が付いているものだけ。
+ *
+ * 送信バーの文言を「評価 n 件」と言い切るために要る。
+ * 出しただけの記録と評価を混ぜて数えると、押した覚えのない数が画面に出る。
+ */
+export function unsentRatings({ posts, state }) {
+  return unsentRecords({ posts, state }).filter((e) => e.rating);
 }
 
 /** 「あすの日付」。空メッセージの言い回しに使う。 */

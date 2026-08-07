@@ -36,7 +36,7 @@
 
 import { jstDateString, jstStamp } from './lib/jst-client.js';
 import { overLimitMessage, slotLabelMap, stepGuide, themeLabelMap, truncate } from './lib/format.js';
-import { activeWeekIds, emptyMessageFor, selectPosts, summaryOf, unsentRatings } from './lib/select.js';
+import { activeWeekIds, emptyMessageFor, selectPosts, summaryOf, unsentRatings, unsentRecords } from './lib/select.js';
 import { STORAGE_KEY, applyPatch, pruneState, traceOf } from './lib/state.js';
 import { MAX_WEIGHTED_LENGTH, weightedLength } from './lib/x-length.js';
 import { buildIssueUrl, buildPayload, chunkEntries, newSubmissionId } from './lib/feedback-payload.js';
@@ -488,21 +488,30 @@ function myTimelineUrl() {
  * 週次ワークフローが labels:feedback の Issue を読んで、翌週の生成に混ぜる。
  */
 function renderSendBar(list) {
-  const pending = unsentRatings({ posts: data.posts ?? [], state: loadState() });
+  const state = loadState();
+  const pending = unsentRecords({ posts: data.posts ?? [], state });
   if (pending.length === 0) return;
+
+  // 評価を押していない「出しただけ」の記録も一緒に送る。
+  // 出せた枠・出せなかった枠が分かるのは、この記録だけである。
+  const rated = unsentRatings({ posts: data.posts ?? [], state }).length;
+  const postedOnly = pending.length - rated;
 
   const bar = document.createElement('div');
   bar.className = 'sendbar';
 
   const text = document.createElement('p');
   text.className = 'sendbar__text';
-  text.textContent = `まだ送っていない反応が ${pending.length} 件あります。送ると翌週の下書きに効きます。`;
+  text.textContent =
+    rated > 0
+      ? `まだ送っていない記録が ${pending.length} 件あります（反応 ${rated} 件${postedOnly > 0 ? ` / 出したぶん ${postedOnly} 件` : ''}）。送ると翌週の下書きに効きます。`
+      : `出したぶんの記録が ${pending.length} 件あります。評価を付けなくても、送ると出せた枠が翌週にいきます。`;
   bar.append(text);
 
   const row = document.createElement('div');
   row.className = 'card__actions';
 
-  const send = button(`反応をまとめて送る（${pending.length}件）`, 'btn btn--x');
+  const send = button(`まとめて送る（${pending.length}件）`, 'btn btn--x');
   send.addEventListener('click', () => sendFeedback(pending));
   row.append(send);
 
@@ -974,12 +983,12 @@ function updateSummary() {
     activeWeeks: activeWeekIds(data),
   });
 
-  // 未送信の反応があることは、タブを開かないと分からない。バッジで外に出す。
-  const pending = unsentRatings({ posts: data.posts ?? [], state: loadState() }).length;
+  // 未送信の記録があることは、タブを開かないと分からない。バッジで外に出す。
+  const pending = unsentRecords({ posts: data.posts ?? [], state: loadState() }).length;
   const doneTab = document.querySelector('.tab[data-view="done"]');
   if (doneTab) {
     doneTab.dataset.badge = pending > 0 ? String(pending) : '';
-    doneTab.setAttribute('aria-label', pending > 0 ? `投稿ずみ（未送信の反応 ${pending} 件）` : '投稿ずみ');
+    doneTab.setAttribute('aria-label', pending > 0 ? `投稿ずみ（未送信の記録 ${pending} 件）` : '投稿ずみ');
   }
 }
 

@@ -129,6 +129,8 @@ async function main() {
     const feedbackFile = readJson(paths.data('feedback.json'), { themes: {}, repos: {} });
     const feedback = feedbackFile.themes ?? {};
     const repoFeedback = feedbackFile.repos ?? {};
+    // 最初の1行の型ごとの手応え。生成のプロンプトに材料として渡す。
+    const hookFeedback = feedbackFile.hooks ?? {};
 
     info(`④ 生成を開始します（${jstStamp()}）`);
     info(`   対象週: ${weekId}（${dates[0]} 〜 ${dates[6]}）`);
@@ -166,7 +168,7 @@ async function main() {
     info(`   時期: ${season ? season.split('\n')[0].replace(/^- /, '') : '（行事暦なし）'}`);
     info(`   いまの話題: ${trends ? `${trends.topics.length} 件` : 'なし（行事暦だけで書きます）'}\n`);
 
-    const context = { audience, calendar, season, trends };
+    const context = { audience, calendar, season, trends, hookFeedback };
 
     let drafts = await askForDrafts({
         model,
@@ -311,18 +313,44 @@ function audienceBlock(audience) {
     ].join('\n');
 }
 
-/** フックの型を、選べる引き出しとして渡す。 */
-function hookBlock(audience) {
+/**
+ * フックの型を、選べる引き出しとして渡す。
+ *
+ * 反応の記録（data/feedback.json の hooks）が溜まっていれば、
+ * どの型が実際に読まれたかも添える。
+ * 重み付けにはしない。フックを選ぶのは生成側の仕事で、機械が指定すると
+ * 「効いた型ばかりが並ぶ」ことになり、案どうしの切り口を変える指示と食い違う。
+ * 材料として渡し、選ぶのは向こうに任せる。
+ */
+function hookBlock(audience, hookFeedback = {}) {
     if (!audience?.hooks?.length) return '';
-    return [
+
+    const scored = Object.entries(hookFeedback)
+        .map(([id, fb]) => ({ id, good: fb.good ?? 0, bad: fb.bad ?? 0 }))
+        .filter((h) => h.good + h.bad > 0 && audience.hooks.some((x) => x.id === h.id));
+
+    const lines = [
         '## 最初の1行（フック）の型',
         'タイムラインで最初に見えるのは1行目だけです。ここで止まらなければ本文は読まれません。',
         '次のどれかの型を選んで、その id を hook に書いてください。案ごとに違う型を使ってください。',
         ...audience.hooks.map((h) => `- ${h.id}: ${h.how}\n  例) ${h.example}`),
+    ];
+
+    if (scored.length > 0) {
+        const worked = scored.filter((h) => h.good > h.bad).sort((a, b) => b.good - a.good);
+        const missed = scored.filter((h) => h.bad > h.good).sort((a, b) => b.bad - a.bad);
+        lines.push('', '### これまでの手応え（このアカウントの実績）');
+        if (worked.length > 0) lines.push(`読まれた型: ${worked.map((h) => `${h.id}（${h.good}件）`).join(' / ')}`);
+        if (missed.length > 0) lines.push(`手応えが無かった型: ${missed.map((h) => `${h.id}（${h.bad}件）`).join(' / ')}`);
+        lines.push('参考にしてかまいませんが、同じ型ばかりにはしないでください。飽きられるほうが早く効きます。');
+    }
+
+    lines.push(
         '',
         '次の書き出しは使わないでください（どれも読み飛ばされます）:',
-        ...(audience.avoid ?? []).map((a) => `- ${a}`),
-    ].join('\n');
+        ...(audience.avoid ?? []).map((a) => `- ${a}`)
+    );
+    return lines.join('\n');
 }
 
 /** いまの時期と話題。 */
@@ -359,7 +387,7 @@ ${policy}
 
 ${audienceBlock(context.audience)}
 
-${hookBlock(context.audience)}
+${hookBlock(context.audience, context.hookFeedback)}
 
 【この作業での約束】
 - 本文だけを書いてください。ハッシュタグは本文に含めないでください（機械が後で付けます）。
