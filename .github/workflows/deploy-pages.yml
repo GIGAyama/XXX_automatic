@@ -44,6 +44,12 @@ jobs:
     timeout-minutes: 5
 
     steps:
+      # 下の確認スクリプトを使うので checkout が要る。
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
       - name: Pages を有効にする（まだなら作る）
         id: enable
         continue-on-error: true
@@ -78,6 +84,15 @@ jobs:
 
           MSG
           exit 1
+
+      # Pages が有効でも、環境側の「配信を許可するブランチ」に入っていないと
+      # deploy はステップを1つも実行しないまま落ちる（ログも残らない）。
+      # 赤い × だけ見せられて原因が分からない状態になるので、ここで先に見つける。
+      - name: このブランチから配信できるか確かめる
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/check-pages-env.mjs "${{ github.event.repository.default_branch }}"
 
   deploy:
     needs: preflight

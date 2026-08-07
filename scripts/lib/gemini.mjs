@@ -58,15 +58,38 @@ export async function generateText({ model, prompt, system, temperature = 0.9 })
     return callGemini(model, body);
 }
 
-async function callGemini(model, body) {
+/**
+ * API キーがあることを先に確かめる。
+ *
+ * ⚠️ 各スクリプトは処理の最初にこれを呼ぶこと。
+ *
+ *   実際に起きた事故: キーが未登録のまま週次ワークフローを回したところ、
+ *   53 リポジトリぶん「1件ずつ失敗しては次へ」を繰り返し、
+ *   最後に「完了 — 新規/更新 0 件」と出て次の工程へ進んでしまった。
+ *   本当の原因（キーが無い）は 53 行のエラーに埋もれて見えず、
+ *   画面には無関係な「プロフィールが空です」だけが残った。
+ *   1件目を投げる前に、ここで止める。
+ */
+export function requireApiKey() {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-        throw new Error(
-            'GEMINI_API_KEY が設定されていません。\n' +
-                '  ローカル: export GEMINI_API_KEY=... （キーは https://aistudio.google.com/apikey で無料で取れます）\n' +
-                '  GitHub:   Settings → Secrets and variables → Actions → New repository secret'
-        );
+        // 設定ミスであってプログラムの異常ではない。スタックトレースを出さないための印。
+        throw Object.assign(new Error(
+            'GEMINI_API_KEY が設定されていません。\n\n' +
+                '  キーは無料で取れます（カード登録も不要）:\n' +
+                '    https://aistudio.google.com/apikey\n\n' +
+                '  GitHub に登録する場合:\n' +
+                '    Settings → Secrets and variables → Actions → New repository secret\n' +
+                '    Name に GEMINI_API_KEY、Secret に取得したキーを貼る\n\n' +
+                '  手元で動かす場合:\n' +
+                '    export GEMINI_API_KEY=...'
+        ), { userFacing: true });
     }
+    return apiKey;
+}
+
+async function callGemini(model, body) {
+    const apiKey = requireApiKey();
 
     const url = `${ENDPOINT}/${encodeURIComponent(model)}:generateContent`;
     const maxAttempts = 4;

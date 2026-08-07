@@ -17,8 +17,8 @@
  * 1週間を通した重複（同じ言い回しが何度も出る）を AI 自身に避けさせるためである。
  */
 import fs from 'node:fs';
-import { generateJson } from './lib/gemini.mjs';
-import { fail, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
+import { generateJson, requireApiKey } from './lib/gemini.mjs';
+import { fail, failWith, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf } from './lib/jst.mjs';
 import { lintPost } from './lib/lint.mjs';
 import { planWeek } from './lib/plan-week.mjs';
@@ -55,6 +55,10 @@ async function main() {
     const args = parseArgs();
     const config = loadConfig();
     const { accounts, slots: slotConfig, themes, guardrails, monetization } = config;
+
+    // 材料を読み込む前に確かめる。キーが無いのに割り当てまで進むと、
+    // 本当の原因が「生成に失敗した」という別の顔で出てくる。
+    requireApiKey();
 
     // ── 対象の週を決める ──────────────────────────────
     let dates;
@@ -274,4 +278,4 @@ function weekDatesOfIsoWeek(year, week) {
     });
 }
 
-main().catch((error) => fail(error.stack ?? error.message));
+main().catch(failWith);

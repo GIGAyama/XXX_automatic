@@ -15,7 +15,7 @@
  * リクエストが飛ぶためである。全部のファイルを舐めるとレート上限に当たる。
  */
 import { getFile, getHeadSha, listPublicRepos, listRecentCommits } from './lib/github.mjs';
-import { fail, info, loadConfig, parseArgs, paths, rel, writeJson } from './lib/io.mjs';
+import { fail, failWith, info, loadConfig, parseArgs, paths, rel, writeJson } from './lib/io.mjs';
 import { jstStamp } from './lib/jst.mjs';
 
 /** 読みにいくファイル。上から順に「そのアプリが何者か」を語る密度が高い。 */
@@ -131,4 +131,4 @@ async function main() {
     }
 }
 
-main().catch((error) => fail(error.stack ?? error.message));
+main().catch(failWith);

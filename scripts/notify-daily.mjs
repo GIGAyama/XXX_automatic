@@ -18,7 +18,7 @@
  * LINE Notify は 2025年3月で終了したので使っていない。
  */
 import { createIssue } from './lib/github.mjs';
-import { fail, info, loadConfig, parseArgs, paths, readJson } from './lib/io.mjs';
+import { fail, failWith, info, loadConfig, parseArgs, paths, readJson } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, weekdayLabelOf } from './lib/jst.mjs';
 
 async function main() {
@@ -166,4 +166,4 @@ function formatDate(iso) {
     return `${Number(m)}/${Number(d)}`;
 }
 
-main().catch((error) => fail(error.stack ?? error.message));
+main().catch(failWith);

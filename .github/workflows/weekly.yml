@@ -43,6 +43,43 @@ jobs:
           node-version: '20'
           cache: npm
 
+      # ⚠️ ここを最初に置く理由
+      #
+      #   キーが未登録のまま走らせると、収集（1分）と依存の用意（1分）を
+      #   全部やったあとで生成に失敗する。しかも失敗はリポジトリの数だけ並ぶので、
+      #   本当の原因（キーが無い）がログに埋もれる。
+      #   実際にそうなったので、何もしないうちに確かめる。
+      - name: 必要な設定がそろっているか確かめる
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -n "$GEMINI_API_KEY" ]; then
+            echo "✓ GEMINI_API_KEY は登録されています（${#GEMINI_API_KEY} 文字）"
+            exit 0
+          fi
+
+          echo "::error title=GEMINI_API_KEY が登録されていません::投稿文を作れないのでここで止めます"
+          cat <<'MSG'
+
+          投稿文の生成には Gemini API キーが要ります。まだ登録されていません。
+
+          ① キーを取る（無料・クレジットカード登録も不要）
+               https://aistudio.google.com/apikey
+
+          ② このリポジトリに登録する
+               Settings → Secrets and variables → Actions
+                 → New repository secret
+               Name   : GEMINI_API_KEY
+               Secret : ①で取ったキーを貼る
+
+          ③ Actions →「週次 — 翌週の投稿を用意する」→ Run workflow
+
+          （Name のつづりが1文字でも違うと空のまま渡ります。
+            コピーして貼り付けるのが確実です。）
+
+          MSG
+          exit 1
+
       - name: 依存を入れる
         run: npm ci
 
