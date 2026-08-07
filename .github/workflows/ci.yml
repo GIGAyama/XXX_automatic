@@ -41,7 +41,7 @@ jobs:
       - name: JSON が読めるか
         run: |
           for f in config/*.json docs/manifest.webmanifest docs/launcher.json package.json \
-                   data/feedback.json data/history.json docs/media/manifest.json; do
+                   data/feedback.json data/history.json data/gemini-model.json docs/media/manifest.json; do
             [ -f "$f" ] || continue
             node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" || { echo "::error file=$f::JSON として読めません"; exit 1; }
           done

@@ -30,6 +30,18 @@
   "_feedbackAuthors": "「反応よかった」の記録（labels:feedback の Issue）を取り込んでよい GitHub アカウント。githubOwner は常に許可される。このリポジトリは公開されていて Issue は誰でも立てられるので、確かめずに取り込むと第三者が翌週の生成の重み付けを動かせてしまう。ふだんは空でよい。別のアカウントからも送りたいときだけ足す。",
   "feedbackAuthors": [],
 
-  "_geminiModel": "無料枠で使えるモデル。1日あたりのリクエスト数に上限があるため、プロフィール生成はコミット SHA でキャッシュして無駄打ちを避けている。",
-  "geminiModel": "gemini-2.5-flash"
+  "_geminiModel": "使う Gemini のモデル。'auto' にすると、API に「いま使えるモデル」を聞いて、そのなかからいちばん新しい安定版を選ぶ。新しい版が出ても、ここを書き換えなくても追従する。特定の版に固定したいときは、モデル名（例: gemini-2.5-flash）を直接書く。無料枠は1日あたりのリクエスト数に上限があるため、プロフィール生成はコミット SHA でキャッシュして無駄打ちを避けている。",
+  "geminiModel": "auto",
+
+  "_geminiModelFallback": "モデル一覧を取れなかったときに使う名前。一覧が引けないことを理由にその週の投稿を作れなくするのは本末転倒なので、必ず動くと分かっているものを1つ置いておく。",
+  "geminiModelFallback": "gemini-2.5-flash",
+
+  "_geminiModelPrefer": "欲しい系統。flash / pro / flash-lite。無料枠で1週間14本ぶんを1回にまとめて投げるので、速くて安い flash が合っている。文章の質を上げたいなら pro にするが、無料枠の上限に当たりやすくなる。",
+  "geminiModelPrefer": "flash",
+
+  "_geminiAllowPreview": "preview や exp のついた版も候補に入れるか。既定は false。途中で挙動が変わったり予告なく消えたりするものに、毎週の生成を預けないため。新しい版をいち早く試したいときだけ true にする。",
+  "geminiAllowPreview": false,
+
+  "_geminiModelMaxAgeHours": "選んだ結果（data/gemini-model.json）をどれだけ使いまわすか。週次は週1回しか走らないので、実質そのたびに聞きなおす。手元で何度も動かすときに毎回聞かないための蓋である。",
+  "geminiModelMaxAgeHours": 24
 }

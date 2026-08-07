@@ -18,6 +18,7 @@
  */
 import fs from 'node:fs';
 import { generateJson, requireApiKey, sleep } from './lib/gemini.mjs';
+import { resolveGeminiModel } from './lib/gemini-models.mjs';
 import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 
 /**
@@ -126,7 +127,8 @@ async function main() {
 
     if (targets.length === 0) fail(`対象のリポジトリが見つかりません（--repo ${args.repo ?? ''}）`);
 
-    info(`② 理解を開始します — ${targets.length} 件が対象`);
+    const { model, source } = await resolveGeminiModel(accounts);
+    info(`② 理解を開始します — ${targets.length} 件が対象（モデル: ${model} — ${source}）`);
 
     let built = 0;
     let cached = 0;
@@ -154,7 +156,7 @@ async function main() {
 
         try {
             const profile = await generateJson({
-                model: accounts.geminiModel,
+                model,
                 system: SYSTEM,
                 prompt: buildPrompt(repo),
                 schema: PROFILE_SCHEMA,

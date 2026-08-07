@@ -160,7 +160,7 @@ GitHub Actions の定期実行は混雑時に数十分遅れます。
 | `Gemini API 429` が続く | 無料枠の1日上限 | 翌日に再実行。`--limit` で分けても可 |
 | `Gemini API 400 (INVALID_ARGUMENT): API key not valid` | キーの値が違う | Secret を貼りなおす（下記） |
 | `Gemini API 403 (PERMISSION_DENIED)` | API が有効でないプロジェクトのキー | AI Studio で作りなおす |
-| `Gemini API 404 (NOT_FOUND): models/... is not found` | モデル名が違う | `config/accounts.json` の `geminiModel` |
+| `Gemini API 404 (NOT_FOUND): models/... is not found` | モデル名が違う／その版が止められた | `node scripts/check-gemini.mjs` で選びなおす（下記） |
 | Pages が 404 | Pages 未有効 | Settings → Pages → Source を GitHub Actions に |
 
 ### Gemini API キーを登録する
@@ -186,6 +186,43 @@ Secret の値に**前後の空白や引用符（`"` や `'`）が混ざってい
 > これが無いと、リポジトリの数だけ同じエラーが並び、本当の理由がその繰り返しに埋もれます。
 >
 > **この2つの確認ステップを消さないでください。** 実際にどちらの失敗も起きました。
+
+### Gemini のモデルまわり
+
+モデル名は `config/accounts.json` に固定していません。既定は `"auto"` で、
+実行のたびに「いま使えるモデル」を API に聞いて**いちばん新しい安定版**を選びます。
+新しい版が出たら自動でそちらに移り、古い版が止められて 404 になることも防げます。
+
+```bash
+node scripts/check-gemini.mjs           # いま何が選ばれるか（実際に1回投げて確かめる）
+node scripts/check-gemini.mjs --models  # 選べるモデルを良い順に並べる
+```
+
+いま何が選ばれているかは `data/gemini-model.json` にあります。
+これはコミットしているので、**いつどの版に切り替わったかが git の履歴で追えます。**
+週次のログにも `モデル: gemini-2.5-flash — 自動選択` のように出ます。
+
+| したいこと | どうするか |
+|---|---|
+| 版を固定する | `geminiModel` にモデル名を直接書く（例: `"gemini-2.5-flash"`） |
+| 文章の質を上げる | `geminiModelPrefer` を `"pro"` に。無料枠の上限に当たりやすくなります |
+| 新しい版をいち早く試す | `geminiAllowPreview` を `true` に |
+| いったん元に戻す | `data/gemini-model.json` を消して `node scripts/check-gemini.mjs` |
+
+> **preview を既定で使わない理由**
+>
+> preview や exp のついた版は、途中で挙動が変わったり、予告なく消えたりします。
+> 毎週の生成をそこに預けると、こちらが何もしていないのに文章の調子が変わります。
+> 新しさより、来週も同じように動くことを優先しています。
+>
+> `gemini-flash-latest` のような「いちばん新しい」を名乗る別名も、同じ理由で既定では使いません。
+> 中身が preview を指していることがあるためです。
+
+> **モデル一覧を取れなかったとき**
+>
+> `geminiModelFallback`（既定 `gemini-2.5-flash`）に落ちて、そのまま先へ進みます。
+> 一覧が引けないことを理由に、その週の投稿を作れなくするのは本末転倒だからです。
+> ただし黙っては通しません。ログに `⚠ Gemini のモデル一覧を取れませんでした` と出ます。
 
 ### 「GitHub Pages へ配信」が2秒で失敗する（ログも出ない）
 
