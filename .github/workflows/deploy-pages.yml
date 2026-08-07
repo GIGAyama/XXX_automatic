@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # workflow_run で起動したときは、既定だとイベントを起こしたときのコミットを見にいくため、
           # 週次が push した生成結果より前の状態を配信してしまう。
