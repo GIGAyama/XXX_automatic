@@ -178,3 +178,36 @@ jobs:
           git commit -m "chore: 翌週の投稿下書きを生成"
           # 他のワークフローが同時に push していることがある。1回だけ取り込んで再試行する。
           git push || (git pull --rebase origin "${GITHUB_REF_NAME}" && git push)
+
+  # ⚠️ 失敗を通知の経路に乗せる。
+  #
+  #   ここが無かったあいだ、週次が落ちたことに気づける手段は Actions の赤いバツだけだった。
+  #   このシステムの通知は GitHub のモバイルアプリに寄せてあるのに（README「⑥ 通知」）、
+  #   失敗だけがその経路の外にあった。
+  #   しかも 60日ルールと噛み合うと、失敗が続いた末に定期実行そのものが黙って止まる。
+  #
+  #   同じラベルの Issue が開いていれば重ねて立てない（scripts/notify-failure.mjs）。
+  notify-failure:
+    needs: build
+    if: failure()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 依存は入れない。ここで使うのは fetch と Node 標準だけで、
+      # しかも「本体が落ちたあと」に走るので、早く確実に届くことを優先する。
+      - name: 失敗を知らせる
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/notify-failure.mjs --workflow '週次' --run-id '${{ github.run_id }}'

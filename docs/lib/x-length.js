@@ -17,7 +17,28 @@ const SINGLE_WEIGHT_RANGES = [
   [0x2032, 0x2037],
 ];
 
-const URL_PATTERN = /https?:\/\/[^\s<>"'）】」]+/g;
+/**
+ * URL とみなす文字列。scripts/lib/x-text.mjs と同じ規則の写し。
+ *
+ * https:// が無くても X は自動でリンクにして t.co に短縮するので、ここも拾う。
+ * 拾わないと「画面では あと10字入る と出ているのに X が弾く」が起きる。
+ *
+ * ⚠️ 後読み（lookbehind）を使わない。iOS Safari が対応したのは 16.4 で、
+ *    それ以前の端末では正規表現の時点で構文エラーになり、この画面が丸ごと出なくなる。
+ *    直前の1文字は捨てグループ（$1）で受けている。置換は '$1' で戻すこと。
+ */
+const TLDS =
+  'com|net|org|jp|io|dev|app|me|co|ai|edu|gov|info|biz|site|page|link|blog|shop|tech|xyz|cloud|tv|fm|ly|gl|be|to|cc';
+
+const URL_PATTERN = new RegExp(
+  `(^|[^\\w@.\\-/])` +
+    `(` +
+    `https?://[^\\s<>"'）】」]+` +
+    `|` +
+    `(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+(?:${TLDS})(?![a-z0-9-])(?:/[^\\s<>"'）】」]*)?` +
+    `)`,
+  'gi'
+);
 
 /** URL 1本の重み。t.co により実際の長さに関係なく固定。 */
 export const URL_WEIGHT = 23;
@@ -25,11 +46,17 @@ export const URL_WEIGHT = 23;
 /** X の上限。日本語だと実質140字。 */
 export const MAX_WEIGHTED_LENGTH = 280;
 
+/** 本文に含まれる URL。 */
+export function extractUrls(text) {
+  if (!text) return [];
+  return [...String(text).matchAll(URL_PATTERN)].map((m) => m[2]);
+}
+
 export function weightedLength(text, urlWeight = URL_WEIGHT) {
   if (!text) return 0;
 
-  const urls = text.match(URL_PATTERN) ?? [];
-  const withoutUrls = text.replace(URL_PATTERN, '');
+  const urls = extractUrls(text);
+  const withoutUrls = String(text).replace(URL_PATTERN, '$1');
 
   let total = urls.length * urlWeight;
   for (const ch of withoutUrls) {

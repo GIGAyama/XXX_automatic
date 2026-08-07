@@ -17,6 +17,8 @@ import path from 'node:path';
 import { shellFilesOf, versionOf } from './build-sw.mjs';
 import { describeModel, readPolicy } from './lib/gemini-models.mjs';
 import { ROOT, paths, readJson, readText, rel } from './lib/io.mjs';
+import { isoWeekId, jstDateString, nextWeekDates } from './lib/jst.mjs';
+import { extractUrls } from './lib/x-text.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
 
@@ -377,6 +379,31 @@ if (history && !Array.isArray(history.posts)) {
     error('BROKEN_HISTORY', 'posts が配列ではありません（scripts/archive-history.mjs が作ります）', 'data/history.json');
 }
 
+/* ── 11'. 予備の引き出しが空のままになっていないか ──────
+ *
+ * 生成は成功していても、予備を作る処理だけが例外で落ちることがある（実際にそうなっていた。
+ * 日付を持たない枠に曜日の温度を引きにいって throw し、try/catch に吸われていた）。
+ * その結果、ランチャーの［いま出す］タブは一度も中身を持ったことがなかった。
+ *
+ * 週の投稿ができているのに予備だけ無い、という組み合わせでしか見つけられない壊れ方なので、
+ * ここで見る。エラーにしないのは、初回の実行では正常に無いためである。 */
+
+{
+    const weekId = isoWeekId(jstDateString());
+    const nextWeekId = isoWeekId(nextWeekDates()[0]);
+    const hasQueue = [weekId, nextWeekId].some((id) => fs.existsSync(paths.data('queue', `${id}.json`)));
+    const stock = readJson(paths.data('stock.json'), null);
+
+    if (hasQueue && (stock === null || (stock.posts ?? []).length === 0)) {
+        warn(
+            'EMPTY_STOCK',
+            '週の下書きはあるのに、予備の引き出し（data/stock.json）が空です。' +
+                'ランチャーの［いま出す］タブに何も出ません。`npm run generate` のログに理由が出ています',
+            'data/stock.json'
+        );
+    }
+}
+
 /* ── 13. 画像が切り取られる形になっていないか ──────────
  *
  * <img> の width / height 属性は、CSS で height を指定しないかぎり
@@ -437,15 +464,17 @@ if (history && !Array.isArray(history.posts)) {
  * 二重にする価値のある種類の失敗である。 */
 
 if (launcher && (launcher.urlPlacement ?? 'reply') === 'reply') {
-    const URL_RE = /https?:\/\/[^\s<>"'）】」]+/;
+    // ⚠️ ここに正規表現を書き写さない。以前は3つ目の写しが置いてあって、
+    //    スキームなしの URL（gigayama.github.io/Typa/）を見逃す穴を
+    //    生成側の検査と揃って持っていた。判定は x-text.mjs の1か所に寄せる。
     for (const post of launcher.posts ?? []) {
         const main = (post.steps ?? [])[0];
         if (!main) continue;
-        const hit = URL_RE.exec(main.text ?? '');
+        const [hit] = extractUrls(main.text ?? '');
         if (hit) {
             error(
                 'URL_IN_MAIN_POST',
-                `${post.id} の本文に URL が入っています（${hit[0]}）。` +
+                `${post.id} の本文に URL が入っています（${hit}）。` +
                     'X は本文に外部リンクがある投稿をほとんど表示しません。リンクは返信に回してください',
                 'docs/launcher.json'
             );
@@ -455,7 +484,7 @@ if (launcher && (launcher.urlPlacement ?? 'reply') === 'reply') {
     // リンクの返信そのものが落ちていないか。
     // 本文からリンクを外したのに返信も無いと、どこからもアプリに来られない。
     const withoutLink = (launcher.posts ?? []).filter(
-        (p) => (p.steps ?? []).length > 0 && !(p.steps ?? []).some((s) => URL_RE.test(s.text ?? ''))
+        (p) => (p.steps ?? []).length > 0 && !(p.steps ?? []).some((s) => extractUrls(s.text ?? '').length > 0)
     );
     if (withoutLink.length > 0) {
         warn(
@@ -532,6 +561,56 @@ try {
     }
 } catch (e) {
     error('CONFIG_UNREADABLE', e.message, 'config/accounts.json');
+}
+
+/* ── 17. 通知が枠のぶんだけあるか ──────────────────
+ *
+ * config/slots.json は朝と夜の2枠なのに、通知の cron は朝の1回しか無かった。
+ * 夜のぶんは朝の Issue に一緒に載っているだけで、
+ * 「朝に見たことを覚えている」ことが前提になっていた。
+ * README が「発信を続けるための要」と呼んでいる通知が、枠の半分に効いていない状態である。
+ *
+ * 枠を足したのに通知を足し忘れる、というのがいちばんありそうな壊れ方なので、
+ * daily-notify.yml の対応表と slots.json を突き合わせる。 */
+
+try {
+    const slots = readJson(paths.config('slots.json')).slots ?? [];
+    const yaml = readText(path.join(ROOT, '.github', 'workflows', 'daily-notify.yml'), null);
+
+    if (yaml !== null && slots.length > 0) {
+        // case 文の「'<cron>') slot=<id> ;;」から対応表を読む
+        const mapped = new Set([...yaml.matchAll(/\)\s*slot=([a-z0-9_-]+)\s*;;/gi)].map((m) => m[1]));
+        const crons = (yaml.match(/^\s*-\s*cron:/gm) ?? []).length;
+
+        for (const slot of slots) {
+            if (!mapped.has(slot.id)) {
+                warn(
+                    'SLOT_NOT_NOTIFIED',
+                    `config/slots.json の枠「${slot.label}（${slot.id}）」に対応する通知がありません。` +
+                        'この枠は誰にも知らされないので、出し忘れます',
+                    '.github/workflows/daily-notify.yml'
+                );
+            }
+        }
+        for (const id of mapped) {
+            if (!slots.some((s) => s.id === id)) {
+                warn(
+                    'SLOT_NOT_DEFINED',
+                    `通知が枠「${id}」を指していますが、config/slots.json にありません。この通知は必ず空振りします`,
+                    '.github/workflows/daily-notify.yml'
+                );
+            }
+        }
+        if (crons < slots.length) {
+            warn(
+                'SLOT_NOT_NOTIFIED',
+                `枠が ${slots.length} 個あるのに cron が ${crons} 本しかありません`,
+                '.github/workflows/daily-notify.yml'
+            );
+        }
+    }
+} catch (e) {
+    error('CONFIG_UNREADABLE', e.message, 'config/slots.json');
 }
 
 /* ── 12. package.json と実行環境の食い違い ────────────

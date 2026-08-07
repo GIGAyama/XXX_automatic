@@ -1,19 +1,32 @@
 name: 毎朝 — 今日の投稿を通知する
 
-# 21:30 UTC = 翌 6:30 JST。
 # ⚠️ cron は UTC。JST の朝に届けたいので、前日の夜の時刻を書くことになる。
 #    日付は scripts/lib/jst.mjs が JST で判定するので、
 #    UTC の日付とずれていても「JSTの今日」の投稿が選ばれる。
 #
-# schedule は混雑時に遅れる。朝の通知が7時台になることはあるが、
+# ⚠️ 枠のぶんだけ cron を持つ。config/slots.json と対応させること。
+#    以前は朝の1回だけで、夜のぶんは朝の Issue に一緒に載っているだけだった。
+#    つまり夜の投稿は「朝に見たことを覚えている」ことが前提で、
+#    README が「発信を続けるための要」と呼んでいる通知が、枠の半分に効いていなかった。
+#    下の SLOT_BY_CRON と config/slots.json のずれは `npm run check` が検出する。
+#
+#    30 21 * * *  → 翌 06:30 JST … morning（7:00 の枠）
+#    0  11 * * *  →    20:00 JST … evening（21:00 の枠）
+#
+# schedule は混雑時に遅れる。通知が1時間ずれることはあるが、
 # 何時に出すかは人が決めるので実害は無い。
 on:
   schedule:
     - cron: '30 21 * * *'
+    - cron: '0 11 * * *'
   workflow_dispatch:
     inputs:
       date:
         description: '通知する日付（YYYY-MM-DD、JST）。空なら今日'
+        type: string
+        required: false
+      slot:
+        description: '知らせる枠（config/slots.json の id）。空ならその日ぶん全部'
         type: string
         required: false
 
@@ -21,8 +34,10 @@ permissions:
   contents: read
   issues: write
 
+# ⚠️ 枠ごとに別のグループにする。1つにまとめて cancel-in-progress を立てると、
+#    朝と夜が近い時刻にずれこんだときに、あとから来たほうが先のほうを打ち消す。
 concurrency:
-  group: daily-notify
+  group: daily-notify-${{ github.event.schedule || inputs.slot || 'manual' }}
   cancel-in-progress: true
 
 jobs:
@@ -40,8 +55,33 @@ jobs:
           node-version: '20'
 
       # 通知に依存パッケージは要らないので npm ci はしない（起動を速くするため）。
-      - name: 今日のぶんを通知する
+      #
+      # どの cron から来たかで枠を決める。手で回したときは inputs.slot（空なら全部）。
+      # ⚠️ SLOT_BY_CRON は config/slots.json の id と揃っていること。
+      #    枠を足して通知を足し忘れる、という壊れ方を npm run check が検出する。
+      - name: この枠のぶんを通知する
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        run: node scripts/notify-daily.mjs ${{ inputs.date && format('--date {0}', inputs.date) || '' }}
+          SCHEDULE: ${{ github.event.schedule }}
+          INPUT_DATE: ${{ inputs.date }}
+          INPUT_SLOT: ${{ inputs.slot }}
+        run: |
+          # SLOT_BY_CRON: '<cron>=<slot id>' を1行ずつ
+          slot="$INPUT_SLOT"
+          if [ -n "$SCHEDULE" ]; then
+            case "$SCHEDULE" in
+              '30 21 * * *') slot=morning ;;
+              '0 11 * * *')  slot=evening ;;
+              *)
+                echo "::error title=cron と枠の対応がありません::'$SCHEDULE' に対応する枠が daily-notify.yml に書かれていません"
+                exit 1
+                ;;
+            esac
+          fi
+
+          args=""
+          [ -n "$INPUT_DATE" ] && args="$args --date $INPUT_DATE"
+          [ -n "$slot" ] && args="$args --slot $slot"
+          echo "notify-daily.mjs$args"
+          node scripts/notify-daily.mjs $args

@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 
-import { composeSteps, hookOf, seedFrom } from '../scripts/lib/x-text.mjs';
+import { composeSteps, extractUrls, hookOf, seedFrom } from '../scripts/lib/x-text.mjs';
 import { lintPost } from '../scripts/lib/lint.mjs';
 
 const guardrails = JSON.parse(fs.readFileSync(new URL('../config/guardrails.json', import.meta.url), 'utf8'));
@@ -158,4 +158,48 @@ test('本文が空なら、それだけを言う', () => {
     assert.deepEqual(lintPost({ id: 'x', steps: [{ kind: 'main', label: '本文', text: '  ' }] }, guardrails, monetization), [
         '本文が空です',
     ]);
+});
+
+/* ── スキームなしの URL ─────────────────────────
+ *
+ * X は https:// が無くても、ドメインらしき文字列を自動でリンクにする。
+ * つまり「gigayama.github.io/Typa/」と書いた投稿は、本文にリンクがある投稿として扱われ、
+ * リーチが下がる。本文からリンクを外すというこのリポジトリの中心的な判断が、
+ * ここを見ていないせいで素通りしていた。 */
+
+test('スキームなしの URL も URL として拾う', () => {
+    assert.deepEqual(extractUrls('詳しくは gigayama.github.io/Typa/ をどうぞ'), ['gigayama.github.io/Typa/']);
+    assert.deepEqual(extractUrls('note.com/gigayama で書いています'), ['note.com/gigayama']);
+    assert.deepEqual(extractUrls('example.co.jp が入口です'), ['example.co.jp']);
+});
+
+test('URL でないものを URL にしない', () => {
+    // ここを広げすぎると、ふつうの日本語やファイル名が URL 扱いになって投稿が作れなくなる。
+    for (const text of [
+        'app.js を直しました',
+        'docs/sw.js の VERSION です',
+        '1.5倍の速さで進みます',
+        '国語。算数。理科。社会。',
+        '午前8.30に集合です',
+        'メールは taro@example.com です',
+    ]) {
+        assert.deepEqual(extractUrls(text), [], `URL でないものを拾っています: ${text}`);
+    }
+});
+
+test('スキームなしの URL が本文にあったら落ちる', () => {
+    const steps = stepsOf();
+    steps[0].text += '\n詳しくは gigayama.github.io/KANJI_Town/ をどうぞ';
+    const problems = lintPost({ id: 'x', steps }, guardrails, monetization);
+    assert.ok(
+        problems.some((p) => p.includes('本文に URL が入っています')),
+        `スキームなしの URL を見逃しています: ${JSON.stringify(problems)}`
+    );
+});
+
+test('スキームなしの URL も1本として数える（返信に2本入るのを止める）', () => {
+    const steps = stepsOf();
+    steps.at(-1).text = `アプリはこちらです。\n${URL_}\nミラーは gigayama.github.io/Typa/ です。`;
+    const problems = lintPost({ id: 'x', steps }, guardrails, monetization);
+    assert.ok(problems.some((p) => p.includes('1本にしてください')), `2本目を見逃しています: ${JSON.stringify(problems)}`);
 });

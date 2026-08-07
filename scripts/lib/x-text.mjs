@@ -15,7 +15,42 @@ const SINGLE_WEIGHT_RANGES = [
     [0x2032, 0x2037],
 ];
 
-const URL_PATTERN = /https?:\/\/[^\s<>"'）】」]+/g;
+/**
+ * URL とみなす文字列。
+ *
+ * ⚠️ https:// が無いものも拾う。
+ *    X は「ドメインらしき文字列」を自動でリンクにして t.co に短縮する。
+ *    つまり本文に `gigayama.github.io/Typa/` と書いた投稿は、
+ *    本文に外部リンクがある投稿として扱われ、リーチが大きく下がる。
+ *    本文からリンクを外すのはこのリポジトリの中心的な判断なのに、
+ *    スキーム付きしか見ていなかったせいで、生成側と配信側の二重の検査が
+ *    どちらも同じ穴を持っていた。
+ *
+ *    広げすぎると「app.js を直しました」「1.5倍」まで URL 扱いになって投稿が作れなくなる。
+ *    そこで末尾は既知の TLD だけに限る。
+ *
+ * ⚠️ 後読み（lookbehind）を使わない。
+ *    iOS Safari が対応したのは 16.4 で、それ以前の端末では正規表現の時点で
+ *    構文エラーになり、ランチャーが丸ごと白い画面になる。
+ *    代わりに直前の1文字を捨てグループ（$1）で受けている。
+ *    置換のときは '$1' で戻すこと（'' にすると1文字消える）。
+ */
+const TLDS =
+    'com|net|org|jp|io|dev|app|me|co|ai|edu|gov|info|biz|site|page|link|blog|shop|tech|xyz|cloud|tv|fm|ly|gl|be|to|cc';
+
+const URL_PATTERN = new RegExp(
+    // ① 直前の1文字（行頭も可）。@ や / や英数字のあとは URL の始まりではない
+    `(^|[^\\w@.\\-/])` +
+        // ② URL 本体
+        `(` +
+        // ②-a スキーム付き。ホスト名を限定しない（localhost や見慣れない TLD も通す）
+        `https?://[^\\s<>"'）】」]+` +
+        `|` +
+        // ②-b スキームなし。「ラベル.」の繰り返し + 既知の TLD + 任意のパス
+        `(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+(?:${TLDS})(?![a-z0-9-])(?:/[^\\s<>"'）】」]*)?` +
+        `)`,
+    'gi'
+);
 
 /** URL 1本の重み。t.co により実際の長さに関係なく固定。 */
 export const URL_WEIGHT = 23;
@@ -25,8 +60,8 @@ export function weightedLength(text, urlWeight = URL_WEIGHT) {
     if (!text) return 0;
 
     // URL は本文から抜いて、本数 × 23 を足す
-    const urls = text.match(URL_PATTERN) ?? [];
-    const withoutUrls = text.replace(URL_PATTERN, '');
+    const urls = extractUrls(text);
+    const withoutUrls = String(text).replace(URL_PATTERN, '$1');
 
     let total = urls.length * urlWeight;
     for (const ch of withoutUrls) {
@@ -38,14 +73,15 @@ export function weightedLength(text, urlWeight = URL_WEIGHT) {
 
 /** 本文に含まれる URL。 */
 export function extractUrls(text) {
-    return text?.match(URL_PATTERN) ?? [];
+    if (!text) return [];
+    return [...String(text).matchAll(URL_PATTERN)].map((m) => m[2]);
 }
 
 /** URL・ハッシュタグ・空白を除いた「中身」の文字数。短すぎる投稿を弾くのに使う。 */
 export function plainLength(text) {
     if (!text) return 0;
     return text
-        .replace(URL_PATTERN, '')
+        .replace(URL_PATTERN, '$1')
         .replace(/#[^\s#]+/g, '')
         .replace(/\s+/g, '')
         .length;

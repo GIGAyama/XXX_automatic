@@ -32,7 +32,7 @@ import { generateJson, requireApiKey } from './lib/gemini.mjs';
 import { resolveGeminiModel } from './lib/gemini-models.mjs';
 import { fail, failWith, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf, weekDatesOfIsoWeek } from './lib/jst.mjs';
-import { lintPost } from './lib/lint.mjs';
+import { lintPost, pruneAlternatives } from './lib/lint.mjs';
 import { planWeek } from './lib/plan-week.mjs';
 import { composeSteps, hookOf, seedFrom } from './lib/x-text.mjs';
 import { seasonBriefOf, weekdayNoteOf } from './lib/season.mjs';
@@ -225,6 +225,17 @@ async function main() {
         posts = posts.filter((p) => !badIds.has(p.id));
     }
 
+    // ── 3'. 落選案も検査する ────────────────────────
+    // ランチャーの［別の案］はワンタップで本文になる。
+    // 本文と同じ基準を通っていないものを、押せる場所に置かない。
+    const droppedAlts = posts.flatMap((post) =>
+        pruneAlternatives(post, guardrails, monetization).map((d) => ({ id: post.id, ...d }))
+    );
+    if (droppedAlts.length > 0) {
+        info(`   ⚠ 落選案 ${droppedAlts.length} 件が検査に落ちたので、差し替え候補から外しました`);
+        for (const { id, problems } of droppedAlts) info(`     - ${id}: ${problems[0]}`);
+    }
+
     // ── 4. 書き出す ────────────────────────────────
     if (args['dry-run']) {
         info('\n──── 生成結果（--dry-run なので保存しません）────\n');
@@ -271,6 +282,13 @@ async function main() {
         const stockPath = paths.data('stock.json');
         writeJson(stockPath, { generatedAt: new Date().toISOString(), generatedAtJst: jstStamp(), weekId, posts: stock });
         info(`   予備の引き出し: ${rel(stockPath)} に ${stock.length} 件`);
+    } else {
+        // 0件のまま黙って進まない。ここが例外で落ちつづけていたあいだ、
+        // ［いま出す］タブは空のままで、誰も気づけなかった。
+        console.error(
+            '⚠ 予備の引き出しが0件です。ランチャーの［いま出す］タブは空のままになります。\n' +
+                '   （下書きが尽きた日に出すものが無くなります。上のログに理由が出ています）'
+        );
     }
 
     info('   次は `npm run build` でランチャー用のデータを作ります');
@@ -364,8 +382,10 @@ ${monetization?.enabled ? '' : '- 収益化の導線（有料記事・アフィ�
         const profile = profileByName.get(slot.repo);
         const lines = [
             `### 枠 id: ${slot.id}`,
-            `日付: ${slot.date}（${slot.weekday}曜）${slot.slotLabel}`,
-            context.calendar ? `この曜日の読まれ方: ${weekdayNoteOf(slot.date, context.calendar)}` : null,
+            slot.date ? `日付: ${slot.date}（${slot.weekday}曜）${slot.slotLabel}` : `枠: ${slot.slotLabel}（日付は決めずに作る）`,
+            // 予備の引き出し（date が空）にはこの行を出さない。
+            // 曜日の読まれ方は、出す日が決まっていてはじめて意味を持つ情報である。
+            slot.date && context.calendar ? `この曜日の読まれ方: ${weekdayNoteOf(slot.date, context.calendar)}` : null,
             `投稿の型: ${slot.themeLabel}`,
             `この型の狙い: ${slot.themeIntent}`,
             `構成の目安: ${slot.themeStructure}`,
@@ -616,13 +636,21 @@ async function buildStock({ model, policy, plan, profiles, profileByName, accoun
         });
     } catch (error) {
         // 引き出しが作れなくても、その週の投稿は出せる。ここで止めない。
-        console.error(`⚠ 予備の引き出しを作れませんでした: ${String(error.message).split('\n')[0]}`);
+        // ⚠️ split('\n')[0] にしないこと。Google のエラーは整形済み JSON で返るので、
+        //    1行目だけ取ると「Gemini API 400: {」になって理由が消える。
+        //    ここは try/catch で握りつぶす場所なので、消えると原因が永久に分からなくなる
+        //    （実際、日付を持たない枠で throw していたことに長らく気づけなかった）。
+        console.error(`⚠ 予備の引き出しを作れませんでした: ${String(error.message).replace(/\s+/g, ' ').trim()}`);
         return [];
     }
 
     const built = assemble(stockPlan, drafts, profileByName, accounts, guardrails);
     // 引き出しにも同じ検査をかける。押した瞬間に出すものなので、あとから直す機会がない。
-    return built.filter((post) => lintPost(post, guardrails, monetization).length === 0);
+    const passed = built.filter((post) => lintPost(post, guardrails, monetization).length === 0);
+    if (passed.length < built.length) {
+        info(`   予備: ${built.length - passed.length} 件が検査に落ちたので外しました`);
+    }
+    return passed;
 }
 
 /** カード画像がある場合だけパスを入れる。無ければ null（文字だけの投稿になる）。 */

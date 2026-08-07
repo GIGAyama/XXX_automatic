@@ -40,8 +40,18 @@ export function periodOf(dateString, calendar) {
     return hits.sort((a, b) => spanDays(a) - spanDays(b))[0];
 }
 
-/** その日の曜日の温度（calendar.json の weekdays）。 */
+/**
+ * その日の曜日の温度（calendar.json の weekdays）。
+ *
+ * ⚠️ 日付が読めないときは throw せず '' を返す。
+ *    予備の投稿（data/stock.json）は日付を持たない枠として作られる。
+ *    ここが throw していたせいで、予備を作る処理がまるごと例外で落ち、
+ *    ［いま出す］タブは一度も中身を持ったことがなかった。
+ *    曜日の温度は「引けなければ無し」でよい情報である。
+ *    日付そのものが正しいかを見るのは jst.mjs の仕事なので、ここでは兼ねない。
+ */
 export function weekdayNoteOf(dateString, calendar) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(dateString ?? ''))) return '';
     return calendar?.weekdays?.[String(weekdayOf(dateString))] ?? '';
 }
 

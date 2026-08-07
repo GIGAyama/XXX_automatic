@@ -14,7 +14,7 @@
 import fs from 'node:fs';
 import { fail, info, loadConfig, parseArgs, paths, readJson, rel } from './lib/io.mjs';
 import { isoWeekId, jstDateString, nextWeekDates } from './lib/jst.mjs';
-import { lintPost } from './lib/lint.mjs';
+import { lintAlternative, lintPost } from './lib/lint.mjs';
 
 function main() {
     const args = parseArgs();
@@ -41,6 +41,7 @@ function main() {
 
     let checked = 0;
     let failed = 0;
+    let badAlternatives = 0;
 
     for (const file of files) {
         const queue = readJson(paths.data('queue', file));
@@ -56,10 +57,23 @@ function main() {
                 info(`   ✖ ${post.id} ${post.repo}`);
                 for (const p of problems) info(`       ${p}`);
             }
+
+            // 落選案（ランチャーの［別の案］）も同じ基準で見る。
+            // ここは失敗にしない。差し替え候補は build-launcher-data.mjs が配信時にふるい落とすので、
+            // 検査を通らない案が外に出ることはない。見えるようにしておくのが目的である。
+            for (const alt of post.alternatives ?? []) {
+                const altProblems = lintAlternative(alt, post, guardrails, monetization);
+                if (altProblems.length === 0) continue;
+                badAlternatives += 1;
+                info(`   ⚠ ${post.id} の別の案: ${altProblems[0]}`);
+            }
         }
     }
 
     info(`\n検査 ${checked} 件、問題あり ${failed} 件`);
+    if (badAlternatives > 0) {
+        info(`別の案 ${badAlternatives} 件が基準を満たしていません（配信時に外れるので、投稿には出ません）`);
+    }
 
     if (failed > 0) {
         fail(
