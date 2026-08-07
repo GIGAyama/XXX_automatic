@@ -1,0 +1,892 @@
+{
+  "version": 1,
+  "cardTemplateSha": "08d5ce0b1e2d866c",
+  "updatedAtJst": "2026-08-07 19:21 JST",
+  "apps": {
+    "KEISAN-BLOCK": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "746c9acf4fd52e76",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "ef95d32b2221faea",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Digital_textbook": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "ba8aa14dbf5c6df2",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "7fae911b70e06c63",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "KAKE_Master": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "afc591546960f2e7",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "9b93fa714ed33fe0",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "KANJI_Town": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "087478b1cf175043",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "6bef49897f01aa24",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Keisan-Card": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "d6bc6cb7a53509d6",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": "はじめる",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "d6476ca47755998f",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "online-100square-calculation": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "d7f08dd7d5aa63d8",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": "スタート",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "81afc484217dc34e",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "SchoolPlan_Editor": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "697d9d4ea4072ca6",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "5fa5dd8ee0a772b5",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Qalc": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "9bc7310ade0cc39f",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "58244492b3ea1a42",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "online-manuscript-paper-pro": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "20f1154bc67f8345",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "31887ba28b877805",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "online-manuscript-paper-lite": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "4bdbb22549461afe",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "9e71673b76c30a67",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "MIRAI-Compass": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "d4116d2cc3696a4e",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": "はじめる",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "ba5c82d9cdc42049",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "MIRAI-Passport": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "4d34bf5b1baa8077",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": "開始",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "30ade8caf70f54fc",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Quoridor": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "5575d4d62501db1f",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": "開始",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "7b54ccb8622102b7",
+        "atJst": "2026-08-07 19:18 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Quarto": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "68fc4f2aa0b47687",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "f7103da480af1faf",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "DigitalCloset": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "ebc4ad1b970c2a36",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "11c99f1368ee88b2",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "app_launcher": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "805e28380d111a49",
+        "atJst": "2026-08-07 19:19 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "2a8044dee721dbf7",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Reversi": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "db0b8035919d5005",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": "開始",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "8833e5b9d99da2c0",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Typa": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "c561477d911dc313",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "3a27bbafed60c1fd",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "PhysicalEducation_note": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "9732161e28f86904",
+        "atJst": "2026-08-07 19:19 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "3c06fc0fa177ac93",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Digital-Newspaper": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "5b8421aa01be0d66",
+        "atJst": "2026-08-07 19:19 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "0abede4738f698c5",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Haiku-meeting": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "5fd8859df2463568",
+        "atJst": "2026-08-07 19:19 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "62085fa2bb9a0436",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Ice_slide-puzzle": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "3248da7a6f8182c6",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "6918257e21b32991",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Homework_barcordreader": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "999bf16df0013762",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "a2e0376f5cdd00eb",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Shiritori_fighter": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "4b4cdf314beb7777",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": "スタート",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "6f8a9a7aad683a67",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Hagetaka-game": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "ad4e1912a082cfc8",
+        "atJst": "2026-08-07 19:19 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "bbce6e437300500d",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Reflection_Journal": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "1f54ded96365ec61",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "8b6e397cf9acab55",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Townmap_Mikke": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "ebad4e40957fcf6c",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "7bc8bed501b76471",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "School_plan_note": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "f012c3ec4c052ed6",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "891273914f3362bc",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Online-Publisher-pro": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "20f0bf8732f7118b",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "ea08333d7af70798",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Gamification": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "a74b93c2ab74cf7c",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "d34a7c4927f05ea1",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Werewolf": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "0e49efcaef2b41e5",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": "開始",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "48823250c7ef6376",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Gobblet": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "f5c4dcf5ae6baba2",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "cc30f1c47633e2f7",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "NotebookSample_Generator": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "2bc7ad1d83fdf05a",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "8daff1f3601e106d",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Video-editing_studio": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "5e21b66f62a60383",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "37dd68ded22b331c",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Music-production_studio": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "37d33f406769198d",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "007c99a140033259",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Treasure_Words": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "fa358944471a3290",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "a8a3972583f7ebd0",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Google-Data-Transfer": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "81a528a075761805",
+        "atJst": "2026-08-07 19:20 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "37e46431a565d067",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "yomikaki": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "32334bc6854e5d81",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": false,
+        "dismissed": "はじめる",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "e92b06e68b5df6aa",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "word_basket": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "23b6b668ccb842ab",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": "スタート",
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "d6395d7d707c9133",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Screenshot-PDF": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "170f2b17829f78ed",
+        "atJst": "2026-08-07 19:20 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "138f9a216f5d0799",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Linker-Clipper": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "7d30974e6680b3bd",
+        "atJst": "2026-08-07 19:20 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "7e14f33d0d258013",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Shapes_Canvas": {
+      "shot": {
+        "ok": true,
+        "fingerprint": "90a15e6d22641641",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "stabilized": true,
+        "dismissed": null,
+        "reason": null
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "7048cf80ede36bd9",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "online-manuscript-paper": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "ee6bd6f31d34f1dc",
+        "atJst": "2026-08-07 19:20 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "595128aab04766ee",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Gem": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "199ecee876447f18",
+        "atJst": "2026-08-07 19:20 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "80533b5bda3b6cd7",
+        "atJst": "2026-08-07 19:20 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Blackboard_Timer": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "d3badf44925a7982",
+        "atJst": "2026-08-07 19:20 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "8b96dfd339106cca",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Class_tweet": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "84f137075fb670f6",
+        "atJst": "2026-08-07 19:21 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "7399b17c1401753d",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Moral_note": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "77ba0664712d9290",
+        "atJst": "2026-08-07 19:21 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "4b2d2b435a7c378b",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Slide_Guild": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "8ac4049b017e1a4e",
+        "atJst": "2026-08-07 19:21 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "18797dafbd1c596e",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Shared-Folder-Sync": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "a5737f640cb0e094",
+        "atJst": "2026-08-07 19:21 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "57fe10acae513eee",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Fax-maker": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "b130dc1a30c7a8b7",
+        "atJst": "2026-08-07 19:21 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "172598da97292a2c",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Officefile_converter": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "8193e05dcf0e558f",
+        "atJst": "2026-08-07 19:21 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "89d93085473596b4",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    },
+    "Gmail_cleaner": {
+      "shot": {
+        "ok": false,
+        "fingerprint": "068b72a490ec0767",
+        "atJst": "2026-08-07 19:21 JST",
+        "reason": "GitHub Pages がありません"
+      },
+      "card": {
+        "ok": true,
+        "fingerprint": "7c375a941a972de4",
+        "atJst": "2026-08-07 19:21 JST",
+        "frames": 1,
+        "blank": false
+      }
+    }
+  }
+}
