@@ -29,13 +29,19 @@ const ENDPOINT = process.env.GEMINI_BASE_URL || 'https://generativelanguage.goog
  * @param {number} [options.temperature]
  * @returns {Promise<object>} パース済みの JSON
  */
-export async function generateJson({ model, prompt, schema, system, temperature = 0.9, search = false }) {
+export async function generateJson({ model, prompt, schema, system, temperature = 0.9, search = false, maxOutputTokens }) {
     const body = {
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
             temperature,
             responseMimeType: 'application/json',
             responseSchema: schema,
+            // ⚠️ 長い文章を書かせるときは必ず指定する。
+            //    既定の上限は 8192 トークンで、日本語 7,000〜9,000 字の記事はそこを超える。
+            //    超えると応答が途中で切れ、JSON として読めなくなって
+            //    「Gemini の応答が JSON として読めませんでした」という
+            //    原因の分かりにくい失敗になる（長さの問題だと気づけない）。
+            ...(maxOutputTokens ? { maxOutputTokens } : {}),
         },
     };
     if (system) body.systemInstruction = { parts: [{ text: system }] };
@@ -43,10 +49,19 @@ export async function generateJson({ model, prompt, schema, system, temperature 
     //    2系に投げると 400 で落ちる。呼び出し側が supportsSearch() で確かめること。
     if (search) body.tools = [{ google_search: {} }];
 
-    const text = await callGemini(model, body);
+    const { text, finishReason } = await callGemini(model, body);
     try {
         return JSON.parse(text);
     } catch (error) {
+        // ⚠️ 出力の上限に当たると、応答は途中で切れたまま返ってくる。
+        //    そのまま JSON.parse に渡すと「読めませんでした」としか出ず、
+        //    長さが原因だと気づけない。理由を名指しする。
+        if (finishReason === 'MAX_TOKENS') {
+            throw new Error(
+                `Gemini の応答が途中で切れました（出力の上限に当たりました。${text.length} 文字で停止）。\n` +
+                    '  → 呼び出し側で maxOutputTokens を増やすか、一度に書かせる量を分けてください。'
+            );
+        }
         throw new Error(`Gemini の応答が JSON として読めませんでした: ${error.message}\n--- 応答 ---\n${text.slice(0, 800)}`);
     }
 }
@@ -59,7 +74,7 @@ export async function generateText({ model, prompt, system, temperature = 0.9, s
     };
     if (system) body.systemInstruction = { parts: [{ text: system }] };
     if (search) body.tools = [{ google_search: {} }];
-    return callGemini(model, body);
+    return (await callGemini(model, body)).text;
 }
 
 /**
@@ -130,12 +145,13 @@ async function callGemini(model, body) {
         if (response.ok) {
             const json = await response.json();
             const text = json?.candidates?.[0]?.content?.parts?.map((p) => p.text ?? '').join('') ?? '';
+            const finishReason = json?.candidates?.[0]?.finishReason ?? null;
             if (!text.trim()) {
                 // 安全フィルタで止められた場合はここに来る。理由を出さないと直しようがない。
-                const reason = json?.candidates?.[0]?.finishReason ?? json?.promptFeedback?.blockReason ?? '不明';
+                const reason = finishReason ?? json?.promptFeedback?.blockReason ?? '不明';
                 throw new Error(`Gemini が空の応答を返しました（finishReason: ${reason}）`);
             }
-            return text;
+            return { text, finishReason };
         }
 
         const detail = await response.text().catch(() => '');

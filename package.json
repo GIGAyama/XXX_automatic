@@ -10,6 +10,7 @@
     "collect": "node scripts/collect-repos.mjs",
     "profiles": "node scripts/build-profiles.mjs",
     "media": "node scripts/capture-media.mjs",
+    "shots": "node scripts/capture-shots.mjs",
     "trends": "node scripts/research-trends.mjs",
     "generate": "node scripts/generate-week.mjs",
     "note": "node scripts/generate-note.mjs",
@@ -26,7 +27,6 @@
     "test": "node --test tests/*.test.mjs",
     "serve": "python3 -m http.server 8000 --directory docs"
   },
-
   "_comment_serve": "serve を間接参照（node --run serve:docs）にしない。node --run は Node 22 で入った機能で、engines は >=20 なので Node 20 では npm run serve が落ちる。実際に落ちていて、CI は serve を実行しないので誰も気づけなかった。npm run check が検出する。",
   "devDependencies": {
     "playwright": "^1.49.0"

@@ -29,6 +29,21 @@ function lintCommon(text, guardrails, monetization, problems, where) {
         if (word && text.includes(word)) problems.push(`${at}禁止語が入っています（「${word}」）`);
     }
 
+    // ⚠️ 教室での出来事を、実際に見たこととして書いていないか。
+    //    文章を作っているのは機械で、その日その教室で何が起きたかを知らない。
+    //    「うちのクラスでは子どもたちが喜んでいました」と書けば、
+    //    それは本人の名前で出る嘘になる。書いてよいのは
+    //    「こうなればいいと思って作った」「〜だと思います」まで。
+    for (const rule of guardrails.experiencePatterns ?? []) {
+        const hit = new RegExp(rule.pattern, 'iu').exec(text);
+        if (hit) {
+            problems.push(
+                `${at}${rule.reason}（「${hit[0]}」）。` +
+                    '実際の授業の様子は、出す前にご自身で足してください'
+            );
+        }
+    }
+
     // enabled が false のあいだは、収益化の導線が混ざっていないかを見る。
     // 兼業許可を確認するまでは外に出さない、という約束を機械で守るための検査。
     if (!monetization?.enabled) {

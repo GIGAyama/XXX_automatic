@@ -28,6 +28,7 @@ GitHub Pages で公開している学習アプリを題材に、**X と note の
 ①' 調査  いま教育の現場で何が話題かを検索で拾う（学校の行事暦と合わせて題材を選ぶ）
 ② 理解   Gemini がアプリごとの「プロフィール」に整理する（更新が無ければ再生成しない）
 ③ 素材   Playwright が各アプリを開いてスクショ → 紹介カード画像を作る
+③' 素材  note の主題アプリを実際に操作して、記事に入れる画面を撮る
 ④ 生成   1枠につき3案書かせ、編集者役が読者の目で1つ選ぶ
 　 　　　 反応がよかった1本は、別の言い方にして出しなおす（生成を呼ばずに1枠埋まる）
 　 検査   ガードレールにかける（個人情報・誇大表現・字数・本文のリンク・収益化表現）
@@ -141,6 +142,7 @@ Discord サーバーの Webhook URL を `DISCORD_WEBHOOK` という名前の Sec
 | 時期ごとの困りごと（学校の1年） | `config/calendar.json` |
 | リンクを本文に入れるか返信に回すか | `config/guardrails.json` の `urlPlacement` |
 | 投稿の型（切り口） | `config/themes.json` |
+| note の記事の文体・構成 | `config/note-style.json` |
 | 禁止表現・字数の基準 | `config/guardrails.json` |
 | 題材にしないリポジトリ | `config/accounts.json` の `excludeRepos` |
 | 使う Gemini のモデル | `config/accounts.json` の `geminiModel`（既定は `auto`） |

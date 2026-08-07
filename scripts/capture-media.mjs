@@ -24,7 +24,7 @@
  */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
-import { chromium } from 'playwright';
+import { assertJapaneseFont, dismissEntryScreen, launchChromium, settle } from './lib/browser.mjs';
 import { CARD_SIZE, buildCardHtml } from './lib/card-template.mjs';
 import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { jstStamp } from './lib/jst.mjs';
@@ -219,21 +219,6 @@ function isBlank(filePath) {
  * `npx playwright install` を強要されて詰まる。
  * CHROMIUM_PATH を渡せばそれを使うようにして、逃げ道を作っておく。
  */
-async function launchChromium() {
-    const executablePath = process.env.CHROMIUM_PATH || undefined;
-    if (executablePath) info(`   （CHROMIUM_PATH の Chromium を使います: ${executablePath}）`);
-    try {
-        return await chromium.launch({ executablePath });
-    } catch (error) {
-        throw new Error(
-            `${error.message}\n\n` +
-                '対処:\n' +
-                '  npx playwright install chromium        … playwright に合う版を入れる\n' +
-                '  CHROMIUM_PATH=/path/to/chrome npm run media  … すでにある Chromium を使う'
-        );
-    }
-}
-
 /**
  * 日本語フォントが入っているかを、撮りはじめる前に1回だけ確かめる。
  *
@@ -250,61 +235,6 @@ async function launchChromium() {
  * 私用領域 U+E000 はどのフォントにも字形が無いので、必ず .notdef（□）が描かれる。
  * 「漢」がそれと1ピクセルも違わないなら、漢字にも字形が無い＝日本語フォントが1つも無い。
  */
-async function assertJapaneseFont(browser) {
-    const context = await browser.newContext({ viewport: { width: 200, height: 200 } });
-    const page = await context.newPage();
-    try {
-        await page.setContent('<!doctype html><meta charset="utf-8"><body></body>');
-        const tofu = await page.evaluate(() => {
-            const FONT =
-                '48px "Noto Sans CJK JP", "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", ' +
-                '"Yu Gothic", Meiryo, IPAexGothic, IPAGothic, sans-serif';
-
-            function draw(ch) {
-                const canvas = document.createElement('canvas');
-                canvas.width = 64;
-                canvas.height = 64;
-                const ctx = canvas.getContext('2d', { willReadFrequently: true });
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(0, 0, 64, 64);
-                ctx.fillStyle = '#000';
-                ctx.textBaseline = 'top';
-                ctx.font = FONT;
-                ctx.fillText(ch, 2, 2);
-                return ctx.getImageData(0, 0, 64, 64).data;
-            }
-
-            const kanji = draw('漢');
-            const pua = draw('');
-
-            let identical = true;
-            let ink = 0;
-            for (let i = 0; i < kanji.length; i += 4) {
-                if (kanji[i] !== pua[i]) identical = false;
-                if (kanji[i] < 200) ink += 1;
-            }
-            // 同じ絵になった＝どちらも豆腐。
-            // 念のため「そもそもほとんど何も描かれていない」も拾う。
-            return identical || ink < 40;
-        });
-        if (tofu) {
-            throw Object.assign(
-                new Error(
-                    'この環境には日本語フォントが入っていません。\n' +
-                        'このまま撮ると、カードの文字がぜんぶ □□□ になります（52枚ぜんぶ作りなおしになります）。\n\n' +
-                        '対処:\n' +
-                        '  sudo apt-get install -y fonts-noto-cjk    … Ubuntu / Debian\n' +
-                        '  brew install --cask font-noto-sans-cjk-jp … macOS\n\n' +
-                        '週次ワークフローは撮る前に fonts-noto-cjk を入れています。'
-                ),
-                { userFacing: true }
-            );
-        }
-    } finally {
-        await context.close();
-    }
-}
-
 /** アプリを開いて画面を撮る。data URI で返してカードに埋め込めるようにする。 */
 async function captureApp(browser, url, name, { frames, stabilize, carousel }) {
     const context = await browser.newContext({
@@ -360,21 +290,6 @@ async function captureApp(browser, url, name, { frames, stabilize, carousel }) {
  * 絵が動かなくなるまで待つ。
  * 同じ絵が2回続いたら安定とみなす。決め打ちの待ち時間より、遅い環境に強い。
  */
-async function settle(page, { maxTries = 6, intervalMs = 300, minWaitMs = 400 } = {}) {
-    await page.evaluate(() => document.fonts?.ready).catch(() => {});
-    await page.waitForTimeout(minWaitMs);
-
-    let previous = await page.screenshot({ type: 'png' });
-    for (let i = 0; i < maxTries; i += 1) {
-        await page.waitForTimeout(intervalMs);
-        const current = await page.screenshot({ type: 'png' });
-        if (current.equals(previous)) return { buffer: current, stabilized: true };
-        previous = current;
-    }
-    // 動きつづけるアプリ（アニメーションが止まらないもの）もある。これは失敗ではない。
-    return { buffer: previous, stabilized: false };
-}
-
 /**
  * 入口ボタンがあれば1つだけ押して中身の画面に入る。
  * 押せなくても失敗にはしない（タイトル画面でも絵にはなる）。
@@ -382,25 +297,6 @@ async function settle(page, { maxTries = 6, intervalMs = 300, minWaitMs = 400 } 
  * 以前は catch を空にしていたので、どのアプリで入口を抜けられなかったのかが
  * どこにも残らなかった。結果を返して manifest.json に書く。
  */
-async function dismissEntryScreen(page) {
-    const labels = ['はじめる', 'はじめよう', 'スタート', 'ゲームスタート', 'スタート！', '開始', 'つづきから', '通常モード'];
-    let sawButton = false;
-
-    for (const label of labels) {
-        try {
-            const button = page.getByRole('button', { name: label, exact: false }).first();
-            if (await button.isVisible({ timeout: 400 })) {
-                sawButton = true;
-                await button.click({ timeout: 1500 });
-                return { clicked: true, label };
-            }
-        } catch {
-            // 見つからない・押せないのは想定内。次の候補へ。
-        }
-    }
-    return { clicked: false, label: sawButton ? '押せませんでした' : null };
-}
-
 /** 紹介カードを HTML から起こして撮る。撮れたファイルのパスを返す。 */
 async function renderCards(browser, profile, repo, screenshotDataUris, frames) {
     const context = await browser.newContext({ viewport: CARD_SIZE, deviceScaleFactor: 1, locale: 'ja-JP' });
