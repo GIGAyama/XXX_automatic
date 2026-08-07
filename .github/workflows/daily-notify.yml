@@ -46,8 +46,20 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      # ⚠️ docs/ を取ってこない。
+      #    通知が読むのは config/ と data/ だけで、docs/ は配信物である。
+      #    そこには紹介カードが 29MB 入っていて、1日2回それを落とすのは無駄でしかない
+      #    （Discord に出す画像は GitHub Pages の URL を参照するので、手元には要らない）。
+      #    新しく読むところを増やしたときは、ここにも足すこと。
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            scripts
+            config
+            data
+            package.json
+          sparse-checkout-cone-mode: true
 
       - name: Setup Node
         uses: actions/setup-node@v4
