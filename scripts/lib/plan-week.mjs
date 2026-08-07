@@ -50,11 +50,21 @@ function daysBetween(a, b) {
  * @param {object} input.themesConfig     config/themes.json
  * @param {object[]} input.profiles       data/profiles/*.json を読んだもの
  * @param {object[]} input.history        data/history.json の posts
- * @param {object} input.feedback         data/feedback.json（型ごとの評価）
+ * @param {object} input.feedback         data/feedback.json の themes（型ごとの評価）
+ * @param {object} input.repoFeedback     data/feedback.json の repos（アプリごとの評価）
  * @param {string} input.weekId           'YYYY-Www'
  * @returns {object[]} 割り当て済みの投稿枠
  */
-export function planWeek({ dates, slots, themesConfig, profiles, history = [], feedback = {}, weekId }) {
+export function planWeek({
+    dates,
+    slots,
+    themesConfig,
+    profiles,
+    history = [],
+    feedback = {},
+    repoFeedback = {},
+    weekId,
+}) {
     const random = seededRandom(weekId);
     const rotation = themesConfig.rotation ?? {};
     const noSameTheme = rotation.noSameThemeWithinDays ?? 2;
@@ -85,6 +95,14 @@ export function planWeek({ dates, slots, themesConfig, profiles, history = [], f
         const good = fb.good ?? 0;
         const bad = fb.bad ?? 0;
         return Math.max(0.2, (theme.weight ?? 1) + good * 0.5 - bad * 0.3);
+    };
+
+    // アプリごとの反応も見る。ただし型より効きを弱くする。
+    // アプリは52件あるので、1件の「よかった」で順番が大きく動くと、
+    // 反応を1つ押しただけで同じアプリばかり出るようになってしまう。
+    const repoBonus = (name) => {
+        const fb = repoFeedback[name] ?? {};
+        return (fb.good ?? 0) * 0.3 - (fb.bad ?? 0) * 0.2;
     };
 
     const plan = [];
@@ -136,7 +154,7 @@ export function planWeek({ dates, slots, themesConfig, profiles, history = [], f
                     const postability = p.postability ?? 3;
                     // しばらく出していないアプリを少し優先する。全アプリに順番が回るようにするため。
                     const rest = Math.min(lastUsedRepo(p.name, date), 60);
-                    return postability + rest / 30;
+                    return Math.max(0.2, postability + rest / 30 + repoBonus(p.name));
                 },
                 random
             );

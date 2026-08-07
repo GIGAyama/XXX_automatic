@@ -14,12 +14,18 @@
     "note": "node scripts/generate-note.mjs",
     "lint:drafts": "node scripts/lint-drafts.mjs",
     "notify": "node scripts/notify-daily.mjs",
+    "feedback": "node scripts/collect-feedback.mjs",
+    "archive": "node scripts/archive-history.mjs",
     "build:index": "node scripts/build-launcher-data.mjs",
+    "build:apps": "node scripts/build-apps-page.mjs",
+    "build:sw": "node scripts/build-sw.mjs",
+    "build": "npm run build:index && npm run build:apps && npm run build:sw",
     "check": "node scripts/check-project.mjs",
     "test": "node --test tests/*.test.mjs",
-    "serve": "node --run serve:docs",
-    "serve:docs": "python3 -m http.server 8000 --directory docs"
+    "serve": "python3 -m http.server 8000 --directory docs"
   },
+
+  "_comment_serve": "serve を間接参照（node --run serve:docs）にしない。node --run は Node 22 で入った機能で、engines は >=20 なので Node 20 では npm run serve が落ちる。実際に落ちていて、CI は serve を実行しないので誰も気づけなかった。npm run check が検出する。",
   "devDependencies": {
     "playwright": "^1.49.0"
   },

@@ -127,3 +127,107 @@ test('「反応よかった」が多い型は選ばれやすくなる', () => {
         `評価を上げたのに増えていません（${countTips(base)} → ${countTips(boosted)}）`
     );
 });
+
+/*
+ * ここから下は、これまで一度も実際には動いていなかった経路のテストである。
+ * history も feedback も読む側はあったが書く側が無く、入力はいつも空だった。
+ * archive-history.mjs と collect-feedback.mjs が書くようになったので、
+ * 「渡したときに本当に効くのか」を固定しておく。
+ */
+
+test('前の週に出したアプリが、間を空けずに翌週へ戻ってこない', () => {
+    // 履歴が空のあいだ、rotation は週の中でしか効いていなかった。
+    // 先週の日曜に出したアプリが今週の月曜にまた出る、という重複を誰も止めていなかった。
+    const profiles = makeProfiles(30); // 候補が足りていれば規則は必ず守られるはず
+    const previous = planWeek({ dates: weekDatesOf('2026-08-03'), slots, themesConfig, profiles, weekId: '2026-W32' });
+    const history = previous.map((p) => ({ date: p.date, repo: p.repo, theme: p.theme }));
+
+    const plan = planWeek({ dates, slots, themesConfig, profiles, history, weekId: '2026-W33' });
+
+    const noSameRepo = themesConfig.rotation.noSameRepoWithinDays;
+    for (const post of plan) {
+        for (const used of history) {
+            if (used.repo !== post.repo) continue;
+            const gap = Math.abs(daysBetween(used.date, post.date));
+            assert.ok(
+                gap >= noSameRepo,
+                `${post.repo} を ${used.date} に出したあと ${post.date}（${gap}日後）にまた出しています`
+            );
+        }
+    }
+
+    // 履歴を渡さなければ、この規則は週をまたいで効かない（＝いま直した部分が本当に効いている）
+    const without = planWeek({ dates, slots, themesConfig, profiles, weekId: '2026-W33' });
+    assert.notDeepEqual(plan.map((p) => p.repo), without.map((p) => p.repo));
+});
+
+function daysBetween(a, b) {
+    return Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / 86_400_000);
+}
+
+test('前の週に使った型も、週をまたいで連続しない', () => {
+    const profiles = makeProfiles(20);
+    // 8/9（日）の夜に intro を使った、という履歴
+    const history = [{ date: '2026-08-09', repo: 'App1', theme: 'intro' }];
+    const plan = planWeek({ dates, slots, themesConfig, profiles, history, weekId: '2026-W33' });
+    // noSameThemeWithinDays = 2 なので 8/10 には intro が来ない
+    assert.ok(plan.filter((p) => p.date === '2026-08-10').every((p) => p.theme !== 'intro'));
+});
+
+test('履歴を渡しても14枠は必ず埋まる', () => {
+    // 条件を厳しくしすぎて枠が空くと、その日は投稿が無いことになる。
+    const profiles = makeProfiles(6);
+    const history = profiles.map((p, i) => ({ date: '2026-08-09', repo: p.name, theme: themesConfig.themes[i % 7].id }));
+    const plan = planWeek({ dates, slots, themesConfig, profiles, history, weekId: '2026-W33' });
+    assert.equal(plan.length, 14);
+    assert.ok(plan.every((p) => p.repo && p.theme));
+});
+
+test('「反応よかった」が多いアプリは選ばれやすくなる', () => {
+    const profiles = makeProfiles(40);
+    const boosted = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles,
+        repoFeedback: Object.fromEntries(
+            ['App1', 'App2', 'App3'].map((name) => [name, { good: 30, bad: 0 }])
+        ),
+        weekId: '2026-W33',
+    });
+    const base = planWeek({ dates, slots, themesConfig, profiles, weekId: '2026-W33' });
+
+    const favored = (plan) => plan.filter((p) => ['App1', 'App2', 'App3'].includes(p.repo)).length;
+    assert.ok(favored(boosted) >= favored(base), `評価を上げたのに増えていません（${favored(base)} → ${favored(boosted)}）`);
+});
+
+test('アプリの評価は型の評価より効きが弱い', () => {
+    // アプリは52件ある。1件の「よかった」で順番が大きく動くと、
+    // 反応を1つ押しただけで同じアプリばかり出るようになってしまう。
+    const profiles = makeProfiles(40);
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles,
+        repoFeedback: { App1: { good: 5, bad: 0 } },
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.filter((p) => p.repo === 'App1').length <= 1, true);
+});
+
+test('「いまいち」が積み重なっても、重みが0や負にならない', () => {
+    // 負の重みが混ざると pickWeighted の合計がおかしくなり、選択そのものが壊れる。
+    const profiles = makeProfiles(10);
+    const plan = planWeek({
+        dates,
+        slots,
+        themesConfig,
+        profiles,
+        feedback: Object.fromEntries(themesConfig.themes.map((t) => [t.id, { good: 0, bad: 100 }])),
+        repoFeedback: Object.fromEntries(profiles.map((p) => [p.name, { good: 0, bad: 100 }])),
+        weekId: '2026-W33',
+    });
+    assert.equal(plan.length, 14);
+    assert.ok(plan.every((p) => p.repo && p.theme));
+});

@@ -14,7 +14,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { ROOT, paths, readJson, rel } from './lib/io.mjs';
+import { shellFilesOf, versionOf } from './build-sw.mjs';
+import { ROOT, paths, readJson, readText, rel } from './lib/io.mjs';
+import { inspectCard, readHeader } from './lib/png.mjs';
+import { CARD_SIZE } from './lib/card-template.mjs';
 
 const issues = [];
 
@@ -38,6 +41,7 @@ const REQUIRED = [
     'config/themes.json',
     'config/guardrails.json',
     'config/monetization.json',
+    'config/media.json',
     'scripts/lib/jst.mjs',
     'docs/index.html',
     'docs/app.js',
@@ -46,6 +50,14 @@ const REQUIRED = [
     'docs/offline.html',
     'docs/manifest.webmanifest',
     'docs/install-hook.js',
+    'docs/apps.html',
+    'docs/apps.css',
+    'docs/lib/jst-client.js',
+    'docs/lib/select.js',
+    'docs/lib/state.js',
+    'docs/lib/format.js',
+    'docs/lib/x-length.js',
+    'docs/lib/feedback-payload.js',
     '.github/workflows/weekly.yml',
     '.github/workflows/daily-notify.yml',
     '.github/workflows/deploy-pages.yml',
@@ -103,12 +115,18 @@ const DATE_FROM_RAW_NOW = [
     /\.toISOString\(\)\s*\.split\s*\(\s*['"]T['"]/,
 ];
 
-for (const file of walk(path.join(ROOT, 'scripts'))) {
-    if (!file.endsWith('.mjs')) continue;
-    // 2つだけ例外がある。
-    //   jst.mjs          … JST を定義している本人。ここで new Date() を使うのは当たり前
-    //   check-project.mjs … 検査の正規表現そのものを含むので、必ず自分に当たる
+// ⚠️ docs/ も歩く。
+//    以前は scripts/ しか見ていなかったので、docs/app.js の
+//    `jst.toISOString().slice(0, 10)` が素通りしていた（+9h を足してあるので
+//    結果は正しかったが、誰かが将来そこを触っても誰も気づけない状態だった）。
+for (const file of [...walk(path.join(ROOT, 'scripts')), ...walk(path.join(ROOT, 'docs'))]) {
+    if (!file.endsWith('.mjs') && !file.endsWith('.js')) continue;
+    // 3つだけ例外がある。
+    //   scripts/lib/jst.mjs      … JST を定義している本人。ここで new Date() を使うのは当たり前
+    //   docs/lib/jst-client.js   … ブラウザ側の同じ役目。tests が両者の一致を確かめている
+    //   check-project.mjs        … 検査の正規表現そのものを含むので、必ず自分に当たる
     if (file.endsWith(path.join('lib', 'jst.mjs'))) continue;
+    if (file.endsWith(path.join('lib', 'jst-client.js'))) continue;
     if (file.endsWith(path.join('scripts', 'check-project.mjs'))) continue;
 
     const text = fs.readFileSync(file, 'utf8');
@@ -171,17 +189,37 @@ try {
  * 学校のネットワークは CDN を塞いでいることがある。
  * このフリート共通の方針でもある。 */
 
-try {
-    const html = fs.readFileSync(paths.docs('index.html'), 'utf8');
-    if (!/Content-Security-Policy/i.test(html)) {
-        warn('NO_CSP', 'CSP の指定がありません', 'docs/index.html');
+// ⚠️ 見るのは「読みこむもの」だけ。<a href> のリンク先は対象外にする。
+//    アプリ一覧ページは各アプリへのリンクが本体なので、
+//    href をまとめて弾くと 52 件ぜんぶがエラーになって検査そのものが使えなくなる。
+//    読みこむのは src=... と、<link ...> の href（スタイルシートなど）である。
+const LOADS_EXTERNAL = [
+    /\bsrc\s*=\s*"https?:\/\/[^"]+"/gi,
+    /<link\b[^>]*\bhref\s*=\s*"https?:\/\/[^"]+"[^>]*>/gi,
+    /@import\s+(?:url\()?["']https?:\/\//gi,
+];
+
+for (const name of ['index.html', 'apps.html', 'offline.html']) {
+    const html = readText(paths.docs(name), null);
+    if (html === null) continue; // 無いことは 1. で報告ずみ
+
+    // offline.html は圏外で出す最小の画面。CSP を持たない代わりに外部も読まない。
+    if (name !== 'offline.html' && !/Content-Security-Policy/i.test(html)) {
+        warn('NO_CSP', 'CSP の指定がありません', `docs/${name}`);
     }
-    const external = html.match(/(?:src|href)="https?:\/\/[^"]+"/g) ?? [];
-    for (const hit of external) {
-        error('EXTERNAL_ASSET', `外部から読みこんでいます（${hit}）。同梱してください`, 'docs/index.html');
+    for (const re of LOADS_EXTERNAL) {
+        for (const hit of html.match(re) ?? []) {
+            error('EXTERNAL_ASSET', `外部から読みこんでいます（${hit.slice(0, 120)}）。同梱してください`, `docs/${name}`);
+        }
     }
-} catch {
-    // ファイルが無いことは 1. で報告ずみ
+
+    // 相対パスで指しているファイルが実在するか。綴りを1文字まちがえると白い画面になる。
+    for (const hit of html.matchAll(/(?:src|href)\s*=\s*"(?!https?:|data:|#|mailto:)([^"]+)"/gi)) {
+        const target = paths.docs(hit[1].split(/[?#]/)[0]);
+        if (!fs.existsSync(target)) {
+            error('BROKEN_LOCAL_REF', `参照先が見つかりません（${hit[1]}）`, `docs/${name}`);
+        }
+    }
 }
 
 /* ── 7. Service Worker が launcher.json をキャッシュしていないか ──
@@ -200,6 +238,176 @@ try {
     }
 } catch {
     // 1. で報告ずみ
+}
+
+/* ── 8. Service Worker のシェルが実在し、版が中身と合っているか ──
+ * cache.addAll は1つでも 404 があると全部失敗する（sw.js 自身がそう警告している）。
+ * そして VERSION がシェルの中身とずれていると、直した画面が端末に届かない。
+ * どちらも「動いているように見えるのに直っていない」という、いちばん時間を溶かす壊れ方をする。 */
+
+try {
+    const sw = fs.readFileSync(paths.docs('sw.js'), 'utf8');
+    const files = shellFilesOf(sw, paths.docs());
+
+    const missing = files.filter(({ file }) => !fs.existsSync(file));
+    for (const { entry } of missing) {
+        error('SW_SHELL_MISSING', `SHELL の "${entry}" がありません。1つでも欠けると addAll が全部失敗します`, 'docs/sw.js');
+    }
+
+    if (missing.length === 0) {
+        const expected = versionOf(files);
+        const current = /const VERSION = '([^']*)';/.exec(sw)?.[1];
+        if (current !== expected) {
+            error(
+                'SW_VERSION_STALE',
+                `VERSION が中身と合っていません（いま ${current} / あるべき ${expected}）。\`npm run build:sw\` を実行してください`,
+                'docs/sw.js'
+            );
+        }
+    }
+} catch (e) {
+    error('SW_UNREADABLE', e.message, 'docs/sw.js');
+}
+
+/* ── 9. 画像とアイコンが実在するか ────────────────────
+ * launcher.json が指す画像が 404 だと、共有シートに画像が乗らない。
+ * しかも画面には何も出ないので、気づくのは投稿したあとになる。 */
+
+const launcher = readJson(paths.docs('launcher.json'), null);
+if (launcher) {
+    const seen = new Set();
+    for (const post of launcher.posts ?? []) {
+        for (const src of post.mediaList ?? (post.media ? [post.media] : [])) {
+            if (seen.has(src)) continue;
+            seen.add(src);
+            if (!fs.existsSync(paths.docs(src))) {
+                error('MISSING_MEDIA', `launcher.json が指す画像がありません（${src} / ${post.id}）`, 'docs/launcher.json');
+            }
+        }
+    }
+}
+
+try {
+    const manifest = readJson(paths.docs('manifest.webmanifest'));
+    for (const icon of manifest.icons ?? []) {
+        if (!fs.existsSync(paths.docs(icon.src))) {
+            error('MISSING_ICON', `アイコンがありません（${icon.src}）。ホーム画面に追加できなくなります`, 'docs/manifest.webmanifest');
+        }
+    }
+} catch {
+    // 1. で報告ずみ
+}
+
+/* ── 10. カード画像が壊れていないか ──────────────────
+ * MANUAL に「画像が真っ白／文字が □□□ になる」が既知の症状として書いてあるのに、
+ * 確かめる手段が1つも無かった。52枚ぜんぶ真っ白でも撮影は「成功」として終わる。 */
+
+if (fs.existsSync(paths.media())) {
+    const cards = fs.readdirSync(paths.media()).filter((f) => /-card(-\d)?\.png$/.test(f));
+    let blank = 0;
+    for (const name of cards) {
+        const buffer = fs.readFileSync(paths.media(name));
+        const header = readHeader(buffer);
+        if (!header) {
+            error('BROKEN_PNG', 'PNG として読めません', `docs/media/${name}`);
+            continue;
+        }
+        if (header.width !== CARD_SIZE.width || header.height !== CARD_SIZE.height) {
+            error(
+                'CARD_SIZE_MISMATCH',
+                `${header.width}×${header.height} です（紹介カードは ${CARD_SIZE.width}×${CARD_SIZE.height}）`,
+                `docs/media/${name}`
+            );
+            continue;
+        }
+        if (inspectCard(buffer, { expect: CARD_SIZE }).blank) {
+            blank += 1;
+            error('BLANK_CARD', 'ほぼ単色です。日本語フォントか描画待ちを疑ってください', `docs/media/${name}`);
+        }
+    }
+    if (cards.length === 0) warn('NO_CARDS', '紹介カードが1枚もありません（`npm run media`）', 'docs/media');
+    void blank;
+
+    // 撮れていないアプリの一覧。失敗ではないが、把握できないままなのは困る。
+    const mediaManifest = readJson(paths.media('manifest.json'), null);
+    if (mediaManifest) {
+        const notShot = Object.entries(mediaManifest.apps ?? {}).filter(([, v]) => v.shot?.ok === false);
+        if (notShot.length > 0) {
+            warn(
+                'NO_SCREENSHOT',
+                `${notShot.length} 件のアプリは画面を撮れていません（文字だけのカードになります）: ${notShot.map(([n]) => n).join(', ')}`,
+                'docs/media/manifest.json'
+            );
+        }
+    }
+}
+
+/* ── 11. 生成物の形が壊れていないか ──────────────────
+ * feedback.json / history.json は無くてもよい（まだ一度も動いていないだけ）。
+ * あるのに形が違うときだけ落とす。壊れたまま生成に食われると、
+ * 「なぜか毎週同じアプリばかり出る」という気づきにくい症状になる。 */
+
+const feedback = readJson(paths.data('feedback.json'), null);
+if (feedback) {
+    if (typeof feedback.posts !== 'object' || typeof feedback.themes !== 'object') {
+        error('BROKEN_FEEDBACK', 'posts と themes が要ります（scripts/collect-feedback.mjs が作ります）', 'data/feedback.json');
+    } else {
+        try {
+            const themeIds = new Set(readJson(paths.config('themes.json')).themes.map((t) => t.id));
+            const unknown = Object.keys(feedback.themes).filter((id) => !themeIds.has(id));
+            if (unknown.length > 0) {
+                warn(
+                    'STALE_FEEDBACK_THEME',
+                    `config/themes.json に無い型の記録が残っています（${unknown.join(', ')}）。生成には効きませんが、消してよいものです`,
+                    'data/feedback.json'
+                );
+            }
+        } catch {
+            // themes.json の壊れは 5. で報告ずみ
+        }
+    }
+}
+
+const history = readJson(paths.data('history.json'), null);
+if (history && !Array.isArray(history.posts)) {
+    error('BROKEN_HISTORY', 'posts が配列ではありません（scripts/archive-history.mjs が作ります）', 'data/history.json');
+}
+
+/* ── 12. package.json と実行環境の食い違い ────────────
+ * `node --run` は Node 22 で入った機能である。engines が ">=20" のまま使うと、
+ * Node 20 の環境で npm run が落ちる。CI は serve を実行しないので、
+ * この食い違いは誰にも検出されないまま README に載りつづける（実際にそうなっていた）。 */
+
+try {
+    const pkg = readJson(path.join(ROOT, 'package.json'));
+    const engine = pkg.engines?.node ?? '';
+    const major = Number(/(\d+)/.exec(engine)?.[1] ?? 0);
+
+    for (const [name, command] of Object.entries(pkg.scripts ?? {})) {
+        if (major > 0 && major < 22 && /\bnode --run\b/.test(command)) {
+            error(
+                'NODE_FEATURE_TOO_NEW',
+                `scripts.${name} が \`node --run\` を使っていますが、これは Node 22 以降の機能です（engines.node は "${engine}"）`,
+                'package.json'
+            );
+        }
+    }
+
+    // ワークフローが使う Node の版が engines を下回っていないか。
+    for (const file of walk(path.join(ROOT, '.github', 'workflows'))) {
+        const yaml = fs.readFileSync(file, 'utf8');
+        for (const hit of yaml.matchAll(/node-version:\s*'?(\d+)/g)) {
+            if (major > 0 && Number(hit[1]) < major) {
+                error(
+                    'NODE_VERSION_TOO_OLD',
+                    `node-version: ${hit[1]} は package.json の engines.node（"${engine}"）を下回っています`,
+                    rel(file)
+                );
+            }
+        }
+    }
+} catch (e) {
+    error('CONFIG_UNREADABLE', e.message, 'package.json');
 }
 
 /* ── 出力 ─────────────────────────────────────── */

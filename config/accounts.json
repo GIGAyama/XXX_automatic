@@ -27,6 +27,9 @@
   "_includeForks": "フォークは他人の成果物なので既定では題材にしない。",
   "includeForks": false,
 
+  "_feedbackAuthors": "「反応よかった」の記録（labels:feedback の Issue）を取り込んでよい GitHub アカウント。githubOwner は常に許可される。このリポジトリは公開されていて Issue は誰でも立てられるので、確かめずに取り込むと第三者が翌週の生成の重み付けを動かせてしまう。ふだんは空でよい。別のアカウントからも送りたいときだけ足す。",
+  "feedbackAuthors": [],
+
   "_geminiModel": "無料枠で使えるモデル。1日あたりのリクエスト数に上限があるため、プロフィール生成はコミット SHA でキャッシュして無駄打ちを避けている。",
   "geminiModel": "gemini-2.5-flash"
 }

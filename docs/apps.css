@@ -1,0 +1,132 @@
+/*
+ * アプリ一覧ページの見た目。
+ *
+ * ⚠️ このファイルは手で書く。生成しない。
+ *    apps.html は毎週作りなおされるので、見た目まで生成物にすると
+ *    「色を1つ直したいだけなのにスクリプトを読む」ことになる。
+ *
+ * ⚠️ apps.html は index.html と同じ CSP（style-src 'self'）を持つ。
+ *    インラインの <style> は使えないので、必ずここに書くこと。
+ *
+ * 前提: 投稿からの着地先。初めて来た人が「自分の教科のものがあるか」を
+ * 数秒で判断できることだけを考える。JS は使わない。
+ */
+
+:root {
+  --bg: #f4f6f9;
+  --card: #ffffff;
+  --ink: #1a2233;
+  --ink-weak: #5c6b82;
+  --line: #dfe5ee;
+  --accent: #1d3557;
+  --radius: 16px;
+  --shadow: 0 2px 10px rgba(20, 35, 60, .07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12161d;
+    --card: #1b212b;
+    --ink: #e8edf5;
+    --ink-weak: #97a4b8;
+    --line: #2c3542;
+    --accent: #7aa5d8;
+    --shadow: 0 2px 10px rgba(0, 0, 0, .35);
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif;
+  line-height: 1.75;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+.wrap { max-width: 900px; margin-inline: auto; padding: 0 16px 40px; }
+
+/* ── 見出し ───────────────────────────────── */
+.head { padding: 28px 0 8px; }
+.head h1 { margin: 0; font-size: 25px; font-weight: 800; letter-spacing: .01em; }
+.head p { margin: 8px 0 0; color: var(--ink-weak); font-size: 14.5px; }
+
+/* ── 教科への飛び先 ───────────────────────── */
+.jump { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0 8px; }
+.jump a {
+  display: inline-block; padding: 7px 14px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: var(--card);
+  color: var(--ink-weak); text-decoration: none; font-size: 13.5px; font-weight: 700;
+}
+.jump a:hover, .jump a:focus-visible { border-color: var(--accent); color: var(--accent); }
+
+/* ── 教科のかたまり ───────────────────────── */
+.group { padding-top: 26px; scroll-margin-top: 12px; }
+.group__title {
+  margin: 0 0 4px; font-size: 19px; font-weight: 800;
+  display: flex; align-items: center; gap: 10px;
+}
+.group__mark { width: 14px; height: 14px; border-radius: 4px; flex: none; background: #2bcbba; }
+
+/*
+ * 教科の色。scripts/lib/card-template.mjs の SUBJECT_COLORS と同じ値。
+ * 投稿カードと一覧で色が違うと、同じアプリだと分からなくなる。
+ * gN の番号は build-apps-page.mjs の SUBJECT_ORDER の並びに対応する。
+ * ここを style 属性で書かないのは、CSP の style-src 'self' が属性も止めるためである。
+ */
+.group__mark--g0 { background: #ff6b81; } /* 国語 */
+.group__mark--g1 { background: #ff9f43; } /* 算数 */
+.group__mark--g2 { background: #26de81; } /* 理科 */
+.group__mark--g3 { background: #fd9644; } /* 社会 */
+.group__mark--g4 { background: #a55eea; } /* 英語 */
+.group__mark--g5 { background: #f7b731; } /* 音楽 */
+.group__mark--g6 { background: #45aaf2; } /* 体育 */
+.group__mark--g7 { background: #4b7bec; } /* 学級経営 */
+.group__mark--g8 { background: #778ca3; } /* 校務 */
+.group__mark--g9 { background: #2bcbba; } /* その他 */
+.group__count { font-size: 13px; font-weight: 700; color: var(--ink-weak); }
+
+.grid {
+  list-style: none; margin: 14px 0 0; padding: 0;
+  display: grid; gap: 14px; grid-template-columns: 1fr;
+}
+@media (min-width: 620px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+/* ── 1つのアプリ ──────────────────────────── */
+.app {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column;
+}
+.app__thumb {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.app__body { padding: 13px 15px 15px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.app__name { margin: 0; font-size: 16.5px; font-weight: 800; line-height: 1.45; }
+.app__one { margin: 0; font-size: 14px; color: var(--ink-weak); }
+.app__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.app__tag {
+  font-size: 11.5px; font-weight: 700; color: var(--ink-weak);
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px;
+}
+.app__links { display: flex; gap: 8px; margin-top: auto; padding-top: 8px; flex-wrap: wrap; }
+.app__links a {
+  flex: 1 1 auto; text-align: center; text-decoration: none;
+  border-radius: 10px; padding: 9px 12px; font-size: 14px; font-weight: 800;
+  min-height: 42px; display: inline-flex; align-items: center; justify-content: center;
+}
+.app__open { background: var(--accent); color: #fff; }
+.app__code { background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); }
+.app__nopages { font-size: 12.5px; color: var(--ink-weak); margin: 0; }
+
+/* ── 脚注 ────────────────────────────────── */
+.foot { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-weak); font-size: 12.5px; }
+.foot a { color: inherit; }

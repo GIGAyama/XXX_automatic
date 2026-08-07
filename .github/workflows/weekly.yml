@@ -23,6 +23,8 @@ on:
 
 permissions:
   contents: write
+  # 反応の記録（labels:feedback の Issue）を読んで、取り込んだら閉じるために要る。
+  issues: write
 
 concurrency:
   group: weekly
@@ -102,6 +104,25 @@ jobs:
       - name: Chromium を入れる
         run: npx playwright install --with-deps chromium
 
+      # ⓪ と ⓪' は「先週までの結果」を翌週の材料にするための工程。
+      # ここが無かったあいだ、README の「⑦ 記録」も rotation の設定も、
+      # 書いてあるだけで実際には何も起きていなかった。
+      #
+      # 反応の記録は、取れなくても翌週の下書きは作れる。
+      # 逆に下書きが作れないと発信そのものが止まる。だからここは続行にする。
+      # （スクリプト自身は CLAUDE.md §6 のとおり、失敗を stderr に出して 1 で終わる。
+      #   止めるかどうかの判断はワークフロー側の仕事なので、それをここに書いている。）
+      - name: ⓪ 反応の記録を取り込む（失敗しても続行）
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run feedback
+
+      # こちらは続行にしない。落ちると週をまたいだ重複回避が黙って効かなくなり、
+      # 「なぜか先週と同じアプリばかり出る」という気づきにくい壊れ方をする。
+      - name: ⓪' 終わった週を履歴に移す
+        run: npm run archive
+
       - name: ① 収集 — リポジトリの素材を集める
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -128,8 +149,14 @@ jobs:
       - name: 検査 — ガードレール
         run: npm run lint:drafts
 
-      - name: ⑤ ランチャー用のデータを組む
-        run: npm run build:index
+      # build:index（ランチャー用データ）→ build:apps（アプリ一覧）→ build:sw（キャッシュの版）。
+      # build:sw は最後でなければならない。版はシェルの中身から計算するので、
+      # 先に走らせると直したはずの画面が端末に届かない。
+      - name: ⑤ ランチャー用のデータとアプリ一覧を組む
+        run: npm run build
+
+      - name: 検査 — 品質ゲート
+        run: npm run check
 
       - name: コミットする
         run: |
