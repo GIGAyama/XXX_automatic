@@ -68,6 +68,9 @@ function toLauncherPost(post, weekId, maxLength, placement = 'reply', gate = nul
             .map((a) => ({ body: a.body, thread: a.thread ?? [] })),
         pickReason: post.pickReason ?? null,
         hook: post.hook ?? null,
+        // 出しなおしかどうか。画面で分かるようにしておかないと、
+        // 「前も見た気がする」が不安（同じものを二度出してしまったのでは）になる。
+        reprise: post.reprise ?? null,
     };
 }
 

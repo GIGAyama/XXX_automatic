@@ -103,6 +103,8 @@ body {
 .chip--len { margin-left: auto; font-variant-numeric: tabular-nums; }
 .chip--len.is-over { background: #ffe8e8; border-color: #f3b6b6; color: #a52020; }
 .chip--edited { background: #fff3e0; border-color: #f0cf9c; color: #8a5a12; }
+/* 出しなおし。反応がよかったものを日を置いて別の言い方で出す枠 */
+.chip--reprise { background: #eef7ee; border-color: #b7d9b7; color: #2f6b34; }
 .chip--sent { align-self: center; }
 
 /*

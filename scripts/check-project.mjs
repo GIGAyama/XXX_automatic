@@ -19,6 +19,7 @@ import { describeModel, readPolicy } from './lib/gemini-models.mjs';
 import { ROOT, paths, readJson, readText, rel } from './lib/io.mjs';
 import { isoWeekId, jstDateString, nextWeekDates } from './lib/jst.mjs';
 import { extractUrls } from './lib/x-text.mjs';
+import { KEEP_WEEKS } from './archive-history.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
 
@@ -577,6 +578,35 @@ try {
     }
 } catch (e) {
     error('CONFIG_UNREADABLE', e.message, 'config/accounts.json');
+}
+
+/* ── 18. 中間ファイルが溜まりすぎていないか ────────────
+ *
+ * data/queue・data/note・data/trends には、週に3〜4ファイルずつ増えていく。
+ * 消す処理はいま archive-history.mjs にあるが、それが動かなくなっても
+ * 誰も気づかない（増えるだけで、何も壊れないため）。
+ * 毎週コミットするので、気づかないうちにリポジトリが重くなる。 */
+
+{
+    const weeks = new Set();
+    for (const dir of ['queue', 'note', 'trends']) {
+        const at = paths.data(dir);
+        if (!fs.existsSync(at)) continue;
+        for (const name of fs.readdirSync(at)) {
+            const m = /^(\d{4}-W\d{2})\./.exec(name);
+            if (m) weeks.add(m[1]);
+        }
+    }
+
+    // KEEP_WEEKS（26）に、掃除が1〜2回落ちたぶんの余裕を足した線。
+    if (weeks.size > 30) {
+        warn(
+            'DATA_PILING_UP',
+            `週ごとの中間ファイルが ${weeks.size} 週ぶん残っています（${KEEP_WEEKS} 週で消えるはずです）。` +
+                '`npm run archive` が動いていない可能性があります',
+            'data/'
+        );
+    }
 }
 
 /* ── 17. 通知が枠のぶんだけあるか ──────────────────

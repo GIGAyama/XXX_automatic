@@ -52,6 +52,7 @@ function daysBetween(a, b) {
  * @param {object[]} input.history        data/history.json の posts
  * @param {object} input.feedback         data/feedback.json の themes（型ごとの評価）
  * @param {object} input.repoFeedback     data/feedback.json の repos（アプリごとの評価）
+ * @param {object} input.postFeedback     data/feedback.json の posts（投稿ごとの評価）
  * @param {string} input.weekId           'YYYY-Www'
  * @returns {object[]} 割り当て済みの投稿枠
  */
@@ -63,6 +64,7 @@ export function planWeek({
     history = [],
     feedback = {},
     repoFeedback = {},
+    postFeedback = {},
     weekId,
 }) {
     const random = seededRandom(weekId);
@@ -107,14 +109,48 @@ export function planWeek({
 
     const plan = [];
 
+    // ── 再放送する1本を先に決める ────────────────────
+    // 反応がよかった投稿を、日を置いてもう一度出す。
+    // 落選案（そのとき選ばれなかったほうの案）を本文にするので、同じ文章にはならない。
+    // 先に決めるのは、そのアプリを週の他の枠で使わないようにするためである。
+    const reprise = pickReprise({ history, postFeedback, dates, rotation, random });
+
     // その週にもう使ったアプリ。
     // noSameRepoWithinDays（既定4日）だけだと、月曜に出したアプリが金曜に戻ってこられる。
     // 1週間に同じアプリが2回出ると、それだけでネタが尽きたように見える。
     // 使えるアプリが足りているあいだは、週内での重複そのものを避ける。
     const usedThisWeek = new Set();
+    if (reprise) usedThisWeek.add(reprise.repo);
+
+    // 再放送を入れる枠。週の真ん中あたりに置く（月曜は新しいものから始めたい）。
+    const repriseAt = reprise ? Math.floor(random() * dates.length * slots.length) : -1;
+    let cursor = -1;
 
     for (const date of dates) {
         for (const slot of slots) {
+            cursor += 1;
+
+            if (cursor === repriseAt && reprise) {
+                plan.push({
+                    id: `${date}-${slot.id}`,
+                    date,
+                    weekday: weekdayLabelOf(date),
+                    slot: slot.id,
+                    slotLabel: slot.label,
+                    hour: slot.hour,
+                    minute: slot.minute ?? 0,
+                    theme: reprise.theme,
+                    themeLabel: themesConfig.themes.find((t) => t.id === reprise.theme)?.label ?? reprise.theme,
+                    themeIntent: '',
+                    themeStructure: '',
+                    repo: reprise.repo,
+                    // この枠は生成しない。過去の落選案をそのまま本文にする。
+                    reprise,
+                });
+                used.push({ date, repo: reprise.repo, theme: reprise.theme });
+                continue;
+            }
+
             // ── 型を選ぶ ────────────────────────────────
             let themeCandidates = themesConfig.themes.filter((t) => lastUsedTheme(t.id, date) >= noSameTheme);
             if (themeCandidates.length === 0) themeCandidates = themesConfig.themes;
@@ -180,6 +216,52 @@ export function planWeek({
     }
 
     return plan;
+}
+
+/**
+ * 再放送する1本を選ぶ。
+ *
+ * なぜ再放送するのか:
+ *   タイムラインは流れる。1回出しただけでは、フォロワーの大半は見ていない。
+ *   反応がよかったものをもう一度出すのは、いちばん確実に効く1本である。
+ *   しかも材料はすでに手元にある——そのとき選ばれなかった案（alternatives）を
+ *   本文にすれば、生成を1回も呼ばずに1枠が埋まる。
+ *
+ * 選ぶ条件:
+ *   ・「反応よかった」が付いている（本人がそう判断したものだけ）
+ *   ・repriseAfterDays（既定30日）以上前に出した
+ *   ・落選案が残っている（同じ文章をそのまま出さないため）
+ *
+ * 該当が無ければ null。無い週は、いままでどおり全枠を生成する。
+ */
+export function pickReprise({ history, postFeedback, dates, rotation = {}, random = Math.random }) {
+    const afterDays = rotation.repriseAfterDays ?? 30;
+    if (afterDays <= 0) return null;
+
+    const candidates = (history ?? []).filter((post) => {
+        if (postFeedback?.[post.id]?.rating !== 'good') return false;
+        if (!post.body || !post.repo) return false;
+        // 同じ文章をそのまま出さない。別の案を持っているものだけを対象にする。
+        if (!(post.alternatives ?? []).some((a) => a?.body)) return false;
+        return daysBetween(post.date, dates[0]) >= afterDays;
+    });
+
+    if (candidates.length === 0) return null;
+
+    // 古いものほど選ばれやすくする。同じ1本が毎週戻ってくるのを避けるため。
+    const picked = pickWeighted(candidates, (p) => Math.min(daysBetween(p.date, dates[0]), 180), random);
+    const alt = (picked.alternatives ?? []).find((a) => a?.body);
+
+    return {
+        ofId: picked.id,
+        ofDate: picked.date,
+        repo: picked.repo,
+        theme: picked.theme,
+        hook: picked.hook ?? null,
+        body: alt.body,
+        thread: alt.thread ?? [],
+        hashtags: picked.hashtags ?? [],
+    };
 }
 
 function isRecentlyUpdated(profile, onDate, withinDays) {

@@ -193,6 +193,9 @@ function postCard(post, saved, today) {
   );
   const lenChip = chip(`${length}/${MAX_WEIGHTED_LENGTH}`, 'chip--len' + (length > MAX_WEIGHTED_LENGTH ? ' is-over' : ''));
   meta.append(lenChip);
+  // 出しなおしだと分かるようにする。黙って出すと「前も見た気がする」が
+  // 「同じものを二度出してしまったのでは」という不安になる。
+  if (post.reprise) meta.append(chip(`出しなおし（${formatDate(post.reprise.ofDate)}）`, 'chip--reprise'));
   if (saved.editedText) meta.append(chip('手直しずみ', 'chip--edited'));
   card.append(meta);
 
