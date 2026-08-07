@@ -105,7 +105,12 @@ body {
 .chip--edited { background: #fff3e0; border-color: #f0cf9c; color: #8a5a12; }
 .chip--sent { align-self: center; }
 
-.card__img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; margin-top: 12px; background: var(--bg); }
+/*
+ * 紹介カードは 1200×675（16:9）。共有する絵そのものなので、全体が見えないと
+ * 「何を出そうとしているのか」が分からない。切り取らない。
+ * height: auto と object-fit: contain の理由は docs/apps.css に詳しく書いてある。
+ */
+.card__img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; margin-top: 12px; background: var(--bg); }
 /* 画像が欠けたときに、壊れたアイコンではなく理由を出す枠 */
 .card__img--missing {
   display: flex; align-items: center; justify-content: center; text-align: center;

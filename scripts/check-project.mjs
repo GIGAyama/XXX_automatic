@@ -374,7 +374,55 @@ if (history && !Array.isArray(history.posts)) {
     error('BROKEN_HISTORY', 'posts が配列ではありません（scripts/archive-history.mjs が作ります）', 'data/history.json');
 }
 
-/* ── 13. Gemini のモデル設定 ────────────────────────
+/* ── 13. 画像が切り取られる形になっていないか ──────────
+ *
+ * <img> の width / height 属性は、CSS で height を指定しないかぎり
+ * 「その高さのボックス」として効いてしまう。幅と高さが両方決まった時点で
+ * aspect-ratio は無視されるので、16:9 のつもりが縦長の枠になり、
+ * 紹介カードが中央だけ切り取られて何のアプリか分からなくなる（実際にそうなった）。
+ *
+ * 属性そのものは、読み込み前に場所を確保して画面が飛び跳ねないようにするために要る。
+ * 消すべきは属性ではなく、CSS 側の height の指定漏れである。 */
+
+{
+    // docs/*.html から「class と height 属性を両方持つ img」を集める
+    const withHeightAttr = new Map(); // class名 → 見つけた場所
+    for (const name of ['index.html', 'apps.html', 'offline.html']) {
+        const html = readText(paths.docs(name), null);
+        if (html === null) continue;
+        for (const tag of html.match(/<img\b[^>]*>/gi) ?? []) {
+            if (!/\bheight\s*=\s*["']?\d/.test(tag)) continue;
+            const className = /\bclass\s*=\s*"([^"]+)"/.exec(tag)?.[1] ?? '';
+            for (const cls of className.split(/\s+/).filter(Boolean)) {
+                if (!withHeightAttr.has(cls)) withHeightAttr.set(cls, `docs/${name}`);
+            }
+        }
+    }
+
+    for (const [cls, where] of withHeightAttr) {
+        for (const cssName of ['style.css', 'apps.css']) {
+            const css = readText(paths.docs(cssName), null);
+            if (css === null) continue;
+
+            // そのクラスだけを対象にした宣言ブロックを探す
+            const rule = new RegExp(`\\.${cls.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')}\\s*\\{([^}]*)\\}`).exec(css);
+            if (!rule) continue;
+            const block = rule[1];
+
+            if (/aspect-ratio\s*:/.test(block) && !/(^|[;{\s])height\s*:/.test(block)) {
+                error(
+                    'IMAGE_CROPPED',
+                    `.${cls} が aspect-ratio を持っていますが height を指定していません。` +
+                        `${where} の <img> に height 属性があるため、そちらが効いて縦長の枠になり、画像が切り取られます。` +
+                        '`height: auto;` を足してください',
+                    `docs/${cssName}`
+                );
+            }
+        }
+    }
+}
+
+/* ── 14. Gemini のモデル設定 ────────────────────────
  * ここが変だと、週次が走ってはじめて分かる（しかも生成の直前まで進んでから落ちる）。
  * 形だけは先に見ておく。 */
 
