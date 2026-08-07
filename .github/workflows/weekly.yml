@@ -80,6 +80,15 @@ jobs:
           MSG
           exit 1
 
+      # 「登録されているが値が正しくない」はここでしか捕まえられない。
+      # シークレットの有無だけ見て先へ進むと、リポジトリの数だけ同じ 400 が並び、
+      # 本当の理由がその繰り返しに埋もれる（実際にそうなった）。
+      # 1回だけ小さく投げて、2秒で決着させる。
+      - name: Gemini API が本当に使えるか確かめる
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/check-gemini.mjs
+
       - name: 依存を入れる
         run: npm ci
 

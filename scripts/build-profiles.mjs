@@ -179,8 +179,11 @@ async function main() {
             await sleep(4000);
         } catch (error) {
             failed += 1;
-            failures.push(`${repo.name}: ${error.message.split('\n')[0]}`);
-            console.error(`   ✖ ${label} — ${error.message.split('\n')[0]}`);
+            // 1件ごとの行は短く畳む。全文は最後にまとめて1回だけ出す。
+            // ⚠️ split('\n')[0] にしないこと。Google のエラーは整形済み JSON で返るため、
+            //    1行目だけ取ると「Gemini API 400: {」になって理由が消える。
+            if (failures.length === 0) failures.push(error.message);
+            console.error(`   ✖ ${label} — ${collapse(error.message)}`);
         }
     }
 
@@ -196,8 +199,8 @@ async function main() {
     if (failed > 0 && built === 0) {
         fail(
             `${failed} 件すべてで失敗しました。1件も作れていません。\n` +
-                `  最初の失敗: ${failures[0]}\n` +
-                '  同じ原因が全件に効いている可能性が高いので、まずそこを直してください。'
+                '同じ原因が全件に効いています。最初の失敗の内容をそのまま出します。\n\n' +
+                `${failures[0]}`
         );
     }
 
@@ -210,6 +213,18 @@ async function main() {
     }
 
     info(`   出力先: ${rel(paths.data('profiles'))}/`);
+}
+
+/**
+ * 1件ごとのログ用に短くする。
+ *
+ * エラー文は「見出し（1行）＋空行＋対処の案内（複数行）」の形。
+ * 案内まで全件ぶん並べると、同じ文章が何十回も流れて逆に読めなくなる。
+ * ここでは見出しだけにして、案内は最後に1回だけ出す。
+ */
+function collapse(message, max = 160) {
+    const head = String(message).split('\n\n')[0].replace(/\s+/g, ' ').trim();
+    return head.length > max ? `${head.slice(0, max)}…` : head;
 }
 
 main().catch(failWith);

@@ -126,7 +126,7 @@ async function callGemini(model, body) {
         // 429（レート上限）と 5xx（一時的な障害）だけやり直す。
         // 400 や 403 は何度投げても同じなので、すぐ止めて原因を出す。
         if (response.status === 429 || response.status >= 500) {
-            lastError = new Error(`Gemini API ${response.status}: ${detail.slice(0, 300)}`);
+            lastError = new Error(describeApiError(response.status, detail));
             if (attempt < maxAttempts) {
                 const wait = backoffMs(attempt);
                 console.warn(`  ⏳ Gemini ${response.status}。${wait / 1000}秒待ってやり直します（${attempt}/${maxAttempts - 1}）`);
@@ -134,11 +134,86 @@ async function callGemini(model, body) {
                 continue;
             }
         } else {
-            throw new Error(`Gemini API ${response.status}: ${detail.slice(0, 500)}`);
+            throw Object.assign(new Error(describeApiError(response.status, detail)), { userFacing: true });
         }
     }
 
     throw lastError ?? new Error('Gemini API の呼び出しに失敗しました');
+}
+
+/**
+ * API のエラー応答を、1行で読める形にして原因の見当まで添える。
+ *
+ * ⚠️ 必ず1行に畳むこと。
+ *   Google のエラーは整形済み JSON（複数行）で返る。そのまま扱うと、
+ *   呼び出し側がログを1行にまとめた時点で「Gemini API 400: {」だけが残り、
+ *   肝心の理由が消える。実際にそうなって原因が分からなくなった。
+ */
+export function describeApiError(status, detail) {
+    let message = String(detail ?? '').replace(/\s+/g, ' ').trim().slice(0, 300);
+    let apiStatus = '';
+
+    try {
+        const json = JSON.parse(detail);
+        if (json?.error?.message) {
+            message = String(json.error.message).replace(/\s+/g, ' ').trim();
+            apiStatus = json.error.status ?? '';
+        }
+    } catch {
+        // JSON で返らないこともある。その場合は畳んだ生の本文をそのまま使う。
+    }
+
+    const head = `Gemini API ${status}${apiStatus ? ` (${apiStatus})` : ''}: ${message}`;
+    const hint = hintFor(status, apiStatus, message);
+    return hint ? `${head}\n\n${hint}` : head;
+}
+
+/** よくある失敗に、次にどこを触ればよいかを添える。 */
+function hintFor(status, apiStatus, message) {
+    const text = `${apiStatus} ${message}`.toLowerCase();
+
+    if (text.includes('api key not valid') || text.includes('api_key_invalid') || status === 401) {
+        return [
+            '  → API キーの値が正しくないようです。',
+            '     ・Secret に貼るとき、前後の空白や引用符（" や \'）が混ざっていないか',
+            '     ・https://aistudio.google.com/apikey で作りなおして貼りかえる',
+            '     GitHub: Settings → Secrets and variables → Actions → GEMINI_API_KEY',
+        ].join('\n');
+    }
+
+    if (text.includes('permission') || status === 403) {
+        return [
+            '  → キーはあるが、このAPIを使う権限がありません。',
+            '     Google Cloud のプロジェクトで作ったキーの場合、',
+            '     Generative Language API が有効になっているか確認してください。',
+            '     AI Studio（aistudio.google.com/apikey）で作りなおすのが確実です。',
+        ].join('\n');
+    }
+
+    if (status === 404 || text.includes('not found') || text.includes('is not supported')) {
+        return [
+            '  → モデル名が使えません。',
+            '     config/accounts.json の geminiModel を見なおしてください。',
+            '     例: gemini-2.5-flash / gemini-flash-latest',
+        ].join('\n');
+    }
+
+    if (status === 429 || text.includes('resource_exhausted') || text.includes('quota')) {
+        return [
+            '  → 無料枠の上限に当たりました。',
+            '     1日の上限なら日付が変わるまで待ちます（太平洋時間の0時に戻ります）。',
+            '     急ぐ場合は --limit で件数を分けて実行してください。',
+        ].join('\n');
+    }
+
+    if (status === 400) {
+        return [
+            '  → リクエストが受け付けられませんでした。',
+            '     キーの値が違う場合もここに来ます。まず GEMINI_API_KEY を貼りなおしてみてください。',
+        ].join('\n');
+    }
+
+    return '';
 }
 
 /** 2秒 → 8秒 → 30秒。無料枠の1分あたり上限は1分待てば必ず開くので、最後は長めに待つ。 */
