@@ -119,6 +119,23 @@ export function weekDatesOf(dateString) {
     return Array.from({ length: 7 }, (_, i) => addDays(monday, i));
 }
 
+/**
+ * ISO 週番号から、その週の月曜〜日曜を出す。
+ *
+ * ISO 週の第1週は「1月4日を含む週」と決まっている。
+ * ここを起点にすると、年またぎ（12月末が翌年の第1週になるなど）でもずれない。
+ */
+export function weekDatesOfIsoWeek(year, week) {
+    const jan4 = new Date(Date.UTC(year, 0, 4));
+    const jan4Dow = jan4.getUTCDay() || 7;
+    const week1Monday = new Date(jan4.getTime() - (jan4Dow - 1) * MS_PER_DAY);
+    const monday = new Date(week1Monday.getTime() + (week - 1) * 7 * MS_PER_DAY);
+    return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(monday.getTime() + i * MS_PER_DAY);
+        return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
+    });
+}
+
 function pad(n) {
     return String(n).padStart(2, '0');
 }

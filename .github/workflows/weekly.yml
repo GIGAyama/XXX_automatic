@@ -136,6 +136,14 @@ jobs:
       - name: ③ 素材 — スクリーンショットと紹介カード
         run: node scripts/capture-media.mjs ${{ inputs.force_media && '--force' || '' }}
 
+      # 話題が拾えなくても、行事暦とプロフィールだけで投稿は作れる。
+      # 週の投稿が作れなくなるほうが損失が大きいので、ここは続行にする。
+      - name: ①' いまの話題を調べる（失敗しても続行）
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npm run trends
+
       - name: ④ 生成 — 翌週の X 投稿
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

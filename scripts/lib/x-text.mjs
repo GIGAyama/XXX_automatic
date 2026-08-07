@@ -86,3 +86,69 @@ export function composePost({ body, url, hashtags = [] }) {
     }
     return parts.filter(Boolean).join('\n\n');
 }
+
+/** リンクを置く返信に添える一言。毎回同じだと機械が書いたように見えるので、投稿ごとに変える。 */
+const LINK_LINES = [
+    'アプリはこちらです。ブラウザで開くだけで使えます。',
+    '使ってみたい方はこちらからどうぞ。登録は要りません。',
+    'こちらで公開しています。無料で、そのまま授業で使えます。',
+    '実物はこちらです。インストールは要りません。',
+];
+
+/**
+ * 1つの投稿を「連投の手順」に組み立てる。
+ *
+ * ⚠️ 本文に URL を入れない（urlPlacement が 'reply' のとき）。
+ *    X は本文に外部リンクがある投稿のリーチを大きく下げる。
+ *    Premium でないアカウントだと、ほとんど誰にも表示されない。
+ *    費用の面では本文に入れて困らないが、読まれないなら発信した意味がない。
+ *    本文はリンク無しで書き、リンクは最初の返信に置く。
+ *
+ * @param {object} input
+ * @param {string} input.body        本文（リンクなし）
+ * @param {string[]} [input.thread]  連投で続けるぶん
+ * @param {string} input.url         アプリの URL
+ * @param {string[]} [input.hashtags]
+ * @param {string} [input.placement] 'reply'（既定）か 'body'
+ * @param {number} [input.seed]      添える一言を選ぶための種。同じ投稿なら毎回同じ文になる
+ * @returns {{kind:string,label:string,text:string}[]}
+ */
+export function composeSteps({ body, thread = [], url, hashtags = [], placement = 'reply', seed = 0 }) {
+    const tags = hashtags.map((tag) => (tag.startsWith('#') ? tag : `#${tag}`));
+    const steps = [];
+
+    if (placement === 'body') {
+        // 従来どおり本文に URL を入れる形。リーチは落ちるが、設定で選べるようにしてある。
+        steps.push({ kind: 'main', label: '本文', text: composePost({ body, url, hashtags }) });
+    } else {
+        steps.push({
+            kind: 'main',
+            label: '本文',
+            text: [String(body ?? '').trim(), tags.join(' ')].filter(Boolean).join('\n\n'),
+        });
+    }
+
+    for (const [i, part] of thread.entries()) {
+        const text = String(part ?? '').trim();
+        if (text) steps.push({ kind: 'thread', label: `つづき ${i + 1}`, text });
+    }
+
+    if (placement !== 'body' && url) {
+        const line = LINK_LINES[Math.abs(seed) % LINK_LINES.length];
+        steps.push({ kind: 'link', label: 'リンクの返信', text: `${line}\n${url}` });
+    }
+
+    return steps;
+}
+
+/** 文字列から安定した数を作る。添える一言を投稿ごとに変えるのに使う（毎回同じ投稿なら同じ文になる）。 */
+export function seedFrom(text) {
+    let h = 0;
+    for (let i = 0; i < String(text).length; i += 1) h = (Math.imul(h, 31) + String(text).charCodeAt(i)) | 0;
+    return h;
+}
+
+/** 最初の1行。タイムラインで最初に目に入るのはここだけなので、別に扱う。 */
+export function hookOf(text) {
+    return String(text ?? '').split('\n')[0].trim();
+}

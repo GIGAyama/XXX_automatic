@@ -8,8 +8,23 @@
   "_minChars": "短すぎる投稿は中身が無い。最低ラインを引く。",
   "minPlainChars": 40,
 
-  "_requireUrl": "X API を使わないので本文に URL を入れても費用はかからない。アプリに来てもらうのが目的なので、必ず入れる。",
+  "_requireUrl": "投稿のどこかに必ずアプリの URL を入れる。来てもらうのが目的なので、リンクの無い投稿は作らない。ただし『どこに』入れるかは urlPlacement で決める。",
   "requireUrl": true,
+
+  "_urlPlacement": "URL を本文に入れるか（body）、自分への返信に回すか（reply）。既定は reply。X は本文に外部リンクがある投稿のリーチを大きく下げ、Premium でないアカウントではほとんど表示されない。費用の面では本文に入れて困らないが、読まれないなら意味がない。本文はリンク無しで書き、リンクは最初の返信に置く。ランチャーが『①本文 → ②返信にリンク』の順に案内する。",
+  "urlPlacement": "reply",
+
+  "_replyMaxWeightedLength": "リンクを置く返信の長さ。短く添えるだけにする。",
+  "replyMaxWeightedLength": 140,
+
+  "_threadMaxSteps": "1投稿から伸ばせる連投の数（本文を除く）。長くすると最後まで読まれない。",
+  "threadMaxSteps": 3,
+
+  "_minThreadChars": "連投の1コマが短すぎないか。ぶつ切りにして数だけ増やすのを防ぐ。",
+  "minThreadChars": 25,
+
+  "_hookMaxChars": "最初の1行（フック）の長さ。タイムラインで最初に見えるのはここだけなので、長いと折り返されて何の話か分からなくなる。超えても落とさず、生成時の指示に使う。",
+  "hookMaxChars": 42,
 
   "_maxHashtags": "多いと宣伝色が強くなり読まれない。",
   "maxHashtags": 3,
