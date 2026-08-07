@@ -22,7 +22,7 @@
 import fs from 'node:fs';
 import { chromium } from 'playwright';
 import { CARD_SIZE, buildCardHtml } from './lib/card-template.mjs';
-import { fail, info, loadConfig, parseArgs, paths, readJson, rel } from './lib/io.mjs';
+import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel } from './lib/io.mjs';
 
 const SHOT_SIZE = { width: 1000, height: 1000 };
 
@@ -186,4 +186,4 @@ async function renderCard(browser, profile, repo, screenshotDataUri, cardPath) {
     }
 }
 
-main().catch((error) => fail(error.stack ?? error.message));
+main().catch(failWith);

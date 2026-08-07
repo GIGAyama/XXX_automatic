@@ -15,8 +15,8 @@
  * note のエディタが Markdown 記法をそのまま解釈しないためである。
  * 「## 見出し」を貼ると「## 見出し」という文字列がそのまま残ってしまう。
  */
-import { generateJson } from './lib/gemini.mjs';
-import { fail, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson, writeText } from './lib/io.mjs';
+import { generateJson, requireApiKey } from './lib/gemini.mjs';
+import { fail, failWith, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson, writeText } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates } from './lib/jst.mjs';
 import fs from 'node:fs';
 
@@ -55,6 +55,8 @@ const NOTE_SCHEMA = {
 async function main() {
     const args = parseArgs();
     const { accounts, monetization } = loadConfig();
+
+    requireApiKey();
 
     const weekId = args.week ?? isoWeekId(args['this-week'] ? jstDateString() : nextWeekDates()[0]);
 
@@ -225,4 +227,4 @@ function loadProfiles() {
         .map((f) => readJson(paths.data('profiles', f)));
 }
 
-main().catch((error) => fail(error.stack ?? error.message));
+main().catch(failWith);

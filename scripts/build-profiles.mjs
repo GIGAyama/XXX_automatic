@@ -17,8 +17,8 @@
  *   Gemini を呼ばない。初回だけ 50 回ほど呼び、以降は更新されたものだけになる。
  */
 import fs from 'node:fs';
-import { generateJson, sleep } from './lib/gemini.mjs';
-import { fail, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
+import { generateJson, requireApiKey, sleep } from './lib/gemini.mjs';
+import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 
 /**
  * 出させる形。responseSchema で縛ると、項目の欠けや余計な前置きが混ざらない。
@@ -113,6 +113,10 @@ async function main() {
     const args = parseArgs();
     const { accounts } = loadConfig();
 
+    // 1件目を投げる前に確かめる。キーが無いまま走らせると、
+    // 全リポジトリぶん失敗を繰り返したうえで「完了」と表示され、原因が埋もれる。
+    requireApiKey();
+
     const collected = readJson(paths.data('repos.json'), null);
     if (!collected) fail('data/repos.json がありません。先に `npm run collect` を実行してください。');
 
@@ -127,6 +131,8 @@ async function main() {
     let built = 0;
     let cached = 0;
     let skipped = 0;
+    let failed = 0;
+    const failures = [];
 
     for (const [index, repo] of targets.entries()) {
         const label = `[${index + 1}/${targets.length}] ${repo.name}`;
@@ -172,13 +178,38 @@ async function main() {
             // 連続で投げると 429 を踏んで待ち時間が増えるだけなので、ここで間隔を空ける。
             await sleep(4000);
         } catch (error) {
-            console.error(`   ✖ ${label} — ${error.message}`);
+            failed += 1;
+            failures.push(`${repo.name}: ${error.message.split('\n')[0]}`);
+            console.error(`   ✖ ${label} — ${error.message.split('\n')[0]}`);
         }
     }
 
     info('');
-    info(`② 完了 — 新規/更新 ${built} 件、キャッシュ据え置き ${cached} 件、素材なしで除外 ${skipped} 件`);
+    info(
+        `② 集計 — 新規/更新 ${built} 件、キャッシュ据え置き ${cached} 件、` +
+            `素材なしで除外 ${skipped} 件、失敗 ${failed} 件`
+    );
+
+    // 全滅したときに「完了」と出して次へ進むと、後続の工程が
+    // 「プロフィールが空です」という無関係な顔で落ちる。
+    // 原因が出ている場所で止める。
+    if (failed > 0 && built === 0) {
+        fail(
+            `${failed} 件すべてで失敗しました。1件も作れていません。\n` +
+                `  最初の失敗: ${failures[0]}\n` +
+                '  同じ原因が全件に効いている可能性が高いので、まずそこを直してください。'
+        );
+    }
+
+    if (failed > 0) {
+        info(`   ※ ${failed} 件は失敗しました（成功した ${built} 件で先へ進みます）`);
+    }
+
+    if (built === 0 && cached === 0) {
+        fail('プロフィールが1件もありません。このままでは投稿を作れないのでここで止めます。');
+    }
+
     info(`   出力先: ${rel(paths.data('profiles'))}/`);
 }
 
-main().catch((error) => fail(error.stack ?? error.message));
+main().catch(failWith);

@@ -123,9 +123,24 @@ GitHub Actions の定期実行は混雑時に数十分遅れます。
 
 | 症状 | 原因 | 直しかた |
 |---|---|---|
-| `GEMINI_API_KEY が設定されていません` | Secret 未登録 | Settings → Secrets and variables → Actions に登録 |
+| `GEMINI_API_KEY が設定されていません` | Secret 未登録 | 下の手順で登録 |
 | `Gemini API 429` が続く | 無料枠の1日上限 | 翌日に再実行。`--limit` で分けても可 |
+| `Gemini API 400: API key not valid` | キーの値が違う | Secret を登録しなおす |
 | Pages が 404 | Pages 未有効 | Settings → Pages → Source を GitHub Actions に |
+
+### Gemini API キーを登録する
+
+1. <https://aistudio.google.com/apikey> でキーを作る（無料・カード登録も不要）
+2. **Settings → Secrets and variables → Actions → New repository secret**
+   - **Name**: `GEMINI_API_KEY`（1文字でも違うと空のまま渡ります。コピー推奨）
+   - **Secret**: 1で取ったキー
+3. **Actions →「週次 — 翌週の投稿を用意する」→ Run workflow**
+
+> 週次ワークフローは、何か処理を始める前にこのキーの有無を確かめます。
+> 未登録なら5秒ほどで止まり、上の手順をログに出します。
+> **この確認ステップを消さないでください。** 消すと、収集と依存の用意を全部
+> やったあとで生成に失敗し、しかも失敗がリポジトリの数だけ並ぶため、
+> 本当の原因がログに埋もれます（実際にそうなりました）。
 
 ### 「GitHub Pages へ配信」が2秒で失敗する（ログも出ない）
 

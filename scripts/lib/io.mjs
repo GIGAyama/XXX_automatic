@@ -100,6 +100,19 @@ export function fail(message) {
     process.exit(1);
 }
 
+/**
+ * 例外を受けて終了する。各スクリプトの main().catch() はこれを使う。
+ *
+ * 設定ミス（キーの未登録など）は userFacing を立てて投げてある。
+ * その場合スタックトレースを出さない。直し方を書いた案内文の下に
+ * 「at requireApiKey (file:///...)」が続くと、読む人はそちらに目を取られて
+ * 肝心の案内を読み落とす。原因が分かっている失敗に技術的な出力は要らない。
+ */
+export function failWith(error) {
+    if (error?.userFacing) fail(error.message);
+    fail(error?.stack ?? String(error));
+}
+
 export function info(message) {
     console.log(message);
 }
