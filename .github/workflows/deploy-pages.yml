@@ -28,7 +28,59 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # ⚠️ このジョブを deploy と分けているのには理由がある。消して1つに戻すと壊れる。
+  #
+  #   deploy には `environment: github-pages` が付いている。
+  #   github-pages は GitHub の予約環境で、「Pages が有効になっているリポジトリ」でしか使えない。
+  #   まだ有効になっていないと、ジョブはステップを1つも実行しないまま2秒で失敗する
+  #   （ログも残らないので、画面上は原因がまったく分からない）。
+  #
+  #   Pages を有効にするのは configure-pages の enablement: true なのだが、
+  #   それを deploy の中に置くと「有効にする処理が、有効でないせいで実行されない」
+  #   という堂々めぐりになる。だから environment の付いていないジョブに出して、先に走らせる。
+  preflight:
+    name: Pages の設定を整える
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Pages を有効にする（まだなら作る）
+        id: enable
+        continue-on-error: true
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      # continue-on-error で受け止めているのは、ここで黙って落ちると
+      # 「また2秒で失敗した」に戻ってしまうためである。何をすればよいかまで出す。
+      - name: 結果を確かめる
+        run: |
+          if [ "${{ steps.enable.outcome }}" = "success" ]; then
+            echo "✓ GitHub Pages は有効です（ソース: GitHub Actions）"
+            exit 0
+          fi
+
+          echo "::error title=GitHub Pages を有効にできませんでした::下の2つを確認してください"
+          cat <<'MSG'
+
+          GitHub Pages をワークフローから自動で有効にできませんでした。
+          リポジトリの設定を2か所ご確認ください。
+
+          ① Settings → Pages → Build and deployment → Source
+               「GitHub Actions」を選ぶ
+               （「Deploy from a branch」になっていると、このワークフローからは配信できません）
+
+          ② Settings → Actions → General → Workflow permissions
+               「Read and write permissions」を選ぶ
+               （読み取り専用だと Pages を有効にする権限が下りません）
+
+          どちらかを直したら、このワークフローを Re-run してください。
+
+          MSG
+          exit 1
+
   deploy:
+    needs: preflight
     runs-on: ubuntu-latest
     # 週次が失敗したときに、古い内容で配信しなおしても意味がない。
     # 手動実行と push のときは workflow_run が無いので、その場合は通す。
@@ -48,11 +100,6 @@ jobs:
           # 既定ブランチの最新を明示して取りにいく。
           # （'main' と書き固めないのは、既定ブランチ名が違うリポジトリでも動くようにするため。）
           ref: ${{ github.event.repository.default_branch }}
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       # docs/ だけを配信する。data/ にはスクリプト用の中間ファイルが入っていて、
       # 公開する意味がないうえ、転送量だけ増える。

@@ -127,6 +127,27 @@ GitHub Actions の定期実行は混雑時に数十分遅れます。
 | `Gemini API 429` が続く | 無料枠の1日上限 | 翌日に再実行。`--limit` で分けても可 |
 | Pages が 404 | Pages 未有効 | Settings → Pages → Source を GitHub Actions に |
 
+### 「GitHub Pages へ配信」が2秒で失敗する（ログも出ない）
+
+ジョブがステップを1つも実行しないまま失敗し、ログを開いても何も無い場合、
+原因はコードではなく**リポジトリの設定**です。
+
+`environment: github-pages` は GitHub の予約環境で、**Pages が有効になっていないリポジトリでは使えません**。
+使えないとジョブは開始前に弾かれるため、ログが1行も残りません。
+
+確認するのはこの2か所です。
+
+1. **Settings → Pages → Build and deployment → Source** を **GitHub Actions** にする
+   （「Deploy from a branch」だと、このワークフローからは配信できません）
+2. **Settings → Actions → General → Workflow permissions** を
+   **Read and write permissions** にする
+
+直したら Actions から「GitHub Pages へ配信」を **Re-run** してください。
+
+> ワークフローには `preflight` ジョブがあり、可能なら Pages を自動で有効にします。
+> それでも駄目なときは、上の2つを日本語で案内して止まります。
+> `preflight` に `environment:` を付けると同じ堂々めぐりに戻るので、付けないでください。
+
 ### 投稿が更新されない
 
 Service Worker が古い画面を返している可能性があります。
