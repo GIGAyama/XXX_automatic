@@ -118,19 +118,87 @@ export async function listRecentCommits(owner, repo, branch, limit = 10) {
     }));
 }
 
-/** Issue を立てる（毎朝の通知に使う）。 */
-export async function createIssue(owner, repo, { title, body, labels = [] }) {
+/**
+ * 書き込み系のリクエスト。
+ *
+ * 読み込みの request() と同じ形にそろえてあるのは、401 やレート上限のときに
+ * 「何を直せばよいか」を書いた案内が読み書きどちらでも出るようにするためである。
+ * 以前は createIssue だけが fetch を直に呼んでいて、そこだけ生のエラーが出ていた。
+ */
+async function mutate(method, path, payload) {
     const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-    if (!token) throw new Error('Issue を作るには GITHUB_TOKEN が必要です');
+    if (!token) throw new Error(`GitHub に書き込むには GITHUB_TOKEN が必要です（${method} ${path}）`);
 
-    const response = await fetch(`${API}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/issues`, {
-        method: 'POST',
+    const response = await fetch(`${API}${path}`, {
+        method,
         headers: { ...headers(), 'content-type': 'application/json' },
-        body: JSON.stringify({ title, body, labels }),
+        body: JSON.stringify(payload),
     });
+
+    if (response.status === 401) {
+        throw new Error(
+            'GitHub API が認証を拒否しました（401 Bad credentials）。\n' +
+                '  GITHUB_TOKEN の値が古いか、書き込みの権限がない可能性があります。\n' +
+                '  ワークフローから動かしているなら permissions に issues: write があるか確かめてください。'
+        );
+    }
+    if (response.status === 403) {
+        throw new Error(
+            `GitHub API が書き込みを拒否しました（403 ${method} ${path}）。\n` +
+                '  ワークフローの permissions に issues: write が無いときにこうなります。\n' +
+                '  Settings → Actions → General → Workflow permissions も確かめてください。'
+        );
+    }
     if (!response.ok) {
         const detail = await response.text().catch(() => '');
-        throw new Error(`Issue の作成に失敗しました ${response.status}: ${detail.slice(0, 300)}`);
+        throw new Error(`GitHub API ${response.status} ${method} ${path}: ${detail.slice(0, 300)}`);
     }
     return response.json();
+}
+
+/** Issue を立てる（毎朝の通知に使う）。 */
+export async function createIssue(owner, repo, { title, body, labels = [] }) {
+    return mutate('POST', `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/issues`, {
+        title,
+        body,
+        labels,
+    });
+}
+
+/**
+ * ラベルと状態で Issue を絞って全ページ分とる。
+ * 反応の記録（labels:feedback）を回収するのに使う。
+ */
+export async function listIssues(owner, repo, { labels = [], state = 'open', perPage = 100 } = {}) {
+    const query = new URLSearchParams({ state, per_page: String(perPage) });
+    if (labels.length > 0) query.set('labels', labels.join(','));
+
+    const issues = [];
+    let url = `${API}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/issues?${query.toString()}`;
+
+    while (url) {
+        const res = await request(url);
+        if (!res.ok) break;
+        const page = await res.body.json();
+        // /issues は Pull Request も返す。混ざると本文の形が違って必ず弾かれるので先に落とす。
+        issues.push(...page.filter((issue) => !issue.pull_request));
+
+        const next = /<([^>]+)>;\s*rel="next"/.exec(res.link || '');
+        url = next ? next[1] : null;
+    }
+    return issues;
+}
+
+/** Issue の状態やラベルを変える（取り込みずみにしてクローズする）。 */
+export async function updateIssue(owner, repo, number, patch) {
+    return mutate('PATCH', `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/issues/${number}`, patch);
+}
+
+/** Issue にコメントする（取り込んだ件数や、拒否した理由を残す）。 */
+export async function addIssueComment(owner, repo, number, body) {
+    return mutate(
+        'POST',
+        `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/issues/${number}/comments`,
+        { body }
+    );
 }

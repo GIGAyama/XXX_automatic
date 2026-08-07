@@ -29,26 +29,35 @@
     <h1 class="head__title">投稿ランチャー</h1>
     <button id="install" class="ghost" hidden>ホーム画面に追加</button>
   </div>
-  <p class="head__sub" id="summary">読み込んでいます…</p>
+  <p class="head__sub" id="summary" aria-live="polite">読み込んでいます…</p>
 </header>
 
-<nav class="tabs" role="tablist">
-  <button class="tab is-on" role="tab" data-view="today" aria-selected="true">今日</button>
-  <button class="tab" role="tab" data-view="week" aria-selected="false">今週ぜんぶ</button>
-  <button class="tab" role="tab" data-view="note" aria-selected="false">note</button>
-  <button class="tab" role="tab" data-view="done" aria-selected="false">投稿ずみ</button>
+<nav class="tabs" role="tablist" aria-label="表示の切りかえ">
+  <button class="tab is-on" id="tab-today" role="tab" data-view="today" aria-controls="list" aria-selected="true" tabindex="0">今日</button>
+  <button class="tab" id="tab-week" role="tab" data-view="week" aria-controls="list" aria-selected="false" tabindex="-1">今週ぜんぶ</button>
+  <button class="tab" id="tab-note" role="tab" data-view="note" aria-controls="list" aria-selected="false" tabindex="-1">note</button>
+  <button class="tab" id="tab-done" role="tab" data-view="done" aria-controls="list" aria-selected="false" tabindex="-1">投稿ずみ</button>
+  <button class="tab" id="tab-past" role="tab" data-view="past" aria-controls="list" aria-selected="false" tabindex="-1">過去</button>
 </nav>
 
-<main id="list" class="list" aria-live="polite"></main>
+<!--
+  aria-live は付けない。
+  ここは再描画のたびに中身が総入れかわりするので、live にすると
+  カードの本文が丸ごと読み上げられて、操作するどころではなくなる。
+  変化の要約は上の #summary（polite）が担う。
+-->
+<main id="list" class="list" role="tabpanel" aria-labelledby="tab-today" tabindex="0"></main>
 
-<div id="toast" class="toast" role="status" aria-live="assertive" hidden></div>
+<!-- role="status" は暗黙で polite。aria-live を重ねると役割が競合する -->
+<div id="toast" class="toast" role="status" data-show="off"></div>
 
 <footer class="foot">
   <p>共有シートに X が出ないときは、［コピーして X を開く］を使ってください。<br>
      本文は共有ボタンを押した時点でクリップボードにも入っています。</p>
+  <p><a href="apps.html">アプリの一覧を見る</a></p>
   <p id="stamp" class="foot__stamp"></p>
 </footer>
 
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>

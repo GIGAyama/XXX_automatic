@@ -78,8 +78,12 @@ async function main() {
     const profiles = loadProfiles();
     if (profiles.length === 0) fail('data/profiles/ が空です。先に `npm run profiles` を実行してください。');
 
+    // 履歴は archive-history.mjs が、反応は collect-feedback.mjs が書く。
+    // どちらも無くても生成はできる（初回がそう）。無いことと壊れていることは区別する。
     const history = readJson(paths.data('history.json'), { posts: [] }).posts ?? [];
-    const feedback = readJson(paths.data('feedback.json'), { themes: {} }).themes ?? {};
+    const feedbackFile = readJson(paths.data('feedback.json'), { themes: {}, repos: {} });
+    const feedback = feedbackFile.themes ?? {};
+    const repoFeedback = feedbackFile.repos ?? {};
 
     info(`④ 生成を開始します（${jstStamp()}）`);
     info(`   対象週: ${weekId}（${dates[0]} 〜 ${dates[6]}）`);
@@ -93,9 +97,15 @@ async function main() {
         profiles,
         history,
         feedback,
+        repoFeedback,
         weekId,
     });
-    info(`   ${plan.length} 枠を割り当てました\n`);
+    info(`   ${plan.length} 枠を割り当てました`);
+    info(
+        `   履歴 ${history.length} 件 / 反応の記録 ${Object.keys(feedback).length} 型` +
+            (history.length === 0 ? '（履歴が空です。週をまたいだ重複回避はまだ効きません）' : '') +
+            '\n'
+    );
 
     // ── 2. 本文を作らせる ──────────────────────────────
     const profileByName = new Map(profiles.map((p) => [p.name, p]));

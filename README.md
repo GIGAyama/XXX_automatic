@@ -23,17 +23,20 @@ GitHub Pages で公開している学習アプリを題材に、**X と note の
 ## しくみ
 
 ```
+⓪ 反映   先週ぶんの「反応よかった」を取り込み、終わった週を履歴に移す
 ① 収集   GitHub API で全リポジトリの README・MANUAL を集める
 ② 理解   Gemini がアプリごとの「プロフィール」に整理する（更新が無ければ再生成しない）
 ③ 素材   Playwright が各アプリを開いてスクショ → 紹介カード画像を作る
 ④ 生成   Gemini が翌週7日分の投稿文を書く（型をローテーション、重複を回避）
 　 検査   ガードレールにかける（個人情報・誇大表現・字数・収益化表現）
-⑤ 通知   毎朝 GitHub Issue が立つ → スマホに通知が届く
-⑥ 投稿   ランチャーで［𝕏 に共有］→ 共有シート → X → 投稿ボタン
-⑦ 記録   「反応よかった」を押すと、翌週の生成に反映される
+⑤ 配信   ランチャーのデータとアプリ一覧ページを作って GitHub Pages へ
+⑥ 通知   毎朝 GitHub Issue が立つ → スマホに通知が届く
+⑦ 投稿   ランチャーで［𝕏 に共有］→ 共有シート → X → 投稿ボタン
+⑧ 記録   ［反応よかった］を付けて［まとめて送る］→ ⓪ に戻る
 ```
 
-①〜⑤は GitHub Actions が日曜の夜と毎朝に自動で回します。
+⓪〜⑥は GitHub Actions が日曜の夜と毎朝に自動で回します。
+人がやるのは ⑦ と ⑧ だけです。
 
 ---
 
@@ -111,6 +114,7 @@ Discord サーバーの Webhook URL を `DISCORD_WEBHOOK` という名前の Sec
 | 投稿の型（切り口） | `config/themes.json` |
 | 禁止表現・字数の基準 | `config/guardrails.json` |
 | 題材にしないリポジトリ | `config/accounts.json` の `excludeRepos` |
+| 1投稿に複数枚の画像を付ける | `config/media.json` の `carousel.enabled` |
 | 収益化のオン/オフ | `config/monetization.json` |
 
 `CLAUDE.md` を直せば、翌週から投稿の雰囲気が変わります。
@@ -138,16 +142,30 @@ npm ci
 export GITHUB_TOKEN=...    # 公開リポジトリを読むだけなのでスコープ無しで可
 export GEMINI_API_KEY=...
 
+npm run feedback -- --dry-run            # ⓪ 反応の記録を取り込む（保存しない）
+npm run archive -- --dry-run             # ⓪' 終わった週を履歴へ（保存しない）
 npm run collect                          # ① 収集
 node scripts/build-profiles.mjs --limit 3  # ② 理解（まず3件で試す）
 node scripts/capture-media.mjs --repo Typa # ③ 素材（1件で試す）
 npm run generate -- --dry-run            # ④ 生成（保存せず画面に出す）
 npm run lint:drafts                      # 検査
-npm run build:index                      # ⑤ ランチャー用データ
+npm run build                            # ⑤ ランチャー用データ＋アプリ一覧＋SWの版
 npm run serve                            # http://localhost:8000 で確認
 npm run check                            # 品質ゲート
 npm test                                 # テスト
 ```
+
+`npm run build` は3つをまとめたものです。個別にも呼べます。
+
+```bash
+npm run build:index   # docs/launcher.json
+npm run build:apps    # docs/apps.html
+npm run build:sw      # docs/sw.js の VERSION を中身から決めなおす
+```
+
+**`build:sw` は必ず最後に**実行してください。Service Worker の版は
+`docs/` の中身から計算しているので、先に走らせると直した画面が端末に届きません
+（`npm run check` がずれを検出します）。
 
 Chromium がうまく起動しないときは、既にある Chromium を指定できます。
 

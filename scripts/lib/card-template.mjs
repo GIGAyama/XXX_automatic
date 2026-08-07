@@ -22,8 +22,12 @@ const FONT_STACK =
     "'Noto Sans CJK JP', 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', " +
     "'Yu Gothic', Meiryo, IPAexGothic, IPAGothic, sans-serif";
 
-/** 教科ごとに色を変える。並べたときに一目で見分けがつくようにするため。 */
-const SUBJECT_COLORS = {
+/**
+ * 教科ごとに色を変える。並べたときに一目で見分けがつくようにするため。
+ * アプリ一覧ページ（build-apps-page.mjs）も同じ色を使う。
+ * 投稿カードと一覧で教科の色が違うと、同じアプリだと分からなくなる。
+ */
+export const SUBJECT_COLORS = {
     算数: { from: '#ff9f43', to: '#ee5a24' },
     国語: { from: '#ff6b81', to: '#c44569' },
     理科: { from: '#26de81', to: '#20bf6b' },
@@ -34,14 +38,19 @@ const SUBJECT_COLORS = {
     学級経営: { from: '#4b7bec', to: '#3867d6' },
     校務: { from: '#778ca3', to: '#4b6584' },
 };
-const DEFAULT_COLORS = { from: '#2bcbba', to: '#0fb9b1' };
+export const DEFAULT_COLORS = { from: '#2bcbba', to: '#0fb9b1' };
 
-function colorsFor(subject = '') {
+export function colorsFor(subject = '') {
     const hit = Object.keys(SUBJECT_COLORS).find((key) => subject.includes(key));
     return hit ? SUBJECT_COLORS[hit] : DEFAULT_COLORS;
 }
 
-function escapeHtml(value = '') {
+/** 教科名を SUBJECT_COLORS のキーに寄せる。「算数（図形）」→「算数」。一覧の見出しにも使う。 */
+export function subjectKeyOf(subject = '') {
+    return Object.keys(SUBJECT_COLORS).find((key) => subject.includes(key)) ?? 'その他';
+}
+
+export function escapeHtml(value = '') {
     return String(value)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')

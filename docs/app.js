@@ -15,7 +15,7 @@
  * 「画像が添付され、本文が入った状態」の投稿画面が立ち上がる。
  * あとは投稿ボタンを押すだけ。API も課金も要らない。
  *
- * ただし2つ気をつける点がある。
+ * ただし3つ気をつける点がある。
  *
  * 1. ユーザー操作の直後でないと share() は拒否される。
  *    ボタンを押してから画像を fetch していると、その待ち時間で
@@ -25,19 +25,34 @@
  * 2. iOS では files と text を一緒に渡すと text が落ちることがある。
  *    そのため share() を呼ぶ前に必ずクリップボードにも本文を入れておく。
  *    落ちても貼り付けで復旧できる。
+ *
+ * 3. 同じ理由が window.open にも当てはまる。
+ *    await のあとに window.open を呼ぶと、iOS Safari のポップアップブロックに
+ *    引っかかる。開くのを先、待つのを後、の順は崩さないこと。
+ *
+ * 表示の選択・状態の手入れ・反応の記録の形は lib/ に切り出してある。
+ * ブラウザを立てずに node --test から検証できるようにするためである。
  */
 
-'use strict';
+import { jstDateString, jstStamp } from './lib/jst-client.js';
+import { overLimitMessage, slotLabelMap, themeLabelMap, truncate } from './lib/format.js';
+import { activeWeekIds, emptyMessageFor, selectPosts, summaryOf, unsentRatings } from './lib/select.js';
+import { STORAGE_KEY, applyPatch, pruneState, traceOf } from './lib/state.js';
+import { MAX_WEIGHTED_LENGTH, weightedLength } from './lib/x-length.js';
+import { buildIssueUrl, buildPayload, chunkEntries, newSubmissionId } from './lib/feedback-payload.js';
 
-const STORAGE_KEY = 'launcher:state:v1';
 const DATA_URL = 'launcher.json';
 
-/** @type {{posts: any[], notes: any[]}} */
+/** @type {{posts: any[], notes: any[], weekIds?: string[], slots?: any[], repoUrl?: string, noteEditorUrl?: string}} */
 let data = { posts: [], notes: [] };
 let view = 'today';
 
-/** 投稿ID → その投稿のカード画像（File）。共有の直前に読みにいかないための先読み置き場。 */
+/** 投稿ID → その投稿の画像（File[]）。共有の直前に読みにいかないための先読み置き場。 */
 const mediaCache = new Map();
+/** 画像を読めなかった投稿。共有のときに「本文だけになります」と伝えるために覚えておく。 */
+const mediaFailed = new Set();
+/** 280字を超えたまま共有しようとした投稿。1度目は止めて、2度目で通す。 */
+const overLimitWarned = new Set();
 
 /* ────────────────────────────────────────────
  *  保存（この端末のなかだけ）
@@ -61,42 +76,32 @@ function saveState(state) {
 }
 
 function patchState(id, patch) {
-  const state = loadState();
-  state[id] = { ...(state[id] || {}), ...patch, at: new Date().toISOString() };
-  saveState(state);
-  return state;
-}
-
-/* ────────────────────────────────────────────
- *  日付（端末のタイムゾーンではなく JST で見る）
- * ──────────────────────────────────────────── */
-
-/**
- * 「今日」を JST の YYYY-MM-DD で返す。
- * 端末のタイムゾーンをそのまま使うと、海外にいるときや
- * 端末の設定がずれているときに「今日の投稿」が出てこなくなる。
- * 生成側（scripts/lib/jst.mjs）と同じ基準にそろえる。
- */
-function todayJst() {
-  const now = new Date();
-  const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-  return jst.toISOString().slice(0, 10);
+  const next = applyPatch(loadState(), id, patch);
+  saveState(next);
+  return next;
 }
 
 /* ────────────────────────────────────────────
  *  画面
  * ──────────────────────────────────────────── */
 
-function visiblePosts() {
-  const state = loadState();
-  const today = todayJst();
+function todayJst() {
+  return jstDateString();
+}
 
-  if (view === 'done') {
-    return data.posts.filter((p) => state[p.id]?.done);
-  }
-  const undone = data.posts.filter((p) => !state[p.id]?.done);
-  if (view === 'today') return undone.filter((p) => p.date <= today);
-  return undone;
+function visiblePosts() {
+  return selectPosts({
+    posts: data.posts ?? [],
+    state: loadState(),
+    view,
+    today: todayJst(),
+    activeWeeks: activeWeekIds(data),
+  });
+}
+
+/** その投稿の本文。手で直してあれば直したほうを使う。 */
+function textOf(post, saved) {
+  return typeof saved?.editedText === 'string' && saved.editedText.trim() ? saved.editedText : post.text;
 }
 
 function render() {
@@ -111,8 +116,20 @@ function render() {
 
   const posts = visiblePosts();
 
+  if (view === 'done') renderSendBar(list);
+
   if (posts.length === 0) {
-    list.append(emptyBox(emptyMessage()));
+    list.append(
+      emptyBox(
+        emptyMessageFor({
+          view,
+          posts: data.posts ?? [],
+          state: loadState(),
+          today: todayJst(),
+          activeWeeks: activeWeekIds(data),
+        })
+      )
+    );
     updateSummary();
     return;
   }
@@ -123,12 +140,6 @@ function render() {
 
   updateSummary();
   prefetchMedia(posts);
-}
-
-function emptyMessage() {
-  if (view === 'done') return 'まだ投稿ずみのものはありません。';
-  if (view === 'today') return '今日出すぶんは終わりました。おつかれさまでした。';
-  return '投稿の下書きがまだありません。\n日曜の夜に翌週ぶんが自動で用意されます。';
 }
 
 function emptyBox(text) {
@@ -142,6 +153,9 @@ function postCard(post, saved, today) {
   const card = document.createElement('article');
   card.className = 'card' + (saved.done ? ' is-done' : '');
 
+  const text = textOf(post, saved);
+  const length = weightedLength(text);
+
   // ── 見出し（日付・枠・型・文字数）──
   const meta = document.createElement('div');
   meta.className = 'card__meta';
@@ -150,27 +164,41 @@ function postCard(post, saved, today) {
     chip(post.themeLabel),
     chip(post.repo)
   );
-  if (post.weightedLength) {
-    const over = post.weightedLength > 280;
-    meta.append(chip(`${post.weightedLength}/280`, 'chip--len' + (over ? ' is-over' : '')));
-  }
+  const lenChip = chip(`${length}/${MAX_WEIGHTED_LENGTH}`, 'chip--len' + (length > MAX_WEIGHTED_LENGTH ? ' is-over' : ''));
+  meta.append(lenChip);
+  if (saved.editedText) meta.append(chip('手直しずみ', 'chip--edited'));
   card.append(meta);
 
   // ── 画像 ──
-  if (post.media) {
-    const img = document.createElement('img');
-    img.className = 'card__img';
-    img.src = post.media;
-    img.alt = `${post.repo} の紹介カード`;
-    img.loading = 'lazy';
-    img.decoding = 'async';
-    card.append(img);
+  const shots = mediaListOf(post);
+  if (shots.length > 0) {
+    const figure = document.createElement('div');
+    figure.className = 'card__shots' + (shots.length > 1 ? ' is-multi' : '');
+    for (const [i, src] of shots.entries()) {
+      const img = document.createElement('img');
+      img.className = 'card__img';
+      img.src = src;
+      img.alt = shots.length > 1 ? `${post.repo} の紹介カード ${i + 1}枚目` : `${post.repo} の紹介カード`;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      // 画像が欠けていると壊れたアイコンだけが出て、原因が分からない。
+      // 何が起きたのかを画面に書く。共有そのものは本文だけで続けられる。
+      img.addEventListener('error', () => {
+        mediaFailed.add(post.id);
+        const box = document.createElement('div');
+        box.className = 'card__img card__img--missing';
+        box.textContent = '画像を読み込めませんでした（本文だけで共有できます）';
+        img.replaceWith(box);
+      });
+      figure.append(img);
+    }
+    card.append(figure);
   }
 
-  // ── 本文 ──
+  // ── 本文（その場で直せる）──
   const body = document.createElement('p');
   body.className = 'card__text';
-  body.textContent = post.text;
+  body.textContent = text;
   card.append(body);
 
   // ── ボタン ──
@@ -185,16 +213,20 @@ function postCard(post, saved, today) {
   copyBtn.addEventListener('click', () => openIntent(post));
   actions.append(copyBtn);
 
-  if (post.media) {
-    const saveBtn = button('画像を保存', 'btn btn--sub');
-    saveBtn.addEventListener('click', () => downloadMedia(post));
+  const editBtn = button(saved.editedText ? '本文を直す（手直しずみ）' : '本文を直す', 'btn btn--sub');
+  editBtn.addEventListener('click', () => openEditor(card, post, body, lenChip));
+  actions.append(editBtn);
+
+  if (shots.length > 0) {
+    const saveBtn = button(shots.length > 1 ? '画像を保存' : '画像を保存', 'btn btn--sub');
+    saveBtn.addEventListener('click', () => saveMedia(post));
     actions.append(saveBtn);
   }
 
   const doneBtn = button(saved.done ? '投稿ずみに戻す' : '投稿した', 'btn btn--sub' + (saved.done ? '' : ' btn--done'));
   doneBtn.addEventListener('click', () => {
     const nowDone = !saved.done;
-    patchState(post.id, { done: nowDone });
+    patchState(post.id, { done: nowDone, ...traceOf(post) });
     render();
     // 「投稿した」を押すとカードが一覧から消える。
     // 何も出ないと消えたことに驚くので、どこへ行ったのかを必ず伝える。
@@ -213,16 +245,155 @@ function postCard(post, saved, today) {
       b.type = 'button';
       if (saved.rating === value) b.classList.add('is-on');
       b.addEventListener('click', () => {
-        patchState(post.id, { rating: saved.rating === value ? null : value, theme: post.theme });
+        const off = saved.rating === value;
+        // 押し直したら「まだ送っていない」状態に戻す。
+        // 送信ずみのまま値だけ変わると、翌週に届くのは古いほうになる。
+        patchState(post.id, { rating: off ? null : value, sent: null, sentAtJst: null, ...traceOf(post) });
         render();
       });
       rate.append(b);
     }
+    if (saved.rating && saved.sent) rate.append(chip('送信ずみ', 'chip--sent'));
     card.append(rate);
   }
 
   return card;
 }
+
+/**
+ * 本文をその場で直す。
+ *
+ * 生成した文がだいたい良くて一言だけ直したい、というのが実際にはいちばん多い。
+ * そのために PC を開いてリポジトリを直して週次を回しなおすのは現実的でない。
+ * 直した内容はこの端末にだけ残る（生成には戻さない。戻す経路を作ると
+ * 「AI が書いた文」と「人が直した文」の境界が消えて、次の生成の材料が濁る）。
+ */
+function openEditor(card, post, bodyEl, lenChip) {
+  if (card.querySelector('.editor')) return;
+
+  const saved = loadState()[post.id] || {};
+  const editor = document.createElement('div');
+  editor.className = 'editor';
+
+  const area = document.createElement('textarea');
+  area.className = 'editor__area';
+  area.value = textOf(post, saved);
+  area.rows = 8;
+  area.setAttribute('aria-label', '投稿の本文');
+
+  const count = document.createElement('p');
+  count.className = 'editor__count';
+
+  const refresh = () => {
+    const length = weightedLength(area.value);
+    count.textContent = `${length}/${MAX_WEIGHTED_LENGTH}`;
+    count.classList.toggle('is-over', length > MAX_WEIGHTED_LENGTH);
+  };
+  area.addEventListener('input', refresh);
+  refresh();
+
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+
+  const save = button('この内容にする', 'btn btn--done');
+  save.addEventListener('click', () => {
+    const value = area.value.trim();
+    // 元の文に戻したときは、直した記録ごと消す。「手直しずみ」の印が残ると紛らわしい。
+    patchState(post.id, { editedText: value && value !== post.text ? value : null, ...traceOf(post) });
+    overLimitWarned.delete(post.id);
+    render();
+    toast(value && value !== post.text ? '本文を直しました（この端末にだけ残ります）' : '元の本文に戻しました');
+  });
+
+  const reset = button('元に戻す', 'btn btn--sub');
+  reset.addEventListener('click', () => {
+    area.value = post.text;
+    refresh();
+  });
+
+  const cancel = button('やめる', 'btn btn--sub');
+  cancel.addEventListener('click', () => editor.remove());
+
+  row.append(save, reset, cancel);
+  editor.append(area, count, row);
+  bodyEl.after(editor);
+  area.focus();
+  void lenChip;
+}
+
+/* ────────────────────────────────────────────
+ *  反応の記録を送る
+ * ──────────────────────────────────────────── */
+
+/**
+ * 未送信の評価をまとめて GitHub の Issue にする。
+ *
+ * X API も GitHub の書き込み API も、画面から直接叩くにはトークンが要る。
+ * スマホのブラウザに書き込み権限のトークンを置くのは重すぎるので、
+ * 本文を載せた Issue 作成画面を開いて、送信ボタンだけ本人に押してもらう。
+ * 週次ワークフローが labels:feedback の Issue を読んで、翌週の生成に混ぜる。
+ */
+function renderSendBar(list) {
+  const pending = unsentRatings({ posts: data.posts ?? [], state: loadState() });
+  if (pending.length === 0) return;
+
+  const bar = document.createElement('div');
+  bar.className = 'sendbar';
+
+  const text = document.createElement('p');
+  text.className = 'sendbar__text';
+  text.textContent = `まだ送っていない反応が ${pending.length} 件あります。送ると翌週の下書きに効きます。`;
+  bar.append(text);
+
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+
+  const send = button(`反応をまとめて送る（${pending.length}件）`, 'btn btn--x');
+  send.addEventListener('click', () => sendFeedback(pending));
+  row.append(send);
+
+  const later = button('あとにする', 'btn btn--sub');
+  later.addEventListener('click', () => bar.remove());
+  row.append(later);
+
+  bar.append(row);
+  list.append(bar);
+}
+
+function sendFeedback(pending) {
+  const repoUrl = data.repoUrl;
+  if (!repoUrl) {
+    toast('送り先が分かりません（launcher.json が古い可能性があります）');
+    return;
+  }
+
+  const themeLabels = themeLabelMap(data);
+  const slotLabels = slotLabelMap(data);
+  const chunks = chunkEntries(pending, { repoUrl, themeLabels, slotLabels });
+
+  // ⚠️ window.open は同期で、いちばん先に呼ぶ。
+  //    ここより前に await を挟むと「ユーザー操作の直後」の資格が切れて、
+  //    iOS Safari のポップアップブロックに落ちる。
+  const first = chunks[0];
+  const payload = buildPayload(first, { submissionId: newSubmissionId(), sentAtJst: jstStamp() });
+  const url = buildIssueUrl(repoUrl, payload, { themeLabels, slotLabels, part: 1, parts: chunks.length });
+  window.open(url, '_blank', 'noopener');
+
+  // 実際に送信ボタンを押したかは取れない。開いたところまでを「送った」とみなし、
+  // 押し忘れたときのために取り消せるようにしておく。
+  for (const entry of first) patchState(entry.id, { sent: true, sentAtJst: jstStamp() });
+  render();
+
+  if (chunks.length > 1) {
+    toast(`GitHub の画面を開きました。件数が多いので ${chunks.length} 通に分けます。送信したら、もう一度このボタンを押してください`);
+  } else {
+    toast('GitHub の画面を開きました。緑の［Create］を押すと送信できます');
+  }
+}
+
+/* ────────────────────────────────────────────
+ *  note
+ * ──────────────────────────────────────────── */
 
 function renderNotes(list) {
   if (!data.notes || data.notes.length === 0) {
@@ -245,30 +416,29 @@ function renderNotes(list) {
     card.append(meta);
 
     const title = document.createElement('p');
-    title.className = 'card__text';
-    title.style.fontWeight = '800';
-    title.style.paddingBottom = '0';
+    title.className = 'card__text card__text--title';
     title.textContent = note.title;
     card.append(title);
 
     const preview = document.createElement('p');
-    preview.className = 'card__text';
-    preview.style.color = 'var(--ink-weak)';
-    preview.style.fontSize = '14px';
-    preview.textContent = `${note.plain.slice(0, 160)}…`;
+    preview.className = 'card__text card__text--preview';
+    preview.textContent = truncate(note.plain, 160);
     card.append(preview);
 
     const actions = document.createElement('div');
     actions.className = 'card__actions';
 
     const go = button('本文をコピーして note を開く', 'btn btn--note');
-    go.addEventListener('click', async () => {
+    go.addEventListener('click', () => {
       // note には公式の投稿 API が無く、非公式 API は規約に触れる。
       // だからここは「クリップボードに入れてエディタを開く」までにしてある。
-      // タイトルは本文と別枠なので、本文の1行目には入れずに案内だけ出す。
-      const ok = await copyText(note.plain);
-      window.open(data.noteEditorUrl || 'https://note.com/notes/new', '_blank', 'noopener');
-      toast(ok ? 'コピーしました。note で貼り付けてください' : 'コピーできませんでした。本文を長押しで選んでください');
+      //
+      // ⚠️ window.open を先に、コピーを後に。逆にすると（await のあとに開くと）
+      //    iOS Safari で新しいタブが開かない。X を開くときとまったく同じ話。
+      window.open(noteEditorUrl(), '_blank', 'noopener');
+      copyText(note.plain).then((ok) => {
+        toast(ok ? 'コピーしました。note で貼り付けてください' : 'コピーできませんでした。本文を長押しで選んでください');
+      });
     });
     actions.append(go);
 
@@ -290,28 +460,67 @@ function renderNotes(list) {
   }
 }
 
+/**
+ * note のエディタ URL。launcher.json から来る文字列をそのまま開かない。
+ * 生成物とはいえ画面に入ってくる唯一の外部文字列なので、行き先を note.com に限る。
+ */
+function noteEditorUrl() {
+  const fallback = 'https://note.com/notes/new';
+  try {
+    const url = new URL(data.noteEditorUrl ?? fallback);
+    if (url.protocol !== 'https:') return fallback;
+    if (url.hostname !== 'note.com' && !url.hostname.endsWith('.note.com')) return fallback;
+    return url.toString();
+  } catch {
+    return fallback;
+  }
+}
+
 /* ────────────────────────────────────────────
  *  X へ出す
  * ──────────────────────────────────────────── */
+
+/** その投稿に付ける画像のパス。1枚のときも配列で扱う。 */
+function mediaListOf(post) {
+  if (Array.isArray(post.mediaList) && post.mediaList.length > 0) return post.mediaList;
+  return post.media ? [post.media] : [];
+}
 
 /**
  * 共有シートを開く。ここがこのアプリの心臓部。
  * 画像は prefetchMedia で先に読んであるので、押してすぐ share() に入れる。
  */
 async function shareToX(post, btn) {
+  const saved = loadState()[post.id] || {};
+  const text = textOf(post, saved);
+
+  // 280字を超えていると X 側で投稿できない。ただし共有そのものを禁止はしない。
+  // 出せなくすると詰むので、1度目は止めて理由を伝え、2度目は通す。
+  const length = weightedLength(text);
+  if (length > MAX_WEIGHTED_LENGTH && !overLimitWarned.has(post.id)) {
+    overLimitWarned.add(post.id);
+    btn.textContent = 'それでも共有する';
+    toast(`${overLimitMessage(length, MAX_WEIGHTED_LENGTH)}［本文を直す］で縮められます`);
+    return;
+  }
+
   // ① 先にクリップボードへ。await しないのは、
   //    ここで待つと「ユーザー操作の直後」の資格を失って share() が拒否されるためである。
   //    iOS で本文が落ちたときの保険なので、間に合わなくても致命的ではない。
-  copyText(post.text);
+  copyText(text);
 
-  const file = mediaCache.get(post.id);
+  const files = mediaCache.get(post.id) ?? [];
 
   try {
-    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file], text: post.text });
+    if (files.length > 1 && navigator.canShare && navigator.canShare({ files })) {
+      // X は1投稿に画像4枚まで。複数コマのカードがあるときはまとめて渡す。
+      await navigator.share({ files, text });
+    } else if (files.length > 0 && navigator.canShare && navigator.canShare({ files: [files[0]] })) {
+      // 複数を受けつけない共有先もある。1枚に落として続ける。
+      await navigator.share({ files: [files[0]], text });
     } else if (navigator.share) {
       // 画像を渡せない環境。本文だけでも共有シートに乗せる。
-      await navigator.share({ text: post.text });
+      await navigator.share({ text });
     } else {
       // PC の Chrome など、共有シートを持たない環境。
       openIntent(post);
@@ -324,7 +533,11 @@ async function shareToX(post, btn) {
     setTimeout(() => {
       btn.textContent = '𝕏 に共有（画像つき）';
     }, 2500);
-    toast('X を選んで投稿ボタンを押してください');
+    toast(
+      files.length === 0 && mediaFailed.has(post.id)
+        ? '画像を用意できなかったので本文だけ共有します'
+        : 'X を選んで投稿ボタンを押してください'
+    );
   } catch (error) {
     // 共有シートを閉じただけでも AbortError が来る。これは失敗ではない。
     if (error && error.name === 'AbortError') return;
@@ -333,23 +546,62 @@ async function shareToX(post, btn) {
   }
 }
 
-/** 本文をコピーして X の投稿画面を開く。画像は付かないので、別途［画像を保存］から添付する。 */
-async function openIntent(post) {
-  const ok = await copyText(post.text);
-  const url = `https://x.com/intent/post?text=${encodeURIComponent(post.text)}`;
-  window.open(url, '_blank', 'noopener');
-  toast(ok ? 'コピーしました。X の画面が開きます' : 'X の画面を開きました');
+/**
+ * 本文をコピーして X の投稿画面を開く。画像は付かないので、別途［画像を保存］から添付する。
+ *
+ * ⚠️ window.open を先に呼ぶ。await のあとに開くと、iOS Safari のポップアップブロックに
+ *    引っかかる。shareToX が copyText を await しないのとまったく同じ理由である。
+ *    しかもこの導線は「共有シートに X が出ないとき」の唯一の逃げ道なので、失うと詰む。
+ */
+function openIntent(post) {
+  const saved = loadState()[post.id] || {};
+  const text = textOf(post, saved);
+  // noopener を付けると window.open は必ず null を返すため、開けたかどうかは判定できない。
+  // 逆タブナビング対策のほうを優先し、案内文は「開かなければ」の場合も含む書き方にする。
+  window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  copyText(text).then((ok) => {
+    toast(
+      ok
+        ? 'コピーしました。X の画面が開かないときは、貼り付けて投稿してください'
+        : 'X の画面を開きました。コピーはできなかったので、本文を長押しで選んでください'
+    );
+  });
 }
 
-/** カード画像を端末に保存する。共有シートが使えないときに手で添付するため。 */
-function downloadMedia(post) {
-  const a = document.createElement('a');
-  a.href = post.media;
-  a.download = `${post.repo}-card.png`;
-  document.body.append(a);
-  a.click();
-  a.remove();
-  toast('画像を保存しました');
+/**
+ * カード画像を端末に持ってくる。共有シートが使えないときに手で添付するため。
+ *
+ * iOS Safari の <a download> は長らく挙動が定まっていない（新しいタブに画像が開くだけ、
+ * ということが普通に起きる）。それを「保存しました」と言い切るのは嘘になる。
+ * 共有シートが使えるなら、そちらを開く（iOS ではここに「画像を保存」が出る）。
+ */
+async function saveMedia(post) {
+  const files = mediaCache.get(post.id) ?? [];
+
+  if (files.length > 0 && navigator.canShare && navigator.canShare({ files })) {
+    try {
+      await navigator.share({ files });
+      return;
+    } catch (error) {
+      if (error && error.name === 'AbortError') return;
+      // 共有で駄目なら下のダウンロードに落ちる
+    }
+  }
+
+  const list = mediaListOf(post);
+  if (list.length === 0) {
+    toast('この投稿には画像がありません');
+    return;
+  }
+  for (const [i, src] of list.entries()) {
+    const a = document.createElement('a');
+    a.href = src;
+    a.download = list.length > 1 ? `${post.repo}-card-${i + 1}.png` : `${post.repo}-card.png`;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
+  toast('画像を開きました。表示された画像を長押しして保存してください');
 }
 
 /**
@@ -358,16 +610,28 @@ function downloadMedia(post) {
  */
 function prefetchMedia(posts) {
   for (const post of posts) {
-    if (!post.media || mediaCache.has(post.id)) continue;
-    fetch(post.media)
-      .then((res) => (res.ok ? res.blob() : null))
-      .then((blob) => {
-        if (!blob) return;
-        mediaCache.set(post.id, new File([blob], `${post.repo}-card.png`, { type: 'image/png' }));
-      })
-      .catch(() => {
-        // 画像が無くても本文だけは共有できる。ここで止めない。
-      });
+    const list = mediaListOf(post);
+    if (list.length === 0 || mediaCache.has(post.id)) continue;
+
+    Promise.all(
+      list.map((src, i) =>
+        fetch(src)
+          .then((res) => (res.ok ? res.blob() : null))
+          .then((blob) =>
+            blob ? new File([blob], list.length > 1 ? `${post.repo}-card-${i + 1}.png` : `${post.repo}-card.png`, { type: 'image/png' }) : null
+          )
+          .catch(() => null)
+      )
+    ).then((files) => {
+      const ok = files.filter(Boolean);
+      if (ok.length > 0) {
+        mediaCache.set(post.id, ok);
+      } else {
+        // 画像が無くても本文だけは共有できる。ここで止めないが、黙ってもいない。
+        mediaFailed.add(post.id);
+        console.warn(`画像を読み込めませんでした: ${post.id}`);
+      }
+    });
   }
 }
 
@@ -422,26 +686,28 @@ let toastTimer = null;
 function toast(message) {
   const el = document.getElementById('toast');
   el.textContent = message;
-  el.hidden = false;
+  // hidden の付け外しは読み上げが安定しない。要素は残したまま見た目だけ切り替える。
+  el.dataset.show = 'on';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => {
-    el.hidden = true;
+    el.dataset.show = 'off';
   }, 3200);
 }
 
 function updateSummary() {
-  const state = loadState();
-  const today = todayJst();
-  const todays = data.posts.filter((p) => p.date === today);
-  const left = todays.filter((p) => !state[p.id]?.done).length;
+  document.getElementById('summary').textContent = summaryOf({
+    posts: data.posts ?? [],
+    state: loadState(),
+    today: todayJst(),
+    activeWeeks: activeWeekIds(data),
+  });
 
-  const summary = document.getElementById('summary');
-  if (data.posts.length === 0) {
-    summary.textContent = '下書きがまだありません';
-  } else if (left === 0) {
-    summary.textContent = `今日のぶんは終わりました（用意ぜんぶで ${data.posts.length} 件）`;
-  } else {
-    summary.textContent = `今日はあと ${left} 件（用意ぜんぶで ${data.posts.length} 件）`;
+  // 未送信の反応があることは、タブを開かないと分からない。バッジで外に出す。
+  const pending = unsentRatings({ posts: data.posts ?? [], state: loadState() }).length;
+  const doneTab = document.querySelector('.tab[data-view="done"]');
+  if (doneTab) {
+    doneTab.dataset.badge = pending > 0 ? String(pending) : '';
+    doneTab.setAttribute('aria-label', pending > 0 ? `投稿ずみ（未送信の反応 ${pending} 件）` : '投稿ずみ');
   }
 }
 
@@ -449,32 +715,90 @@ function updateSummary() {
  *  起動
  * ──────────────────────────────────────────── */
 
+const TABS = ['today', 'week', 'note', 'done', 'past'];
+
+function selectTab(name, { focus = false } = {}) {
+  if (!TABS.includes(name)) name = 'today';
+  view = name;
+  const list = document.getElementById('list');
+  for (const t of document.querySelectorAll('.tab')) {
+    const on = t.dataset.view === name;
+    t.classList.toggle('is-on', on);
+    t.setAttribute('aria-selected', String(on));
+    // 選択中のタブだけをタブ順に載せる（roving tabindex）。
+    // 全部が順番に入ると、キーボードで一覧に届くまでにタブを4回通ることになる。
+    t.tabIndex = on ? 0 : -1;
+    if (on) {
+      list.setAttribute('aria-labelledby', t.id);
+      if (focus) t.focus();
+    }
+  }
+  render();
+}
+
 function bindTabs() {
-  for (const tab of document.querySelectorAll('.tab')) {
-    tab.addEventListener('click', () => {
-      view = tab.dataset.view;
-      for (const t of document.querySelectorAll('.tab')) {
-        const on = t === tab;
-        t.classList.toggle('is-on', on);
-        t.setAttribute('aria-selected', String(on));
-      }
-      render();
+  const tabs = [...document.querySelectorAll('.tab')];
+  for (const [i, tab] of tabs.entries()) {
+    tab.addEventListener('click', () => selectTab(tab.dataset.view));
+    tab.addEventListener('keydown', (event) => {
+      const move = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      let next = null;
+      if (move) next = tabs[(i + move + tabs.length) % tabs.length];
+      else if (event.key === 'Home') next = tabs[0];
+      else if (event.key === 'End') next = tabs[tabs.length - 1];
+      if (!next) return;
+      event.preventDefault();
+      selectTab(next.dataset.view, { focus: true });
     });
   }
 }
 
+/** 通知の Issue から #done などで飛んでこられるようにする。 */
+function viewFromHash() {
+  const name = location.hash.replace(/^#/, '');
+  return TABS.includes(name) ? name : 'today';
+}
+
+/**
+ * ホーム画面への追加。
+ *
+ * beforeinstallprompt は Chrome 系にしかない。iOS Safari では永久に発火しないので、
+ * それだけを頼りにすると iPhone にボタンが出ない（README は iPhone 前提で書いてある）。
+ * UA を見て分岐すると必ず外すので、「一定時間たっても prompt が来ず、
+ * まだホーム画面から開かれていない」という事実だけで手順の案内に切り替える。
+ */
 function bindInstall() {
   const btn = document.getElementById('install');
-  const show = () => {
-    if (window.__pwaInstallPrompt) btn.hidden = false;
+  let mode = null;
+
+  const installed = () =>
+    window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  const showPrompt = () => {
+    if (!window.__pwaInstallPrompt || installed()) return;
+    mode = 'prompt';
+    btn.textContent = 'ホーム画面に追加';
+    btn.hidden = false;
   };
-  window.addEventListener('pwa-install-available', show);
+
+  window.addEventListener('pwa-install-available', showPrompt);
   window.addEventListener('pwa-installed', () => {
     btn.hidden = true;
   });
-  show();
+  showPrompt();
+
+  setTimeout(() => {
+    if (mode || installed()) return;
+    mode = 'howto';
+    btn.textContent = 'ホーム画面への追加';
+    btn.hidden = false;
+  }, 1500);
 
   btn.addEventListener('click', async () => {
+    if (mode === 'howto') {
+      showInstallHowTo();
+      return;
+    }
     const prompt = window.__pwaInstallPrompt;
     if (!prompt) return;
     btn.hidden = true;
@@ -484,9 +808,73 @@ function bindInstall() {
   });
 }
 
+function showInstallHowTo() {
+  const existing = document.getElementById('howto');
+  if (existing) {
+    existing.remove();
+    return;
+  }
+  const box = document.createElement('div');
+  box.id = 'howto';
+  box.className = 'howto';
+  box.innerHTML = '';
+
+  const title = document.createElement('p');
+  title.className = 'howto__title';
+  title.textContent = 'ホーム画面に置くと、通知から1タップで開けます';
+  box.append(title);
+
+  const list = document.createElement('ol');
+  list.className = 'howto__list';
+  for (const step of [
+    'iPhone / iPad：下（または右上）の「共有」ボタンを押す',
+    'メニューを下にたどって「ホーム画面に追加」を押す',
+    'Android：右上のメニューから「アプリをインストール」を押す',
+  ]) {
+    const li = document.createElement('li');
+    li.textContent = step;
+    list.append(li);
+  }
+  box.append(list);
+
+  const close = button('閉じる', 'btn btn--sub');
+  close.addEventListener('click', () => box.remove());
+  box.append(close);
+
+  document.getElementById('list').prepend(box);
+}
+
+/**
+ * Service Worker の登録。
+ *
+ * ⚠️ launcher.json の読み込みより先にやること。
+ *    以前は読み込みが失敗すると early return してここに来なかった。
+ *    つまり「初回が圏外だった端末」には、以後シェルのキャッシュも offline.html も
+ *    永久に用意されない。いちばんオフライン対応が要る場面で効かない、という形になっていた。
+ */
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    // 新しい版が有効になった。1回だけ読み直して、古い画面を残さない。
+    // これが無いと MANUAL の「アイコンを消して追加しなおしてください」が永久に残る。
+    if (reloaded) return;
+    reloaded = true;
+    location.reload();
+  });
+
+  navigator.serviceWorker.register('sw.js').catch(() => {
+    // オフライン対応が効かないだけで、画面は動く。
+  });
+}
+
 async function boot() {
+  registerServiceWorker();
   bindTabs();
   bindInstall();
+  view = viewFromHash();
+  window.addEventListener('hashchange', () => selectTab(viewFromHash()));
 
   try {
     // Pages のキャッシュが古いと「新しい週が出てこない」という分かりにくい症状になる。
@@ -505,14 +893,16 @@ async function boot() {
     return;
   }
 
-  document.getElementById('stamp').textContent = `下書きの作成: ${data.generatedAtJst || '不明'}`;
-  render();
+  // 端末の記録を手入れする。放っておくと1年で数百件たまる。
+  // 画面に出ているものと、まだ送っていない評価は残す（lib/state.js）。
+  const { state, removed } = pruneState(loadState(), {
+    keepIds: (data.posts ?? []).map((p) => p.id).concat((data.notes ?? []).map((n) => `note-${n.weekId}`)),
+    today: todayJst(),
+  });
+  if (removed > 0) saveState(state);
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(() => {
-      // オフライン対応が効かないだけで、画面は動く。
-    });
-  }
+  document.getElementById('stamp').textContent = `下書きの作成: ${data.generatedAtJst || '不明'}`;
+  selectTab(view);
 }
 
 boot();

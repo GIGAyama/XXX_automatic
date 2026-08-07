@@ -72,6 +72,15 @@ body {
   cursor: pointer; font-family: inherit;
 }
 .tab.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* 未送信の反応がたまっていることを、タブを開かなくても分かるようにする */
+.tab[data-badge]:not([data-badge=""])::after {
+  content: attr(data-badge);
+  display: inline-block; margin-left: 6px; min-width: 18px; padding: 0 5px;
+  background: var(--warn); color: #fff; border-radius: 999px;
+  font-size: 11px; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums;
+}
 
 /* ── カード ───────────────────────────────── */
 .list { padding: 0 16px 28px; display: flex; flex-direction: column; gap: 14px; }
@@ -93,13 +102,31 @@ body {
 .chip--today { background: var(--accent); border-color: var(--accent); color: #fff; }
 .chip--len { margin-left: auto; font-variant-numeric: tabular-nums; }
 .chip--len.is-over { background: #ffe8e8; border-color: #f3b6b6; color: #a52020; }
+.chip--edited { background: #fff3e0; border-color: #f0cf9c; color: #8a5a12; }
+.chip--sent { align-self: center; }
 
 .card__img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; margin-top: 12px; background: var(--bg); }
+/* 画像が欠けたときに、壊れたアイコンではなく理由を出す枠 */
+.card__img--missing {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: 12px; color: var(--ink-weak); font-size: 13px;
+  border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line);
+}
+
+/* 複数コマのカード。横に並べてスワイプで見る（縦に積むと本文が遠くなる） */
+.card__shots.is-multi {
+  display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; padding-bottom: 2px;
+}
+.card__shots.is-multi::-webkit-scrollbar { display: none; }
+.card__shots.is-multi .card__img { flex: 0 0 88%; scroll-snap-align: center; border-radius: 10px; }
 
 .card__text {
   margin: 0; padding: 14px; white-space: pre-wrap; word-break: break-word;
   font-size: 15.5px; line-height: 1.75;
 }
+.card__text--title { font-weight: 800; padding-bottom: 0; }
+.card__text--preview { color: var(--ink-weak); font-size: 14px; }
 
 .card__actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 14px 14px; }
 
@@ -124,6 +151,36 @@ body {
 }
 .rate button.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
 
+/* ── 本文をその場で直す ─────────────────────── */
+.editor { padding: 0 14px 14px; }
+.editor__area {
+  width: 100%; min-height: 190px; padding: 12px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: var(--bg); color: var(--ink);
+  font-family: inherit; font-size: 15.5px; line-height: 1.75; resize: vertical;
+}
+.editor__count {
+  margin: 6px 0 10px; text-align: right; font-size: 12.5px; font-weight: 700;
+  color: var(--ink-weak); font-variant-numeric: tabular-nums;
+}
+.editor__count.is-over { color: #a52020; }
+.editor .card__actions { padding: 0; }
+
+/* ── 反応をまとめて送る ─────────────────────── */
+.sendbar {
+  background: var(--card); border: 1.5px solid var(--warn); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 14px 0 0;
+}
+.sendbar__text { margin: 0; padding: 0 14px 12px; font-size: 14px; color: var(--ink); font-weight: 700; }
+
+/* ── ホーム画面への追加の案内 ────────────────── */
+.howto {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 16px 16px 14px;
+}
+.howto__title { margin: 0 0 8px; font-size: 15px; font-weight: 800; }
+.howto__list { margin: 0 0 12px; padding-left: 1.2em; font-size: 14px; color: var(--ink-weak); }
+.howto__list li { margin-bottom: 4px; }
+
 /* ── 空のとき ──────────────────────────────── */
 .empty {
   text-align: center; padding: 44px 20px; color: var(--ink-weak); font-size: 14.5px;
@@ -138,6 +195,9 @@ body {
   font-size: 14px; font-weight: 700; box-shadow: 0 6px 22px rgba(0, 0, 0, .25);
   z-index: 50; max-width: calc(100vw - 32px); text-align: center;
 }
+/* hidden の付け外しは読み上げが安定しないので、要素は残したまま見た目だけ切り替える */
+.toast[data-show="off"], .toast:not([data-show]) { visibility: hidden; opacity: 0; }
+.toast[data-show="on"] { visibility: visible; opacity: 1; }
 
 /* ── フッタ ───────────────────────────────── */
 .foot { padding: 8px 20px 34px; color: var(--ink-weak); font-size: 12.5px; line-height: 1.65; }

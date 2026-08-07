@@ -1,13 +1,19 @@
 {
-  "generatedAt": "2026-08-07T06:41:58.083Z",
-  "generatedAtJst": "2026-08-07 15:41 JST",
+  "generatedAt": "2026-08-07T08:33:03.331Z",
+  "generatedAtJst": "2026-08-07 17:33 JST",
   "weekIds": [
     "2026-W32",
     "2026-W33"
   ],
+  "pastWeekIds": [
+    "2026-W31",
+    "2026-W30",
+    "2026-W29"
+  ],
   "launcherUrl": "https://gigayama.github.io/XXX_automatic/",
   "noteEditorUrl": "https://note.com/notes/new",
   "xHandle": "",
+  "maxWeightedLength": 280,
   "repoUrl": "https://github.com/GIGAyama/XXX_automatic",
   "slots": [
     {
@@ -36,7 +42,11 @@
       "text": "「あれ、前の漢字ドリル進捗が消えちゃった？」端末買い替えや長期休暇で困る子がいますよね。そんなときに役立つのがKANJI_Townです。記録が消えにくいPWAで、今日の5字を学習。児童はサッと始められますよ。\n\nhttps://gigayama.github.io/KANJI_Town/\n\n#漢字学習 #小学校 #PWA",
       "url": "https://gigayama.github.io/KANJI_Town/",
       "media": "media/KANJI_Town-card.png",
-      "weightedLength": 243
+      "mediaList": [
+        "media/KANJI_Town-card.png"
+      ],
+      "weightedLength": 243,
+      "overLimit": false
     },
     {
       "id": "2026-08-10-evening",
@@ -52,7 +62,11 @@
       "text": "「コマが滑るゲーム、起動しなくなった！」という声があり、Ice Slide Puzzleを更新しました。キャッシュ周りを改善し、古いバージョンが残らないように対応。アクセシビリティも向上させ、遊びやすくなりました！\n\nhttps://gigayama.github.io/Ice_slide-puzzle/\n\n#南極スライダー #PWA #ボードゲーム",
       "url": "https://gigayama.github.io/Ice_slide-puzzle/",
       "media": "media/Ice_slide-puzzle-card.png",
-      "weightedLength": 259
+      "mediaList": [
+        "media/Ice_slide-puzzle-card.png"
+      ],
+      "weightedLength": 259,
+      "overLimit": false
     },
     {
       "id": "2026-08-11-morning",
@@ -68,7 +82,11 @@
       "text": "AIを使ってしりとりアプリの言葉リストを作っていて気づきました。子どもの言葉のひらめきは、AIの学習データよりずっと自由で面白い。アプリでも、そんな発想が広がる余地を残したいと改めて思いました。\n\nhttps://gigayama.github.io/word_basket/\n\n#ワードバスケット #しりとり #小学校",
       "url": "https://gigayama.github.io/word_basket/",
       "media": "media/word_basket-card.png",
-      "weightedLength": 252
+      "mediaList": [
+        "media/word_basket-card.png"
+      ],
+      "weightedLength": 252,
+      "overLimit": false
     },
     {
       "id": "2026-08-11-evening",
@@ -84,7 +102,11 @@
       "text": "しりとりファイター、低学年の子には音声入力がおすすめです。マイクボタンをタップして言葉を話すだけ。キーボード入力に慣れていなくても、思考を止めずにゲームを楽しめます。言葉遊びのきっかけにもなりますよ。\n\nhttps://gigayama.github.io/Shiritori_fighter/\n\n#しりとり #音声入力 #小学校",
       "url": "https://gigayama.github.io/Shiritori_fighter/",
       "media": "media/Shiritori_fighter-card.png",
-      "weightedLength": 254
+      "mediaList": [
+        "media/Shiritori_fighter-card.png"
+      ],
+      "weightedLength": 254,
+      "overLimit": false
     },
     {
       "id": "2026-08-12-morning",
@@ -100,7 +122,11 @@
       "text": "「宿題出した人〜？」朝の確認に時間がかかりますよね。このアプリは、登校時に児童が番号と気持ちを入力するだけ。先生はダッシュボードで未提出や気になる子を瞬時に把握。時間のゆとりが生まれますよ。\n\nhttps://gigayama.github.io/Homework_barcordreader/\n\n#宿題 #学級経営 #働き方改革",
       "url": "https://gigayama.github.io/Homework_barcordreader/",
       "media": "media/Homework_barcordreader-card.png",
-      "weightedLength": 244
+      "mediaList": [
+        "media/Homework_barcordreader-card.png"
+      ],
+      "weightedLength": 244,
+      "overLimit": false
     },
     {
       "id": "2026-08-12-evening",
@@ -116,7 +142,11 @@
       "text": "ワークシートの準備や採点に時間がかかり、本来したい指導に集中できない…そんな困りごと、ありませんか？わたしは「MIRAI-Passport」でAIにワークシート作成から添削まで任せています。子どもはアカウント不要でサッと使えますよ。\n\nhttps://gigayama.github.io/MIRAI-Passport/\n\n#みらいパスポート #AI #小学校",
       "url": "https://gigayama.github.io/MIRAI-Passport/",
       "media": "media/MIRAI-Passport-card.png",
-      "weightedLength": 272
+      "mediaList": [
+        "media/MIRAI-Passport-card.png"
+      ],
+      "weightedLength": 272,
+      "overLimit": false
     },
     {
       "id": "2026-08-13-morning",
@@ -132,7 +162,11 @@
       "text": "作文の添削、一人ひとり丁寧にするのは大変ですよね。Online Publisher ProはGASとReactで開発し、AIが誤字脱字指摘や褒め言葉を自動生成するようにしました。Google Workspace環境ならデプロイも簡単。先生の負担を減らせるはずです。\n\nhttps://gigayama.github.io/Online-Publisher-pro/\n\n#作文 #AI添削 #GIGAスクール",
       "url": "https://gigayama.github.io/Online-Publisher-pro/",
       "media": "media/Online-Publisher-pro-card.png",
-      "weightedLength": 272
+      "mediaList": [
+        "media/Online-Publisher-pro-card.png"
+      ],
+      "weightedLength": 272,
+      "overLimit": false
     },
     {
       "id": "2026-08-13-evening",
@@ -148,7 +182,11 @@
       "text": "KAKE Masterの「ふたりでもんだい」モード、使っていますか？カードを配る手間なく、端末一つで九九の出し合いができます。休み時間や朝の会のちょっとした時間に、友達と楽しく練習できますよ。\n\nhttps://gigayama.github.io/KAKE_Master/\n\n#九九 #算数 #学習アプリ",
       "url": "https://gigayama.github.io/KAKE_Master/",
       "media": "media/KAKE_Master-card.png",
-      "weightedLength": 231
+      "mediaList": [
+        "media/KAKE_Master-card.png"
+      ],
+      "weightedLength": 231,
+      "overLimit": false
     },
     {
       "id": "2026-08-14-morning",
@@ -164,7 +202,11 @@
       "text": "計算問題の教材をAIで作成する中で、子どもが苦手な問題傾向はデータで分かるものの、その「つまずき」の背景にある思考までは読み取れないと感じました。AIは効率化に役立ちますが、子どもの心に寄り添うのはやはり人間ならではですね。\n\nhttps://gigayama.github.io/Keisan-Card/\n\n#教育AI #算数 #GIGAスクール",
       "url": "https://gigayama.github.io/Keisan-Card/",
       "media": "media/Keisan-Card-card.png",
-      "weightedLength": 274
+      "mediaList": [
+        "media/Keisan-Card-card.png"
+      ],
+      "weightedLength": 274,
+      "overLimit": false
     },
     {
       "id": "2026-08-14-evening",
@@ -180,7 +222,11 @@
       "text": "「先生、漢字が読めない」「操作が難しくて…」動画編集でつまずく子が多いですよね。Video-editing studioはブラウザで完結、漢字にはふりがな付き。低学年でも一人で楽しく動画を作れるようにしました。\n\nhttps://gigayama.github.io/Video-editing_studio/\n\n#動画編集 #小学校 #GIGA端末",
       "url": "https://gigayama.github.io/Video-editing_studio/",
       "media": "media/Video-editing_studio-card.png",
-      "weightedLength": 244
+      "mediaList": [
+        "media/Video-editing_studio-card.png"
+      ],
+      "weightedLength": 244,
+      "overLimit": false
     },
     {
       "id": "2026-08-15-morning",
@@ -196,7 +242,11 @@
       "text": "学習記録を自動で集計してくれるGamification。実は朝の会で「昨日の頑張り」を共有するのに便利なんです。経験値やバッジで可視化されるから、子どもたちのモチベーションも上がります。褒める視点が見つかりますよ。\n\nhttps://gigayama.github.io/Gamification/\n\n#ゲーミフィケーション #学習記録 #小学校",
       "url": "https://gigayama.github.io/Gamification/",
       "media": "media/Gamification-card.png",
-      "weightedLength": 268
+      "mediaList": [
+        "media/Gamification-card.png"
+      ],
+      "weightedLength": 268,
+      "overLimit": false
     },
     {
       "id": "2026-08-15-evening",
@@ -212,7 +262,11 @@
       "text": "学校のWi-Fiが不安定、タブレットのキーボードが邪魔…。現場の困りごとから、この100マス計算アプリは生まれました。オフラインで爆速動作、手書きやテンキー入力で画面もスッキリ。子どもはストレスなく計算に取り組めています。\n\nhttps://gigayama.github.io/online-100square-calculation/\n\n#100マス計算 #GIGAスクール #小学校",
       "url": "https://gigayama.github.io/online-100square-calculation/",
       "media": "media/online-100square-calculation-card.png",
-      "weightedLength": 275
+      "mediaList": [
+        "media/online-100square-calculation-card.png"
+      ],
+      "weightedLength": 275,
+      "overLimit": false
     },
     {
       "id": "2026-08-16-morning",
@@ -228,7 +282,11 @@
       "text": "ハゲタカのえじきのような心理戦ゲームをAIと対戦する中で、AIは確率で最適な手を選びますが、人間の「あえて裏をかく」ような駆け引きは難しいと感じました。子どもの思考の多様性って面白いですね。\n\nhttps://gigayama.github.io/Hagetaka-game/\n\n#教育AI #カードゲーム #心理戦",
       "url": "https://gigayama.github.io/Hagetaka-game/",
       "media": "media/Hagetaka-game-card.png",
-      "weightedLength": 242
+      "mediaList": [
+        "media/Hagetaka-game-card.png"
+      ],
+      "weightedLength": 242,
+      "overLimit": false
     },
     {
       "id": "2026-08-16-evening",
@@ -244,7 +302,11 @@
       "text": "「人差し指打ちが直らない」「短い時間の練習だと進捗が消えちゃう」そんな声を受けてTypaを更新しました。指のイラスト表示で正しい指使いをサポート。数秒のスキマ練習でも記録が残り、続きから始められますよ。\n\nhttps://gigayama.github.io/Typa/\n\n#タイピング #Chromebook #小学校",
       "url": "https://gigayama.github.io/Typa/",
       "media": "media/Typa-card.png",
-      "weightedLength": 256
+      "mediaList": [
+        "media/Typa-card.png"
+      ],
+      "weightedLength": 256,
+      "overLimit": false
     }
   ],
   "notes": [

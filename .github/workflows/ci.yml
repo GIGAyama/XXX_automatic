@@ -32,15 +32,31 @@ jobs:
 
       - name: JavaScript の構文
         run: |
-          for f in scripts/*.mjs scripts/lib/*.mjs tools/*.mjs docs/*.js; do
+          for f in scripts/*.mjs scripts/lib/*.mjs tools/*.mjs docs/*.js docs/lib/*.js; do
             node --check "$f"
           done
 
+      # 生成物（feedback.json / history.json / media/manifest.json）は
+      # まだ一度も動いていなければ存在しない。無いのは正常なので、あるときだけ見る。
       - name: JSON が読めるか
         run: |
-          for f in config/*.json docs/manifest.webmanifest docs/launcher.json package.json; do
+          for f in config/*.json docs/manifest.webmanifest docs/launcher.json package.json \
+                   data/feedback.json data/history.json docs/media/manifest.json; do
+            [ -f "$f" ] || continue
             node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" || { echo "::error file=$f::JSON として読めません"; exit 1; }
           done
+
+      # 生成物が最新の入力から作りなおせるか。
+      # 手で docs/ を直したまま忘れる、という壊れ方をここで捕まえる。
+      - name: 生成物が入力と食い違っていないか
+        run: |
+          npm run build:apps
+          npm run build:sw
+          if ! git diff --quiet -- docs/apps.html docs/sw.js; then
+            echo "::error::docs/apps.html か docs/sw.js が入力と食い違っています。\`npm run build\` を実行してコミットしてください"
+            git --no-pager diff --stat -- docs/apps.html docs/sw.js
+            exit 1
+          fi
 
       - name: 生成ずみの投稿がガードレールを通るか
         run: npm run lint:drafts

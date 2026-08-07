@@ -14,22 +14,50 @@
  */
 import fs from 'node:fs';
 import { fail, info, loadConfig, paths, readJson, rel, writeJson } from './lib/io.mjs';
-import { isoWeekId, jstDateString, jstStamp, nextWeekDates } from './lib/jst.mjs';
+import { addDays, isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf } from './lib/jst.mjs';
+import { weightedLength } from './lib/x-text.mjs';
+
+/** 「今週ぶん」として扱う週のほかに、さかのぼって載せる週の数。 */
+const PAST_WEEKS = 3;
+
+/** その投稿に付く画像のパス（複数コマがあれば全部）。 */
+function mediaPathsFor(repo) {
+    const found = [];
+    for (let i = 1; i <= 4; i += 1) {
+        const name = i === 1 ? `${repo}-card.png` : `${repo}-card-${i}.png`;
+        if (fs.existsSync(paths.media(name))) found.push(`media/${name}`);
+        else if (i > 1) break;
+    }
+    return found;
+}
 
 function main() {
-    const { accounts, slots } = loadConfig();
+    const { accounts, slots, guardrails } = loadConfig();
 
     // 今週と翌週を載せる。日曜の夜に翌週分ができるので、
     // 週末は「今週の残り」と「来週の分」が両方見える状態になる。
-    const weekIds = [...new Set([isoWeekId(jstDateString()), isoWeekId(nextWeekDates()[0])])];
+    const activeWeekIds = [...new Set([isoWeekId(jstDateString()), isoWeekId(nextWeekDates()[0])])];
 
+    // さらに過去数週も載せる。反応を記録するには「先週なにを出したか」が見える必要があるし、
+    // 反応がよかったものを日を置いて出しなおす、という使い方もできる。
+    // ここに載っていない週は、ランチャーが「過去」タブに回す。
+    const today = jstDateString();
+    const pastWeekIds = [];
+    for (let i = 1; i <= PAST_WEEKS; i += 1) {
+        const id = isoWeekId(addDays(weekDatesOf(today)[0], -7 * i));
+        if (!activeWeekIds.includes(id)) pastWeekIds.push(id);
+    }
+
+    const maxLength = guardrails.maxWeightedLength ?? 280;
     const posts = [];
     const notes = [];
 
-    for (const weekId of weekIds) {
+    for (const weekId of [...pastWeekIds, ...activeWeekIds]) {
         const queue = readJson(paths.data('queue', `${weekId}.json`), null);
         if (queue) {
             for (const post of queue.posts) {
+                const mediaList = mediaPathsFor(post.repo);
+                const length = post.weightedLength ?? weightedLength(post.text);
                 posts.push({
                     id: post.id,
                     weekId,
@@ -43,12 +71,17 @@ function main() {
                     repo: post.repo,
                     text: post.text,
                     url: post.url,
-                    media: post.media,
-                    weightedLength: post.weightedLength ?? null,
+                    // media は1枚目。古い Service Worker が配っている app.js が読んでも壊れないように残す。
+                    media: mediaList[0] ?? post.media ?? null,
+                    mediaList,
+                    weightedLength: length,
+                    overLimit: length > maxLength,
                 });
             }
         }
 
+        // note の下書きは今週・翌週ぶんだけ。過去のものは出しても押すものが無い。
+        if (!activeWeekIds.includes(weekId)) continue;
         const note = readJson(paths.data('note', `${weekId}.json`), null);
         if (note) {
             notes.push({
@@ -72,10 +105,13 @@ function main() {
     writeJson(outPath, {
         generatedAt: new Date().toISOString(),
         generatedAtJst: jstStamp(),
-        weekIds,
+        // ここに入っている週が「今週ぶん」。入っていない週はランチャーが過去扱いにする。
+        weekIds: activeWeekIds,
+        pastWeekIds,
         launcherUrl: accounts.launcherUrl,
         noteEditorUrl: accounts.noteEditorUrl,
         xHandle: accounts.xHandle,
+        maxWeightedLength: maxLength,
         // 「反応がよかった」の記録を Issue にして送り返すために使う。
         // トークンを画面に持たせずに書き戻せる唯一の方法がこれ。
         repoUrl: `https://github.com/${accounts.githubOwner}/${accounts.repoName}`,
@@ -85,11 +121,16 @@ function main() {
     });
 
     info(`⑤ 完了 — ${rel(outPath)}`);
-    info(`   投稿 ${posts.length} 件 / note 下書き ${notes.length} 本（${weekIds.join(', ')}）`);
+    info(`   投稿 ${posts.length} 件 / note 下書き ${notes.length} 本（今週ぶん: ${activeWeekIds.join(', ')}）`);
+    if (pastWeekIds.length > 0) info(`   過去週として ${pastWeekIds.filter((id) => posts.some((p) => p.weekId === id)).length} 週ぶんを載せました`);
 
-    const missingMedia = posts.filter((p) => !p.media).length;
+    const missingMedia = posts.filter((p) => p.mediaList.length === 0).length;
     if (missingMedia > 0) {
         info(`   ※ ${missingMedia} 件は画像がありません。\`npm run media\` を実行すると付きます`);
+    }
+    const over = posts.filter((p) => p.overLimit).length;
+    if (over > 0) {
+        info(`   ※ ${over} 件が ${maxLength} 文字を超えています。ランチャーが共有の前に警告します`);
     }
 }
 

@@ -9,20 +9,25 @@
  *    ここをキャッシュすると「新しい週の投稿がいつまでも出てこない」という、
  *    原因がとても分かりにくい症状になる。中身が毎週入れかわるファイルなので、
  *    常にネットワークを見にいく。
+ *
+ * ⚠️ VERSION の行は `npm run build:sw` が書き換える。手で直さないこと。
+ *    シェルの中身から計算した値が入っているので、画面を直せば必ず版が変わり、
+ *    端末のキャッシュも入れかわる。`npm run check` がずれを検出する。
  */
 
-const VERSION = 'v1';
+const VERSION = 'v594e314b';
 const SHELL_CACHE = `launcher-shell-${VERSION}`;
 const MEDIA_CACHE = `launcher-media-${VERSION}`;
 
 /** 画面を出すのに要る最小限。ここが揃っていれば圏外でも真っ白にならない。 */
-const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html'];
+const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(SHELL_CACHE)
       // 1つでも欠けると addAll 全体が失敗する。アイコンなど欠けても動くものは入れない。
+      // 実在するかは npm run build:sw / npm run check が先に見ている。
       .then((cache) => cache.addAll(SHELL))
       .then(() => self.skipWaiting())
   );
@@ -75,10 +80,19 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // ── それ以外（画面の部品）: キャッシュを先に返しつつ、裏で更新する ──
+  // ── それ以外（画面の部品）──
+  //
+  // キャッシュを先に返し、無いときだけ取りにいく。
+  //
+  // 以前は「キャッシュを返しつつ裏で更新する」形だったが、app.js を
+  // lib/*.js に分けたことで、その形は「新しい app.js と古い lib」という
+  // 混ざった状態を作れてしまう。1ファイルなら気にならなかった問題である。
+  // いまは VERSION がシェルの内容から決まるので、直せば必ず別のキャッシュになり、
+  // 版が混ざらない。裏で更新する必要そのものが無くなった。
   event.respondWith(
     caches.match(request).then((hit) => {
-      const network = fetch(request)
+      if (hit) return hit;
+      return fetch(request)
         .then((res) => {
           if (res.ok) {
             const copy = res.clone();
@@ -86,8 +100,7 @@ self.addEventListener('fetch', (event) => {
           }
           return res;
         })
-        .catch(() => hit || caches.match('./offline.html'));
-      return hit || network;
+        .catch(() => caches.match('./offline.html'));
     })
   );
 });
