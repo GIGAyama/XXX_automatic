@@ -135,14 +135,23 @@ GitHub Actions の定期実行は混雑時に数十分遅れます。
 `environment: github-pages` は GitHub の予約環境で、**Pages が有効になっていないリポジトリでは使えません**。
 使えないとジョブは開始前に弾かれるため、ログが1行も残りません。
 
-確認するのはこの2か所です。
+確認するのはこの3か所です。上から順に見てください。
 
-1. **Settings → Pages → Build and deployment → Source** を **GitHub Actions** にする
+1. **Settings → Environments → `github-pages` → Deployment branches and tags**
+   → **No restriction** にする（または `main` を追加する）
+
+   実行ページの上に
+   `Branch "main" is not allowed to deploy to github-pages due to environment protection rules.`
+   と出ていたらこれです。**ブランチの名前を変えたことがあると、
+   環境側に古い名前が残っていて、この状態になります。**
+
+2. **Settings → Pages → Build and deployment → Source** を **GitHub Actions** にする
    （「Deploy from a branch」だと、このワークフローからは配信できません）
-2. **Settings → Actions → General → Workflow permissions** を
+
+3. **Settings → Actions → General → Workflow permissions** を
    **Read and write permissions** にする
 
-直したら Actions から「GitHub Pages へ配信」を **Re-run** してください。
+直したら Actions から「GitHub Pages へ配信」を **Re-run failed jobs** してください。
 
 > ワークフローには `preflight` ジョブがあり、可能なら Pages を自動で有効にします。
 > それでも駄目なときは、上の2つを日本語で案内して止まります。
