@@ -1,0 +1,66 @@
+name: GitHub Pages へ配信
+
+# ⚠️ workflow_run が要る理由（ここを消すとランチャーが永久に更新されない）
+#
+#   週次ワークフローは docs/launcher.json と docs/media/ をコミットして push する。
+#   ところが GITHUB_TOKEN による push は、他のワークフローを起動しない
+#   （無限ループを防ぐための GitHub の仕様）。
+#   つまり push トリガーだけ書いても、週次の生成結果は永遠に配信されない。
+#   週次ワークフローの完了そのものを合図にする。
+on:
+  workflow_run:
+    workflows: ['週次 — 翌週の投稿を用意する']
+    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # 週次が失敗したときに、古い内容で配信しなおしても意味がない。
+    # 手動実行と push のときは workflow_run が無いので、その場合は通す。
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # workflow_run で起動したときは、既定だとイベントを起こしたときのコミットを見にいくため、
+          # 週次が push した生成結果より前の状態を配信してしまう。
+          # 既定ブランチの最新を明示して取りにいく。
+          # （'main' と書き固めないのは、既定ブランチ名が違うリポジトリでも動くようにするため。）
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      # docs/ だけを配信する。data/ にはスクリプト用の中間ファイルが入っていて、
+      # 公開する意味がないうえ、転送量だけ増える。
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

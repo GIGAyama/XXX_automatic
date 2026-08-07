@@ -1,0 +1,46 @@
+name: CI
+
+# pull_request でも動かす。push: [main] だけだと、
+# PR の時点で落ちていることに気づけないまま main に入る。
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: 品質ゲートとテスト
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 品質ゲート
+        run: npm run check
+
+      - name: テスト
+        run: npm test
+
+      - name: JavaScript の構文
+        run: |
+          for f in scripts/*.mjs scripts/lib/*.mjs tools/*.mjs docs/*.js; do
+            node --check "$f"
+          done
+
+      - name: JSON が読めるか
+        run: |
+          for f in config/*.json docs/manifest.webmanifest docs/launcher.json package.json; do
+            node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" || { echo "::error file=$f::JSON として読めません"; exit 1; }
+          done
+
+      - name: 生成ずみの投稿がガードレールを通るか
+        run: npm run lint:drafts

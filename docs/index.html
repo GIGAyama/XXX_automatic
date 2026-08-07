@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>投稿ランチャー</title>
+<meta name="description" content="用意された投稿を、スマホから3タップで X と note に出すためのランチャー">
+<meta name="theme-color" content="#1d3557">
+
+<!--
+  外部からは何も読みこまない。
+  学校のネットワークは CDN を塞いでいることがあり、
+  読めないと画面が半分だけ崩れて原因が分からなくなる。
+  このフリート共通の方針でもある。
+-->
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+<script src="install-hook.js"></script>
+</head>
+<body>
+
+<header class="head">
+  <div class="head__row">
+    <h1 class="head__title">投稿ランチャー</h1>
+    <button id="install" class="ghost" hidden>ホーム画面に追加</button>
+  </div>
+  <p class="head__sub" id="summary">読み込んでいます…</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab is-on" role="tab" data-view="today" aria-selected="true">今日</button>
+  <button class="tab" role="tab" data-view="week" aria-selected="false">今週ぜんぶ</button>
+  <button class="tab" role="tab" data-view="note" aria-selected="false">note</button>
+  <button class="tab" role="tab" data-view="done" aria-selected="false">投稿ずみ</button>
+</nav>
+
+<main id="list" class="list" aria-live="polite"></main>
+
+<div id="toast" class="toast" role="status" aria-live="assertive" hidden></div>
+
+<footer class="foot">
+  <p>共有シートに X が出ないときは、［コピーして X を開く］を使ってください。<br>
+     本文は共有ボタンを押した時点でクリップボードにも入っています。</p>
+  <p id="stamp" class="foot__stamp"></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

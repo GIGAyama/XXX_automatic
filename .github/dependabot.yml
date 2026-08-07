@@ -1,0 +1,17 @@
+# 実行時の依存は持たないが、2つだけ古くなると静かに壊れるものがある。
+#   ・GitHub Actions の各アクション（固定バージョンで書いてある）
+#   ・playwright（Chromium のバージョンと結びついている）
+# 月に1度だけ見る。頻繁に PR が来ても、結局まとめてしか見ないため。
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    open-pull-requests-limit: 3
+
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    open-pull-requests-limit: 2

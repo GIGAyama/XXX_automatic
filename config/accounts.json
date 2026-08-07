@@ -1,0 +1,32 @@
+{
+  "_comment": "アカウントと公開先の設定。ここを直せば別アカウント・別リポジトリでも動く。",
+
+  "githubOwner": "GIGAyama",
+
+  "_repoName": "このリポジトリ名。GitHub Pages の basePath がこれで決まる。gigayama.github.io は多数のアプリが同一オリジンを共有しているため、ここがずれると別アプリと取り違えられる。",
+  "repoName": "XXX_automatic",
+
+  "_pagesBase": "各学習アプリの公開 URL の組み立て規則。GIGAyama の全リポジトリで「リポジトリ名 = basePath」が守られているので、リポジトリ名から機械的に決まる。",
+  "pagesBase": "https://gigayama.github.io/",
+
+  "_launcherUrl": "投稿ランチャー（このリポジトリの docs/）の公開 URL。通知の本文に入れる。",
+  "launcherUrl": "https://gigayama.github.io/XXX_automatic/",
+
+  "xHandle": "",
+
+  "_noteEditorUrl": "note の新規記事エディタ。note は公式 API を持たないので、本文をクリップボードに入れてこの URL を開き、貼り付けてもらう。note 側の URL が変わったらここだけ直せばよい（実機で一度確認すること）。",
+  "noteEditorUrl": "https://note.com/notes/new",
+
+  "_excludeRepos": "発信の題材にしないリポジトリ。フォーク、設定置き場、このリポジトリ自身など。",
+  "excludeRepos": [
+    "XXX_automatic",
+    "my-antigravity-skills",
+    "GIGAyama.github.io"
+  ],
+
+  "_includeForks": "フォークは他人の成果物なので既定では題材にしない。",
+  "includeForks": false,
+
+  "_geminiModel": "無料枠で使えるモデル。1日あたりのリクエスト数に上限があるため、プロフィール生成はコミット SHA でキャッシュして無駄打ちを避けている。",
+  "geminiModel": "gemini-2.5-flash"
+}

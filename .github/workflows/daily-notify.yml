@@ -1,0 +1,47 @@
+name: 毎朝 — 今日の投稿を通知する
+
+# 21:30 UTC = 翌 6:30 JST。
+# ⚠️ cron は UTC。JST の朝に届けたいので、前日の夜の時刻を書くことになる。
+#    日付は scripts/lib/jst.mjs が JST で判定するので、
+#    UTC の日付とずれていても「JSTの今日」の投稿が選ばれる。
+#
+# schedule は混雑時に遅れる。朝の通知が7時台になることはあるが、
+# 何時に出すかは人が決めるので実害は無い。
+on:
+  schedule:
+    - cron: '30 21 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '通知する日付（YYYY-MM-DD、JST）。空なら今日'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: daily-notify
+  cancel-in-progress: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 通知に依存パッケージは要らないので npm ci はしない（起動を速くするため）。
+      - name: 今日のぶんを通知する
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: node scripts/notify-daily.mjs ${{ inputs.date && format('--date {0}', inputs.date) || '' }}

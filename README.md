@@ -1,0 +1,176 @@
+# 投稿ランチャー（XXX_automatic）
+
+GitHub Pages で公開している学習アプリを題材に、**X と note の投稿を「文章・画像・ハッシュタグ・URL がぜんぶ用意された状態」まで自動で作る**仕組みです。
+
+人がやるのは、スマホで通知を開いて **カードをタップ → 投稿ボタンを押す** だけ。
+
+**費用は月0円**です。
+
+---
+
+## なぜ作ったか
+
+発信が続かないのは意志の問題ではなく、毎回この3つが必要になるからです。
+
+1. 何を書くか考える
+2. 文章を書く
+3. 画像を用意する
+
+この3つを丸ごと機械に渡し、人には「出す/出さない」の判断だけを残しました。
+
+---
+
+## しくみ
+
+```
+① 収集   GitHub API で全リポジトリの README・MANUAL を集める
+② 理解   Gemini がアプリごとの「プロフィール」に整理する（更新が無ければ再生成しない）
+③ 素材   Playwright が各アプリを開いてスクショ → 紹介カード画像を作る
+④ 生成   Gemini が翌週7日分の投稿文を書く（型をローテーション、重複を回避）
+　 検査   ガードレールにかける（個人情報・誇大表現・字数・収益化表現）
+⑤ 通知   毎朝 GitHub Issue が立つ → スマホに通知が届く
+⑥ 投稿   ランチャーで［𝕏 に共有］→ 共有シート → X → 投稿ボタン
+⑦ 記録   「反応よかった」を押すと、翌週の生成に反映される
+```
+
+①〜⑤は GitHub Actions が日曜の夜と毎朝に自動で回します。
+
+---
+
+## X API を使っていない理由
+
+**2026年2月に X API の無料枠が廃止されました。** 現在は従量課金のみで、
+URL を含まない投稿が $0.015、**URL を含む投稿は $0.20**（1投稿あたり約32円）かかります。
+毎日3投稿すると月3,000円近くになります。
+
+代わりに **Web Share API** を使っています。
+
+```js
+navigator.share({ files: [カード画像], text: 本文 })
+```
+
+これを呼ぶと OS の共有シートが開き、X を選ぶと**画像が添付され本文が入った状態**の
+投稿画面が立ち上がります。API も課金も要りません。
+
+X の Web Intent（`x.com/intent/post`）は本文を入れられますが**画像を添付できない**ため、
+PC や共有シート非対応の環境向けのフォールバックとして併用しています。
+
+## note を自動投稿しない理由
+
+note に公式 API はありません。非公式 API は存在しますが、利用規約に触れて
+**アカウント停止につながる可能性**があります。本業の信用に関わるため使っていません。
+
+代わりに、本文を生成してクリップボードに入れ、note のエディタを開くところまでを自動化しています。
+公開ボタンは人が押します。
+
+---
+
+## はじめかた
+
+### 1. Gemini API キーを取る（無料・カード登録不要）
+
+<https://aistudio.google.com/apikey> でキーを作ります。
+
+リポジトリの **Settings → Secrets and variables → Actions → New repository secret** で、
+名前を `GEMINI_API_KEY` として登録します。
+
+### 2. GitHub Pages を有効にする
+
+**Settings → Pages → Source** を **GitHub Actions** にします。
+
+### 3. 最初の1回を手で動かす
+
+**Actions → 週次 — 翌週の投稿を用意する → Run workflow**
+
+初回は全アプリのプロフィール生成とスクリーンショット撮影が走るので、20〜30分ほどかかります。
+2回目以降は更新のあったアプリだけになるので数分で終わります。
+
+### 4. スマホのホーム画面に追加する
+
+<https://gigayama.github.io/XXX_automatic/> を開き、「ホーム画面に追加」します。
+
+### 5. GitHub モバイルアプリの通知をオンにする
+
+毎朝の Issue が通知として届きます。ここが発信を続けるための要です。
+
+### 6.（任意）Discord に通知する
+
+Discord サーバーの Webhook URL を `DISCORD_WEBHOOK` という名前の Secret に登録すると、
+毎朝 Discord にも画像つきで届きます。通知の見え方はこちらのほうが快適です。
+
+---
+
+## 調整のしかた
+
+いちばん触るところから順に並べてあります。
+
+| 変えたいこと | どこを直すか |
+|---|---|
+| 投稿の文体・話し方 | `CLAUDE.md` の §3（そのままプロンプトに入ります） |
+| 1日の投稿数・時間帯 | `config/slots.json` |
+| 投稿の型（切り口） | `config/themes.json` |
+| 禁止表現・字数の基準 | `config/guardrails.json` |
+| 題材にしないリポジトリ | `config/accounts.json` の `excludeRepos` |
+| 収益化のオン/オフ | `config/monetization.json` |
+
+`CLAUDE.md` を直せば、翌週から投稿の雰囲気が変わります。
+
+---
+
+## 収益化について
+
+`config/monetization.json` の `enabled` は既定で `false` です。
+
+日本の公立学校教員は地方公務員であり、兼業・副業には
+**地方公務員法38条にもとづく任命権者の許可**が必要な場合があります。手続きは自治体ごとに異なります。
+
+確認が済むまでは収益化の導線を一切出さない設計にしてあり、
+`scripts/lint-drafts.mjs` が生成文を監視して、収益化表現が混ざったら投稿候補から外します。
+
+確認が済んだら `enabled` を `true` にし、`links` を埋めてください。
+
+---
+
+## 手で動かすとき
+
+```bash
+npm ci
+export GITHUB_TOKEN=...    # 公開リポジトリを読むだけなのでスコープ無しで可
+export GEMINI_API_KEY=...
+
+npm run collect                          # ① 収集
+node scripts/build-profiles.mjs --limit 3  # ② 理解（まず3件で試す）
+node scripts/capture-media.mjs --repo Typa # ③ 素材（1件で試す）
+npm run generate -- --dry-run            # ④ 生成（保存せず画面に出す）
+npm run lint:drafts                      # 検査
+npm run build:index                      # ⑤ ランチャー用データ
+npm run serve                            # http://localhost:8000 で確認
+npm run check                            # 品質ゲート
+npm test                                 # テスト
+```
+
+Chromium がうまく起動しないときは、既にある Chromium を指定できます。
+
+```bash
+CHROMIUM_PATH=/path/to/chrome npm run media
+```
+
+---
+
+## 気をつける点
+
+- **時刻はすべて JST。** GitHub Actions の cron は UTC です。日付の判定は必ず
+  `scripts/lib/jst.mjs` を通してください。`npm run check` が違反を検出します。
+- **60日ルール。** リポジトリに60日間なにも動きがないと、GitHub は定期実行を止めます。
+  週次ワークフローが毎週コミットするので通常は止まりませんが、
+  長期間ワークフローが失敗し続けたときは Actions のページで再有効化してください。
+- **リポジトリ名を変えるとき**は `config/accounts.json` の `repoName` と
+  `docs/manifest.webmanifest` の `id` / `start_url` / `scope` を必ず揃えてください。
+  `gigayama.github.io` は多数のアプリが同一オリジンを共有しているため、
+  ここがずれると別アプリと取り違えられます。`npm run check` が検出します。
+
+詳しい操作は [MANUAL.md](MANUAL.md) に書いてあります。
+
+## ライセンス
+
+MIT

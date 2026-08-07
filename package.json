@@ -1,0 +1,29 @@
+{
+  "name": "xxx-automatic",
+  "version": "1.0.0",
+  "description": "GIGAyama の学習アプリを題材に、X / note の投稿文と画像を自動生成し、スマホから3タップで投稿できるようにする半自動発信システム",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "_comment": "実行時の依存は持たない。Gemini も GitHub API も Node 20 の fetch で直接叩く。SDK を挟むとバージョン差分で静かに壊れ、非エンジニアが原因を追えなくなるためである。playwright だけは例外で、スクリーンショットの生成にどうしても要る（CI とローカルでしか動かない）。",
+  "scripts": {
+    "collect": "node scripts/collect-repos.mjs",
+    "profiles": "node scripts/build-profiles.mjs",
+    "media": "node scripts/capture-media.mjs",
+    "generate": "node scripts/generate-week.mjs",
+    "note": "node scripts/generate-note.mjs",
+    "lint:drafts": "node scripts/lint-drafts.mjs",
+    "notify": "node scripts/notify-daily.mjs",
+    "build:index": "node scripts/build-launcher-data.mjs",
+    "check": "node scripts/check-project.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "serve": "node --run serve:docs",
+    "serve:docs": "python3 -m http.server 8000 --directory docs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

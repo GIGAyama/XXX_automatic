@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Playwright が置いていく作業用の一時ファイル。
+# スクリーンショットの完成品は docs/media/ に入れてコミットする
+# （GitHub Pages から配信して Web Share API に渡すため、リポジトリに無いと成立しない）。
+.playwright/
+test-results/
+playwright-report/
+
+.DS_Store
+Thumbs.db

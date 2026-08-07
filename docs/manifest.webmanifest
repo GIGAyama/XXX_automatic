@@ -1,0 +1,26 @@
+{
+  "name": "投稿ランチャー - X / note",
+  "short_name": "投稿ランチャー",
+  "description": "用意された投稿を、スマホから3タップで X と note に出すためのランチャー",
+  "lang": "ja",
+  "dir": "ltr",
+
+  "_comment": "gigayama.github.io は多数のアプリが同一オリジンを共有している。id / scope / start_url がリポジトリ名と食い違うと、別アプリと取り違えられて『開いたら違うアプリが立ち上がる』事故が起きる。リポジトリ名を変えたらここも必ず直すこと。",
+  "id": "/XXX_automatic/",
+  "start_url": "/XXX_automatic/",
+  "scope": "/XXX_automatic/",
+
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "launch_handler": { "client_mode": ["navigate-existing", "auto"] },
+  "orientation": "portrait",
+  "background_color": "#f4f6f9",
+  "theme_color": "#1d3557",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

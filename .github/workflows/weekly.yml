@@ -1,0 +1,99 @@
+name: 週次 — 翌週の投稿を用意する
+
+# 日曜 11:00 UTC = 日曜 20:00 JST。
+# ⚠️ GitHub Actions の cron は UTC で動く。JST のつもりで書くと9時間ずれる。
+#    日付の計算はスクリプト側で scripts/lib/jst.mjs を通しているので、
+#    多少発火が遅れても「翌週ぶん」の判定はずれない。
+#
+# schedule はベストエフォートで、混雑時は数十分遅れることがある。
+# 翌週ぶんを作る処理なので、遅れても実害は出ない。
+on:
+  schedule:
+    - cron: '0 11 * * 0'
+  workflow_dispatch:
+    inputs:
+      force_profiles:
+        description: 'プロフィールをキャッシュ無視で作りなおす'
+        type: boolean
+        default: false
+      force_media:
+        description: '画像を撮りなおす'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: 依存を入れる
+        run: npm ci
+
+      # スクリーンショットに日本語を出すために要る。
+      # 入れないと豆腐（□□□）になり、原因が分かりにくい。
+      - name: 日本語フォントを入れる
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: Chromium を入れる
+        run: npx playwright install --with-deps chromium
+
+      - name: ① 収集 — リポジトリの素材を集める
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run collect
+
+      - name: ② 理解 — アプリのプロフィールを作る
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/build-profiles.mjs ${{ inputs.force_profiles && '--force' || '' }}
+
+      - name: ③ 素材 — スクリーンショットと紹介カード
+        run: node scripts/capture-media.mjs ${{ inputs.force_media && '--force' || '' }}
+
+      - name: ④ 生成 — 翌週の X 投稿
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npm run generate
+
+      - name: ④' 生成 — note の下書き
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npm run note
+
+      - name: 検査 — ガードレール
+        run: npm run lint:drafts
+
+      - name: ⑤ ランチャー用のデータを組む
+        run: npm run build:index
+
+      - name: コミットする
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data docs
+          if git diff --staged --quiet; then
+            echo "変更はありませんでした"
+            exit 0
+          fi
+          git commit -m "chore: 翌週の投稿下書きを生成"
+          # 他のワークフローが同時に push していることがある。1回だけ取り込んで再試行する。
+          git push || (git pull --rebase origin "${GITHUB_REF_NAME}" && git push)
