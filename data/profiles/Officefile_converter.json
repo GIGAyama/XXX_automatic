@@ -4,40 +4,35 @@
   "pagesUrl": null,
   "hasPages": false,
   "pushedAt": "2025-10-14T11:15:09Z",
-  "generatedAt": "2026-08-07T06:37:44.752Z",
-  "oneLine": "OfficeファイルをGoogle形式に一括変換",
-  "catchCopy": "Officeファイル変換！",
+  "generatedAt": "2026-08-08T02:35:23.891Z",
+  "oneLine": "ドライブ内のOfficeファイルをGoogle形式に一括変換する。",
+  "catchCopy": "OfficeファイルをGoogle形式へ一括変換",
   "targetGrade": "教員向け",
   "subject": "校務",
   "painPoints": [
-    "他の先生からもらったWordやPowerPointの資料をGoogle Workspaceで開くとレイアウトが崩れる",
-    "過去に作成した大量のOfficeファイルをGoogleドライブに移行する際、一つずつ変換するのが面倒",
-    "学年や分掌で共有するOffice形式のファイルをGoogleドキュメントやスライドで共同編集したいが、変換作業が手間"
+    "フォルダ内のOfficeファイルを1つずつ手動でGoogle形式に変換するのが大変",
+    "Microsoft Office形式とGoogle形式のファイルが混在して管理しにくい"
   ],
   "howToUse": [
-    "変換したいファイルがあるフォルダのURLを指定",
-    "アプリを実行する",
-    "フォルダ内のファイルがGoogle形式に変換される"
+    "1. 変換したいドライブのフォルダURLを指定する",
+    "2. 変換処理を実行する",
+    "3. Google形式に変換されたファイルを確認する"
   ],
   "strengths": [
-    "指定したフォルダ内のOfficeファイルをまとめて変換できる",
-    "手動でのファイル形式変換にかかる手間と時間を削減",
-    "Google Workspaceでの共同編集や共有をスムーズに開始できる",
-    "OfficeファイルとGoogle形式の混在環境での作業効率を向上"
+    "指定したURLフォルダ内のMicrosoft Office形式ファイルをまとめてGoogle形式に変換可能",
+    "フォルダ単位で対象ファイルを処理できる"
   ],
   "classroomScenes": [
-    "学年で共有するOffice形式の年間計画をGoogle形式に変換し、共同編集を始める前",
-    "過去のOffice形式の教材データをGoogleドライブに移行する際",
-    "他の学校の先生から受け取ったOffice形式の資料を、自分のGoogle Workspace環境で活用する時"
+    "過去に作成したOffice形式の授業資料をGoogle形式へまとめて移行するとき",
+    "共有フォルダ内のOfficeファイルをGoogle形式に揃えて校務で使いたいとき"
   ],
   "designDecisions": [],
   "keywords": [
-    "Office",
-    "Google Workspace",
+    "Googleドライブ",
     "ファイル変換",
-    "校務効率化",
-    "共同編集",
-    "Googleドライブ"
+    "MicrosoftOffice",
+    "Google形式",
+    "校務効率化"
   ],
-  "postability": 4
+  "postability": 2
 }

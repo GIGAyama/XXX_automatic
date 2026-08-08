@@ -1,13 +1,13 @@
 {
   "version": 1,
   "cardTemplateSha": "08d5ce0b1e2d866c",
-  "updatedAtJst": "2026-08-08 05:00 JST",
+  "updatedAtJst": "2026-08-08 11:38 JST",
   "apps": {
     "KEISAN-BLOCK": {
       "shot": {
         "ok": true,
-        "fingerprint": "746c9acf4fd52e76",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "d76e0eb2677484b0",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -15,8 +15,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "ef95d32b2221faea",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "bf981936f75a6022",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -24,8 +24,8 @@
     "Digital_textbook": {
       "shot": {
         "ok": true,
-        "fingerprint": "ba8aa14dbf5c6df2",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "82f2fc8062637ac0",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -33,8 +33,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "7fae911b70e06c63",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "b654c05b32691e71",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -42,8 +42,8 @@
     "KAKE_Master": {
       "shot": {
         "ok": true,
-        "fingerprint": "afc591546960f2e7",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "850f78ccc5b0018a",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -51,8 +51,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "9b93fa714ed33fe0",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "a82f601ec7b1c903",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -60,17 +60,17 @@
     "KANJI_Town": {
       "shot": {
         "ok": true,
-        "fingerprint": "087478b1cf175043",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "967bae2bb6d50975",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
-        "stabilized": false,
+        "stabilized": true,
         "dismissed": null,
         "reason": null
       },
       "card": {
         "ok": true,
-        "fingerprint": "6bef49897f01aa24",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "e335c82efdc8e8a2",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -78,8 +78,8 @@
     "Keisan-Card": {
       "shot": {
         "ok": true,
-        "fingerprint": "d6bc6cb7a53509d6",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "f49a8c205043f1e4",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "はじめる",
@@ -87,8 +87,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "d6476ca47755998f",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "5c2c34dcd7ade3e2",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -96,8 +96,8 @@
     "online-100square-calculation": {
       "shot": {
         "ok": true,
-        "fingerprint": "d7f08dd7d5aa63d8",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "e675423ea18e871b",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "スタート",
@@ -105,8 +105,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "81afc484217dc34e",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "9f36d2decf6a830e",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -114,8 +114,8 @@
     "SchoolPlan_Editor": {
       "shot": {
         "ok": true,
-        "fingerprint": "697d9d4ea4072ca6",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "f84b94732cb3cf93",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -123,8 +123,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "5fa5dd8ee0a772b5",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "56f189476472a9fe",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -132,8 +132,8 @@
     "Qalc": {
       "shot": {
         "ok": true,
-        "fingerprint": "9bc7310ade0cc39f",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "a574b6580a78702f",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -141,8 +141,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "58244492b3ea1a42",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "7c4a5eaecdde85df",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -168,8 +168,8 @@
     "online-manuscript-paper-lite": {
       "shot": {
         "ok": true,
-        "fingerprint": "4bdbb22549461afe",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "f76745c0bbce441e",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -177,8 +177,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "9e71673b76c30a67",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "54dd011d5b1e5a52",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -186,8 +186,8 @@
     "MIRAI-Compass": {
       "shot": {
         "ok": true,
-        "fingerprint": "d4116d2cc3696a4e",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "2321f6513d714d96",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "はじめる",
@@ -195,8 +195,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "ba5c82d9cdc42049",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "b7dffda121256361",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -222,8 +222,8 @@
     "Quoridor": {
       "shot": {
         "ok": true,
-        "fingerprint": "5575d4d62501db1f",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "fba54bc481d820dd",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": "開始",
@@ -231,8 +231,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "7b54ccb8622102b7",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "89d6d41a39565247",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -240,17 +240,17 @@
     "Quarto": {
       "shot": {
         "ok": true,
-        "fingerprint": "68fc4f2aa0b47687",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "fa6b9f542453ffe1",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
-        "stabilized": false,
+        "stabilized": true,
         "dismissed": null,
         "reason": null
       },
       "card": {
         "ok": true,
-        "fingerprint": "f7103da480af1faf",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "67f7df7093bf174b",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -259,7 +259,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "ebc4ad1b970c2a36",
-        "atJst": "2026-08-07 19:19 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -267,8 +267,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "11c99f1368ee88b2",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "d4ffed2c74ce00e3",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -276,14 +276,14 @@
     "app_launcher": {
       "shot": {
         "ok": false,
-        "fingerprint": "805e28380d111a49",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "fa488ea42a957a74",
+        "atJst": "2026-08-08 11:36 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "2a8044dee721dbf7",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "f90143f14961478b",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -291,8 +291,8 @@
     "Reversi": {
       "shot": {
         "ok": true,
-        "fingerprint": "db0b8035919d5005",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "8561b8eae7b5b8a4",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "開始",
@@ -300,8 +300,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "8833e5b9d99da2c0",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "8662de660304fb9e",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -309,8 +309,8 @@
     "Typa": {
       "shot": {
         "ok": true,
-        "fingerprint": "c561477d911dc313",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "5db78d2f5685582b",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -318,8 +318,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "3a27bbafed60c1fd",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "2a6d85947c89a3b1",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -328,13 +328,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "9732161e28f86904",
-        "atJst": "2026-08-07 19:19 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "3c06fc0fa177ac93",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "dca9033d5a3e07d5",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -343,13 +343,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "5b8421aa01be0d66",
-        "atJst": "2026-08-07 19:19 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "0abede4738f698c5",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "60350ed24377b599",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -358,13 +358,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "5fd8859df2463568",
-        "atJst": "2026-08-07 19:19 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "62085fa2bb9a0436",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "05c31ac02063b248",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -373,7 +373,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "3248da7a6f8182c6",
-        "atJst": "2026-08-07 19:19 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -381,8 +381,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "6918257e21b32991",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "5b1e1eb1933de3cc",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -390,8 +390,8 @@
     "Homework_barcordreader": {
       "shot": {
         "ok": true,
-        "fingerprint": "999bf16df0013762",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "14fb77203f953c75",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -399,8 +399,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "a2e0376f5cdd00eb",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "126e45ee2923a090",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -408,8 +408,8 @@
     "Shiritori_fighter": {
       "shot": {
         "ok": true,
-        "fingerprint": "4b4cdf314beb7777",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "20bd855c62ab3a4a",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": "スタート",
@@ -417,8 +417,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "6f8a9a7aad683a67",
-        "atJst": "2026-08-07 19:19 JST",
+        "fingerprint": "0a6f0678b04dbab4",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -427,7 +427,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "ad4e1912a082cfc8",
-        "atJst": "2026-08-07 19:19 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -435,8 +435,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "bbce6e437300500d",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "7264d0d19d93948a",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -445,7 +445,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "1f54ded96365ec61",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -453,8 +453,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "8b6e397cf9acab55",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "beb126db1cde4457",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -462,8 +462,8 @@
     "Townmap_Mikke": {
       "shot": {
         "ok": true,
-        "fingerprint": "ebad4e40957fcf6c",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "8d2a299dea2f234a",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -471,8 +471,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "7bc8bed501b76471",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "a6add0488021908e",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -498,8 +498,8 @@
     "Online-Publisher-pro": {
       "shot": {
         "ok": true,
-        "fingerprint": "20f0bf8732f7118b",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "fc5524563ff2fcd9",
+        "atJst": "2026-08-08 11:35 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -507,8 +507,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "ea08333d7af70798",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "03e53086e89ac964",
+        "atJst": "2026-08-08 11:35 JST",
         "frames": 1,
         "blank": false
       }
@@ -516,8 +516,8 @@
     "Gamification": {
       "shot": {
         "ok": true,
-        "fingerprint": "a74b93c2ab74cf7c",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "fad39c9fbc49acda",
+        "atJst": "2026-08-08 11:35 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -525,8 +525,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "d34a7c4927f05ea1",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "7b38c9639ce24151",
+        "atJst": "2026-08-08 11:35 JST",
         "frames": 1,
         "blank": false
       }
@@ -534,8 +534,8 @@
     "Werewolf": {
       "shot": {
         "ok": true,
-        "fingerprint": "0e49efcaef2b41e5",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "f2f863650e9964d9",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": "開始",
@@ -543,8 +543,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "48823250c7ef6376",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "3f1f79e34915863b",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -553,7 +553,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "f5c4dcf5ae6baba2",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -561,8 +561,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "cc30f1c47633e2f7",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "09330abdf1fda1fa",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -570,8 +570,8 @@
     "NotebookSample_Generator": {
       "shot": {
         "ok": true,
-        "fingerprint": "2bc7ad1d83fdf05a",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "5562f8ee17e13922",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -579,8 +579,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "8daff1f3601e106d",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "f8a18f4ec86036f5",
+        "atJst": "2026-08-08 11:36 JST",
         "frames": 1,
         "blank": false
       }
@@ -589,7 +589,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "5e21b66f62a60383",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -597,8 +597,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "37dd68ded22b331c",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "0a500432be550dbf",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -607,7 +607,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "37d33f406769198d",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -615,8 +615,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "007c99a140033259",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "057d062960154f16",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "blank": false
       }
@@ -625,7 +625,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "fa358944471a3290",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:37 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -633,8 +633,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "a8a3972583f7ebd0",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "b3a583a42f46a4bb",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -643,13 +643,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "81a528a075761805",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "37e46431a565d067",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "a6a35bbc0d933945",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -676,7 +676,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "23b6b668ccb842ab",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "スタート",
@@ -684,8 +684,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "d6395d7d707c9133",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "bc58086a6f7fce35",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -694,13 +694,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "170f2b17829f78ed",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "138f9a216f5d0799",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "88e298ef4bc84ea4",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -709,13 +709,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "7d30974e6680b3bd",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "7e14f33d0d258013",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "f9f55fe2f85f46bf",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -724,7 +724,7 @@
       "shot": {
         "ok": true,
         "fingerprint": "90a15e6d22641641",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -732,8 +732,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "7048cf80ede36bd9",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "9d1be3886ada0fec",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -757,13 +757,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "199ecee876447f18",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "80533b5bda3b6cd7",
-        "atJst": "2026-08-07 19:20 JST",
+        "fingerprint": "230ce475d687df7a",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -772,13 +772,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "d3badf44925a7982",
-        "atJst": "2026-08-07 19:20 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "8b96dfd339106cca",
-        "atJst": "2026-08-07 19:21 JST",
+        "fingerprint": "9dcf8ea0cb2e9381",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -787,13 +787,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "84f137075fb670f6",
-        "atJst": "2026-08-07 19:21 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "7399b17c1401753d",
-        "atJst": "2026-08-07 19:21 JST",
+        "fingerprint": "9989aa661df08a2e",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -802,13 +802,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "77ba0664712d9290",
-        "atJst": "2026-08-07 19:21 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "4b2d2b435a7c378b",
-        "atJst": "2026-08-07 19:21 JST",
+        "fingerprint": "03edfc5a2d135801",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -817,13 +817,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "8ac4049b017e1a4e",
-        "atJst": "2026-08-07 19:21 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "18797dafbd1c596e",
-        "atJst": "2026-08-07 19:21 JST",
+        "fingerprint": "d29d1046879f2480",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -832,13 +832,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "a5737f640cb0e094",
-        "atJst": "2026-08-07 19:21 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "57fe10acae513eee",
-        "atJst": "2026-08-07 19:21 JST",
+        "fingerprint": "10389755c4f0f533",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -862,13 +862,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "8193e05dcf0e558f",
-        "atJst": "2026-08-07 19:21 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "89d93085473596b4",
-        "atJst": "2026-08-07 19:21 JST",
+        "fingerprint": "274094c7f30e07d6",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
@@ -877,13 +877,13 @@
       "shot": {
         "ok": false,
         "fingerprint": "068b72a490ec0767",
-        "atJst": "2026-08-07 19:21 JST",
+        "atJst": "2026-08-08 11:38 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "7c375a941a972de4",
-        "atJst": "2026-08-07 19:21 JST",
+        "fingerprint": "2ede464a6e8756ac",
+        "atJst": "2026-08-08 11:38 JST",
         "frames": 1,
         "blank": false
       }
