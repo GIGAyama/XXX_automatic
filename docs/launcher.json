@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-08T02:41:52.210Z",
-  "generatedAtJst": "2026-08-08 11:41 JST",
+  "generatedAt": "2026-08-08T03:47:44.637Z",
+  "generatedAtJst": "2026-08-08 12:47 JST",
   "weekIds": [
     "2026-W32",
     "2026-W33"
@@ -28,6 +28,192 @@
       "hour": 21
     }
   ],
+  "galleries": {
+    "KANJI_Town": [
+      {
+        "id": "card:0",
+        "src": "media/KANJI_Town-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Ice_slide-puzzle": [
+      {
+        "id": "card:0",
+        "src": "media/Ice_slide-puzzle-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "word_basket": [
+      {
+        "id": "card:0",
+        "src": "media/word_basket-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Shiritori_fighter": [
+      {
+        "id": "card:0",
+        "src": "media/Shiritori_fighter-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "KAKE_Master": [
+      {
+        "id": "card:0",
+        "src": "media/KAKE_Master-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "MIRAI-Passport": [
+      {
+        "id": "card:0",
+        "src": "media/MIRAI-Passport-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Online-Publisher-pro": [
+      {
+        "id": "card:0",
+        "src": "media/Online-Publisher-pro-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "KEISAN-BLOCK": [
+      {
+        "id": "card:0",
+        "src": "media/KEISAN-BLOCK-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Keisan-Card": [
+      {
+        "id": "card:0",
+        "src": "media/Keisan-Card-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Video-editing_studio": [
+      {
+        "id": "card:0",
+        "src": "media/Video-editing_studio-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Gamification": [
+      {
+        "id": "card:0",
+        "src": "media/Gamification-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "online-100square-calculation": [
+      {
+        "id": "card:0",
+        "src": "media/online-100square-calculation-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Hagetaka-game": [
+      {
+        "id": "card:0",
+        "src": "media/Hagetaka-game-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Typa": [
+      {
+        "id": "card:0",
+        "src": "media/Typa-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "SchoolPlan_Editor": [
+      {
+        "id": "card:0",
+        "src": "media/SchoolPlan_Editor-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "online-manuscript-paper-pro": [
+      {
+        "id": "card:0",
+        "src": "media/online-manuscript-paper-pro-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Treasure_Words": [
+      {
+        "id": "card:0",
+        "src": "media/Treasure_Words-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Digital_textbook": [
+      {
+        "id": "card:0",
+        "src": "media/Digital_textbook-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Reversi": [
+      {
+        "id": "card:0",
+        "src": "media/Reversi-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "DigitalCloset": [
+      {
+        "id": "card:0",
+        "src": "media/DigitalCloset-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "School_plan_note": [
+      {
+        "id": "card:0",
+        "src": "media/School_plan_note-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "Shapes_Canvas": [
+      {
+        "id": "card:0",
+        "src": "media/Shapes_Canvas-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ],
+    "yomikaki": [
+      {
+        "id": "card:0",
+        "src": "media/yomikaki-card.png",
+        "kind": "card",
+        "label": "紹介カード"
+      }
+    ]
+  },
   "posts": [
     {
       "id": "2026-08-10-morning",

@@ -128,6 +128,52 @@ body {
 .card__shots.is-multi::-webkit-scrollbar { display: none; }
 .card__shots.is-multi .card__img { flex: 0 0 88%; scroll-snap-align: center; border-radius: 10px; }
 
+/*
+ * 添付する画像を選ぶところ。
+ *
+ * 横に流して並べる。縦に積むと、画像の多いアプリ（週案エディタは23枚ある）で
+ * 本文とボタンが画面のはるか下に行ってしまい、いちばん押したいものが遠くなる。
+ * 選んだものには番号を出す。X には選んだ順に並んで載るので、
+ * 「入っているかどうか」だけでなく「何枚目か」が見えないと確かめられない。
+ */
+.picker { padding: 10px 14px 0; }
+.picker__head { margin: 0 0 8px; font-size: 12.5px; font-weight: 700; color: var(--ink-weak); }
+.picker__strip {
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.picker__strip::-webkit-scrollbar { display: none; }
+
+.picker__cell {
+  position: relative; flex: 0 0 108px; padding: 0; cursor: pointer;
+  background: var(--bg); border: 2px solid var(--line); border-radius: 10px;
+  overflow: hidden; font-family: inherit; text-align: left;
+}
+.picker__cell img {
+  display: block; width: 100%; height: 68px; object-fit: cover; background: var(--card);
+}
+.picker__cell.is-on { border-color: var(--accent); }
+.picker__cell.is-broken { opacity: .45; }
+.picker__cell:active { transform: translateY(1px); }
+
+/* 選んだ順の番号。選んでいないあいだは空にして場所だけ空けない（丸が並ぶと選択に見える） */
+.picker__badge {
+  position: absolute; top: 4px; left: 4px; min-width: 20px; height: 20px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px; font-size: 12px; font-weight: 800; line-height: 1;
+}
+.picker__cell.is-on .picker__badge { background: var(--accent); color: #fff; }
+
+.picker__label {
+  display: block; padding: 5px 6px 6px; font-size: 11.5px; line-height: 1.35;
+  color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.picker__reset {
+  margin-top: 2px; padding: 0; border: none; background: none; cursor: pointer;
+  font-family: inherit; font-size: 12.5px; color: var(--ink-weak); text-decoration: underline;
+}
+
 .card__text {
   margin: 0; padding: 14px; white-space: pre-wrap; word-break: break-word;
   font-size: 15.5px; line-height: 1.75;

@@ -294,6 +294,34 @@ if (launcher) {
             }
         }
     }
+
+    /* 添付できる画像の一覧（galleries）。
+     * ここに載る repo の画像は raw.githubusercontent.com を直接読む。
+     * ランチャーが他所のドメインに取りにいく唯一の場所なので、行き先を確かめる。
+     * 生成物とはいえ、外から来たパスがそのまま URL になっているためである。 */
+    const owner = readJson(paths.config('accounts.json'), {}).githubOwner ?? '';
+    const allowed = `https://raw.githubusercontent.com/${owner}/`;
+    for (const [repo, items] of Object.entries(launcher.galleries ?? {})) {
+        const ids = new Set();
+        for (const item of items) {
+            if (ids.has(item.id)) {
+                error('DUPLICATE_MEDIA_ID', `galleries の id が重複しています（${repo} / ${item.id}）`, 'docs/launcher.json');
+            }
+            ids.add(item.id);
+
+            if (item.kind === 'repo') {
+                if (!String(item.src).startsWith(allowed)) {
+                    error(
+                        'FOREIGN_MEDIA',
+                        `添付候補が想定外の場所を指しています（${repo} / ${item.src}）。ランチャーは ${allowed} 以下しか読みません`,
+                        'docs/launcher.json'
+                    );
+                }
+            } else if (!fs.existsSync(paths.docs(item.src))) {
+                error('MISSING_MEDIA', `添付候補の画像がありません（${repo} / ${item.src}）`, 'docs/launcher.json');
+            }
+        }
+    }
 }
 
 try {

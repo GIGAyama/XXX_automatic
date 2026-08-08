@@ -15,6 +15,11 @@
  * 「画像が添付され、本文が入った状態」の投稿画面が立ち上がる。
  * あとは投稿ボタンを押すだけ。API も課金も要らない。
  *
+ * 添付する画像は選べる。紹介カード（このリポジトリで作ったもの）のほかに、
+ * アプリのリポジトリに置いてある画像 — note の記事のために実際に操作して撮ったもの —
+ * が候補に出る。実物は raw.githubusercontent.com から直接読む（リポジトリに取り込むと
+ * 毎週のコミットが重くなるため）。選んだ結果は端末の localStorage に残る。
+ *
  * ただし3つ気をつける点がある。
  *
  * 1. ユーザー操作の直後でないと share() は拒否される。
@@ -40,16 +45,32 @@ import { activeWeekIds, emptyMessageFor, selectPosts, summaryOf, unsentRatings, 
 import { STORAGE_KEY, applyPatch, pruneState, traceOf } from './lib/state.js';
 import { MAX_WEIGHTED_LENGTH, weightedLength } from './lib/x-length.js';
 import { buildIssueUrl, buildPayload, chunkEntries, newSubmissionId } from './lib/feedback-payload.js';
+import {
+  MAX_MEDIA,
+  defaultSelection,
+  fileNameFor,
+  galleryOf,
+  normalizeSelection,
+  selectedItems,
+  toggleSelection,
+} from './lib/media-pick.js';
 
 const DATA_URL = 'launcher.json';
 
-/** @type {{posts: any[], notes: any[], weekIds?: string[], slots?: any[], repoUrl?: string, noteEditorUrl?: string}} */
+/** @type {{posts: any[], notes: any[], weekIds?: string[], slots?: any[], repoUrl?: string, noteEditorUrl?: string, galleries?: object}} */
 let data = { posts: [], notes: [] };
 let view = 'today';
 
-/** 投稿ID → その投稿の画像（File[]）。共有の直前に読みにいかないための先読み置き場。 */
-const mediaCache = new Map();
-/** 画像を読めなかった投稿。共有のときに「本文だけになります」と伝えるために覚えておく。 */
+/**
+ * 画像の URL → File。共有の直前に読みにいかないための先読み置き場。
+ *
+ * 投稿IDではなく URL で持つ。同じアプリの画像は別の投稿でも同じものを使うので、
+ * 投稿ごとに持つと同じ絵を何度も読むことになる。
+ */
+const fileCache = new Map();
+/** いま読んでいる最中のもの。共有のときに「まだ準備中」と「読めなかった」を分けるために要る。 */
+const filePending = new Map();
+/** 読めなかった画像。共有のときに「本文だけになります」と伝えるために覚えておく。 */
 const mediaFailed = new Set();
 /** 280字を超えたまま共有しようとした投稿。1度目は止めて、2度目で通す。 */
 const overLimitWarned = new Set();
@@ -167,6 +188,92 @@ function render() {
   prefetchMedia(posts);
 }
 
+/**
+ * 添付する画像を選ぶところ。
+ *
+ * アプリのリポジトリには、note の記事のために実際に操作して撮った画像が入っている。
+ * 機械が撮りなおしたカードより中身が濃いので、そこから選べるようにする。
+ *
+ * 選んだ順に並べて渡す。X は4枚まで。上限に当たったときは黙って無視せず理由を出す
+ * （反応が無いと「押せていないのか、壊れているのか」が区別できない）。
+ */
+function mediaPicker(post, gallery, chosen) {
+  const box = document.createElement('div');
+  box.className = 'picker';
+
+  const head = document.createElement('p');
+  head.className = 'picker__head';
+  head.textContent = `添付する画像（${chosen.length}/${MAX_MEDIA}）`;
+  box.append(head);
+
+  const strip = document.createElement('div');
+  strip.className = 'picker__strip';
+
+  const order = new Map(chosen.map((item, i) => [item.id, i + 1]));
+
+  for (const item of gallery) {
+    const cell = document.createElement('button');
+    cell.type = 'button';
+    cell.className = 'picker__cell' + (order.has(item.id) ? ' is-on' : '');
+    cell.setAttribute('aria-pressed', order.has(item.id) ? 'true' : 'false');
+    cell.setAttribute('aria-label', `${item.label}を${order.has(item.id) ? '外す' : '添付する'}`);
+
+    const img = document.createElement('img');
+    img.src = item.src;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.addEventListener('error', () => {
+      mediaFailed.add(item.src);
+      cell.classList.add('is-broken');
+      cell.title = '読み込めませんでした';
+    });
+    cell.append(img);
+
+    const badge = document.createElement('span');
+    badge.className = 'picker__badge';
+    badge.textContent = order.get(item.id) ?? '';
+    cell.append(badge);
+
+    const caption = document.createElement('span');
+    caption.className = 'picker__label';
+    caption.textContent = item.label;
+    cell.append(caption);
+
+    cell.addEventListener('click', () => {
+      const saved = loadState()[post.id] || {};
+      const result = toggleSelection(saved.media, item.id, gallery);
+      if (result.reason === 'max') {
+        toast(`画像は${MAX_MEDIA}枚までです。どれかを外してから選んでください`);
+        return;
+      }
+      patchState(post.id, { media: result.selected, ...traceOf(post) });
+      // 選んだ瞬間に読みはじめる。共有ボタンを押してから読むと、
+      // その待ち時間で「操作の直後」ではなくなり iOS で share() が拒否される。
+      if (result.selected.includes(item.id)) loadMediaFile(post, item, result.selected.indexOf(item.id));
+      render();
+    });
+
+    strip.append(cell);
+  }
+
+  box.append(strip);
+
+  // 既定（紹介カードだけ）に戻す道を残す。選びなおすうちに分からなくなったとき、
+  // 元に戻せないと「とりあえず全部外す」しかなくなる。
+  const reset = document.createElement('button');
+  reset.type = 'button';
+  reset.className = 'picker__reset';
+  reset.textContent = '紹介カードだけに戻す';
+  reset.addEventListener('click', () => {
+    patchState(post.id, { media: defaultSelection(gallery), ...traceOf(post) });
+    render();
+  });
+  box.append(reset);
+
+  return box;
+}
+
 function emptyBox(text) {
   const div = document.createElement('div');
   div.className = 'empty';
@@ -200,21 +307,24 @@ function postCard(post, saved, today) {
   card.append(meta);
 
   // ── 画像 ──
-  const shots = mediaListOf(post);
+  // 上に「いま添付されるもの」、下に「選べるもの」。
+  // 選んだ結果がそのまま大きく出ていないと、投稿してから気づくことになる。
+  const gallery = galleryFor(post);
+  const shots = selectedItems(gallery, saved.media);
   if (shots.length > 0) {
     const figure = document.createElement('div');
     figure.className = 'card__shots' + (shots.length > 1 ? ' is-multi' : '');
-    for (const [i, src] of shots.entries()) {
+    for (const [i, item] of shots.entries()) {
       const img = document.createElement('img');
       img.className = 'card__img';
-      img.src = src;
-      img.alt = shots.length > 1 ? `${post.repo} の紹介カード ${i + 1}枚目` : `${post.repo} の紹介カード`;
+      img.src = item.src;
+      img.alt = shots.length > 1 ? `${item.label}（${i + 1}枚目）` : item.label;
       img.loading = 'lazy';
       img.decoding = 'async';
       // 画像が欠けていると壊れたアイコンだけが出て、原因が分からない。
       // 何が起きたのかを画面に書く。共有そのものは本文だけで続けられる。
       img.addEventListener('error', () => {
-        mediaFailed.add(post.id);
+        mediaFailed.add(item.src);
         const box = document.createElement('div');
         box.className = 'card__img card__img--missing';
         box.textContent = '画像を読み込めませんでした（本文だけで共有できます）';
@@ -224,6 +334,9 @@ function postCard(post, saved, today) {
     }
     card.append(figure);
   }
+
+  // 候補が紹介カード1枚しか無いなら、選ぶところは出さない（押すものが増えるだけになる）。
+  if (gallery.length > 1) card.append(mediaPicker(post, gallery, shots));
 
   // ── 連投の手順 ──
   // ①本文 → ②つづき → ③リンクの返信、の順に1コマずつ出す。
@@ -761,10 +874,14 @@ function noteEditorUrl() {
  *  X へ出す
  * ──────────────────────────────────────────── */
 
-/** その投稿に付ける画像のパス。1枚のときも配列で扱う。 */
-function mediaListOf(post) {
-  if (Array.isArray(post.mediaList) && post.mediaList.length > 0) return post.mediaList;
-  return post.media ? [post.media] : [];
+/** その投稿で選べる画像。紹介カード＋アプリのリポジトリに置いてある画像。 */
+function galleryFor(post) {
+  return galleryOf(post, data.galleries ?? {});
+}
+
+/** いまその投稿に付くことになっている画像（選んだ順）。 */
+function chosenFor(post, saved = loadState()[post.id] || {}) {
+  return selectedItems(galleryFor(post), saved.media);
 }
 
 /**
@@ -790,11 +907,28 @@ async function shareToX(post, btn, step = null, totalSteps = 1) {
   //    iOS で本文が落ちたときの保険なので、間に合わなくても致命的ではない。
   copyText(text);
 
-  const files = mediaCache.get(post.id) ?? [];
+  const chosen = chosenFor(post, saved);
+  const files = chosen.map((item) => fileCache.get(item.src)).filter(Boolean);
+
+  // まだ読み終わっていない画像があるときは、いったん止める。
+  // 足りないまま共有すると、選んだはずの画像が黙って1枚減った状態で投稿されてしまう。
+  // 読めなかった（失敗が確定した）ものは待っても変わらないので、そのまま先へ進む。
+  const loading = chosen.filter((item) => !fileCache.has(item.src) && !mediaFailed.has(item.src));
+  if (loading.length > 0) {
+    for (const [i, item] of loading.entries()) loadMediaFile(post, item, i);
+    toast(`画像を準備しています（残り${loading.length}枚）。もう一度［共有］を押してください`);
+    return;
+  }
+
+  // 前に読めなかったものは、ここでもう一度だけ取りにいく（待たない）。
+  // 電波が悪かっただけのことがあり、そのまま諦めると画面を開きなおすまで直らない。
+  for (const [i, item] of chosen.entries()) {
+    if (!fileCache.has(item.src)) loadMediaFile(post, item, i);
+  }
 
   try {
     if (files.length > 1 && navigator.canShare && navigator.canShare({ files })) {
-      // X は1投稿に画像4枚まで。複数コマのカードがあるときはまとめて渡す。
+      // X は1投稿に画像4枚まで。選んだぶんをまとめて渡す。
       await navigator.share({ files, text });
     } else if (files.length > 0 && navigator.canShare && navigator.canShare({ files: [files[0]] })) {
       // 複数を受けつけない共有先もある。1枚に落として続ける。
@@ -815,11 +949,12 @@ async function shareToX(post, btn, step = null, totalSteps = 1) {
     setTimeout(() => {
       btn.textContent = label;
     }, 2500);
+    const missing = chosen.length - files.length;
     toast(
       totalSteps > 1
         ? 'X で投稿したら、［次へ］を押して返信を続けてください'
-        : files.length === 0 && mediaFailed.has(post.id)
-          ? '画像を用意できなかったので本文だけ共有します'
+        : missing > 0
+          ? `画像を${missing}枚用意できませんでした。${files.length > 0 ? '残りだけ添えて共有します' : '本文だけ共有します'}`
           : 'X を選んで投稿ボタンを押してください'
     );
   } catch (error) {
@@ -860,7 +995,13 @@ function openIntent(post, step = null) {
  * 共有シートが使えるなら、そちらを開く（iOS ではここに「画像を保存」が出る）。
  */
 async function saveMedia(post) {
-  const files = mediaCache.get(post.id) ?? [];
+  const chosen = chosenFor(post);
+  if (chosen.length === 0) {
+    toast('画像が選ばれていません');
+    return;
+  }
+
+  const files = chosen.map((item) => fileCache.get(item.src)).filter(Boolean);
 
   if (files.length > 0 && navigator.canShare && navigator.canShare({ files })) {
     try {
@@ -872,15 +1013,10 @@ async function saveMedia(post) {
     }
   }
 
-  const list = mediaListOf(post);
-  if (list.length === 0) {
-    toast('この投稿には画像がありません');
-    return;
-  }
-  for (const [i, src] of list.entries()) {
+  for (const [i, item] of chosen.entries()) {
     const a = document.createElement('a');
-    a.href = src;
-    a.download = list.length > 1 ? `${post.repo}-card-${i + 1}.png` : `${post.repo}-card.png`;
+    a.href = item.src;
+    a.download = fileNameFor(post.repo, item, i);
     document.body.append(a);
     a.click();
     a.remove();
@@ -889,34 +1025,48 @@ async function saveMedia(post) {
 }
 
 /**
- * 表示中のカードの画像を File にして先に持っておく。
+ * 選んである画像を File にして先に持っておく。
  * ボタンを押してから読みにいくと、その待ち時間のせいで share() が拒否されることがある。
  */
 function prefetchMedia(posts) {
   for (const post of posts) {
-    const list = mediaListOf(post);
-    if (list.length === 0 || mediaCache.has(post.id)) continue;
-
-    Promise.all(
-      list.map((src, i) =>
-        fetch(src)
-          .then((res) => (res.ok ? res.blob() : null))
-          .then((blob) =>
-            blob ? new File([blob], list.length > 1 ? `${post.repo}-card-${i + 1}.png` : `${post.repo}-card.png`, { type: 'image/png' }) : null
-          )
-          .catch(() => null)
-      )
-    ).then((files) => {
-      const ok = files.filter(Boolean);
-      if (ok.length > 0) {
-        mediaCache.set(post.id, ok);
-      } else {
-        // 画像が無くても本文だけは共有できる。ここで止めないが、黙ってもいない。
-        mediaFailed.add(post.id);
-        console.warn(`画像を読み込めませんでした: ${post.id}`);
-      }
-    });
+    for (const [i, item] of chosenFor(post).entries()) {
+      loadMediaFile(post, item, i);
+    }
   }
+}
+
+/**
+ * 画像1枚を File にする。読み終わるまでの Promise を覚えておき、二重に取りにいかない。
+ *
+ * repo の画像は raw.githubusercontent.com から読む（CORS は許可されている）。
+ * Service Worker は他所のドメインには手を出さないので、ここは素の fetch がそのまま出る。
+ * つまり圏外では取れない。取れなければ本文だけで共有できる形に落とす。
+ */
+function loadMediaFile(post, item, index = 0) {
+  if (fileCache.has(item.src)) return Promise.resolve(fileCache.get(item.src));
+  if (filePending.has(item.src)) return filePending.get(item.src);
+
+  const task = fetch(item.src)
+    .then((res) => (res.ok ? res.blob() : Promise.reject(new Error(`HTTP ${res.status}`))))
+    .then((blob) => {
+      const file = new File([blob], fileNameFor(post.repo, item, index), {
+        type: blob.type || 'image/png',
+      });
+      fileCache.set(item.src, file);
+      mediaFailed.delete(item.src);
+      return file;
+    })
+    .catch((error) => {
+      // 画像が無くても本文だけは共有できる。ここで止めないが、黙ってもいない。
+      mediaFailed.add(item.src);
+      console.warn(`画像を読み込めませんでした: ${item.src}`, error);
+      return null;
+    })
+    .finally(() => filePending.delete(item.src));
+
+  filePending.set(item.src, task);
+  return task;
 }
 
 /* ────────────────────────────────────────────

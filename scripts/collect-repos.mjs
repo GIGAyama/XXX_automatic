@@ -13,10 +13,21 @@
  *
  * 取りにいくファイルを絞っているのは、55リポジトリ × ファイル数だけ
  * リクエストが飛ぶためである。全部のファイルを舐めるとレート上限に当たる。
+ *
+ * 画像の一覧もここで作る（images）。note の記事のために撮ったスクリーンショットが
+ * リポジトリに入っているので、投稿に添える候補として拾っておく。
+ * 中身は取ってこない。パスと説明文だけを控え、実物はランチャーが raw から直接読む。
  */
-import { getFile, getHeadSha, listPublicRepos, listRecentCommits } from './lib/github.mjs';
-import { fail, failWith, info, loadConfig, parseArgs, paths, rel, writeJson } from './lib/io.mjs';
+import { getFile, getHeadSha, getTree, listPublicRepos, listRecentCommits } from './lib/github.mjs';
+import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { jstStamp } from './lib/jst.mjs';
+import {
+    DEFAULT_REPO_IMAGES,
+    captionSourcePaths,
+    labelFromPath,
+    parseCaptions,
+    pickRepoImages,
+} from './lib/repo-images.mjs';
 
 /** 読みにいくファイル。上から順に「そのアプリが何者か」を語る密度が高い。 */
 const SOURCE_FILES = [
@@ -26,10 +37,80 @@ const SOURCE_FILES = [
     { key: 'packageJson', path: 'package.json', maxChars: 2000 },
 ];
 
+/**
+ * そのリポジトリに置いてある画像のうち、投稿に添えられそうなものを拾う。
+ *
+ * note の記事を書くときに撮った画面（docs/note/images/01-home.png のような形）が
+ * すでに入っている。実際に操作した結果の絵なので、機械が撮りなおすより中身が濃い。
+ *
+ * リクエストは repo あたり tree で1回、説明文の Markdown で最大2回。
+ * 画像そのものはここでは取らない（共有のときにランチャーが raw から直接読む）。
+ *
+ * ⚠️ 失敗しても投稿づくり全体は止めない。画像は「あれば添えられる」ものであって、
+ *    無くても本文と紹介カードで成立する。ただし黙って0件にはせず、理由を出す。
+ */
+async function collectImages(owner, repoName, branch, headSha, source, config) {
+    if (!config.enabled) return [];
+    if (!headSha) return []; // SHA で固定できないと、あとで絵が入れかわっても気づけない
+
+    let tree;
+    try {
+        tree = await getTree(owner, repoName, headSha);
+    } catch (error) {
+        console.error(`   … ${repoName} の一覧を取れませんでした（画像なしで続けます）— ${error.message}`);
+        return [];
+    }
+
+    if (tree.truncated) {
+        // 一覧が途中で切られた repo。拾えた範囲で続けるが、
+        // 「なぜあの画像が候補に出ないのか」を後から追えるようにここで言っておく。
+        console.error(`   … ${repoName} は一覧が大きすぎて途中までしか読めていません`);
+    }
+
+    const picked = pickRepoImages(tree.entries, config);
+    if (picked.length === 0) return [];
+
+    // 上限で切ったぶんは必ず言う。黙って切ると「全部載っている」ように見えて、
+    // あの画面が候補に出ない理由をどこからも追えなくなる。
+    const all = pickRepoImages(tree.entries, { ...config, maxPerRepo: Number.MAX_SAFE_INTEGER });
+    if (all.length > picked.length) {
+        info(`   … ${repoName} は候補が ${all.length} 枚あるので ${picked.length} 枚に絞りました（config/media.json の maxPerRepo）`);
+    }
+
+    const paths_ = picked.map((image) => image.path);
+
+    // 説明文の材料。README と MANUAL はすでに取ってあるので、ここでは取りにいかない。
+    const documents = [
+        { path: 'README.md', text: source.readme ?? '' },
+        { path: 'MANUAL.md', text: source.manual ?? '' },
+    ];
+    for (const mdPath of captionSourcePaths(tree.entries, paths_, 2)) {
+        try {
+            const text = await getFile(owner, repoName, mdPath, headSha);
+            if (text) documents.push({ path: mdPath, text: text.slice(0, 20000) });
+        } catch (error) {
+            console.error(`   … ${repoName}/${mdPath} を読めませんでした — ${error.message}`);
+        }
+    }
+
+    const captions = parseCaptions(documents, paths_);
+
+    return picked.map((image) => ({
+        path: image.path,
+        size: image.size,
+        // 説明が拾えなければファイル名から作る。無題のサムネイルが並ぶより選びやすい。
+        label: captions.get(image.path) ?? labelFromPath(image.path),
+        // 説明を人が書いたものかどうかは分けておく。あとで「説明が付いた画像だけ」に
+        // 絞りたくなったときに、ファイル名から作ったものと区別できないと困る。
+        described: captions.has(image.path),
+    }));
+}
+
 async function main() {
     const args = parseArgs();
     const { accounts } = loadConfig();
     const owner = accounts.githubOwner;
+    const repoImages = { ...DEFAULT_REPO_IMAGES, ...(readJson(paths.config('media.json'), {}).repoImages ?? {}) };
 
     info(`① 収集を開始します（${jstStamp()}）`);
     info(`   対象: github.com/${owner}`);
@@ -68,6 +149,7 @@ async function main() {
             ]);
 
             const source = Object.fromEntries(files);
+            const images = await collectImages(owner, repo.name, branch, headSha, source, repoImages);
 
             repos.push({
                 name: repo.name,
@@ -92,12 +174,17 @@ async function main() {
                 recentCommits: commits,
                 source,
                 hasReadme: Boolean(source.readme),
+
+                // リポジトリに置いてある画像（note の記事のために撮ったものなど）。
+                // 投稿に添える候補として、ランチャーが選べるようにする。
+                images,
             });
 
             const marks = [
                 source.readme ? 'README' : null,
                 source.manual ? 'MANUAL' : null,
                 repo.has_pages ? 'Pages' : null,
+                images.length > 0 ? `画像${images.length}` : null,
             ]
                 .filter(Boolean)
                 .join(' ');
@@ -126,6 +213,10 @@ async function main() {
     info('');
     info(`① 完了 — ${rel(outPath)} に ${repos.length} 件`);
     info(`   README あり: ${withReadme} 件 / Pages 公開: ${withPages} 件`);
+
+    const withImages = repos.filter((r) => (r.images ?? []).length > 0);
+    const imageCount = withImages.reduce((sum, r) => sum + r.images.length, 0);
+    info(`   添付できる画像: ${imageCount} 枚（${withImages.length} 件のアプリ）`);
     if (withReadme < repos.length) {
         info(`   ※ README の無い ${repos.length - withReadme} 件は、説明文とコミットlog だけで紹介文を書きます`);
     }
