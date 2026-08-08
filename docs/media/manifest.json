@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cardTemplateSha": "08d5ce0b1e2d866c",
-  "updatedAtJst": "2026-08-08 11:38 JST",
+  "updatedAtJst": "2026-08-08 13:01 JST",
   "apps": {
     "KEISAN-BLOCK": {
       "shot": {
@@ -150,8 +150,8 @@
     "online-manuscript-paper-pro": {
       "shot": {
         "ok": true,
-        "fingerprint": "20f1154bc67f8345",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "1ba9c4e9bd2953f9",
+        "atJst": "2026-08-08 13:01 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -159,8 +159,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "31887ba28b877805",
-        "atJst": "2026-08-07 19:18 JST",
+        "fingerprint": "0047c9de56a6f32f",
+        "atJst": "2026-08-08 13:01 JST",
         "frames": 1,
         "blank": false
       }
@@ -498,8 +498,8 @@
     "Online-Publisher-pro": {
       "shot": {
         "ok": true,
-        "fingerprint": "fc5524563ff2fcd9",
-        "atJst": "2026-08-08 11:35 JST",
+        "fingerprint": "6bd134b79db60e1c",
+        "atJst": "2026-08-08 13:01 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -507,8 +507,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "03e53086e89ac964",
-        "atJst": "2026-08-08 11:35 JST",
+        "fingerprint": "bd3a5bf5a7a0da14",
+        "atJst": "2026-08-08 13:01 JST",
         "frames": 1,
         "blank": false
       }

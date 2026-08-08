@@ -1,22 +1,32 @@
 {
-  "generatedAt": "2026-08-08T02:20:35.093Z",
-  "generatedAtJst": "2026-08-08 11:20 JST",
+  "generatedAt": "2026-08-08T04:00:51.361Z",
+  "generatedAtJst": "2026-08-08 13:00 JST",
   "owner": "GIGAyama",
-  "count": 47,
+  "count": 48,
   "repos": [
     {
       "name": "Online-Publisher-pro",
       "description": "GIGAスクール構想向け教育用Webアプリ。児童が楽しく物語や作文を書けるエディタ（原稿用紙・製本プレビュー対応）と、教員向けのGemini APIを活用したAI添削アシスト機能を搭載。Google Apps Script (GAS) + Reactで構築されています。",
       "topics": [],
       "defaultBranch": "main",
-      "headSha": "4ca8bc633beb0e2688691d844ea082601fb114cf",
-      "pushedAt": "2026-08-08T02:20:05Z",
+      "headSha": "7afdd193b55cf3e9e05464d55c8f7e0dae47d1e3",
+      "pushedAt": "2026-08-08T02:20:53Z",
       "createdAt": "2026-03-07T01:10:03Z",
       "stars": 0,
       "homepage": "https://gigayama.github.io/Online-Publisher-pro/pwa",
       "hasPages": true,
       "pagesUrl": "https://gigayama.github.io/Online-Publisher-pro/",
       "recentCommits": [
+        {
+          "sha": "7afdd19",
+          "date": "2026-08-08T02:20:53Z",
+          "message": "Merge pull request #3 from GIGAyama/claude/readme-manual-consistency-mkh18h"
+        },
+        {
+          "sha": "7176e60",
+          "date": "2026-08-08T02:20:01Z",
+          "message": "docs: READMEを実装に合わせて修正し、操作マニュアル(MANUAL.md)を追加"
+        },
         {
           "sha": "4ca8bc6",
           "date": "2026-08-03T12:25:33Z",
@@ -46,25 +56,16 @@
           "sha": "27646b6",
           "date": "2026-03-08T01:23:15Z",
           "message": "スクロール対応、作品リーダー追加など"
-        },
-        {
-          "sha": "bf21c4d",
-          "date": "2026-03-08T01:21:48Z",
-          "message": "Update index.html"
-        },
-        {
-          "sha": "0b98d11",
-          "date": "2026-03-07T01:12:36Z",
-          "message": "Update README.md"
         }
       ],
       "source": {
-        "readme": "# オンライン出版社 Pro - GIGA Edition\n\n「オンライン出版社 Pro」は、GIGAスクール構想の教育現場（主に小学校）向けに開発された、児童が楽しく作文や物語を書けるWebアプリケーションです。\n\nバックエンドにGoogle Apps Script (GAS)、フロントエンドにReact + Tailwind CSSを採用しており、学校のGoogle Workspace環境で簡単にデプロイ・運用することができます。\n\n## ✨ 主な機能\n\n### 👧👦 児童向け機能（Student Mode）\n\n*   **リッチなエディタ機能**: 自動保存（ブラウザ内）、文字数カウント機能を備えたシンプルな執筆環境。\n    \n*   **挿絵の挿入と編集**: Google Driveへ画像を自動アップロードし、サイズ調整や多彩な形（丸、星形、チケット型など）への切り抜きが可能。\n    \n*   **多彩なプレビューと印刷**:\n    \n    *   **原稿用紙モード**: 高学年（20×20）/ 低学年（15×16）の切り替え、禁則処理（追い出し・ぶら下がり）に対応した縦書き表示。\n        \n    *   **本モード**: 挿絵と文章が本のようにレイアウトされる見開き表示。\n        \n*   **先生からの添削確認**: 先生からの添削（赤線）とコメントを確認し、「修正完了」としてマークしていく機能。\n    \n\n### 🏫 先生向け機能（Teacher Mode）\n\n*   **ダッシュボード**: 提出された作品の一覧表示、キーワード検索、状態（提出済・再提出・完了など）や日付によるフィルタリング。\n    \n*   **直感的な添削UI**: 原稿用紙プレビュー上で文字をドラッグして、直接コメント（赤線）を追加・削除可能。\n    \n*   **AI添削アシスト機能**: Gemini APIを活用し、児童の作文に対する誤字脱字の指摘やアドバイス（褒め言葉）をAIが自動生成。一括AI添削にも対応。\n    \n*   **一括操作**: 複数作品の一括完了処理、一括印刷機能。\n    \n*   **差分（Diff）表示**: 前回提出時からの変更箇所をハイライト表示。\n    \n\n### 🎨 みんなの作品だな（Gallery Mode）\n\n*   「完了」または「提出済」となった作品をクラス全員で共有。\n    \n*   作品を読んで、お互いに感想（コメント）を送り合える交流機能。\n    \n\n## 🛠 技術スタック\n\n*   **Frontend**: React (CDN), Tailwind CSS, Babel, Bootstrap Icons\n    \n*   **Backend**: Google Apps Script (GAS)\n    \n*   **Database / Storage**: Google Sheets (作文データ・コメント保存), Google Drive (挿絵画像保存)\n    \n*   **AI Integration**: Google Gemini API (`gemini-2.5-flash`)\n    \n\n## 📱 スマートフォン・タブレット対応\n\nメインの学習領域（執筆・プレビュー・添削画面）は、PC / Chromebook / タブレット / スマートフォンのどの端末でも画面いっぱいに表示されるレスポンシブ設計です。\n\n*   **児童画面**: 小さい画面では「かく」と「プレビュー」をタブで切り替えて、それぞれ全画面で使えます。\n    \n*   **先生画面**: 小さい画面では「作品一覧」と「添削画面」を切り替えて表示します。原稿用紙上の添削は、タッチ端末では**文字を長押ししてからなぞる**ことで範囲選択できます。\n    \n\n## 📲 PWAとしてインストールする（Chromeから「アプリ」にする）\n\n### 方法1: Chromeのメニューからインストール（いちばん簡単）\n\nPC / Chromebook のChromeでウェブアプリのURL（`/exec`）を開き、右上のメニュー（︙）から\n**「キャスト、保存、共有」→「ページをアプリとしてインストール」** を選ぶと、独立ウィンドウで起動するアプリとしてインストールできます。\n\n> Google Apps Script のウェブアプリはGoogleのラッパーページ（iframe）内で動作する仕様のため、この方法ではアイコン等は既定のものになります。専用アイコン付きの本格的なPWAにしたい場合は方法2を使ってください。\n\n### 方法2: 同梱のPWAシェル（`pwa/` フォルダ）を使う\n\n本リポジトリの `pwa/` フォルダは、GASのウェブアプリを全画面で包む**インストール可能なPWAシェル**です（マニフェスト・Service Worker・アイコン同梱）。\n\n1.  このリポジトリをフォークし、GitHubの **Settings → Pages** でGitHub Pagesを有効にします（もしくは `pwa/` フォルダを任意の静的ホスティングに配置します）。\n    \n2.  `https://<ユーザー名>.github.io/<リポジトリ名>/pwa/` にアクセスします。\n    \n3.  初回にGASのウェブアプリURL（`/exec`）を入力すると、以後はそのアプリが全画面で起動します。\n    \n    *   先生が配布する場合は `.../pwa/?app=<GASのウェブアプリURL>` の形式のリンクを配ると、児童の入力は不要です。\n        \n4.  アドレスバーのインストールアイコン、または画面内の「アプリとしてインストール」ボタンからインストールできます。\n    \n    *   **Androidタブレット**: Chromeのメニュー →「ホーム画面に追加」→「インストール」\n        \n    *   **iPad / iPhone**: Safariの共有メニュー →「ホーム画面に追加」\n        \n\n## 🚀 導入手順（セットアップ）\n\nこのアプリはGoogle Apps Script (GAS) のWebアプリとして動作します。データベースとなるスプレッドシートや画像保存用フォルダは、**初回起動時に自動で生成（自己修復）される**ため、複雑な初期設定は不要です。\n\n### 1. GASプロジェクトの作成\n\n1.  [Google Apps Script](https://script.google.com/ \"null\") にアクセスし、「新しいプロジェクト」を作成します。\n    \n2.  プロジェクト名を「オンライン出版社 Pro」などに変更します。\n    \n\n### 2. コードの配置\n\n1.  デフォルトで存在する `コード.gs` に、本リポジトリの `code.gs` の内容をコピー＆ペーストします。\n    \n2.  左側の「＋」ボタンから「HTML」を選択し、ファイル名を `index` にして作成します（`index.html` になります）。\n    \n3.  作成した `index.html` に、本リポジトリの `index.html` の内容をコピー＆ペーストします。\n    \n\n### 3. Webアプリとしてデプロイ\n\n1.  右上の「デプロイ」>「新しいデプロイ」をクリックします。\n    \n2.  種類の選択（歯車アイコン）から「ウェブアプリ」を選択します。\n    \n3.  以下の設定でデプロイします：\n    \n    *   **説明**: （任意）\n        \n    *   **実行するユーザー**: `自分（あなたのGoogleアカウント）`\n        \n    *   **アクセスできるユーザー**: `全員` または `Google アカウントを持つ全員`（学校の要件に合わせてください）\n        \n4.  「デプロイ」をクリックします。\n    \n5.  初回は「アクセスを承認」の警告が出ます。「詳細を表示」>「オンライン出版社 Pro（安全ではないページ）に移動」から許可を行ってください。\n    \n\n### 4. 初期設定と動作確認\n\n1.  発行された「ウェブアプリのURL」にアクセスし、アプリが表示されることを確認します。\n    \n2.  右上の「先生用」ボタンをクリックします。\n    \n3.  初回パスワードは **`admin`** です。\n    \n4.  ログイン後、右上の「設定（歯車アイコン）」をクリックし、以下の設定を必ず行ってください。\n    \n    *   **新しいパスワードの設定**（セキュリティのため必ず変更してください）\n        \n    *   **Gemini APIキーの設定**（AI添削機能を使用する場合。[Google AI Studio](https://aistudio.google.com/ \"null\") から取得したAPIキーを入力してください）\n        \n\n> **セキュリティについて**: パスワード変更・APIキー設定・AI添削のサーバー関数は、現在ログイン中の教師パスワードによる認証付きです。児童側からこれらの操作を行うことはできません。\n\n\n以上でセットアップは完了です。発行されたWebアプリのURLを児童に共有して使用を開始してください。\n\n## 💡 ショートカットキー（先生用画面）\n\n先生用画面では、キーボード操作で効率的に作業ができます（`?` キーで一覧表示）。\n\n*   `↑` / `↓`: 児童の切り替え\n    \n*   `V`: プレビューの切り替え（原稿用紙 / 本 / 差分）\n    \n*   `S`: 表示中の作品を一括選択 / 解除\n    \n*   `U`: データの更新\n    \n*   `A`: AI添削の実行\n    \n*   `Shift + A`: 選択した作品の一括AI添削\n    \n*   `P`: 表示中作品の印刷\n    \n*   `Shift + P`: 選択した作品の一括印刷\n    \n*   `C`: 完了にする\n    \n*   `R`: 再提出にする\n    \n\n## 📄 ライセンス\n\nThis project is licensed under the MIT License.\n\n## ✍️ 作者\n\nGIGA山 ([note](https://note.com/cute_borage86 \"null\"))\n",
-        "manual": null,
+        "readme": "# オンライン出版社 Pro - GIGA Edition\n\n「オンライン出版社 Pro」は、GIGAスクール構想の教育現場（主に小学校）向けに開発された、児童が作文や物語を書き、先生が添削し、クラスで読み合うためのWebアプリケーションです。\n\n児童が書いた文章はそのまま **縦書きの原稿用紙** や **挿絵入りの本** としてプレビュー・印刷でき、先生は原稿用紙の上で直接赤入れ（添削）ができます。完成した作品は「みんなの作品だな」に並び、児童どうしで感想を送り合えます。\n\nバックエンドはGoogle Apps Script (GAS)、フロントエンドはReact + Tailwind CSSの単一HTMLです。**サーバーの契約やビルド作業は不要**で、学校のGoogle Workspaceアカウントさえあればデプロイできます。\n\n- 📘 **画面ごとの詳しい操作手順は [MANUAL.md（操作マニュアル）](MANUAL.md) を参照してください。**\n\n---\n\n## 📌 このアプリでできること（早わかり）\n\n| だれが | できること |\n| --- | --- |\n| 児童 | 題名・学年組・名前・本文を書く／挿絵を追加して形やサイズを変える／原稿用紙・本の2種類でプレビューする／印刷する／先生に提出する／先生の添削を読んで「修正完了」にする |\n| 先生 | 提出物を一覧で見る／検索・絞り込みをする／原稿用紙上をドラッグして赤線と添削コメントを付ける／AI（Gemini）に添削案を作らせる／前回からの変更点を差分表示する／「完了」「再提出」を切り替える／まとめてAI添削・完了・印刷する |\n| クラス全員 | 「提出済」「完了」の作品を本棚から選び、全画面のブックリーダーでページをめくって読む／感想コメントを送る |\n\n作品データ（作文・添削・感想）は**Googleスプレッドシート**に、挿絵画像は**Googleドライブ**に保存されます。どちらも初回起動時に自動生成されるため、事前準備は不要です。\n\n---\n\n## ✨ 主な機能\n\nアプリは画面右上のボタンで **児童モード / みんなの作品だな / 先生用** の3つを切り替えて使います。児童モードとギャラリーはログイン不要、先生用のみパスワードが必要です。\n\n### 👧👦 児童向け機能（児童モード）\n\n* **執筆エディタ**: 「だいめい」「がくねん・くみ」「なまえ」「本文」を入力します。本文の下に**改行を除いた文字数**がリアルタイムで表示されます。漢字にはふりがな（ルビ）が振られています。\n\n* **クラウド自動保存**: 入力が **20秒** 止まると自動でサーバー（スプレッドシート）に保存されます。保存状態は「編集中／保存中…／クラウド保存済」と画面に表示されます。\n  * タブを閉じる・別アプリに切り替えるなど画面が非表示になった瞬間にも即座に保存されます。\n  * オフライン時や通信失敗時は端末内（localStorage）に一時保存し、**オンラインに復帰したタイミングで自動送信**します。\n  * 「提出済」「完了」の作品は編集がロックされるため、自動保存も行われません。\n\n* **挿絵の追加と編集**: 画像を選ぶと端末側で**幅800px以下のJPEGに縮小**してからGoogleドライブへアップロードします。挿絵ごとに次の設定ができます。\n  * 配置するページ番号の指定（「本」モードの何ページ目に置くか）\n  * 大きさ 30〜150%\n  * 切り抜きの形 8種類（しかく／かどまる／まる／ふわふわ／ひしがた／ほしがた／はっかくけい／チケット）\n  * 並べ替え（同じページ内での表示順）、削除\n  * ※ 挿絵が表示されるのは「**本**」モードと本の印刷のみです。原稿用紙モードには表示されません。\n\n* **2種類のプレビュー**:\n  * **原稿用紙モード**: 縦書き・右から左のマス目表示。1行目に題名、次の行に学年組と名前が入ります。設定で **20字×20行（高学年）/ 15字×16行（低学年）** を切り替えられ、禁則処理は **追い出し / ぶら下がり** の2方式から選べます。\n  * **本モード**: 1ページ目が表紙（題名・学年組・名前）、2ページ目以降が本文（35字×13行）。指定したページの上部に挿絵が並びます。\n\n* **印刷**: プレビューの「印刷」ボタンから **A4横** で出力します。原稿用紙表示中は原稿用紙のレイアウト（中央に綴じ代付き）、本表示中は見開き2ページのレイアウトで印刷されます。\n\n* **提出と作り直し**: 「提出する」で先生に提出します。提出済・完了の作品は編集できなくなりますが、「**コピーして新しく書く**」で挿絵ごと複製し、新しい下書きとして書き直せます。\n\n* **先生からの添削確認**: 赤いマークの付いた文字をタップするとコメントが開き、「修正完了（赤線を消す）」で1件ずつ消していけます。本文を書き直しても、添削の位置は自動で追従します。\n\n* **先生の操作をお知らせ**: 「提出済」の作品を開いている間は **1分おき** にサーバーを確認し、先生が「完了」「再提出」にしたり添削を更新すると、メッセージを表示して画面を自動更新します。\n\n### 🏫 先生向け機能（先生モード）\n\n* **提出一覧（管理画面）**: 下書き以外（提出済・再提出・完了）の作品が一覧表示されます。\n  * キーワード検索（**名前・題名・本文**を対象）\n  * ステータス絞り込み（**完了以外**（初期値）／すべて表示／提出済／再提出／完了）\n  * 更新日の期間指定（開始日〜終了日）\n  * 前回添削時から本文が変わっている作品には「差分あり」アイコンが付きます\n\n* **直感的な添削UI**: 原稿用紙プレビュー上で文字を**ドラッグ**して範囲を選び、コメントを入力すると赤線として追加されます。既存の赤線をクリックすると削除できます。タッチ端末では**長押ししてからなぞる**ことで範囲選択できます。\n\n* **AI添削アシスト**: Gemini API（`gemini-2.5-flash`）が誤字脱字の指摘や改善点・良い点を小学生向けの言葉で提案し、`【AI】` 付きの赤線として本文の該当箇所に自動で追加されます。選択した作品をまとめて処理する**一括AI添削**にも対応しています。\n  * ※ AIの指摘のうち、本文中に一致する箇所が見つかったものだけが赤線になります。\n  * ※ 利用にはGemini APIキーの設定が必要です（後述）。\n\n* **ステータス操作**: 「完了」「再提出」をワンクリックで切り替え。画面は即座に更新され（楽観的UI）、通信に失敗した場合は自動で元の状態に戻ります。\n\n* **差分（Diff）表示**: 前回添削したときの本文と現在の本文を比較し、追加箇所を緑、削除箇所を赤の取り消し線でハイライトします。\n\n* **一括操作**: チェックを入れた複数作品に対して、一括AI添削・一括「完了」・一括印刷を実行できます。\n\n* **キーボードショートカット**: `?` キーで一覧が開きます（後述）。\n\n### 🎨 みんなの作品だな（ギャラリーモード）\n\n* 「提出済」または「完了」の作品が**本棚**として並びます。感想が付いている作品には件数バッジが表示されます。\n\n* 本を選ぶと**全画面のブックリーダー**が開きます。`←` `→` キー、画面左右の矢印、スワイプでページをめくれます（`Esc` で一覧に戻ります）。\n\n* 読んだ作品に**感想（コメント）**を送れます。名前を空欄で送ると「名無し」として投稿されます。\n\n---\n\n## 🛠 技術スタック\n\n* **Frontend**: React 18 (CDN), Tailwind CSS (CDN), Babel Standalone, Bootstrap Icons, Google Fonts (Zen Maru Gothic / Shippori Mincho), diff-match-patch\n* **Backend**: Google Apps Script (GAS) — `code.gs`\n* **Database / Storage**: Google Sheets（作文データ・交流コメント）, Google Drive（挿絵画像）\n* **AI Integration**: Google Gemini API (`gemini-2.5-flash`)\n\nビルド工程はありません。`code.gs` と `index.html` の2ファイルをGASプロジェクトに貼り付けるだけで動作します。\n\n### 自動生成されるデータ\n\n初回アクセス時に以下が自動作成され、削除された場合も再生成（自己修復）されます。\n\n| 種類 | 名前 | 内容 |\n| --- | --- | --- |\n| スプレッドシート | `オンライン出版社Pro_データベース` | シート「作文データ」（作品ID・題名・学年組・氏名・本文・ステータス・挿絵データ・添削データ・先生コメント・作成日時・更新日時・削除日時）、シート「交流コメントデータ」（コメントID・作品ID・投稿者名・コメント本文・投稿日時） |\n| Driveフォルダ | `オンライン出版社Pro_画像データ` | 挿絵画像。`<img>` から読み込めるように「**リンクを知っている全員が閲覧可**」で作成されます |\n| スクリプトプロパティ | `TEACHER_PASSWORD` / `GEMINI_API_KEY` / `SPREADSHEET_ID` / `IMAGE_FOLDER_ID` | 教師パスワード、APIキー、生成済みファイルのID |\n\n---\n\n## 📱 スマートフォン・タブレット対応\n\nメインの学習領域（執筆・プレビュー・添削画面）は、PC / Chromebook / タブレット / スマートフォンのどの端末でも画面いっぱいに表示されるレスポンシブ設計です。\n\n* **児童画面**: 小さい画面では「かく」と「プレビュー」をタブで切り替えて、それぞれ全画面で使えます。\n* **先生画面**: 小さい画面では「作品一覧」と「添削画面」を切り替えて表示します。原稿用紙上の添削は、タッチ端末では**文字を長押ししてからなぞる**ことで範囲選択できます。\n* **ギャラリー**: 縦画面では上に本、下に感想欄が並びます。スワイプでページをめくれます。\n\n---\n\n## 📲 PWAとしてインストールする（Chromeから「アプリ」にする）\n\n### 方法1: Chromeのメニューからインストール（いちばん簡単）\n\nPC / Chromebook のChromeでウェブアプリのURL（`/exec`）を開き、右上のメニュー（︙）から\n**「キャスト、保存、共有」→「ページをアプリとしてインストール」** を選ぶと、独立ウィンドウで起動するアプリとしてインストールできます。\n\n> Google Apps Script のウェブアプリはGoogleのラッパーページ（iframe）内で動作する仕様のため、この方法ではアイコン等は既定のものになります。専用アイコン付きの本格的なPWAにしたい場合は方法2を使ってください。\n\n### 方法2: 同梱のPWAシェル（`pwa/` フォルダ）を使う\n\n本リポジトリの `pwa/` フォルダは、GASのウェブアプリを全画面で包む**インストール可能なPWAシェル**です（マニフェスト・Service Worker・アイコン同梱）。アプリ本体は常にネットワークから読み込むため、シェルだけがキャッシュされます。\n\n1.  このリポジトリをフォークし、GitHubの **Settings → Pages** でGitHub Pagesを有効にします（もしくは `pwa/` フォルダを任意の静的ホスティングに配置します）。\n\n2.  `https://<ユーザー名>.github.io/<リポジトリ名>/pwa/` にアクセスします。\n\n3.  初回にGASのウェブアプリURL（`/exec`）を入力すると、以後はそのアプリが全画面で起動します。入力できるのは `script.google.com` / `*.googleusercontent.com` のHTTPS URLのみです。\n\n    *   先生が配布する場合は `.../pwa/?app=<GASのウェブアプリURL>` の形式のリンクを配ると、児童の入力は不要です。\n    *   URLを間違えたときは、アプリ右下の「URLを変える」から入力し直せます。\n\n4.  アドレスバーのインストールアイコン、または画面内の「アプリとしてインストール」ボタンからインストールできます。\n\n    *   **Androidタブレット**: Chromeのメニュー →「ホーム画面に追加」→「インストール」\n    *   **iPad / iPhone**: Safariの共有メニュー →「ホーム画面に追加」\n\n---\n\n## 🚀 導入手順（セットアップ）\n\nこのアプリはGoogle Apps Script (GAS) のWebアプリとして動作します。データベースとなるスプレッドシートや画像保存用フォルダは、**初回起動時に自動で生成（自己修復）される**ため、複雑な初期設定は不要です。\n\n### 1. GASプロジェクトの作成\n\n1.  [Google Apps Script](https://script.google.com/) にアクセスし、「新しいプロジェクト」を作成します。\n2.  プロジェクト名を「オンライン出版社 Pro」などに変更します。\n\n### 2. コードの配置\n\n1.  デフォルトで存在する `コード.gs` に、本リポジトリの `code.gs` の内容をコピー＆ペーストします。\n2.  左側の「＋」ボタンから「HTML」を選択し、ファイル名を `index` にして作成します（`index.html` になります）。\n3.  作成した `index.html` に、本リポジトリの `index.html` の内容をコピー＆ペーストします。\n\n### 3. Webアプリとしてデプロイ\n\n1.  右上の「デプロイ」>「新しいデプロイ」をクリックします。\n2.  種類の選択（歯車アイコン）から「ウェブアプリ」を選択します。\n3.  以下の設定でデプロイします：\n    *   **説明**: （任意）\n    *   **実行するユーザー**: `自分（あなたのGoogleアカウント）`\n    *   **アクセスできるユーザー**: `全員` または `Google アカウントを持つ全員`（学校の要件に合わせてください）\n4.  「デプロイ」をクリックします。\n5.  初回は「アクセスを承認」の警告が出ます。「詳細を表示」>「オンライン出版社 Pro（安全ではないページ）に移動」から許可を行ってください。\n\n> スプレッドシート・Driveフォルダは、**実行するユーザー（＝先生のアカウント）のマイドライブ**に作成されます。\n\n### 4. 初期設定と動作確認\n\n1.  発行された「ウェブアプリのURL」にアクセスし、アプリが表示されることを確認します。\n2.  右上の「先生用」ボタンをクリックします。\n3.  初回パスワードは **`admin`** です。\n4.  ログイン後、右上の「設定（歯車アイコン）」をクリックし、以下の設定を必ず行ってください。\n    *   **新しいパスワードの設定**（セキュリティのため必ず変更してください）\n    *   **Gemini APIキーの設定**（AI添削機能を使用する場合。[Google AI Studio](https://aistudio.google.com/) から取得したAPIキーを入力してください）\n\n以上でセットアップは完了です。発行されたWebアプリのURLを児童に共有して使用を開始してください。\n\n---\n\n## 🔐 セキュリティと運用上の注意\n\n利用前に、次の仕様を理解したうえで運用ルールを決めてください。\n\n* **サーバー側で認証しているのは教師向け機能だけです。** パスワード変更・Gemini APIキー設定・AI添削・先生用の一覧取得は、ログイン中の教師パスワードによる認証付きで、児童側からは実行できません。\n* **児童モードにログインはありません。** 「開く」ボタンで表示される一覧には、そのアプリに保存されている**全員分の作品**が並びます（他の児童の作品を開いて編集することも技術的には可能です）。同一クラス・学年内での利用を前提とした設計です。\n* **挿絵画像の保存フォルダは「リンクを知っている全員が閲覧可」に設定されます。** アプリの `<img>` タグから画像を表示するための仕様です。個人が特定できる写真等の取り扱いには十分注意してください。\n* **教師パスワードはスクリプトプロパティに平文で保存されます。** GASエディタ → プロジェクト設定 → スクリプトプロパティ の `TEACHER_PASSWORD` から直接変更することもできます。\n* **作品を削除する機能はアプリ内にありません。** スプレッドシート「作文データ」の「削除日時」列に値（日付など）を入力すると、その行はアプリ上に表示されなくなります。\n\n---\n\n## 💡 ショートカットキー（先生用画面）\n\n先生用画面では、キーボード操作で効率的に作業ができます（`?` キーで一覧表示）。\n\n| キー | 動作 |\n| --- | --- |\n| `↑` / `↓` | 児童（作品）の切り替え |\n| `V` | プレビューの切り替え（原稿用紙 → 本 → 差分） |\n| `S` | 表示中の作品を一括選択 / 解除 |\n| `U` | データの更新 |\n| `A` | 表示中の作品のAI添削 |\n| `Shift + A` | 選択した作品の一括AI添削 |\n| `P` | 表示中作品の印刷 |\n| `Shift + P` | 選択した作品の一括印刷 |\n| `C` | 完了にする |\n| `R` | 再提出にする |\n| `?` | ショートカット一覧の表示 / 非表示 |\n| `Esc` | 開いているモーダルを閉じる |\n\n※ 入力欄（テキストボックス・検索欄など）にカーソルがあるときは、ショートカットは動作しません。\n\n---\n\n## 📁 リポジトリ構成\n\n```\n.\n├── code.gs                 # GASサーバーサイド（DB初期化・保存・取得・AI添削）\n├── index.html              # アプリ本体（React単一ファイル）\n├── MANUAL.md               # 操作マニュアル（児童編・先生編・管理編）\n└── pwa/                    # インストール可能なPWAシェル（任意）\n    ├── index.html          # GASウェブアプリを全画面で包むシェル\n    ├── manifest.webmanifest\n    ├── sw.js               # シェルのみをキャッシュするService Worker\n    └── icons/\n```\n\n---\n\n## 📄 ライセンス\n\nThis project is licensed under the MIT License.\n\n## ✍️ 作者\n\nGIGA山 ([note](https://note.com/cute_borage86))\n",
+        "manual": "# オンライン出版社 Pro 操作マニュアル\n\nこのマニュアルは、実際のアプリの画面と動作にそって書かれた操作手順書です。\n導入（デプロイ）の方法は [README.md](README.md) を参照してください。\n\n## 目次\n\n- [0. 画面の共通ルール](#0-画面の共通ルール)\n- [1. 児童編：作品を書いて提出する](#1-児童編作品を書いて提出する)\n- [2. 先生編：提出物を見て添削する](#2-先生編提出物を見て添削する)\n- [3. みんなの作品だな：読んで感想を送る](#3-みんなの作品だな読んで感想を送る)\n- [4. 管理編：パスワードとAPIキー](#4-管理編パスワードとapiキー)\n- [5. データの保存場所と管理](#5-データの保存場所と管理)\n- [6. 困ったときは](#6-困ったときは)\n- [付録A ステータス一覧](#付録a-ステータス一覧)\n- [付録B ショートカットキー一覧](#付録b-ショートカットキー一覧)\n- [付録C 挿絵の形一覧](#付録c-挿絵の形一覧)\n\n---\n\n## 0. 画面の共通ルール\n\n### 3つのモード\n\n画面いちばん上のバーで、3つのモードを切り替えます。モードによってバーの色が変わります。\n\n| モード | 切り替え方 | 色 | ログイン |\n| --- | --- | --- | --- |\n| 児童モード（かく） | 左上のロゴ「オンライン出版社 Pro」をクリック | オレンジ | 不要 |\n| みんなの作品だな | 右上の「みんなの作品」ボタン | 緑 | 不要 |\n| 先生用 | 右上の「先生用」ボタン | 赤（ローズ） | **パスワードが必要** |\n\n### 歯車（設定）ボタン\n\n上部バーの歯車ボタンは、**今いるモードによって開く内容が変わります**。\n\n- 児童モード・ギャラリーで押した場合 → 原稿用紙の**用紙設定**（文字数・禁則処理）\n- 先生モードで押した場合 → **システム設定**（ログインパスワードの変更、Gemini APIキーの設定）\n\n### ふりがな\n\n児童が使う画面の漢字には、ふりがな（ルビ）が振られています。\n\n---\n\n## 1. 児童編：作品を書いて提出する\n\n児童モードは左右2つのエリアに分かれています。\n\n- **左：エディタ**（「書く」「挿絵」の2タブ）\n- **右：プレビュー**（原稿用紙／本）\n\n> スマートフォンやタブレットの縦画面では左右が並ばず、いちばん上の「**かく**」「**プレビュー**」タブで切り替えて、それぞれ全画面で使います。\n\n### 1-1. 文章を書く\n\n1. 「書く」タブを開きます。\n2. **だいめい** / **がくねん・くみ** / **なまえ** を入力します。\n3. 大きな入力欄に本文を書きます。\n4. 入力欄の右下に、**改行を除いた文字数**が表示されます。\n\n書いた内容は右側のプレビューにすぐ反映されます。エディタをスクロールすると、プレビューの原稿用紙も連動してスクロールします。\n\n### 1-2. 保存のしくみ（保存ボタンはありません）\n\nこのアプリに「保存ボタン」はありません。次のタイミングで自動的に保存されます。\n\n| タイミング | 動作 |\n| --- | --- |\n| 入力が **20秒** 止まったとき | サーバー（スプレッドシート）へ自動保存 |\n| タブを閉じる・別アプリに切り替える・画面を消したとき | その場ですぐ自動保存 |\n| 「提出する」を押したとき | 保存してから提出 |\n\n本文の入力欄の下に、いまの保存状態が表示されます。\n\n| 表示 | 意味 |\n| --- | --- |\n| ✏️ 編集中 | まだ保存されていない変更があります（20秒待つと保存されます） |\n| 🔄 保存中... | サーバーへ送信しています |\n| ☁️ クラウド保存済 | サーバーへの保存が完了しました |\n| 🚫 オフライン (端末に一時保存) | ネットにつながっていません。内容は端末に残っており、**つながり次第、自動で送信されます** |\n| ⚠️ エラー (端末に一時保存) | 送信に失敗しました。内容は端末に残っています |\n\n> **注意**：「提出済」「完了」になった作品は編集がロックされるため、自動保存も行われません。\n\n### 1-3. 挿絵を入れる\n\n1. 左のエリアで「**挿絵**」タブを開きます。\n2. 「画像を選択して追加」の枠を押し、端末の画像を選びます。\n   - 画像は端末側で**幅800px以下のJPEG**に縮小してからGoogleドライブへアップロードされます。\n3. 追加された挿絵カードで、次の設定ができます。\n\n| 項目 | 内容 |\n| --- | --- |\n| 配置ページ | 「本」モードの何ページ目に置くかを数字で指定します（**1ページ目は表紙**です） |\n| 大きさ | 30%〜150%のスライダー |\n| 切り抜き | 8種類の形から選びます（[付録C](#付録c-挿絵の形一覧)） |\n| ▲ / ▼ | 同じページに複数置いたときの並び順を入れ替えます |\n| 🗑 | その挿絵を削除します |\n\n> **挿絵が表示されるのは「本」モードだけです。** 原稿用紙モードには挿絵は出ません。\n> 同じページに挿絵を置くと、そのページの本文は1行の文字数が約6割に減り、挿絵の下に収まるように組まれます。\n\n### 1-4. プレビューを切り替える\n\nプレビュー右上のボタンで切り替えます。\n\n- **原稿用紙**：縦書きのマス目表示。1行目に題名（上から4マス目から）、次の行に学年組と名前が下寄せで入ります。\n- **本**：1ページ目が表紙（題名・学年組・名前）、2ページ目からが本文（35字×13行）。挿絵はページ上部に並びます。\n\n#### 用紙の設定（歯車ボタン）\n\n| 設定 | 選べる値 |\n| --- | --- |\n| 用紙の文字数 | **20文字×20行（高学年）** / **15文字×16行（低学年）** |\n| 禁則処理 | **追い出し**（行末の禁則文字を次の行へ送る） / **ぶら下がり**（マスの外に小さく表示する） |\n\nこの設定は使っている端末のブラウザに保存され、次回も引き継がれます。\n\n### 1-5. 印刷する\n\nプレビュー右上の「**印刷**」ボタンを押します。用紙は **A4横** です。\n\n- 「**原稿用紙**」を表示中 → 原稿用紙のレイアウト（中央に綴じ代と題名・ページ番号）で1ページずつ出力\n- 「**本**」を表示中 → 見開き2ページを1枚に並べて出力\n\n### 1-6. 新しく書く／保存した作品を開く\n\n- **新規**：今の内容を消して、まっさらな状態から書き始めます。書きかけの内容があるときは確認画面が出ます。\n- **開く**：サーバーに保存されている作品の一覧から選んで開きます。題名・学年組・名前・ステータス・更新日時が表示されます。\n\n> 「開く」の一覧には、**そのアプリに保存されている全員分の作品**が表示されます。自分の名前を目印に探してください。\n\n### 1-7. 提出する\n\n「**提出する**」ボタンを押すと、先生の一覧に「提出済」として届きます。\n\n提出後は本文・挿絵とも**編集できなくなり**、ボタンが「**コピーして新しく書く**」に変わります。これを押すと挿絵ごと複製した新しい下書きが作られ、先生の添削や感想は引き継がずに書き直せます。\n\n### 1-8. 先生の添削を読む\n\n先生が添削すると、原稿用紙プレビューの該当する文字に**赤いマーク**が付きます。\n\n1. 赤いマークの文字をタップ（クリック）します。\n2. 先生からのコメントが表示されます。\n3. 直し終えたら「**修正完了（赤線を消す）**」を押します。その赤線は児童の画面から消えます（先生の画面には残ります）。\n\n> 本文を書き直しても、添削の位置は本文の変化に合わせて自動で追従します。\n\n### 1-9. 先生の操作のお知らせ\n\n「**提出済**」の作品を開いている間、アプリは **1分おき** にサーバーを確認しています。先生が操作すると、次のメッセージが表示され、画面が自動で最新の内容に更新されます。\n\n| 先生の操作 | 表示されるメッセージ |\n| --- | --- |\n| 「完了」にした | 先生が作品を「完了」にしました！ よくがんばりました！ |\n| 「再提出」にした | 先生から「再提出」で返却されました。コメントを確認して直してみましょう。 |\n| 添削・コメントを更新した | 先生が添削・コメントを更新しました。確認してみましょう。 |\n\n「再提出」で返された作品は**もう一度編集できる状態**に戻ります。直したあとに「提出する」を押すと内容と添削の状態が保存されます（一覧上のステータスは「再提出」のままです）。\n\n---\n\n## 2. 先生編：提出物を見て添削する\n\n### 2-1. ログイン\n\n1. 右上の「**先生用**」ボタンを押します。\n2. パスワードを入力します（**初回は `admin`**）。\n3. ログインすると提出一覧が読み込まれます。\n\n> ログイン状態はページを開いている間だけ保持されます。再読み込みすると再度ログインが必要です。\n\n### 2-2. 提出一覧（左側）\n\n一覧には**下書き以外**（提出済・再提出・完了）の作品が、更新日時の新しい順に並びます。\n\n| 機能 | 説明 |\n| --- | --- |\n| キーワード検索 | 名前・題名・本文を対象に絞り込みます |\n| ステータス | 完了以外（初期値）／すべて表示／提出済／再提出／完了 |\n| 日付 | 更新日の開始日〜終了日で絞り込みます |\n| ↻ ボタン | 最新のデータを取り直します（`U` キーでも可） |\n| ? ボタン | ショートカット一覧を開きます |\n\n各行には児童の名前・ステータスバッジ・題名が並びます。前回の添削時から本文が変わっている作品には、青い**差分アイコン**が付きます。\n\n行の左のチェックボックスは**一括操作の対象**を選ぶためのものです。\n\n> 画面が狭い端末では、一覧と添削画面が切り替え表示になります。作品を選ぶと添削画面が開き、左上の「←」で一覧に戻ります。\n\n### 2-3. 添削画面（右側）\n\n上部のバーには、選択中の作品の学年組・名前・題名と、次のボタンが並びます。\n\n| ボタン | 説明 |\n| --- | --- |\n| 原稿 / 本 / 差分 | プレビューの切り替え（`V` キーで順に切り替え） |\n| 印刷 | 表示中の作品を印刷（`P` キー） |\n| AI添削 | Geminiに添削案を作らせる（「原稿」表示中のみ表示。`A` キー） |\n| 再提出 | ステータスを「再提出」にする（`R` キー） |\n| 完了 | ステータスを「完了」にする（`C` キー） |\n\n作品を選ぶと、本文が前回の添削時から変わっている場合は自動で「**差分**」表示、それ以外は「**原稿**」表示で開きます。\n\n### 2-4. 赤線（添削）を付ける／消す\n\n**付ける**\n\n1. プレビューを「**原稿**」表示にします。\n2. 原稿用紙の上で、指摘したい文字を**ドラッグ**して範囲を選びます。\n   - タブレットなどのタッチ端末では、**文字を長押ししてから、そのままなぞって**選択します（短いスワイプはスクロールになります）。\n3. 指を離すとコメント入力欄が開くので、修正指示やアドバイスを入力し「追加する」を押します。\n\n**消す**\n\n赤いマークの付いた文字をクリックすると確認画面が開き、「削除する」でその添削を消せます。\n\n> 児童が「修正完了」にした添削は、児童の画面では消えますが、先生の画面には**緑色のマーク**で残ります。\n\n### 2-5. AI添削を使う\n\n事前に[システム設定](#4-管理編パスワードとapiキー)でGemini APIキーを登録しておく必要があります。\n\n- **1件だけ**：「原稿」表示で「**AI添削**」ボタン（または `A` キー）。\n- **まとめて**：一覧でチェックを入れ、一覧上部の 🪄 ボタン（または `Shift + A`）。確認画面で「一括添削を開始」を押します。件数が多いと数分かかります。\n\nAIは「小学校の先生」として、誤字脱字・表現の改善点・良い点を、小学生に伝わる言葉で指摘します。指摘は本文中の該当箇所に `【AI】` 付きの赤線として追加され、そのまま保存されます。\n\n> AIが引用した文字列が本文中に見つからなかった指摘は、赤線として追加されません。そのため「◯件のAI提案を追加しました」の件数がAIの指摘数より少なくなることがあります。\n> AIの指摘はあくまで下書きです。不要なものはクリックして削除し、先生の言葉で書き換えてから児童に返してください。\n\n### 2-6. 差分表示\n\n「**差分**」タブでは、**前回添削したときの本文**と**現在の本文**を比較して表示します。\n\n- 緑のハイライト：追加された部分\n- 赤の取り消し線：削除された部分\n\n再提出された作品のどこが直ったかを確認するのに使います。\n\n### 2-7. 一括操作\n\n一覧でチェックを入れてから、一覧上部のボタンを押します。\n\n| ボタン | 動作 | ショートカット |\n| --- | --- | --- |\n| 🪄 | 選択した作品を一括AI添削 | `Shift + A` |\n| ✅ | 選択した作品を一括で「完了」にする | — |\n| 🖨 | 選択した作品を一括印刷 | `Shift + P` |\n\n一括印刷のレイアウトは、そのとき表示しているプレビューに従います（「原稿」表示中なら原稿用紙、「本」「差分」表示中なら本のレイアウト）。\n\n### 2-8. 印刷\n\n「印刷」ボタンを押すとブラウザの印刷ダイアログが開きます。**用紙はA4横**を選んでください。ヘッダー・フッターはオフを推奨します。\n\n---\n\n## 3. みんなの作品だな：読んで感想を送る\n\n1. 上部バーの「**みんなの作品**」を押します。\n2. 「提出済」または「完了」になっている作品が本棚に並びます。感想が付いている作品には、右上に件数のバッジが出ます。\n3. 読みたい本を選ぶと、全画面のブックリーダーが開きます。\n\n### ページのめくり方\n\n| 操作 | 動作 |\n| --- | --- |\n| `←` キー / 画面左の矢印 / 左へスワイプ | 次のページ |\n| `→` キー / 画面右の矢印 / 右へスワイプ | 前のページ |\n| `Esc` キー / 左上の「一覧にもどる」 | 一覧に戻る |\n\n縦書きの本なので、**右から左へ**めくっていきます。\n\n### 感想を送る\n\n画面右側（縦画面では下側）の「感想・コメント」欄で、\n\n1. 「あなたのなまえ」を入力します（空欄のまま送ると「名無し」になります）。\n2. 「かんそうをかこう」に感想を書き、送信ボタンか `Enter` キーを押します。\n\n送った感想はすぐ一覧に追加され、スプレッドシートの「交流コメントデータ」シートに記録されます。\n\n> 感想の削除・編集はアプリからはできません。不適切な投稿があった場合は、スプレッドシートの「交流コメントデータ」シートの行を直接削除してください。\n\n---\n\n## 4. 管理編：パスワードとAPIキー\n\n先生モードでログインした状態で、上部バーの**歯車ボタン**を押すと「システム設定」が開きます。この画面は児童モードには表示されません。\n\n### ログインパスワードの変更\n\n「新しいパスワードを入力」に入力して「保存して閉じる」を押します。**初期パスワード `admin` は必ず変更してください。**\n\n> GASエディタ → プロジェクト設定 → スクリプトプロパティ の `TEACHER_PASSWORD` を直接書き換えても変更できます。\n\n### Gemini APIキーの設定\n\n1. [Google AI Studio](https://aistudio.google.com/) でAPIキーを取得します。\n2. 「AI添削用APIキー」に貼り付けて「保存して閉じる」を押します。\n\nキーはスクリプトプロパティ `GEMINI_API_KEY` に保存され、AI添削のときにサーバー側から使われます。ブラウザ側には保存されません。\n\n> パスワード変更・APIキー設定・AI添削・先生用の一覧取得は、いずれもサーバー側で教師パスワードを検証しています。児童側の画面からこれらの操作を実行することはできません。\n\n---\n\n## 5. データの保存場所と管理\n\n初回アクセス時に、デプロイした先生のマイドライブに次のファイルが自動生成されます。手動で削除しても、次のアクセス時に作り直されます（中のデータは戻りません）。\n\n### スプレッドシート `オンライン出版社Pro_データベース`\n\n**シート「作文データ」**\n\n| 列 | 内容 |\n| --- | --- |\n| 作品ID | 自動採番されるUUID |\n| 題名 / 学年・クラス / 氏名 / 本文 | 児童が入力した内容 |\n| ステータス | `draft` / `submitted` / `rework` / `completed` |\n| 挿絵データ | 挿絵の一覧（JSON） |\n| 添削データ | 添削時点の本文と赤線の一覧（JSON） |\n| 先生コメント | 予備の列（現在のアプリ画面からは入力しません） |\n| 作成日時 / 更新日時 | 日時 |\n| 削除日時 | **値を入れるとアプリ上に表示されなくなります** |\n\n**シート「交流コメントデータ」**\n\nコメントID / 作品ID / 投稿者名 / コメント本文 / 投稿日時\n\n### Driveフォルダ `オンライン出版社Pro_画像データ`\n\n挿絵の画像ファイルが入ります。アプリの `<img>` から表示するため、フォルダは「**リンクを知っている全員が閲覧可**」に設定されます。個人が特定できる写真の扱いには注意してください。\n\n### 作品を消したいとき\n\nアプリに削除機能はありません。スプレッドシート「作文データ」の該当行の「**削除日時**」列に日付などの値を入力すると、その作品は児童・先生・ギャラリーのどの画面にも表示されなくなります（行そのものは残ります）。完全に消す場合は行ごと削除してください。\n\n---\n\n## 6. 困ったときは\n\n| 症状 | 確認すること |\n| --- | --- |\n| 「オフライン (端末に一時保存)」と出たまま | ネットワーク接続を確認してください。**タブを閉じずに",
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Gamification",
@@ -126,7 +127,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"gamification\",\n  \"version\": \"1.0.0\",\n  \"description\": \"まなびクエスト — 小学校の学習記録×ゲーミフィケーション（GitHub Pages シェル + Google Apps Script）\",\n  \"private\": true,\n  \"license\": \"MIT\",\n  \"_comment_type\": \"\\\"type\\\": \\\"module\\\" は書きません。既存の tools/*.js は require を使う書き方（CommonJS）で、これを付けると全部動かなくなります。scripts/ 側は拡張子が .mjs なので、指定がなくても新しい書き方で読まれます。\",\n  \"engines\": {\n    \"node\": \">=20\"\n  },\n  \"scripts\": {\n    \"check\": \"node scripts/check-project.mjs\",\n    \"check:json\": \"node scripts/check-project.mjs --json\",\n    \"test\": \"node tools/check-syntax.js && node tools/check-portal-bridge.js && node tools/check-studylog.js && node tools/check-assignment.js && node tools/check-exp.js && node tools/check-insights.js\",\n    \"quality\": \"npm run check && npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/GIGAyama/Gamification.git\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Werewolf",
@@ -188,7 +190,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"werewolf-game\",\n  \"private\": true,\n  \"version\": \"1.1.0\",\n  \"type\": \"module\",\n  \"description\": \"小学生・タブレット向け 人狼ゲーム Webアプリ (PWA対応)\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"tsc -b && vite build\",\n    \"preview\": \"vite preview\",\n    \"typecheck\": \"tsc -b --noEmit\",\n    \"icons\": \"node scripts/generate-icons.mjs\",\n    \"fonts\": \"node scripts/build-fonts.mjs\",\n    \"test\": \"vitest run\",\n    \"check\": \"node scripts/check-project.mjs\"\n  },\n  \"dependencies\": {\n    \"lucide-react\": \"^0.400.0\",\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"^18.3.3\",\n    \"@types/react-dom\": \"^18.3.0\",\n    \"@vitejs/plugin-react\": \"^4.3.1\",\n    \"autoprefixer\": \"^10.4.19\",\n    \"postcss\": \"^8.5.25\",\n    \"sharp\": \"^0.33.4\",\n    \"tailwindcss\": \"^3.4.6\",\n    \"typescript\": \"^5.5.3\",\n    \"vite\": \"^5.3.4\",\n    \"vite-plugin-pwa\": \"^0.20.1\",\n    \"vitest\": \"^2.1.9\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "NotebookSample_Generator",
@@ -250,7 +253,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"notebooksample-generator\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\",\n    \"test\": \"node --test tests/*.test.js\",\n    \"check\": \"node scripts/check-project.mjs\",\n    \"check:json\": \"node scripts/check-project.mjs --json\",\n    \"quality\": \"npm run check && npm test\"\n  },\n  \"dependencies\": {\n    \"html2canvas-pro\": \"^2.2.3\",\n    \"lucide-react\": \"^1.7.0\",\n    \"react\": \"^19.2.4\",\n    \"react-dom\": \"^19.2.4\"\n  },\n  \"devDependencies\": {\n    \"@tailwindcss/vite\": \"^4.2.2\",\n    \"@vitejs/plugin-react\": \"^6.0.1\",\n    \"tailwindcss\": \"^4.2.2\",\n    \"vite\": \"^8.0.3\",\n    \"vite-plugin-pwa\": \"^1.3.0\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Townmap_Mikke",
@@ -312,7 +316,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Homework_barcordreader",
@@ -374,7 +379,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"homework_barcordreader\",\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"description\": \"「宿題ポスト」は、小学校の教室に欠かせない **宿題の提出確認** と **朝の健康観察（きもちメーター）** を、ChromebookやiPadから一瞬で完了できるWebアプリケーションです。\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\",\n    \"test\": \"node --test\",\n    \"lint\": \"eslint .\",\n    \"check\": \"npm run lint && npm test && npm run build && npm run gate\",\n    \"icons\": \"node scripts/optimize-icons.mjs && node scripts/make-maskable.mjs\",\n    \"gate\": \"node scripts/check-project.mjs\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"http://local_proxy@127.0.0.1:41521/git/GIGAyama/Homework_barcordreader\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"dependencies\": {\n    \"lucide-react\": \"^0.577.0\",\n    \"react\": \"^19.2.4\",\n    \"react-dom\": \"^19.2.4\"\n  },\n  \"devDependencies\": {\n    \"@eslint/js\": \"^10.0.1\",\n    \"@tailwindcss/vite\": \"^4.2.1\",\n    \"@vitejs/plugin-react\": \"^5.1.4\",\n    \"eslint\": \"^10.7.0\",\n    \"eslint-plugin-react-hooks\": \"^7.1.1\",\n    \"globals\": \"^17.7.0\",\n    \"sharp\": \"^0.35.3\",\n    \"tailwindcss\": \"^4.2.1\",\n    \"vite\": \"^7.3.1\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Reversi",
@@ -436,7 +442,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"reversi\",\n  \"private\": true,\n  \"version\": \"0.0.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\",\n    \"lint\": \"eslint .\",\n    \"test\": \"node scripts/run-tests.mjs\",\n    \"verify-gate\": \"node scripts/verify-gate.mjs\",\n    \"check\": \"npm run lint && npm test && npm run build && node scripts/check-project.mjs\"\n  },\n  \"dependencies\": {\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\"\n  },\n  \"devDependencies\": {\n    \"@eslint/js\": \"^9.39.5\",\n    \"@vitejs/plugin-react\": \"^4.3.1\",\n    \"autoprefixer\": \"^10.4.19\",\n    \"eslint\": \"^9.39.5\",\n    \"eslint-plugin-react\": \"^7.37.5\",\n    \"eslint-plugin-react-hooks\": \"^7.1.1\",\n    \"globals\": \"^17.9.0\",\n    \"postcss\": \"^8.4.38\",\n    \"tailwindcss\": \"^3.4.4\",\n    \"vite\": \"^5.4.1\"\n  },\n  \"engines\": {\n    \"node\": \">=20\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Typa",
@@ -498,7 +505,8 @@
         "manifest": "{\n  \"name\": \"Typa（タイパ） タイピングれんしゅう\",\n  \"short_name\": \"Typa\",\n  \"description\": \"小学生の Chromebook のための タイピング学習アプリ。どの指で どのキーを 押すかを 見ながら、ローマ字入力と ショートカットキーを 練習できます。時間ぎめの チャレンジ、にがてな キーだけを あつめた とっくん、レベルと バッジも あります。通信は しません。\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n  \"categories\": [\"education\"],\n  \"start_url\": \"/Typa/\",\n  \"scope\": \"/Typa/\",\n  \"id\": \"/Typa/\",\n  \"display\": \"standalone\",\n  \"display_override\": [\"standalone\", \"minimal-ui\"],\n  \"launch_handler\": { \"client_mode\": [\"navigate-existing\", \"auto\"] },\n  \"orientation\": \"any\",\n  \"background_color\": \"#eef4fb\",\n  \"theme_color\": \"#4a90e2\",\n  \"icons\": [\n    { \"src\": \"icons/favicon-32.png\", \"sizes\": \"32x32\", \"type\": \"image/png\" },\n    { \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/icon-maskable-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"maskable\" },\n    { \"src\": \"icons/icon-maskable-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"maskable\" }\n  ],\n  \"shortcuts\": [\n    { \"name\": \"れんしゅうを はじめる\", \"short_name\": \"れんしゅう\", \"url\": \"./?tab=menu\",\n      \"icons\": [{ \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\" }] },\n    { \"name\": \"チャレンジを する\", \"short_name\": \"チャレンジ\", \"url\": \"./?screen=challenge\",\n      \"icons\": [{ \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\" }] },\n    { \"name\": \"きろくを 見る\", \"short_name\": \"きろく\", \"url\": \"./?tab=records\",\n      \"icons\": [{ \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\" }] }\n  ]\n}\n",
         "packageJson": "{\n  \"name\": \"typa\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"description\": \"小学生の Chromebook のための タイピング学習アプリ\",\n  \"license\": \"MIT\",\n  \"_type\": \"tools/check-*.js は CommonJS なので \\\"type\\\": \\\"module\\\" は 付けません。付けると 6本 とも 動かなく なります（実さいに 踏みました）。品質ゲートの スクリプトは .mjs に して あります\",\n  \"scripts\": {\n    \"check\": \"node scripts/check-project.mjs\",\n    \"check:self-test\": \"node scripts/self-test.mjs\",\n    \"check:lessons\": \"node tools/check-lessons.js\",\n    \"check:mastery\": \"node tools/check-mastery.js\",\n    \"check:progress\": \"node tools/check-progress.js\",\n    \"check:review\": \"node tools/check-review.js\",\n    \"check:study\": \"node tools/check-study.js\",\n    \"check:backup\": \"node tools/check-backup.js\",\n    \"measure\": \"node scripts/measure/measure.mjs\",\n    \"measure:typing\": \"node scripts/measure/typing.mjs\",\n    \"measure:pwa\": \"node scripts/measure/pwa.mjs\"\n  },\n  \"_measure\": \"measure:* だけ playwright が 要ります（npm i -D playwright && npx playwright install chromium）。CI では 走らせません\",\n  \"devDependencies\": {},\n  \"engines\": {\n    \"node\": \">=20\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "app_launcher",
@@ -560,7 +568,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"giga-portal\",\n  \"version\": \"3.1.0\",\n  \"private\": true,\n  \"description\": \"GIGA portal — GIGAスクール向け Chrome 拡張ランチャー（開発用のツールだけを持つ package.json）\",\n  \"license\": \"MIT\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build:icons\": \"node tools/build-icons.mjs\",\n    \"measure\": \"node tools/measure.mjs\",\n    \"measure:online\": \"node tools/measure.mjs --online\",\n    \"measure:selftest\": \"node tools/measure.mjs --selftest\",\n    \"test\": \"node --test tests/*.test.mjs\",\n    \"lint\": \"eslint .\",\n    \"check\": \"npm run lint && npm test && npm run gate\",\n    \"verify\": \"node tools/verify-extension.mjs\",\n    \"gate\": \"node scripts/check-project.mjs\",\n    \"gate:selftest\": \"node scripts/check-project.mjs --selftest\"\n  },\n  \"devDependencies\": {\n    \"eslint\": \"^9.39.0\",\n    \"playwright\": \"1.56.1\",\n    \"sharp\": \"^0.35.3\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Shiritori_fighter",
@@ -622,7 +631,21 @@
         "manifest": "{\n  \"name\": \"しりとりファイター\",\n  \"short_name\": \"しりとりF\",\n  \"description\": \"ことばで戦え！声でも遊べるしりとりバトルゲーム\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n  \"start_url\": \".\",\n  \"scope\": \".\",\n  \"display\": \"standalone\",\n  \"orientation\": \"any\",\n  \"background_color\": \"#170f33\",\n  \"theme_color\": \"#312e81\",\n  \"categories\": [\"games\", \"education\", \"kids\"],\n  \"icons\": [\n    {\n      \"src\": \"icons/icon-192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\",\n      \"purpose\": \"any\"\n    },\n    {\n      \"src\": \"icons/icon-512.png\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/png\",\n      \"purpose\": \"any\"\n    },\n    {\n      \"src\": \"icons/icon-maskable-192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\",\n      \"purpose\": \"maskable\"\n    },\n    {\n      \"src\": \"icons/icon-maskable-512.png\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/png\",\n      \"purpose\": \"maskable\"\n    }\n  ]\n}\n",
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/screenshot-battle.png",
+          "size": 249522,
+          "label": "バトル画面",
+          "described": true
+        },
+        {
+          "path": "docs/screenshot-setup.png",
+          "size": 242676,
+          "label": "セットアップ画面",
+          "described": true
+        }
+      ]
     },
     {
       "name": "Quarto",
@@ -684,7 +707,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"quarto\",\n  \"private\": true,\n  \"version\": \"0.0.0\",\n  \"type\": \"module\",\n  \"homepage\": \"https://GIGAyama.github.io/Quarto\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"lint\": \"eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0\",\n    \"preview\": \"vite preview\",\n    \"predeploy\": \"npm run build\",\n    \"deploy\": \"gh-pages -d dist\",\n    \"test\": \"node --test\",\n    \"check\": \"node scripts/check-project.mjs\",\n    \"check:self\": \"node scripts/check-project.mjs --self-test\",\n    \"measure\": \"node tools/measure.mjs\",\n    \"measure:update\": \"node tools/measure-update.mjs\",\n    \"icons\": \"node scripts/generate-icons.mjs\",\n    \"serve:dist\": \"node tools/serve-dist.mjs\"\n  },\n  \"dependencies\": {\n    \"canvas-confetti\": \"^1.9.4\",\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"sweetalert2\": \"^11.26.25\",\n    \"three\": \"^0.158.0\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"^18.2.37\",\n    \"@types/react-dom\": \"^18.2.15\",\n    \"@vitejs/plugin-react\": \"^4.2.0\",\n    \"autoprefixer\": \"^10.5.4\",\n    \"eslint\": \"^8.53.0\",\n    \"eslint-plugin-react\": \"^7.33.2\",\n    \"eslint-plugin-react-hooks\": \"^4.6.0\",\n    \"eslint-plugin-react-refresh\": \"^0.4.4\",\n    \"gh-pages\": \"^6.1.1\",\n    \"postcss\": \"^8.5.22\",\n    \"sharp\": \"^0.35.3\",\n    \"tailwindcss\": \"^3.4.19\",\n    \"vite\": \"^5.0.0\",\n    \"vite-plugin-pwa\": \"^0.20.5\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Quoridor",
@@ -746,7 +770,71 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"kabe-kabe-gassen\",\n  \"private\": true,\n  \"version\": \"1.2.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\",\n    \"lint\": \"eslint . --max-warnings=0\",\n    \"test\": \"node --test tests/*.test.mjs\",\n    \"icons\": \"node tools/build-icons.mjs\",\n    \"gate\": \"node scripts/check-project.mjs\",\n    \"gate:self-test\": \"node scripts/check-project.mjs --self-test\",\n    \"measure:ui\": \"node tools/measure-ui.mjs dist\",\n    \"measure:pwa\": \"node tools/measure-pwa.mjs dist\",\n    \"measure:a11y\": \"node tools/measure-a11y.mjs dist\",\n    \"measure:icons\": \"node tools/measure-icons.mjs dist\",\n    \"measure:boot\": \"node tools/measure-boot.mjs dist\",\n    \"measure\": \"npm run measure:ui && npm run measure:pwa && npm run measure:a11y && npm run measure:icons && npm run measure:boot\",\n    \"check\": \"npm run lint && npm run test && npm run build && npm run gate && npm run measure\"\n  },\n  \"dependencies\": {\n    \"lucide-react\": \"^1.25.0\",\n    \"react\": \"^19.2.8\",\n    \"react-dom\": \"^19.2.8\"\n  },\n  \"devDependencies\": {\n    \"@eslint/js\": \"^10.0.1\",\n    \"@vitejs/plugin-react\": \"^6.0.4\",\n    \"autoprefixer\": \"^10.5.4\",\n    \"eslint\": \"^10.7.0\",\n    \"eslint-plugin-react-hooks\": \"^7.1.1\",\n    \"eslint-plugin-react-refresh\": \"^0.5.3\",\n    \"globals\": \"^17.7.0\",\n    \"playwright\": \"^1.56.1\",\n    \"postcss\": \"^8.5.22\",\n    \"sharp\": \"^0.35.3\",\n    \"tailwindcss\": \"^3.4.19\",\n    \"vite\": \"^8.1.5\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
+    },
+    {
+      "name": "online-manuscript-paper-pro",
+      "description": "GIGAスクール対応！GAS + Reactで作られた、AI添削機能付きの「オンライン原稿用紙」アプリ。",
+      "topics": [],
+      "defaultBranch": "main",
+      "headSha": "e692f888a6a2eaad4b6b84be8eedc8b6513a1fb0",
+      "pushedAt": "2026-08-07T22:50:55Z",
+      "createdAt": "2026-02-08T12:01:49Z",
+      "stars": 0,
+      "homepage": "https://gigayama.github.io/online-manuscript-paper-pro/",
+      "hasPages": true,
+      "pagesUrl": "https://gigayama.github.io/online-manuscript-paper-pro/",
+      "recentCommits": [
+        {
+          "sha": "e692f88",
+          "date": "2026-08-07T22:35:02Z",
+          "message": "Merge pull request #8 from GIGAyama/claude/readme-manual-consistency-kl20wp"
+        },
+        {
+          "sha": "aa2258e",
+          "date": "2026-08-07T22:34:09Z",
+          "message": "docs: READMEを実装に合わせて修正し、操作マニュアルを追加"
+        },
+        {
+          "sha": "658c867",
+          "date": "2026-08-06T21:22:57Z",
+          "message": "Merge pull request #7 from GIGAyama/claude/article-input-line-overlap-79d32w"
+        },
+        {
+          "sha": "ab5489c",
+          "date": "2026-08-06T12:27:36Z",
+          "message": "ci: Pages デプロイをbuild/deployジョブに分割し、再実行で必ず失敗する問題を修正"
+        },
+        {
+          "sha": "c6094de",
+          "date": "2026-08-06T12:13:01Z",
+          "message": "ci: Pages デプロイの待ち時間を30分に延長"
+        },
+        {
+          "sha": "e179e31",
+          "date": "2026-08-06T11:59:45Z",
+          "message": "Merge pull request #6 from GIGAyama/claude/article-input-line-overlap-79d32w"
+        },
+        {
+          "sha": "100ddc5",
+          "date": "2026-08-06T11:56:04Z",
+          "message": "fix: 本文入力欄の罫線と文字の重なりを修正、全体のバグ修正と最適化"
+        },
+        {
+          "sha": "3716029",
+          "date": "2026-08-03T13:05:43Z",
+          "message": "Merge pull request #5 from GIGAyama/claude/rollout-jrcug1"
+        }
+      ],
+      "source": {
+        "readme": "# 📝 オンライン原稿用紙 Pro (サーバーレス・P2P版)\n\n「オンライン原稿用紙 Pro」は、GIGAスクール構想のタブレット端末に最適化された、ブラウザ上で動く**縦書き原稿用紙＋作文添削アプリ**です。\n\n児童は横書きの入力欄に打ち込むだけで、隣に**縦書きの原稿用紙**がリアルタイムに組版されます。先生は提出された作文を**原稿用紙の上で直接なぞって赤ペンを入れ**、その場で児童の画面に返せます。\n\nバックエンドサーバーやデータベース（GAS等）は一切使いません。**PeerJS（WebRTC）による端末間の直接通信**と**ブラウザのローカルストレージ**だけで動作します。GitHub Pages 等に静的ファイルを置くだけで、その日の授業から使えます。\n\n- **デモ / 配布元:** リポジトリを GitHub Pages で公開すればそのまま動きます\n- **くわしい操作手順:** [📖 MANUAL.md（操作マニュアル）](MANUAL.md)\n\n---\n\n## ✨ このアプリでできること\n\n### 🏫 先生と児童をつなぐリアルタイム通信（P2P）\n\n- **4桁のPINコードだけで接続**\n  先生が「通信ルームを開始」を押すと4桁のPINが発行され、児童はそれを入力するだけでつながります。アカウント登録・ログインID・メールアドレスは一切不要です。\n- **提出後は書き直しがその場で先生に届く**\n  一度提出された作文は、児童が書き直すたび（入力が止まって約0.6秒後）に自動で先生の画面へ送られます。先生側の原稿用紙も自動で最新の状態に更新されます。\n  ※**提出前の下書きは先生の一覧には表示されません。** 名簿に並ぶのは「提出済」「再提出」「完了」の作文だけです。\n- **切断・翌日でも取りこぼさない**\n  通信が切れている間に先生が付けた添削は、児童が次に接続した瞬間に自動で返却されます（同じ端末・同じブラウザで開いた場合）。\n\n### ✍️ 児童向けに最適化された画面\n\n- **入力欄と原稿用紙の同時表示**\n  左（スマホ・タテ画面では上）の入力欄に打つと、右の原稿用紙プレビューが即座に組版されます。入力欄をスクロールすると原稿用紙側も連動します。\n- **本格的な原稿用紙の組版**\n  20字×20行（高学年）／15字×16行（低学年）を切り替え可能。禁則処理は「追い出し」と「ぶら下がり」から選べ、「。」」のような約物は1マスに詰めて表示します。\n- **ふりがな（ルビ）付きのやさしい画面**\n  児童が使う画面のボタン・見出し・メッセージの漢字にはふりがなが振ってあり、低学年でも読めます（先生用の管理画面と、作文本文にはルビは付きません）。\n- **文字数カウンター**：改行を除いた本文の文字数を常に表示します。\n- **レスポンシブ対応**：タブレットの横／縦画面、スマートフォンの狭い画面でもレイアウトが崩れません。\n- **うっかり防止**\n  名前が未入力のまま提出しようとすると警告が出ます。先生と接続していない状態では提出できません（送信できていないのに提出済になってしまう事故を防ぎます）。新規作成時は学年・クラス・名前を引き継ぎます。\n- **ネットがなくても書ける**\n  入力内容は自動で端末に保存されます。作文は `.json` ファイルとして書き出し／読み込みもできるので、通信が使えない環境や端末の乗り換えにも対応できます。\n\n### 👩‍🏫 先生用の添削ツール\n\n- **なぞるだけの赤ペン**\n  原稿用紙プレビュー上で直したい文字をマウスや指でドラッグすると、その範囲にコメントを付けられます。付けた添削は即座に児童の画面に反映され、児童は読んだあと「修正完了」で赤線を自分で消せます。\n- **AI自動添削アシスト（Gemini API）**\n  Google の `gemini-2.5-flash` を使い、誤字脱字の指摘と「児童の思考を促す問いかけ」を自動生成して赤ペンとして貼り付けます。AIに送るのは**学年・題名・本文のみで、児童の名前は送信しません。**\n- **差分ビュー**\n  前回添削した時点の文章と今の文章を比べ、児童が**書き足した部分を青**、**消した部分を赤の取り消し線**で表示します。どこを直したのかが一目で分かります。\n- **名簿の絞り込み**\n  キーワード（名前・題名・本文）、状態（完了以外／すべて／提出済／再提出／完了）、更新日の範囲で一覧を絞り込めます。\n- **一括操作**\n  チェックを入れた作文をまとめて「AI添削」「完了」「印刷」できます。\n- **A4横の原稿用紙で印刷**\n  1枚に見開き2面＋中央の行罫（題名・ページ番号入り）を配置した、本物に近いレイアウトで印刷できます。\n- **キーボードショートカット**\n  児童の切り替え、完了／再提出、AI添削、印刷などをキー操作で行えます（`?` キーで一覧を表示）。\n- **パスワード保護（任意）**\n  先生用設定でパスワードを決めると、以後は先生モードに入る際に入力が必要になります。**初期状態はパスワードなしで誰でも先生モードに入れます。**\n\n### 📲 PWA対応（アプリとしてインストール可能）\n\n- **ホーム画面に追加**：Chrome / Edge のアドレスバーに出る「インストール」ボタン（またはメニューの「アプリをインストール」）から、PC・タブレット・スマホにインストールできます。iPad / iPhone の Safari では「共有」→「ホーム画面に追加」です。\n- **オフライン起動**：一度読み込んだあとは Service Worker のキャッシュにより、ネットワークがなくてもアプリを起動して作文を書けます（P2P通信とAI添削にはネットワークが必要です）。\n\n---\n\n## 🚀 導入・デプロイ方法\n\n本アプリは `index.html` を中心とした**静的ファイルのみ**で構成されています。ビルド作業は不要です。\n\n1. 本リポジトリをダウンロード、またはフォークします。\n2. **GitHub Pages** やお好きなWebホスティング（Vercel, Netlify, 学校内サーバーなど）に、以下のファイルをそのままアップロードします。\n   ```\n   index.html\n   manifest.webmanifest\n   sw.js\n   favicon.png\n   icons/\n   ```\n3. 公開されたURLにアクセスすればすぐ使えます。\n\n> **HTTPS での公開を推奨します。** PWAのインストール・オフライン動作（Service Worker）と、P2P通信（WebRTC）は HTTPS 環境が前提です。\n\n本リポジトリには GitHub Actions のワークフロー（`.github/workflows/deploy-pages.yml`）が含まれており、`main` ブランチへの push で GitHub Pages に自動デプロイされます。\n\n> **AI添削を使う場合:** 先生モードの「設定（歯車マーク）」から、ご自身の **Gemini APIキー** を登録してください。キーは先生のブラウザ内（localStorage）にのみ保存され、リポジトリやサーバーには送信されません。\n\n---\n\n## 📖 かんたんスタートガイド\n\nくわしい手順・画面の説明は [MANUAL.md](MANUAL.md) を参照してください。\n\n### 👩‍🏫 先生（ホスト）\n\n1. アプリを開き、右上の「**先生用**」ボタンで先生モードに入ります。\n2. 左パネルの「**通信ルームを開始**」を押します。\n3. 表示された **4桁のPINコード** を児童に伝えます（接続人数もここに表示されます）。\n4. 児童が「**提出**」すると、左の名簿に作文が並びます。\n5. 名簿から選ぶと右に原稿用紙が出ます。文字をドラッグして添削するか、「**AI添削**」を使います。\n6. 「**再提出**」または「**完了**」を押すと、接続中の児童の画面へ即座に反映されます。\n\n### 🧒 児童（クライアント）\n\n1. アプリを開き、画面上部の「**先生と接続**」（鎖のマーク）を押します。\n2. 先生に教えてもらった **4桁のPIN** を入力します。\n3. 題名・学年クラス・名前を入れて、作文を書きます。\n4. 書けたら「**提出**」を押します（接続していないと提出できません）。\n5. 先生から返ってくると右上の「**ベルのマーク**」に未読の数が付きます。押してコメントを読み、赤い部分を直します。\n\n---\n\n## 🛠 技術スタック\n\n| 分類 | 使用技術 |\n| --- | --- |\n| UI | React 18（UMD版）＋ Babel Standalone（JSXをブラウザ内で変換） |\n| スタイル | Tailwind CSS（CDN版）、Bootstrap Icons、Google Fonts（Zen Maru Gothic / Shippori Mincho / Zen Old Mincho） |\n| P2P通信 | PeerJS 1.5.2（WebRTC） |\n| 差分表示 | diff-match-patch |\n| AI添削 | Google Gemini API（`gemini-2.5-flash`） |\n| ダイアログ | SweetAlert2 |\n| オフライン | Service Worker（`sw.js`）＋ Web App Manifest |\n| データ保存 | ブラウザの localStorage |\n\nいずれのライブラリもCDNから読み込むため、**初回アクセス時のみネットワーク接続が必要**です。2回目以降は Service Worker のキャッシュで起動できます。\n\n---\n\n## ⚠️ 注意事項・制限事項\n\n### データの保存について\n\n- データは**開いているブラウザの中（localStorage）にのみ**保存されます。**別の端末・別のブラウザで開くと、過去のデータは表示されません。**\n  別の端末で続きを書く場合は、必ず「ファイル（`.json`）」に書き出し、新しい端末の「開く」→「ファイルから読み込む」で取り込んでください。\n- 先生のPCでブラウザの履歴・サイトデータを消去すると、**保存されていた児童の提出データも消えます。** 長期保存が必要な場合は、印刷またはファイルのダウンロードでバックアップしてください。\n- 端末の保存領域がいっぱいの場合やプライベートモードでは保存に失敗することがあります。その場合は画面に警告が表示されます。\n\n### 通信について\n\n- 作文データそのものは端末間で直接（P2P／WebRTC）やり取りされますが、**接続の仲介にはPeerJSの公開シグナリングサーバーを利用します。** 学校のネットワークでWebRTCや当該サーバーが遮断されていると接続できません。\n- PINは4桁のため、**別の教室と偶然同じPINになる可能性があります。** 重複を検知した場合は自動的に別のPINで再取得しますが、授業中は先生の画面に出ているPINが正しいことを都度確認してください。\n- 先生が「通信ルームを開始」していない間、児童は接続も提出もできません。\n\n### AI添削について\n\n- Gemini APIキーは先生ご自身で用意し、利用規約・利用料金をご確認のうえお使いください。\n- AIに送信されるのは**学年・題名・本文**です。児童の名前は送信しませんが、**本文中に個人が特定できる情報が書かれている場合はそのまま送信されます。** 運用ルールにご注意ください。\n- AIが指摘した箇所は、本文中に該当する文字列が見つかった場合のみ赤ペンとして貼り付けられます。そのため提案の一部が反映されないことがあります。\n\n---\n\n## 📄 ライセンス / 作者\n\n©2026 オンライン原稿用紙 Pro — [GIGA山](https://note.com/cute_borage86)\n",
+        "manual": "# 📖 オンライン原稿用紙 Pro 操作マニュアル\n\nこのマニュアルは、実際のアプリの画面と動作にもとづいた操作手順書です。\nアプリの概要・導入方法は [README.md](README.md) を参照してください。\n\n---\n\n## 目次\n\n1. [はじめに（動作環境とモード）](#1-はじめに動作環境とモード)\n2. [児童（クライアント）の使い方](#2-児童クライアントの使い方)\n3. [先生（ホスト）の使い方](#3-先生ホストの使い方)\n4. [用紙の設定と原稿用紙の組版ルール](#4-用紙の設定と原稿用紙の組版ルール)\n5. [印刷](#5-印刷)\n6. [ファイルでのやりとり（オフライン運用）](#6-ファイルでのやりとりオフライン運用)\n7. [データはどこに保存されるか](#7-データはどこに保存されるか)\n8. [授業の進め方の例](#8-授業の進め方の例)\n9. [こまったときは（トラブルシューティング）](#9-こまったときはトラブルシューティング)\n\n---\n\n## 1. はじめに（動作環境とモード）\n\n### 動作環境\n\n| 項目 | 内容 |\n| --- | --- |\n| 推奨ブラウザ | Google Chrome / Microsoft Edge / Safari（いずれも最新版） |\n| 通信 | 初回読み込み時はインターネット接続が必要。P2P通信とAI添削にも接続が必要 |\n| 公開方式 | HTTPS を推奨（PWAインストール・オフライン動作・WebRTC の前提） |\n| インストール | 不要（ブラウザで開くだけ）。PWAとしてホーム画面に追加も可能 |\n\n### 2つのモード\n\nアプリは同じURLで、右上のボタンにより**児童モード**と**先生モード**を切り替えて使います。\n\n| モード | 入り方 | 画面の色 | できること |\n| --- | --- | --- | --- |\n| 児童モード | 初期状態。左上のアプリ名ロゴを押すと戻る | 青 | 作文の執筆・保存・提出・返却の確認 |\n| 先生モード | 右上の「先生用」ボタン | 赤（ヘッダー下線が赤に変わる） | 名簿の閲覧・添削・AI添削・一括操作・印刷 |\n\n> **先生モードのパスワード**\n> 初期状態では**パスワードなしで誰でも先生モードに入れます。**\n> 先生モードの「設定（歯車）」でパスワードを設定すると、以後は入室時に入力を求められます。\n> 児童が使う端末では、必ずパスワードを設定してから配布することをおすすめします。\n\n---\n\n## 2. 児童（クライアント）の使い方\n\n### 2-1. 画面の構成\n\n| 位置 | 内容 |\n| --- | --- |\n| 左（スマホ・タテ画面では上） | 題名・学年クラス・名前・本文の入力欄、文字数、操作ボタン |\n| 右（スマホ・タテ画面では下） | 縦書きの原稿用紙プレビュー（入力と同時に組版される） |\n| 画面上部 | 同期状態のバッジ、「先生と接続」ボタン、通知ベル、設定（歯車）、「先生用」ボタン |\n\n入力欄をスクロールすると、原稿用紙プレビューも連動してスクロールします。\n原稿用紙は画面の高さに合わせて自動で拡大・縮小され、横方向にスクロールしてページを送れます（マウスホイールの上下操作でも横に動きます）。\n\n### 2-2. 先生と接続する\n\n1. 画面上部の「**先生と接続**」（鎖のマーク）を押します。\n   - このボタンは**未接続のときだけ**表示されます。\n2. 先生の画面に出ている **4桁のPINコード** を入力します。\n3. 「接続する」を押します。\n\n接続に成功すると、上部のバッジが「**先生と同期済**」（緑）になります。\n\n| バッジの表示 | 意味 |\n| --- | --- |\n| オフライン | 先生と接続していない |\n| 接続中... | 接続を試みている |\n| 保存中... / 保存・同期中... | 入力内容を保存（または先生へ送信）している最中 |\n| 端末に保存済 | この端末に保存された（未接続） |\n| 先生と同期済 | 先生とつながっている |\n\n> **接続時に前回の添削が自動で返ってくる**\n> 接続した瞬間、この端末から提出した作文のうち、先生の手元で新しくなっているもの（再提出・完了になったもの）が自動的に返却されます。前の授業の続きも、つなぐだけで最新の添削が届きます。\n\n### 2-3. 作文を書く\n\n1. **題名**、**学年・クラス**、**名前** を入力します。\n2. **本文** を入力します。改行するとそのまま原稿用紙の改行になります。\n3. 入力欄の下に、改行を除いた**文字数**が表示されます。\n\n入力の手が止まると自動で端末に保存されます（先生と接続していれば同時に先生へも送られます）。\n\n### 2-4. 保存する・提出する\n\n| ボタン | 動作 |\n| --- | --- |\n| **新規** | 新しい作文を書き始めます。書きかけの内容があると確認画面が出ます。**学年・クラス・名前は引き継がれます** |\n| **開く** | 端末に保存した作品の一覧から選んで開きます。ファイル（`.json`）からの読み込みもここから |\n| **保存** | 端末に保存します。接続中なら先生にも同期されます |\n| **⬇（ダウンロード）** | 作文を `.json` ファイルとして書き出します |\n| **提出** | 先生に提出します。確認ダイアログが出ます |\n\n> **提出できない・してはいけないときの動作**\n> - **名前が空のときは提出できません。**「なまえを かいてから ていしゅつ してください」と表示されます。\n> - **先生と接続していないときは提出できません。**「せんせいと せつぞく されていないため ていしゅつ できません」と表示されます（送信されていないのに提出済になる事故を防ぐためです）。\n\n**提出したあとは編集できなくなります。**（「提出済のため編集不可」と表示されます）\n先生が「再提出」にすると、ふたたび編集できるようになります。\n\n### 2-5. 状態（ステータス）の見かた\n\n入力欄の右上に、いまの状態が色付きで表示されます。\n\n| 表示 | 色 | 意味 | 編集 |\n| --- | --- | --- | --- |\n| 下書き | グレー | まだ提出していない | できる |\n| 提出済 | 青 | 先生に送った。先生の確認待ち | できない |\n| 再提出 | オレンジ | 先生が「直してね」と返した | できる |\n| 完了 | 緑 | 先生が完了にした | できない |\n\n### 2-6. 先生からの添削を読む\n\n1. 先生から返却されると、画面上部に**ベルのマーク**が現れ、未読の件数が赤いバッジで表示されます。\n2. ベルを押すと「先生からの返却」一覧が開きます。未読には「New」が付きます。\n3. 「確認する」を押すと、その作文が開きます（未読は既読になります）。\n4. 原稿用紙の中で、**赤くなっているマス**が先生の指摘箇所です。タップすると先生のコメントが読めます。\n5. 直し終えたら、コメント画面の「**修正完了（赤線を消す）**」を押すと、その赤い印が消えます。\n   - 提出中・完了中は「変更不可」となり押せません。\n\n> ベルのマークは、返却された作品が1件以上あるときだけ表示されます。\n\n### 2-7. 「完了」になった作文を書き直したいとき\n\n完了した作文は編集できません。「**コピーして新しく書く**」を押すと、同じ内容の新しい下書きが作られ、そこから続きを書けます（元の完了した作文はそのまま残ります）。\n\n---\n\n## 3. 先生（ホスト）の使い方\n\n### 3-1. 先生モードに入る\n\n1. 右上の「**先生用**」ボタンを押します。\n2. パスワードを設定している場合は、ログイン画面でパスワードを入力します。\n   - 未設定の場合はそのまま先生モードに切り替わります。\n\n### 3-2. 通信ルームを開始する\n\n1. 左パネルの「**通信ルームを開始**」を押します。\n2. **4桁のPINコード** が大きく表示されるので、児童に伝えます。\n3. 接続している児童の人数が「**N人 接続中**」として表示されます。\n\n> - PINは4桁のため、まれに他の教室と重複します。その場合は自動的に別のPINを取り直します（最大5回）。取得できなかったときはエラーが表示されるので、もう一度「通信ルームを開始」を押してください。\n> - 通信ルームは、先生が児童モードに切り替えても維持されます。ページを再読み込みすると切断されるので、授業中はタブを閉じたり更新したりしないでください。\n\n### 3-3. 名簿（左パネル）\n\n**名簿に並ぶのは「提出済」「再提出」「完了」の作文だけです。** 児童が書いている途中の下書きは表示されません。\n\n| 表示 | 意味 |\n| --- | --- |\n| 名前（太字） | 児童が入力した名前 |\n| 青「提出済」 | 提出されて未処理 |\n| オレンジ「再提出」 | 先生が差し戻した |\n| 緑「完了」 | 完了にした |\n| 📄 差分アイコン | 前回の添削時点から本文が変わっている（＝児童が直した） |\n\n- 並び順は**更新日時の新しい順**です。\n- 各行の左のチェックボックスで、一括操作の対象を選べます。\n\n#### 絞り込み\n\n| 項目 | 内容 |\n| --- | --- |\n| キーワード | 名前・題名・本文を対象に検索 |\n| 状態 | 完了以外（初期値）／すべて表示／提出済／再提出／完了 |\n| 日付（2つの入力） | **更新日**の範囲でしぼり込み（先生が添削や状態変更をした日時も反映されます） |\n| ×ボタン | 絞り込みをすべて解除して初期状態に戻す |\n\n### 3-4. 赤ペンで添削する\n\n1. 名簿から児童を選ぶと、右に**原稿用紙プレビュー**が表示されます。\n2. 直したい文字を**マウスでドラッグ**、またはタブレットなら**指でなぞり**ます（画面上部に「文字をドラッグして添削」と案内が出ます）。\n3. 指を離すとコメント入力画面が開くので、修正指示やアドバイスを入力し「追加する」を押します。\n4. 添削した範囲は薄い赤の背景と赤い縦線で表示されます。\n5. **接続中の児童には、その場で添削が届きます。** 未接続の児童には次回接続時に自動で返却されます。\n\n**添削を消したいとき**：すでに添削が付いているマスをタップ（クリック）すると、コメントの確認画面が開きます。「削除する」で取り消せます。\n\n**児童が「修正完了」にした添削**は、先生の画面では**緑色**に変わります（児童の画面からは消えます）。\n\n> タブレットでは、**横方向のスワイプはページ送り**、**縦方向のドラッグは添削の範囲選択**として扱われます。\n\n### 3-5. AI添削（Gemini API）\n\n事前に「設定（歯車）」から Gemini APIキーを登録しておく必要があります。\n\n- **1人分**：画面右上の「**AI添削**」ボタン（またはキー `A`）\n- **まとめて**：名簿でチェックを入れてから、一括操作の🪄アイコン（またはキー `Shift + A`）\n\nAIは誤字脱字の指摘と、児童の思考を促す問いかけを生成し、該当箇所に「【AI】」付きの赤ペンとして自動で貼り付けます。貼り付けた結果はふつうの添削と同じように編集・削除でき、接続中の児童にはその場で届きます。\n\n> - **AIに送信されるのは「学年・クラス」「題名」「本文」のみで、児童の名前は送信しません。**\n> - AIが指摘した文字列が本文中に見つからなかった場合、その提案は貼り付けられません（`N件のAI提案を追加しました` の件数で確認できます）。\n> - 一括添削は1件ずつ順に処理します。APIキーが未設定・不正な場合は途中で中断し、成功・失敗の件数が表示されます。\n\n### 3-6. 差分ビュー（どこを直したか見る）\n\nプレビュー右上の「**原稿 / 差分**」の切り替え（またはキー `V`）で表示を変えられます。\n\n- **青いハイライト** … 前回添削した時点から、児童が**書き足した・書き換えた**部分\n- **赤い取り消し線** … 児童が**消した**部分\n\n児童が本文を直していた場合、その作文を選ぶと**自動的に差分ビューで開きます。**\n\n### 3-7. 状態を変える（返却する）\n\nプレビュー右上のボタンで、選択中の作文の状態を変更します。変更は接続中の児童の画面に即座に反映されます。\n\n| ボタン | キー | 動作 |\n| --- | --- | --- |\n| **再提出** | `R` | 「直して出し直してね」。児童はふたたび編集できるようになります |\n| **完了** | `C` | 「これで完成」。児童側は編集不可になります |\n\n### 3-8. 一括操作\n\n名簿でチェックを入れてから、名簿上部のアイコンを使います。\n\n| アイコン | 動作 | キー |\n| --- | --- | --- |\n| ☑（左端） | 表示中の作品をすべて選択／解除 | `S` |\n| 🪄 | 一括AI添削（確認あり） | `Shift + A` |\n| ✅ | 一括で「完了」にする（確認あり） | — |\n| 🖨 | 一括印刷 | `Shift + P` |\n\n### 3-9. 児童にファイルで渡す\n\nプレビュー上部の**⬇ボタン**で、選択中の作文を添削込みの `.json` ファイルとして書き出せます（ファイル名は `名前_添削済.json`）。\n通信が使えない場合、このファイルを児童に渡して「開く」→「ファイルから読み込む」で取り込ませれば、添削を届けられます。\n\n### 3-10. 先生用設定（歯車）\n\n**先生モードの歯車**を押すと「先生用設定」が開きます。この画面は児童モードでは表示されません。\n\n| 項目 | 内容 |\n| --- | --- |\n| ログインパスワードの設定 | 空欄のままなら先生モードは誰でも入れます |\n| Gemini APIキー | AI添削に使います。このブラウザ内にのみ保存されます |\n| 全データを消去する | この端末に溜まった**児童の提出データをすべて削除**します（確認あり・取り消し不可） |\n\n> **用紙の文字数・禁則処理の設定は、この画面にはありません。**\n> 児童モードに戻ってから歯車を押してください（→ [4. 用紙の設定](#4-用紙の設定と原稿用紙の組版ルール)）。設定はこの端末の表示と印刷に共通で使われます。\n\n### 3-11. キーボードショートカット\n\n先生モードで、入力欄にカーソルが無いときに使えます。`?` キーでいつでも一覧を表示できます。\n\n| キー | 動作 |\n| --- | --- |\n| `↑` / `↓` | 児童（作品）の切り替え |\n| `V` | 表示切り替え（原稿用紙 / 差分） |\n| `S` | 表示中の作品を一括選択 / 解除 |\n| `A` | 選択中の作品をAI添削 |\n| `Shift + A` | チェックを入れた作品を一括AI添削 |\n| `P` | 選択中の作品を印刷 |\n| `Shift + P` | チェックを入れた作品を一括印刷 |\n| `C` | 完了にする |\n| `R` | 再提出にする |\n| `?` | ショートカット一覧の表示 / 非表示 |\n| `Esc` | 開いているダイアログを閉じる |\n\n### 3-12. スマートフォンで使うとき\n\n画面が狭い端末では、名簿とプレビューが切り替え表示になります。\n\n- 名簿で作品をタップ → プレビューに切り替わる\n- プレビュー左上の「**＜**」 → 名簿に戻る\n\n---\n\n## 4. 用紙の設定と原稿用紙の組版ルール\n\n### 4-1. 設定を開く\n\n**児童モードで歯車ボタン**を押すと「設定」が開きます。\n\n| 項目 | 選択肢 |\n| --- | --- |\n| 用紙の文字数 | **20文字 × 20行（高学年）** / **15文字 × 16行（低学年）** |\n| 禁則処理 | **追い出し**（前行末の文字を次行に送る） / **ぶら下がり**（マス外に小さく表示） |\n\n設定はこの端末（ブラウザ）に保存され、画面表示と印刷の両方に反映されます。先生の端末での設定は、先生の画面のプレビューと印刷に適用されます。\n\n### 4-2. 自動でこうなります\n\n- **題名**：1行目の3マス目から始まります。\n- **学年・クラス／名前**：題名の次の行に、その行の終わり（縦書きなので下端）から1マス空けて配置されます。\n- **本文**：入力欄の改行がそのまま原稿用紙の改行になります。空行はそのまま1行分の空きになります。\n- **約物の詰め**：「。」」「、」」「！」」「？」」などの組み合わせは**1マスに収めて**表示します。\n- **行頭禁則**：`、。」』）っゃゅょッャュョー・？！` などが行の先頭に来ないよう調整します。\n- **行末禁則**：`「『（［【` などの開き括弧が行の末尾に来ないよう次行に送ります。\n- **ページ区切り**：20文字設定は20行、15文字設定は16行で1ページです。\n\n---\n\n## 5. 印刷\n\n### 児童\n\n原稿用紙プレビュー右上の「**印刷**」ボタンを押すと、いま開いている作文が印刷されます。\n\n### 先生\n\n- 選択中の1人分 … キー `P`\n- チェックした複数人分 … 一括操作の🖨アイコン、またはキー `Shift + P`\n\n### 印刷レイアウト\n\n- 用紙サイズは **A4横（余白なし）** です。ブラウザの印刷設定で「用紙：A4」「向き：横」「余白：なし」「背景のグラフィック：オン」にすると、罫線がきれいに出ます。\n- 1枚に**見開き2面**を配置し、中央の**行罫（ぎょうび）**に題名（先頭10文字）とページ番号が入ります。\n- 画面上の赤ペン（添削コメント）は印刷されません。印刷されるのは作文本文です。\n\n---\n\n## 6. ファイルでのやりとり（オフライン運用）\n\n通信が使えない環境でも、`.json` ファイルで作文をやりとりできます。\n\n| やりたいこと | 手順 |\n| --- | --- |\n| 児童が作文を持ち出す | 児童モードの **⬇ボタン** →`名前_題名.json` が保存される |\n| 別の端末で続きを書く | 「**開く**」→「**ファイルから読み込む**」→ `.json` を選ぶ |\n| 先生が添削を配る | 先生モードでプレビ",
+        "manifest": "{\n  \"id\": \"./\",\n  \"name\": \"オンライン原稿用紙 Pro\",\n  \"short_name\": \"原稿用紙Pro\",\n  \"description\": \"縦書き原稿用紙で作文が書ける学習アプリ。先生とのリアルタイム添削・AI添削に対応。\",\n  \"lang\": \"ja\",\n  \"start_url\": \"./\",\n  \"scope\": \"./\",\n  \"display\": \"standalone\",\n  \"orientation\": \"any\",\n  \"background_color\": \"#f8fafc\",\n  \"theme_color\": \"#3b82f6\",\n  \"icons\": [\n    { \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/maskable-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"maskable\" },\n    { \"src\": \"icons/maskable-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"maskable\" }\n  ]\n}\n",
+        "packageJson": null
+      },
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "online-manuscript-paper-lite",
@@ -808,7 +896,8 @@
         "manifest": "{\n  \"name\": \"オンライン原稿用紙 Lite\",\n  \"short_name\": \"原稿用紙Lite\",\n  \"description\": \"ブラウザだけで動く縦書き原稿用紙アプリ。入力すると縦書きでリアルタイムにプレビューされ、A4横向きで印刷できます。\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n\n  \"id\": \"/online-manuscript-paper-lite/\",\n  \"start_url\": \"/online-manuscript-paper-lite/\",\n  \"scope\": \"/online-manuscript-paper-lite/\",\n\n  \"display\": \"standalone\",\n  \"display_override\": [\"standalone\", \"fullscreen\", \"minimal-ui\"],\n  \"launch_handler\": { \"client_mode\": [\"navigate-existing\", \"auto\"] },\n  \"orientation\": \"any\",\n  \"background_color\": \"#fdfbf7\",\n  \"theme_color\": \"#b45309\",\n  \"categories\": [\"education\", \"productivity\"],\n  \"icons\": [\n    { \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/maskable-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"maskable\" },\n    { \"src\": \"icons/maskable-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"maskable\" }\n  ]\n}\n",
         "packageJson": "{\n  \"name\": \"online-manuscript-paper-lite\",\n  \"version\": \"2.0.0\",\n  \"private\": true,\n  \"description\": \"オンライン原稿用紙 Lite - ブラウザだけで動く縦書き原稿用紙アプリ\",\n  \"license\": \"MIT\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"node tools/build.mjs\",\n    \"check\": \"node scripts/check-project.mjs\",\n    \"test\": \"node --test tests/*.test.mjs\",\n    \"measure\": \"node tools/measure/measure.mjs\",\n    \"icons\": \"node tools/make-icons.mjs\"\n  },\n  \"devDependencies\": {\n    \"autoprefixer\": \"^10.4.21\",\n    \"bootstrap-icons\": \"^1.11.1\",\n    \"esbuild\": \"^0.25.10\",\n    \"postcss\": \"^8.5.6\",\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\",\n    \"sweetalert2\": \"^11.26.0\",\n    \"tailwindcss\": \"^3.4.18\"\n  },\n  \"engines\": {\n    \"node\": \">=20\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "MIRAI-Compass",
@@ -870,7 +959,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"mirai-compass\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"description\": \"みらいコンパス — 自由進度学習支援アプリケーション（GAS ウェブアプリ + GitHub Pages シェル）\",\n  \"license\": \"MIT\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"node tools/build-vendor.mjs\",\n    \"check\": \"node scripts/check-project.mjs\",\n    \"test\": \"node --test tests/**/*.test.mjs\",\n    \"ci\": \"npm run build && node tools/verify-generated.mjs && npm run check && npm test\"\n  },\n  \"dependencies\": {\n    \"bootstrap\": \"5.3.0\",\n    \"bootstrap-icons\": \"1.11.1\",\n    \"chart.js\": \"4.5.1\",\n    \"fabric\": \"5.3.0-browser\",\n    \"sortablejs\": \"1.15.0\",\n    \"sweetalert2\": \"11.26.25\"\n  },\n  \"engines\": {\n    \"node\": \">=20\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Qalc",
@@ -932,7 +1022,147 @@
         "manifest": null,
         "packageJson": "{\n    \"name\": \"multi-qalc\",\n    \"private\": true,\n    \"version\": \"0.0.0\",\n    \"type\": \"module\",\n    \"scripts\": {\n        \"dev\": \"vite\",\n        \"build\": \"vite build\",\n        \"lint\": \"eslint .\",\n        \"preview\": \"vite preview\",\n        \"test:studylog\": \"node scripts/studyLog.test.mjs\",\n        \"test:room\": \"node scripts/roomAccess.test.mjs\",\n        \"test\": \"npm run test:studylog && npm run test:room && npm run test:battle\",\n        \"check\": \"node scripts/check-project.mjs && node scripts/check-contrast.mjs\",\n        \"check:contrast\": \"node scripts/check-contrast.mjs\",\n        \"test:battle\": \"node scripts/battleLogic.test.mjs\",\n        \"measure\": \"node tools/measure/all.mjs\"\n    },\n    \"dependencies\": {\n        \"@fontsource/zen-maru-gothic\": \"^5.3.0\",\n        \"canvas-confetti\": \"^1.9.4\",\n        \"framer-motion\": \"^12.43.0\",\n        \"lucide-react\": \"^1.28.0\",\n        \"peerjs\": \"^1.5.5\",\n        \"qrcode\": \"^1.5.4\",\n        \"react\": \"^19.2.8\",\n        \"react-dom\": \"^19.2.8\"\n    },\n    \"devDependencies\": {\n        \"@types/react\": \"^19.2.17\",\n        \"@types/react-dom\": \"^19.2.3\",\n        \"@vitejs/plugin-react\": \"^4.2.1\",\n        \"autoprefixer\": \"^10.4.19\",\n        \"eslint\": \"^8.57.0\",\n        \"eslint-plugin-react\": \"^7.34.1\",\n        \"eslint-plugin-react-hooks\": \"^4.6.0\",\n        \"eslint-plugin-react-refresh\": \"^0.4.6\",\n        \"postcss\": \"^8.4.38\",\n        \"tailwindcss\": \"^3.4.3\",\n        \"vite\": \"^5.2.0\"\n    }\n}"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/01-home.png",
+          "size": 240042,
+          "label": "Qalcのホーム画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/02-drill-select.png",
+          "size": 118790,
+          "label": "ドリル選択画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-game.png",
+          "size": 82918,
+          "label": "ゲーム画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/04-tool-hissan.png",
+          "size": 92231,
+          "label": "ひっ算のどうぐ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/05-tool-sakuranbo.png",
+          "size": 104723,
+          "label": "さくらんぼのどうぐ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-tool-tokei.png",
+          "size": 125488,
+          "label": "とけいのどうぐ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/07-tool-warai.png",
+          "size": 126486,
+          "label": "わりあいのどうぐ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-tool-mihaji.png",
+          "size": 127763,
+          "label": "みはじのどうぐ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/09-result.png",
+          "size": 113252,
+          "label": "結果画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/10-mistakes-box.png",
+          "size": 131217,
+          "label": "にがて克服ボックス",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/11-room-qr.png",
+          "size": 166870,
+          "label": "へやをつくる",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-member-waiting.png",
+          "size": 105322,
+          "label": "許可を待っている子どもの画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/13-approve.png",
+          "size": 173424,
+          "label": "入室の許可",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/14-boss-start.png",
+          "size": 156692,
+          "label": "ボスバトルの開始",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/15-boss-attack.png",
+          "size": 268197,
+          "label": "ボスの攻撃",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-boss-result.png",
+          "size": 229981,
+          "label": "ボスバトルの結果",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-territory-board.png",
+          "size": 220325,
+          "label": "じんとりバトルの盤面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-territory-result.png",
+          "size": 335569,
+          "label": "じんとりバトルの結果",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/19-presentation-mode.png",
+          "size": 177139,
+          "label": "ていじモード",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/20-shop.png",
+          "size": 147496,
+          "label": "きせかえショップ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/21-course-manager.png",
+          "size": 265036,
+          "label": "コース管理",
+          "described": true
+        },
+        {
+          "path": "public/bosses/calculon.png",
+          "size": 36491,
+          "label": "calculon",
+          "described": false
+        },
+        {
+          "path": "public/characters/painter-win.png",
+          "size": 34054,
+          "label": "painter win",
+          "described": false
+        }
+      ]
     },
     {
       "name": "SchoolPlan_Editor",
@@ -994,7 +1224,147 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"schoolplan-editor-quality\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"description\": \"Quality gates for the SchoolPlan Editor Google Apps Script project\",\n  \"type\": \"module\",\n  \"engines\": {\n    \"node\": \">=20\"\n  },\n  \"scripts\": {\n    \"check\": \"node scripts/check-project.mjs\",\n    \"check:json\": \"node scripts/check-project.mjs --json\",\n    \"test\": \"node --test\",\n    \"quality\": \"npm run check && npm test\",\n    \"build:vendor\": \"node tools/build-vendor.mjs\",\n    \"verify:icons\": \"node tools/verify-icons.mjs\"\n  },\n  \"devDependencies\": {\n    \"@material-symbols/font-400\": \"^0.45.10\",\n    \"bootstrap\": \"^5.3.8\",\n    \"bootstrap-icons\": \"^1.11.3\",\n    \"playwright\": \"^1.62.1\",\n    \"sweetalert2\": \"^11.14.5\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/01-week-plan.png",
+          "size": 764340,
+          "label": "週案グリッド全体",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/02-edit-mode.png",
+          "size": 842053,
+          "label": "編集モード",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-input-assist.png",
+          "size": 866110,
+          "label": "入力支援メニュー",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/04-unit-picker.png",
+          "size": 716105,
+          "label": "進捗つき単元ピッカー",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/05-plan-search.png",
+          "size": 705344,
+          "label": "週をまたいだ全文検索",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-next-week.png",
+          "size": 327876,
+          "label": "教科名だけ入った先の週",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/07-holiday-week.png",
+          "size": 337940,
+          "label": "祝日（海の日）のある週",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-print-options.png",
+          "size": 671497,
+          "label": "印刷オプション",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/09-print-page1.png",
+          "size": 297489,
+          "label": "印刷1ページ目",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/10-print-page2.png",
+          "size": 211854,
+          "label": "印刷2ページ目（時数表・検印欄）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/11-reflection-hub.png",
+          "size": 662203,
+          "label": "振り返りの一覧",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-reflection-wizard.png",
+          "size": 671641,
+          "label": "振り返りの入力（音声入力つき）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/13-task-list.png",
+          "size": 765320,
+          "label": "タスク画面全体",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/14-hours-annual.png",
+          "size": 469768,
+          "label": "年間・教科別の実施時数",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/15-hours-simulation.png",
+          "size": 490908,
+          "label": "年度末シミュレーション",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-unit-master.png",
+          "size": 538938,
+          "label": "単元マスタ一覧",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-unit-check.png",
+          "size": 554762,
+          "label": "整合性チェックの結果",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-newsletter.png",
+          "size": 489376,
+          "label": "学級通信エディタ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/19-events-pdf.png",
+          "size": 230220,
+          "label": "行事予定PDFの閲覧",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/20-pdf-import.png",
+          "size": 376600,
+          "label": "PDF読み込み",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/21-settings.png",
+          "size": 533753,
+          "label": "設定タブ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/22-timetable-editor.png",
+          "size": 362510,
+          "label": "固定時間割エディタ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/23-data-protection.png",
+          "size": 533164,
+          "label": "データ保全・復元",
+          "described": true
+        }
+      ]
     },
     {
       "name": "Keisan-Card",
@@ -1056,7 +1426,69 @@
         "manifest": "{\n  \"name\": \"けいさんカード\",\n  \"short_name\": \"けいさんカード\",\n  \"description\": \"小学1年生の計算カードをデジタルで。たしざん・ひきざんをカードでれんしゅう。\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n\n  \"_comment_id\": \"id はこのアプリの『背番号』。同じサイト（gigayama.github.io）に置いた他のアプリと絶対に重ならないよう、リポジトリ名と同じ絶対パスを必ず書くこと。省略すると start_url が代わりに背番号として使われ、start_url を少し直しただけで別アプリ扱いになったり、似た構成の別アプリと取り違えられて『ページが他のアプリに開かれる』原因になる。このリポジトリをコピーして別アプリを作るときは、id・scope・start_url を必ず新しいフォルダ名に書き換えること。\",\n  \"id\": \"/Keisan-Card/\",\n  \"start_url\": \"/Keisan-Card/?source=pwa\",\n  \"scope\": \"/Keisan-Card/\",\n\n  \"display\": \"standalone\",\n  \"display_override\": [\"standalone\", \"fullscreen\", \"minimal-ui\"],\n  \"launch_handler\": {\n    \"client_mode\": [\"navigate-existing\", \"auto\"]\n  },\n  \"orientation\": \"any\",\n  \"background_color\": \"#f6f7f9\",\n  \"theme_color\": \"#f59e0b\",\n  \"categories\": [\"education\", \"kids\"],\n  \"icons\": [\n    { \"src\": \"./icons/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"./icons/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"./icons/icon-maskable-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"maskable\" },\n    { \"src\": \"./icons/icon-maskable-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"maskable\" }\n  ]\n}\n",
         "packageJson": "{\n  \"name\": \"keisan-card\",\n  \"version\": \"1.4.0\",\n  \"private\": true,\n  \"description\": \"けいさんカード（デジタル計算カード）。GitHub Pages で配信する静的 PWA。\",\n  \"license\": \"MIT\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"node tools/build.mjs\",\n    \"test\": \"node --test tests/*.test.mjs\",\n    \"check\": \"node tools/build.mjs --check && node scripts/check-project.mjs && node --test tests/*.test.mjs\",\n    \"measure\": \"node tools/measure.mjs\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"7.29.7\",\n    \"@babel/preset-react\": \"7.29.7\",\n    \"react\": \"18.3.1\",\n    \"react-dom\": \"18.3.1\",\n    \"tailwindcss\": \"3.4.17\",\n    \"terser\": \"5.49.1\"\n  },\n  \"optionalDependencies\": {\n    \"playwright\": \"1.62.1\",\n    \"sharp\": \"0.35.3\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/02-select.png",
+          "size": 41371,
+          "label": "カードをえらぶ画面。4色と枚数とベストタイム",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-mode.png",
+          "size": 31806,
+          "label": "モードをえらぶ画面。じゅんばんとバラバラ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-swipe.png",
+          "size": 31381,
+          "label": "左へはらっている途中。「わかった」のラベルが出ている",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-result.png",
+          "size": 40068,
+          "label": "結果画面。クリアタイム・ベスト・1かいめで せいかい",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/11-records-top.png",
+          "size": 61284,
+          "label": "せいちょうの きろく の上部。れんぞく・スタンプ・カレンダー",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-records-decks.png",
+          "size": 52812,
+          "label": "カードごとの回数・ベスト・前回・棒グラフ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/15-wide-title.png",
+          "size": 33180,
+          "label": "横長の画面でのタイトル画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-install-guide.png",
+          "size": 53833,
+          "label": "Chromebook 向けインストール案内",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-wide-select.png",
+          "size": 37959,
+          "label": "横長の画面でのカードをえらぶ画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-wide-card.png",
+          "size": 33186,
+          "label": "横長の画面でのカード表示（電子黒板・パソコン）",
+          "described": true
+        }
+      ]
     },
     {
       "name": "online-100square-calculation",
@@ -1118,7 +1550,117 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"online-100square-calculation\",\n  \"private\": true,\n  \"version\": \"1.6.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\",\n    \"check\": \"node scripts/check-project.mjs\"\n  },\n  \"dependencies\": {\n    \"@tensorflow/tfjs\": \"^3.21.0\",\n    \"@tensorflow/tfjs-backend-cpu\": \"^3.21.0\",\n    \"@tensorflow/tfjs-backend-webgl\": \"^3.21.0\",\n    \"@tensorflow/tfjs-converter\": \"^3.21.0\",\n    \"@tensorflow/tfjs-core\": \"^3.21.0\",\n    \"lucide-react\": \"^0.284.0\",\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"^18.2.15\",\n    \"@types/react-dom\": \"^18.2.7\",\n    \"@vitejs/plugin-react\": \"^4.0.3\",\n    \"autoprefixer\": \"^10.4.14\",\n    \"postcss\": \"^8.4.27\",\n    \"tailwindcss\": \"^3.3.3\",\n    \"vite\": \"^4.4.5\",\n    \"vite-plugin-pwa\": \"^0.16.7\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/01-home.png",
+          "size": 82997,
+          "label": "ホーム画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/02-desktop-home.png",
+          "size": 102013,
+          "label": "Chromebook で開いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-playing.png",
+          "size": 72598,
+          "label": "はじめたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/04-progress.png",
+          "size": 99157,
+          "label": "とちゅうまで解いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/05-hikizan.png",
+          "size": 89530,
+          "label": "引き算",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-kakezan.png",
+          "size": 94098,
+          "label": "かけ算",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/07-result.png",
+          "size": 150131,
+          "label": "おわったところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-marking.png",
+          "size": 130388,
+          "label": "あとからまとめて丸つけ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/09-quit-confirm.png",
+          "size": 277124,
+          "label": "とちゅうでやめる",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/10-handwriting.png",
+          "size": 103578,
+          "label": "手書きで数字を書く",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/11-handwriting-done.png",
+          "size": 93101,
+          "label": "書いた数字がマスに入る",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-desktop-playing.png",
+          "size": 148537,
+          "label": "Chromebook で解いているところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/13-numpad.png",
+          "size": 102216,
+          "label": "ボタン入力",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/14-settings.png",
+          "size": 211397,
+          "label": "設定",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/15-input-left.png",
+          "size": 148315,
+          "label": "入力ツールを左に置いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-stats.png",
+          "size": 215280,
+          "label": "記録の画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-stats-modes.png",
+          "size": 215321,
+          "label": "引き算とかけ算の記録",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-presentation.png",
+          "size": 188373,
+          "label": "提示モード",
+          "described": true
+        }
+      ]
     },
     {
       "name": "KANJI_Town",
@@ -1180,7 +1722,153 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"kanji-town\",\n  \"private\": true,\n  \"version\": \"0.3.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build && node scripts/check-bundle-budget.mjs && cp dist/index.html dist/404.html\",\n    \"check:bundle\": \"node scripts/check-bundle-budget.mjs\",\n    \"check\": \"node scripts/check-project.mjs\",\n    \"preview\": \"vite preview\",\n    \"test\": \"node --test --experimental-test-module-mocks\"\n  },\n  \"dependencies\": {\n    \"framer-motion\": \"^12.36.0\",\n    \"lucide-react\": \"^0.577.0\",\n    \"react\": \"^19.2.4\",\n    \"react-dom\": \"^19.2.4\"\n  },\n  \"devDependencies\": {\n    \"@tailwindcss/vite\": \"^4.2.1\",\n    \"@vitejs/plugin-react\": \"^4.7.0\",\n    \"tailwindcss\": \"^4.2.1\",\n    \"vite\": \"^6.4.1\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/01-home.png",
+          "size": 284144,
+          "label": "トップページ（縦に全部）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/02-read-aloud.png",
+          "size": 112074,
+          "label": "音読フェーズ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-reading-challenge.png",
+          "size": 112074,
+          "label": "音読チャレンジ中",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/04-reading-cleared.png",
+          "size": 112074,
+          "label": "音読チャレンジのクリア",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/05-stroke-order.png",
+          "size": 119223,
+          "label": "書き順アニメーション",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-trace-guided.png",
+          "size": 117968,
+          "label": "なぞり書き1回目（吸いつく）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-test-blank.png",
+          "size": 75924,
+          "label": "テストの白いマス",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/09-test-written.png",
+          "size": 138494,
+          "label": "テストに書いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/10-test-graded.png",
+          "size": 168308,
+          "label": "テストの採点とこたえ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/11-session-result.png",
+          "size": 223978,
+          "label": "学習の結果画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-home-after.png",
+          "size": 265570,
+          "label": "学習後のトップページ（土地が広がった）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/14-residents.png",
+          "size": 138431,
+          "label": "住民のパネル",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/15-dictionary.png",
+          "size": 160581,
+          "label": "漢字ずかん",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-stats.png",
+          "size": 278371,
+          "label": "学習きろく（4つの力・復習予報）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-achievements.png",
+          "size": 173525,
+          "label": "実績",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-craft.png",
+          "size": 225119,
+          "label": "クラフト",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/19-drill-editor.png",
+          "size": 142644,
+          "label": "ドリルを作る",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/20-drill-list.png",
+          "size": 74991,
+          "label": "マイドリル一覧",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/21-drill-share-link.png",
+          "size": 233003,
+          "label": "リンクで配る（QRつき）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/22-drill-test-choose.png",
+          "size": 175028,
+          "label": "出題数を選ぶ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/23-drill-test-question.png",
+          "size": 64374,
+          "label": "ドリルのテスト（例文の中に書く）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/24-drill-test-written.png",
+          "size": 104049,
+          "label": "書き終えたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/25-drill-test-result.png",
+          "size": 137024,
+          "label": "テスト結果の一覧",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/26-drill-test-reason.png",
+          "size": 317818,
+          "label": "採点の内訳（なぜ69点か）",
+          "described": true
+        }
+      ]
     },
     {
       "name": "KAKE_Master",
@@ -1242,7 +1930,153 @@
         "manifest": "{\n  \"name\": \"九九カード - かけざんアプリ\",\n  \"short_name\": \"九九カード\",\n  \"description\": \"九九の計算カードで楽しく学べる算数アプリ。カード練習・クイズ・ふたりで対戦・きろくスタンプで九九をマスターしよう!\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n\n  \"id\": \"/KAKE_Master/\",\n  \"start_url\": \"/KAKE_Master/\",\n  \"scope\": \"/KAKE_Master/\",\n\n  \"display\": \"standalone\",\n  \"display_override\": [\"standalone\", \"fullscreen\", \"minimal-ui\"],\n  \"launch_handler\": { \"client_mode\": [\"navigate-existing\", \"auto\"] },\n  \"orientation\": \"any\",\n  \"background_color\": \"#fffbeb\",\n  \"theme_color\": \"#b45309\",\n  \"categories\": [\"education\", \"kids\"],\n  \"icons\": [\n    {\n      \"src\": \"/KAKE_Master/icons/icon-192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\",\n      \"purpose\": \"any\"\n    },\n    {\n      \"src\": \"/KAKE_Master/icons/icon-512.png\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/png\",\n      \"purpose\": \"any\"\n    },\n    {\n      \"src\": \"/KAKE_Master/icons/maskable-192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\",\n      \"purpose\": \"maskable\"\n    },\n    {\n      \"src\": \"/KAKE_Master/icons/maskable-512.png\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/png\",\n      \"purpose\": \"maskable\"\n    }\n  ]\n}\n",
         "packageJson": "{\n  \"name\": \"kake-master\",\n  \"version\": \"1.3.0\",\n  \"private\": true,\n  \"description\": \"九九カード - かけざんアプリ（GIGA Standard v5 準拠）\",\n  \"license\": \"MIT\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"check\": \"node scripts/check-project.mjs\",\n    \"check:self-test\": \"node scripts/check-project.mjs --self-test\",\n    \"test\": \"node --test tests/*.test.mjs\",\n    \"measure:ui\": \"node tools/measure-ui.mjs\",\n    \"measure:pwa\": \"node tools/measure-pwa.mjs\",\n    \"measure:icons\": \"node tools/measure-icons.mjs\",\n    \"smoke\": \"node tools/smoke.mjs\",\n    \"icons\": \"node tools/optimize-icons.mjs\"\n  },\n  \"devDependencies\": {\n    \"playwright\": \"1.49.1\",\n    \"sharp\": \"^0.33.5\"\n  },\n  \"devDependenciesNote\": \"playwright と sharp は tools/ の実測ツール専用。品質ゲート(npm run check)と npm test は依存なしで動くため、CI では入れない。\"\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/01-home.png",
+          "size": 144748,
+          "label": "ひらいた直後のホーム",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/02-setup-flash.png",
+          "size": 226021,
+          "label": "カードでれんしゅうの設定",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-card-front.png",
+          "size": 128935,
+          "label": "カードのおもて（しき）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/04-card-back.png",
+          "size": 335707,
+          "label": "カードのうら（こたえととなえかた）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/05-card-reverse.png",
+          "size": 136029,
+          "label": "こたえからしきをあてる向き",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-flash-progress.png",
+          "size": 136103,
+          "label": "練習のとちゅう。のこり枚数の帯",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/07-flash-celebrate.png",
+          "size": 159941,
+          "label": "終わったときの紙ふぶき",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-flash-result.png",
+          "size": 128271,
+          "label": "練習の結果",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/09-setup-quiz.png",
+          "size": 192754,
+          "label": "こたえてクイズの設定",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/10-quiz-play.png",
+          "size": 117981,
+          "label": "数字キーで答えているところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/11-quiz-wrong.png",
+          "size": 78265,
+          "label": "まちがえたときの表示",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-quiz-result.png",
+          "size": 129059,
+          "label": "クイズの結果とまちがえたカード",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/13-setup-pair.png",
+          "size": 241103,
+          "label": "ふたりでもんだいの設定とあそびかた",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/14-pair-turn.png",
+          "size": 110949,
+          "label": "対戦中。どちらの番かの表示",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/15-pair-judge.png",
+          "size": 341787,
+          "label": "相手が ○× を押すところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-pair-result.png",
+          "size": 98627,
+          "label": "対戦の結果",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-home-weak.png",
+          "size": 165660,
+          "label": "にがてカードの案内が出たホーム",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-records-top.png",
+          "size": 232510,
+          "label": "きろく画面の上のまとめ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/19-calendar.png",
+          "size": 182696,
+          "label": "スタンプカレンダー",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/20-heatmap.png",
+          "size": 252005,
+          "label": "九九マスターマップ（81マス）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/21-studylog.png",
+          "size": 226492,
+          "label": "がくしゅうの ふりかえり",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/22-badges.png",
+          "size": 216361,
+          "label": "メダル12種類",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/23-weak-practice.png",
+          "size": 129557,
+          "label": "にがてカードだけの練習",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/24-landscape.png",
+          "size": 127996,
+          "label": "タブレットを横にしたところ",
+          "described": true
+        }
+      ]
     },
     {
       "name": "Digital_textbook",
@@ -1304,7 +2138,147 @@
         "manifest": null,
         "packageJson": "{\n    \"name\": \"digital-textbook-maker\",\n    \"private\": true,\n    \"version\": \"1.0.0\",\n    \"type\": \"module\",\n    \"scripts\": {\n        \"sync-vendor\": \"node scripts/sync-vendor.mjs\",\n        \"predev\": \"npm run sync-vendor\",\n        \"dev\": \"vite\",\n        \"prebuild\": \"npm run sync-vendor\",\n        \"build\": \"vite build\",\n        \"preview\": \"vite preview\",\n        \"lint\": \"eslint .\",\n        \"check\": \"npm run lint && node scripts/check-project.mjs\",\n        \"deploy\": \"gh-pages -d dist\"\n    },\n    \"dependencies\": {\n        \"lucide-react\": \"^0.344.0\",\n        \"react\": \"^18.2.0\",\n        \"react-dom\": \"^18.2.0\"\n    },\n    \"devDependencies\": {\n        \"@eslint/js\": \"^9.39.5\",\n        \"@types/react\": \"^18.2.66\",\n        \"@types/react-dom\": \"^18.2.22\",\n        \"@vitejs/plugin-react\": \"^4.2.1\",\n        \"autoprefixer\": \"^10.4.18\",\n        \"eslint\": \"^9.39.5\",\n        \"eslint-plugin-react\": \"^7.37.5\",\n        \"eslint-plugin-react-hooks\": \"^7.1.1\",\n        \"fabric\": \"^5.3.0\",\n        \"gh-pages\": \"^6.1.1\",\n        \"globals\": \"^17.9.0\",\n        \"idb-keyval\": \"^6.2.1\",\n        \"jsqr\": \"^1.4.0\",\n        \"pdfjs-dist\": \"^2.16.105\",\n        \"peerjs\": \"^1.5.2\",\n        \"postcss\": \"^8.4.35\",\n        \"qrcode\": \"^1.5.1\",\n        \"sharp\": \"^0.35.3\",\n        \"tailwindcss\": \"^3.4.1\",\n        \"tailwindcss-animate\": \"^1.0.7\",\n        \"vite\": \"^5.1.4\",\n        \"vite-plugin-pwa\": \"^1.3.0\"\n    }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/01-home.png",
+          "size": 211465,
+          "label": "アプリを開いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/02-library.png",
+          "size": 298601,
+          "label": "PDFを読みこんだあとの棚",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-textbook.png",
+          "size": 308500,
+          "label": "プリントを開いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/04-toolbar.png",
+          "size": 325320,
+          "label": "道具を出したところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/05-pen.png",
+          "size": 339005,
+          "label": "えんぴつで丸をつけたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-marker.png",
+          "size": 335228,
+          "label": "マーカーで線を引いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/07-sticky.png",
+          "size": 390317,
+          "label": "ふせんを貼ったところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-marked.png",
+          "size": 413372,
+          "label": "丸つけをしたプリント",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/09-stamp-eval.png",
+          "size": 460615,
+          "label": "評価のスタンプ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/10-stamp-math.png",
+          "size": 440606,
+          "label": "算数のスタンプ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/11-stamp-jp.png",
+          "size": 447633,
+          "label": "国語のスタンプ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-math-tools.png",
+          "size": 263545,
+          "label": "算数の道具を置いたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/13-mystamp.png",
+          "size": 350221,
+          "label": "マイスタンプを作る",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/14-view-menu.png",
+          "size": 314554,
+          "label": "表示のしかたを選ぶ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/15-half.png",
+          "size": 285918,
+          "label": "半ページ表示",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-presentation.png",
+          "size": 393392,
+          "label": "提示モードにしたところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-timer.png",
+          "size": 452710,
+          "label": "タイマー",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-shortcuts.png",
+          "size": 398341,
+          "label": "ショートカット一覧",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/19-share.png",
+          "size": 384520,
+          "label": "共有の画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/20-received.png",
+          "size": 411794,
+          "label": "子どもの端末に入ったところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/21-kid-library.png",
+          "size": 251716,
+          "label": "子どもの棚",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/22-jp-vertical.png",
+          "size": 703322,
+          "label": "国語のプリントに使ったところ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/23-backup.png",
+          "size": 431927,
+          "label": "バックアップを取り込む画面",
+          "described": true
+        }
+      ]
     },
     {
       "name": "KEISAN-BLOCK",
@@ -1366,7 +2340,153 @@
         "manifest": "{\n  \"name\": \"さんすうブロック - けいさんれんしゅう\",\n  \"short_name\": \"さんすうブロック\",\n  \"description\": \"算数ブロックとさくらんぼ計算で、繰り上がり・繰り下がりの計算をマスターする小学1年生向け学習アプリ\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n\n  \"id\": \"/KEISAN-BLOCK/\",\n  \"start_url\": \"/KEISAN-BLOCK/\",\n  \"scope\": \"/KEISAN-BLOCK/\",\n\n  \"display\": \"standalone\",\n  \"display_override\": [\"standalone\", \"fullscreen\", \"minimal-ui\"],\n  \"launch_handler\": { \"client_mode\": [\"navigate-existing\", \"auto\"] },\n  \"orientation\": \"any\",\n  \"background_color\": \"#cdeeff\",\n  \"theme_color\": \"#ff9f43\",\n  \"categories\": [\"education\", \"kids\"],\n  \"icons\": [\n    { \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/maskable-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"maskable\" },\n    { \"src\": \"icons/maskable-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"maskable\" }\n  ]\n}\n",
         "packageJson": "{\n  \"name\": \"keisan-block\",\n  \"version\": \"1.0.0\",\n  \"description\": \"さんすうブロック — 小学1年生向けの けいさん れんしゅう（PWA）\",\n  \"private\": true,\n  \"license\": \"MIT\",\n  \"type\": \"module\",\n  \"_comment\": \"依存パッケージは持たない。ブラウザへ送る実行コードは 0 バイトで、ビルドもしない。ここにあるのは検査を走らせるための入口だけ。\",\n  \"scripts\": {\n    \"check\": \"node scripts/check-project.mjs\",\n    \"check:json\": \"node scripts/check-project.mjs --json\",\n    \"test\": \"node --test tests/*.test.mjs\",\n    \"icons\": \"python3 tools/make-icons.py\",\n    \"serve\": \"python3 -m http.server 8000\"\n  },\n  \"engines\": {\n    \"node\": \">=20\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": [
+        {
+          "path": "docs/note/images/01-home.png",
+          "size": 201118,
+          "label": "ホーム（レベル・ミッション・6つのメニュー）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/02-add-step1.png",
+          "size": 143872,
+          "label": "たしざん 1つめの問い（8は あと いくつで 10）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/03-add-split.png",
+          "size": 143636,
+          "label": "さくらんぼに 2が入り、ばらが2かたまりに分かれる",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/04-add-task.png",
+          "size": 165141,
+          "label": "「わけた 2こを タップして…」の作業画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/05-add-frame.png",
+          "size": 145524,
+          "label": "10がそろって わくが緑に光った状態",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/06-add-last.png",
+          "size": 155167,
+          "label": "最後の問い（10と 4で いくつ）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/07-add-howto.png",
+          "size": 190566,
+          "label": "「けいさんの しかた」4行と5秒の待ち",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/08-set-clear.png",
+          "size": 187217,
+          "label": "5もん クリアと バッジ獲得のおしらせ",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/09-sub-select.png",
+          "size": 131580,
+          "label": "ひきざんの さくせんえらび",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/10-genka-take.png",
+          "size": 154993,
+          "label": "10のまとまりから ブロックを5こ とる作業（11−5）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/12-genka-count.png",
+          "size": 142374,
+          "label": "10にななめ線と残りの5、ブロックに数えた番号",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/13-hint.png",
+          "size": 170583,
+          "label": "2回まちがえたときのヒント（11−2）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/14-gengen.png",
+          "size": 171137,
+          "label": "ばらから ひいて 10から ひく さくせん（16−9）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/16-timed-result.png",
+          "size": 156372,
+          "label": "タイムアタックの結果",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/17-dev-select.png",
+          "size": 115769,
+          "label": "はってんの えらび画面",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/18-dev-add.png",
+          "size": 155731,
+          "label": "10のぼうに合体したところ（36＋7）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/19-dev-sub.png",
+          "size": 157595,
+          "label": "はってんの ひきざん（44−5）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/20-free-input.png",
+          "size": 170682,
+          "label": "じぶんで しきを いれる（13−9・さくせんえらび付き）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/21-free-explain.png",
+          "size": 110570,
+          "label": "せつめいモードの「こたえを 見る」（42−17）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/22-free-reveal.png",
+          "size": 117497,
+          "label": "押したあと。手順の言い方が出る",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/23-free-rods.png",
+          "size": 123153,
+          "label": "10のぼうをタップして動かす",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/24-present.png",
+          "size": 209656,
+          "label": "大きく表示（電子黒板・1366×768）",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/26-records-log.png",
+          "size": 392243,
+          "label": "きろく／あしあと",
+          "described": true
+        },
+        {
+          "path": "docs/note/images/27-records-map.png",
+          "size": 127724,
+          "label": "きろく／けいさんマップ",
+          "described": true
+        }
+      ]
     },
     {
       "name": "DigitalCloset",
@@ -1428,7 +2548,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"digital-closet\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build && node tools/build-sw.mjs\",\n    \"preview\": \"vite preview\",\n    \"icons\": \"node tools/build-icons.mjs\",\n    \"measure\": \"node tools/measure.mjs\",\n    \"measure:pwa\": \"node tools/measure-pwa.mjs\",\n    \"measure:csp\": \"node tools/measure-csp.mjs\",\n    \"check\": \"node scripts/check-project.mjs\",\n    \"verify-gate\": \"node scripts/verify-gate.mjs\"\n  },\n  \"dependencies\": {\n    \"lucide-react\": \"^0.468.0\",\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"^18.3.18\",\n    \"@types/react-dom\": \"^18.3.5\",\n    \"@vitejs/plugin-react\": \"^4.3.4\",\n    \"autoprefixer\": \"^10.4.20\",\n    \"postcss\": \"^8.4.49\",\n    \"sharp\": \"^0.35.3\",\n    \"tailwindcss\": \"^3.4.17\",\n    \"vite\": \"^6.0.7\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "PhysicalEducation_note",
@@ -1490,7 +2611,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Digital-Newspaper",
@@ -1552,7 +2674,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     },
     {
       "name": "Haiku-meeting",
@@ -1614,7 +2737,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"haiku-meeting\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"description\": \"GIGA句会プラザ。GAS のウェブアプリ。ここにあるのは、配信する app.html / css.html / vendor.html を作るための道具。\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"build\": \"node tools/build.mjs\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.28.4\",\n    \"@babel/preset-react\": \"^7.27.1\",\n    \"canvas-confetti\": \"^1.6.0\",\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\",\n    \"tailwindcss\": \"^3.4.19\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Ice_slide-puzzle",
@@ -1676,7 +2800,8 @@
         "manifest": "{\n  \"name\": \"南極スライダー\",\n  \"short_name\": \"南極スライダー\",\n  \"description\": \"氷の上をツルツル滑るコマを操って王冠をゴールへ導く、2人対戦型ボードゲーム\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n  \"id\": \"/Ice_slide-puzzle/\",\n  \"start_url\": \"/Ice_slide-puzzle/\",\n  \"scope\": \"/Ice_slide-puzzle/\",\n  \"display\": \"standalone\",\n  \"display_override\": [\n    \"standalone\",\n    \"fullscreen\",\n    \"minimal-ui\"\n  ],\n  \"launch_handler\": {\n    \"client_mode\": [\n      \"navigate-existing\",\n      \"auto\"\n    ]\n  },\n  \"orientation\": \"any\",\n  \"background_color\": \"#fff9c4\",\n  \"theme_color\": \"#ffffff\",\n  \"categories\": [\n    \"games\",\n    \"education\",\n    \"kids\"\n  ],\n  \"icons\": [\n    {\n      \"src\": \"icons/icon-192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\",\n      \"purpose\": \"any\"\n    },\n    {\n      \"src\": \"icons/icon-512.png\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/png\",\n      \"purpose\": \"any\"\n    },\n    {\n      \"src\": \"icons/maskable-192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\",\n      \"purpose\": \"maskable\"\n    },\n    {\n      \"src\": \"icons/maskable-512.png\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/png\",\n      \"purpose\": \"maskable\"\n    }\n  ]\n}\n",
         "packageJson": "{\n  \"name\": \"ice_slide-puzzle\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"description\": \"南極スライダー。ビルドは不要で、index.html をそのまま配信している。ここにあるのはアイコンを作り直すための道具だけ。\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"icons\": \"node tools/optimize-icons.mjs\"\n  },\n  \"devDependencies\": {\n    \"sharp\": \"^0.35.3\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Hagetaka-game",
@@ -1738,7 +2863,8 @@
         "manifest": "{\n  \"name\": \"ハゲタカのえじき\",\n  \"short_name\": \"ハゲタカ\",\n  \"description\": \"みんなであそべるカードゲーム「ハゲタカのえじき」。あいことばでへやをつくって、ともだちやロボとしょうぶしよう！\",\n  \"lang\": \"ja\",\n  \"id\": \"./\",\n  \"start_url\": \"./\",\n  \"scope\": \"./\",\n  \"display\": \"standalone\",\n  \"orientation\": \"any\",\n  \"background_color\": \"#f0f9ff\",\n  \"theme_color\": \"#38bdf8\",\n  \"icons\": [\n    { \"src\": \"icons/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"any\" },\n    { \"src\": \"icons/maskable-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"maskable\" },\n    { \"src\": \"icons/maskable-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"maskable\" }\n  ]\n}\n",
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Reflection_Journal",
@@ -1800,7 +2926,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "tsubomi-learning",
@@ -1862,7 +2989,153 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": [
+        {
+          "path": "assets/apple_bud.webp",
+          "size": 113084,
+          "label": "apple bud",
+          "described": false
+        },
+        {
+          "path": "assets/apple_flower.webp",
+          "size": 98170,
+          "label": "apple flower",
+          "described": false
+        },
+        {
+          "path": "assets/azalea_bud.webp",
+          "size": 116106,
+          "label": "azalea bud",
+          "described": false
+        },
+        {
+          "path": "assets/azalea_flower.webp",
+          "size": 108828,
+          "label": "azalea flower",
+          "described": false
+        },
+        {
+          "path": "assets/broccoli_bud.webp",
+          "size": 133386,
+          "label": "broccoli bud",
+          "described": false
+        },
+        {
+          "path": "assets/broccoli_flower.webp",
+          "size": 107142,
+          "label": "broccoli flower",
+          "described": false
+        },
+        {
+          "path": "assets/camellia_bud.webp",
+          "size": 88540,
+          "label": "camellia bud",
+          "described": false
+        },
+        {
+          "path": "assets/camellia_flower.webp",
+          "size": 69926,
+          "label": "camellia flower",
+          "described": false
+        },
+        {
+          "path": "assets/carnation_bud.webp",
+          "size": 58924,
+          "label": "carnation bud",
+          "described": false
+        },
+        {
+          "path": "assets/carnation_flower.webp",
+          "size": 57630,
+          "label": "carnation flower",
+          "described": false
+        },
+        {
+          "path": "assets/cosmos_bud.webp",
+          "size": 111966,
+          "label": "cosmos bud",
+          "described": false
+        },
+        {
+          "path": "assets/cosmos_flower.webp",
+          "size": 79432,
+          "label": "cosmos flower",
+          "described": false
+        },
+        {
+          "path": "assets/cucumber_bud.webp",
+          "size": 110092,
+          "label": "cucumber bud",
+          "described": false
+        },
+        {
+          "path": "assets/cucumber_flower.webp",
+          "size": 89770,
+          "label": "cucumber flower",
+          "described": false
+        },
+        {
+          "path": "assets/dandelion_bud.webp",
+          "size": 120482,
+          "label": "dandelion bud",
+          "described": false
+        },
+        {
+          "path": "assets/dandelion_flower.webp",
+          "size": 72678,
+          "label": "dandelion flower",
+          "described": false
+        },
+        {
+          "path": "assets/hydrangea_bud.webp",
+          "size": 82478,
+          "label": "hydrangea bud",
+          "described": false
+        },
+        {
+          "path": "assets/hydrangea_flower.webp",
+          "size": 109304,
+          "label": "hydrangea flower",
+          "described": false
+        },
+        {
+          "path": "assets/lily_bud.webp",
+          "size": 80492,
+          "label": "lily bud",
+          "described": false
+        },
+        {
+          "path": "assets/lily_flower.webp",
+          "size": 53182,
+          "label": "lily flower",
+          "described": false
+        },
+        {
+          "path": "assets/mandarin_bud.webp",
+          "size": 102648,
+          "label": "mandarin bud",
+          "described": false
+        },
+        {
+          "path": "assets/mandarin_flower.webp",
+          "size": 76002,
+          "label": "mandarin flower",
+          "described": false
+        },
+        {
+          "path": "assets/nanohana_bud.webp",
+          "size": 63142,
+          "label": "nanohana bud",
+          "described": false
+        },
+        {
+          "path": "assets/nanohana_flower.webp",
+          "size": 48880,
+          "label": "nanohana flower",
+          "described": false
+        }
+      ]
     },
     {
       "name": "Gobblet",
@@ -1924,7 +3197,8 @@
         "manifest": "{\n  \"id\": \"/Gobblet/\",\n  \"name\": \"パクパクゴブレット\",\n  \"short_name\": \"ゴブレット\",\n  \"description\": \"大きな駒で小さな駒をかぶせて3つ並べる、2人対戦ボードゲーム\",\n  \"lang\": \"ja\",\n  \"dir\": \"ltr\",\n  \"start_url\": \"/Gobblet/?source=pwa\",\n  \"scope\": \"/Gobblet/\",\n  \"display\": \"standalone\",\n  \"display_override\": [\"standalone\", \"fullscreen\", \"minimal-ui\"],\n  \"launch_handler\": { \"client_mode\": [\"navigate-existing\", \"auto\"] },\n  \"orientation\": \"any\",\n  \"background_color\": \"#fff8c7\",\n  \"theme_color\": \"#1769aa\",\n  \"categories\": [\"games\", \"education\", \"kids\"],\n  \"icons\": [\n    {\"src\": \"./icons/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"any\"},\n    {\"src\": \"./icons/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"any\"},\n    {\"src\": \"./icons/icon-maskable-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\", \"purpose\": \"maskable\"},\n    {\"src\": \"./icons/icon-maskable-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\", \"purpose\": \"maskable\"},\n    {\"src\": \"./icon.svg\", \"sizes\": \"any\", \"type\": \"image/svg+xml\", \"purpose\": \"any\"}\n  ],\n  \"shortcuts\": [\n    {\"name\": \"新しいゲーム\", \"short_name\": \"新規ゲーム\", \"url\": \"/Gobblet/?source=pwa\"}\n  ]\n}\n",
         "packageJson": "{\n  \"name\": \"gobblet\",\n  \"version\": \"2.1.0\",\n  \"description\": \"パクパクゴブレット - 3D風のコマをかぶせて遊ぶ対戦型ボードゲーム\",\n  \"main\": \"server.js\",\n  \"type\": \"module\",\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"dev\": \"node server.js\",\n    \"build\": \"echo 'No build required'\",\n    \"lint\": \"echo 'No lint required'\",\n    \"start\": \"node server.js\",\n    \"test\": \"node --test \\\"tests/**/*.test.mjs\\\"\",\n    \"check\": \"node scripts/check-project.mjs\"\n  },\n  \"dependencies\": {\n    \"express\": \"^4.19.2\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Video-editing_studio",
@@ -1986,7 +3260,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"video-editing_studio\",\n  \"version\": \"1.0.0\",\n  \"description\": \"小学校向けの、ブラウザだけで完結する動画編集アプリ「映像制作スタジオ」\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\",\n    \"test\": \"cd tests && node --test\",\n    \"check\": \"node scripts/check-project.mjs\",\n    \"predeploy\": \"npm run build\",\n    \"deploy\": \"gh-pages -d dist\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/GIGAyama/Video-editing_studio.git\"\n  },\n  \"keywords\": [],\n  \"author\": \"GIGAyama\",\n  \"license\": \"MIT\",\n  \"type\": \"module\",\n  \"bugs\": {\n    \"url\": \"https://github.com/GIGAyama/Video-editing_studio/issues\"\n  },\n  \"homepage\": \"https://github.com/GIGAyama/Video-editing_studio#readme\",\n  \"dependencies\": {\n    \"lucide-react\": \"^0.577.0\",\n    \"react\": \"^19.2.4\",\n    \"react-dom\": \"^19.2.4\"\n  },\n  \"devDependencies\": {\n    \"@vitejs/plugin-react\": \"^4.7.0\",\n    \"autoprefixer\": \"^10.4.27\",\n    \"gh-pages\": \"^6.3.0\",\n    \"postcss\": \"^8.5.8\",\n    \"tailwindcss\": \"^3.4.19\",\n    \"vite\": \"^5.4.21\"\n  },\n  \"engines\": {\n    \"node\": \">=18\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Music-production_studio",
@@ -2048,7 +3323,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"music-production_studio\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\"\n  },\n  \"dependencies\": {\n    \"lucide-react\": \"^0.263.1\",\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\"\n  },\n  \"devDependencies\": {\n    \"@vitejs/plugin-react\": \"^4.0.3\",\n    \"autoprefixer\": \"^10.4.27\",\n    \"postcss\": \"^8.5.8\",\n    \"tailwindcss\": \"^3.4.19\",\n    \"vite\": \"^4.4.5\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Treasure_Words",
@@ -2095,7 +3371,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"treasure-words\",\n  \"private\": true,\n  \"version\": \"0.1.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite --host 0.0.0.0\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview --host 0.0.0.0\",\n    \"test\": \"vitest run\",\n    \"test:watch\": \"vitest\",\n    \"verify:pages\": \"node scripts/verify-pages-build.mjs\"\n  },\n  \"dependencies\": {\n    \"lucide-react\": \"^0.544.0\",\n    \"react\": \"^19.2.0\",\n    \"react-dom\": \"^19.2.0\"\n  },\n  \"devDependencies\": {\n    \"@testing-library/jest-dom\": \"^6.9.1\",\n    \"@testing-library/react\": \"^16.3.0\",\n    \"@vitejs/plugin-react\": \"^5.0.4\",\n    \"jsdom\": \"^27.0.0\",\n    \"vite\": \"^7.1.9\",\n    \"vite-plugin-pwa\": \"^1.1.0\",\n    \"vitest\": \"^4.0.0\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Google-Data-Transfer",
@@ -2157,7 +3434,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "word_basket",
@@ -2219,7 +3497,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"word-basket\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"homepage\": \"https://gigayama.github.io/word_basket/\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\"\n  },\n  \"dependencies\": {\n    \"lucide-react\": \"^0.469.0\",\n    \"react\": \"^19.0.0\",\n    \"react-dom\": \"^19.0.0\"\n  },\n  \"devDependencies\": {\n    \"@vitejs/plugin-react\": \"^4.3.4\",\n    \"autoprefixer\": \"^10.4.20\",\n    \"postcss\": \"^8.5.1\",\n    \"tailwindcss\": \"^3.4.17\",\n    \"vite\": \"^6.0.0\",\n    \"vite-plugin-pwa\": \"^1.3.0\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Screenshot-PDF",
@@ -2281,7 +3560,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Linker-Clipper",
@@ -2343,7 +3623,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     },
     {
       "name": "Shapes_Canvas",
@@ -2405,7 +3686,8 @@
         "manifest": null,
         "packageJson": "{\n  \"name\": \"shapes-canvas\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\"\n  },\n  \"dependencies\": {\n    \"lucide-react\": \"^0.475.0\",\n    \"react\": \"^19.0.0\",\n    \"react-dom\": \"^19.0.0\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"^19.0.0\",\n    \"@types/react-dom\": \"^19.0.0\",\n    \"@vitejs/plugin-react\": \"^4.3.4\",\n    \"autoprefixer\": \"^10.4.19\",\n    \"postcss\": \"^8.4.38\",\n    \"tailwindcss\": \"^3.4.4\",\n    \"vite\": \"^6.2.0\",\n    \"vite-plugin-singlefile\": \"^2.1.0\"\n  }\n}\n"
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Gem",
@@ -2447,7 +3729,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     },
     {
       "name": "Blackboard_Timer",
@@ -2509,7 +3792,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Class_tweet",
@@ -2571,7 +3855,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": true
+      "hasReadme": true,
+      "images": []
     },
     {
       "name": "Moral_note",
@@ -2633,7 +3918,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     },
     {
       "name": "Slide_Guild",
@@ -2685,7 +3971,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     },
     {
       "name": "Shared-Folder-Sync",
@@ -2737,7 +4024,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     },
     {
       "name": "Officefile_converter",
@@ -2769,7 +4057,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     },
     {
       "name": "Gmail_cleaner",
@@ -2811,7 +4100,8 @@
         "manifest": null,
         "packageJson": null
       },
-      "hasReadme": false
+      "hasReadme": false,
+      "images": []
     }
   ]
 }
