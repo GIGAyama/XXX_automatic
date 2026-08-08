@@ -12,9 +12,17 @@
   学校のネットワークは CDN を塞いでいることがあり、
   読めないと画面が半分だけ崩れて原因が分からなくなる。
   このフリート共通の方針でもある。
+
+  例外は raw.githubusercontent.com の画像だけ。
+  アプリのリポジトリに置いてあるスクリーンショット（note の記事のために撮ったもの）を
+  投稿に添えられるようにするため、img-src と connect-src の両方で許す。
+  img-src はサムネイルの表示に、connect-src は共有シートへ渡す File を作る fetch に要る。
+  片方だけ開けても動かない。実際、img-src だけ開けて画面は出るのに
+  共有すると画像が付かない、という形で1度つまずいている。
+  ここを広げる前に docs/lib/media-pick.js の isAllowedMediaSrc も合わせること。
 -->
 <meta http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+      content="default-src 'self'; img-src 'self' data: https://raw.githubusercontent.com; style-src 'self'; script-src 'self'; connect-src 'self' https://raw.githubusercontent.com; base-uri 'none'; form-action 'none'">
 
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">

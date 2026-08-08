@@ -16,6 +16,7 @@ import fs from 'node:fs';
 import { fail, info, loadConfig, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { addDays, isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf } from './lib/jst.mjs';
 import { lintAlternative } from './lib/lint.mjs';
+import { rawUrl } from './lib/repo-images.mjs';
 import { composeSteps, seedFrom, weightedLength } from './lib/x-text.mjs';
 
 /** 「今週ぶん」として扱う週のほかに、さかのぼって載せる週の数。 */
@@ -100,6 +101,53 @@ function legacySteps(post, placement) {
     return [{ kind: 'main', label: '本文', text: post.text }];
 }
 
+/**
+ * 添付できる画像の一覧を、アプリごとに組む。
+ *
+ * 中身は2種類ある。
+ *   card … このリポジトリで作った紹介カード（docs/media/）。既定で選ばれる。
+ *   repo … アプリのリポジトリに置いてある画像（note の記事のために撮ったものなど）。
+ *
+ * repo のほうは raw.githubusercontent.com を直接指す。
+ * このリポジトリに取り込まないのは、KANJI_Town だけで28枚・約5MB あり、
+ * 毎週コミットする以上それがそのままリポジトリの重さになるためである（config/media.json）。
+ *
+ * URL はコミット SHA で固定する。ブランチ名で組むと、アプリ側で画像を差しかえたときに
+ * 画面に出ている絵と共有される絵が食い違い、しかも気づけない。
+ */
+function buildGalleries(repoNames, owner) {
+    const collected = readJson(paths.data('repos.json'), { repos: [] }).repos ?? [];
+    const byName = new Map(collected.map((repo) => [repo.name, repo]));
+    const galleries = {};
+
+    for (const name of repoNames) {
+        const items = mediaPathsFor(name).map((src, i) => ({
+            id: `card:${i}`,
+            src,
+            kind: 'card',
+            label: i === 0 ? '紹介カード' : `紹介カード ${i + 1}`,
+        }));
+
+        const repo = byName.get(name);
+        if (repo?.headSha) {
+            for (const image of repo.images ?? []) {
+                items.push({
+                    // id はパスで作る。SHA で作ると、アプリ側に1つコミットが入っただけで
+                    // 端末に残した「この画像を選んだ」が全部はずれる。
+                    id: `repo:${image.path}`,
+                    src: rawUrl(owner, name, repo.headSha, image.path),
+                    kind: 'repo',
+                    label: image.label,
+                });
+            }
+        }
+
+        if (items.length > 0) galleries[name] = items;
+    }
+
+    return galleries;
+}
+
 /** その投稿に付く画像のパス（複数コマがあれば全部）。 */
 function mediaPathsFor(repo) {
     const found = [];
@@ -176,6 +224,10 @@ function main() {
         info('⚠ 載せるものがありません。先に `npm run generate` を実行してください。');
     }
 
+    // 画面に出るアプリのぶんだけ、添付できる画像の一覧を載せる。
+    const usedRepos = new Set([...posts, ...stock].map((post) => post.repo).filter(Boolean));
+    const galleries = buildGalleries(usedRepos, accounts.githubOwner);
+
     const outPath = paths.docs('launcher.json');
     writeJson(outPath, {
         generatedAt: new Date().toISOString(),
@@ -192,6 +244,10 @@ function main() {
         // トークンを画面に持たせずに書き戻せる唯一の方法がこれ。
         repoUrl: `https://github.com/${accounts.githubOwner}/${accounts.repoName}`,
         slots: slots.slots.map((s) => ({ id: s.id, label: s.label, hour: s.hour })),
+        // 添付できる画像の一覧。アプリ単位で持つ。
+        // 投稿ごとに持たせると、同じアプリが何度も出てくるぶんだけ同じ配列が並び、
+        // スマホで最初に読むファイルが理由もなく重くなる。
+        galleries,
         posts,
         notes,
         // 予定に無い投稿を「いま出したい」ときの引き出し。週次で作り置きしてある。
@@ -205,6 +261,10 @@ function main() {
     const missingMedia = posts.filter((p) => p.mediaList.length === 0).length;
     if (missingMedia > 0) {
         info(`   ※ ${missingMedia} 件は画像がありません。\`npm run media\` を実行すると付きます`);
+    }
+    const attachable = Object.values(galleries).reduce((sum, items) => sum + items.filter((i) => i.kind === 'repo').length, 0);
+    if (attachable > 0) {
+        info(`   添付できるリポジトリ内の画像: ${attachable} 枚（ランチャーで選べます）`);
     }
     const over = posts.filter((p) => p.overLimit).length;
     if (over > 0) {

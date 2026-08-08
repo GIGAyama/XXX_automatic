@@ -93,6 +93,30 @@ export async function getFile(owner, repo, filePath, ref) {
     return res.body.text();
 }
 
+/**
+ * リポジトリの中身の一覧（git tree）を1回のリクエストで全部とる。
+ *
+ * ファイルを1つずつ探ると repo あたり何十リクエストにもなる。
+ * recursive=1 なら1回で済む。返ってくる truncated が true のときは
+ * 途中で切られている（巨大な repo）ので、そのことを呼び出し側に伝える。
+ */
+export async function getTree(owner, repo, ref) {
+    const res = await request(
+        `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/git/trees/${encodeURIComponent(ref)}?recursive=1`
+    );
+    if (!res.ok) return { entries: [], truncated: false };
+    const json = await res.body.json();
+    return {
+        entries: (json.tree ?? []).map((entry) => ({
+            path: entry.path,
+            type: entry.type,
+            size: entry.size ?? 0,
+            sha: entry.sha,
+        })),
+        truncated: Boolean(json.truncated),
+    };
+}
+
 /** 既定ブランチの最新コミット SHA。プロフィールのキャッシュ判定に使う。 */
 export async function getHeadSha(owner, repo, branch) {
     const res = await request(

@@ -15,12 +15,12 @@
  *    端末のキャッシュも入れかわる。`npm run check` がずれを検出する。
  */
 
-const VERSION = 'vc0d55c17';
+const VERSION = 'vf7262496';
 const SHELL_CACHE = `launcher-shell-${VERSION}`;
 const MEDIA_CACHE = `launcher-media-${VERSION}`;
 
 /** 画面を出すのに要る最小限。ここが揃っていれば圏外でも真っ白にならない。 */
-const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js'];
+const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js', './lib/media-pick.js'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
