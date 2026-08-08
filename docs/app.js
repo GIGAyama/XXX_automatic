@@ -75,6 +75,10 @@ const mediaFailed = new Set();
 /** 280字を超えたまま共有しようとした投稿。1度目は止めて、2度目で通す。 */
 const overLimitWarned = new Set();
 
+/** 共有ボタンの文言。画像を選びなおしたときに書きかえるので、2か所に散らさない。 */
+const SHARE_LABEL = '𝕏 に共有';
+const SHARE_LABEL_WITH_MEDIA = '𝕏 に共有（画像つき）';
+
 /* ────────────────────────────────────────────
  *  保存（この端末のなかだけ）
  * ──────────────────────────────────────────── */
@@ -196,27 +200,29 @@ function render() {
  *
  * 選んだ順に並べて渡す。X は4枚まで。上限に当たったときは黙って無視せず理由を出す
  * （反応が無いと「押せていないのか、壊れているのか」が区別できない）。
+ *
+ * ⚠️ ここでは render() を呼ばない。
+ *    一覧を作りなおすと、横に流して見ていたサムネイルが必ず1枚目に戻る。
+ *    週案エディタのように候補が23枚あると、奥のほうを2枚選ぶだけで
+ *    毎回スクロールしなおすことになり、選ぶ作業そのものが成立しない。
+ *    選択で変わるのは「番号」「見出し」「上に出ている絵」だけなので、そこだけ書きかえる。
  */
-function mediaPicker(post, gallery, chosen) {
+function mediaPicker(post, gallery, onChange) {
   const box = document.createElement('div');
   box.className = 'picker';
 
   const head = document.createElement('p');
   head.className = 'picker__head';
-  head.textContent = `添付する画像（${chosen.length}/${MAX_MEDIA}）`;
   box.append(head);
 
   const strip = document.createElement('div');
   strip.className = 'picker__strip';
 
-  const order = new Map(chosen.map((item, i) => [item.id, i + 1]));
-
   for (const item of gallery) {
     const cell = document.createElement('button');
     cell.type = 'button';
-    cell.className = 'picker__cell' + (order.has(item.id) ? ' is-on' : '');
-    cell.setAttribute('aria-pressed', order.has(item.id) ? 'true' : 'false');
-    cell.setAttribute('aria-label', `${item.label}を${order.has(item.id) ? '外す' : '添付する'}`);
+    cell.className = 'picker__cell';
+    cell.dataset.mediaId = item.id;
 
     const img = document.createElement('img');
     img.src = item.src;
@@ -232,7 +238,6 @@ function mediaPicker(post, gallery, chosen) {
 
     const badge = document.createElement('span');
     badge.className = 'picker__badge';
-    badge.textContent = order.get(item.id) ?? '';
     cell.append(badge);
 
     const caption = document.createElement('span');
@@ -251,7 +256,7 @@ function mediaPicker(post, gallery, chosen) {
       // 選んだ瞬間に読みはじめる。共有ボタンを押してから読むと、
       // その待ち時間で「操作の直後」ではなくなり iOS で share() が拒否される。
       if (result.selected.includes(item.id)) loadMediaFile(post, item, result.selected.indexOf(item.id));
-      render();
+      onChange();
     });
 
     strip.append(cell);
@@ -267,11 +272,72 @@ function mediaPicker(post, gallery, chosen) {
   reset.textContent = '紹介カードだけに戻す';
   reset.addEventListener('click', () => {
     patchState(post.id, { media: defaultSelection(gallery), ...traceOf(post) });
-    render();
+    onChange();
   });
   box.append(reset);
 
+  refreshPicker(box, post);
   return box;
+}
+
+/**
+ * 選んだ状態を、選ぶところに映す。番号・押された状態・見出しだけを書きかえる。
+ * サムネイルそのものは作りなおさない（横のスクロール位置を保つため）。
+ */
+function refreshPicker(picker, post) {
+  const chosen = chosenFor(post);
+  const order = new Map(chosen.map((item, i) => [item.id, i + 1]));
+
+  picker.querySelector('.picker__head').textContent = `添付する画像（${chosen.length}/${MAX_MEDIA}）`;
+
+  for (const cell of picker.querySelectorAll('.picker__cell')) {
+    const at = order.get(cell.dataset.mediaId);
+    cell.classList.toggle('is-on', at !== undefined);
+    cell.setAttribute('aria-pressed', at !== undefined ? 'true' : 'false');
+    cell.querySelector('.picker__badge').textContent = at ?? '';
+    const label = cell.querySelector('.picker__label').textContent;
+    cell.setAttribute('aria-label', `${label}を${at !== undefined ? '外す' : '添付する'}`);
+  }
+}
+
+/**
+ * 共有ボタンの文言を、いまの選択に合わせる。
+ *
+ * 「それでも共有する」「共有しました」に変わっている最中は触らない。
+ * こちらが上書きすると、長すぎる本文を止めている案内が消える。
+ */
+function refreshShareLabel(btn, post) {
+  if (btn.textContent !== SHARE_LABEL && btn.textContent !== SHARE_LABEL_WITH_MEDIA) return;
+  btn.textContent = chosenFor(post).length > 0 ? SHARE_LABEL_WITH_MEDIA : SHARE_LABEL;
+}
+
+/**
+ * いま添付されることになっている画像を、カードの上に出す。
+ * 選んだ結果がそのまま大きく見えていないと、投稿してから気づくことになる。
+ */
+function renderShots(box, post) {
+  const shots = chosenFor(post);
+  box.innerHTML = '';
+  box.className = 'card__shots' + (shots.length > 1 ? ' is-multi' : '');
+
+  for (const [i, item] of shots.entries()) {
+    const img = document.createElement('img');
+    img.className = 'card__img';
+    img.src = item.src;
+    img.alt = shots.length > 1 ? `${item.label}（${i + 1}枚目）` : item.label;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    // 画像が欠けていると壊れたアイコンだけが出て、原因が分からない。
+    // 何が起きたのかを画面に書く。共有そのものは本文だけで続けられる。
+    img.addEventListener('error', () => {
+      mediaFailed.add(item.src);
+      const missing = document.createElement('div');
+      missing.className = 'card__img card__img--missing';
+      missing.textContent = '画像を読み込めませんでした（本文だけで共有できます）';
+      img.replaceWith(missing);
+    });
+    box.append(img);
+  }
 }
 
 function emptyBox(text) {
@@ -308,35 +374,28 @@ function postCard(post, saved, today) {
 
   // ── 画像 ──
   // 上に「いま添付されるもの」、下に「選べるもの」。
-  // 選んだ結果がそのまま大きく出ていないと、投稿してから気づくことになる。
   const gallery = galleryFor(post);
   const shots = selectedItems(gallery, saved.media);
-  if (shots.length > 0) {
-    const figure = document.createElement('div');
-    figure.className = 'card__shots' + (shots.length > 1 ? ' is-multi' : '');
-    for (const [i, item] of shots.entries()) {
-      const img = document.createElement('img');
-      img.className = 'card__img';
-      img.src = item.src;
-      img.alt = shots.length > 1 ? `${item.label}（${i + 1}枚目）` : item.label;
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      // 画像が欠けていると壊れたアイコンだけが出て、原因が分からない。
-      // 何が起きたのかを画面に書く。共有そのものは本文だけで続けられる。
-      img.addEventListener('error', () => {
-        mediaFailed.add(item.src);
-        const box = document.createElement('div');
-        box.className = 'card__img card__img--missing';
-        box.textContent = '画像を読み込めませんでした（本文だけで共有できます）';
-        img.replaceWith(box);
-      });
-      figure.append(img);
-    }
-    card.append(figure);
-  }
+
+  const shotsBox = document.createElement('div');
+  card.append(shotsBox);
+  renderShots(shotsBox, post);
+
+  // 選んだときに書きかえるところ。一覧ごと作りなおすとスクロール位置が飛ぶので、
+  // ここに集めて、変わるものだけを差しかえる。
+  let shareBtn = null;
+  let picker = null;
+  const refreshMedia = () => {
+    renderShots(shotsBox, post);
+    if (picker) refreshPicker(picker, post);
+    if (shareBtn) refreshShareLabel(shareBtn, post);
+  };
 
   // 候補が紹介カード1枚しか無いなら、選ぶところは出さない（押すものが増えるだけになる）。
-  if (gallery.length > 1) card.append(mediaPicker(post, gallery, shots));
+  if (gallery.length > 1) {
+    picker = mediaPicker(post, gallery, refreshMedia);
+    card.append(picker);
+  }
 
   // ── 連投の手順 ──
   // ①本文 → ②つづき → ③リンクの返信、の順に1コマずつ出す。
@@ -379,7 +438,7 @@ function postCard(post, saved, today) {
   actions.className = 'card__actions';
 
   if (step.kind === 'main') {
-    const shareBtn = button(shots.length > 0 ? '𝕏 に共有（画像つき）' : '𝕏 に共有', 'btn btn--x');
+    shareBtn = button(shots.length > 0 ? SHARE_LABEL_WITH_MEDIA : SHARE_LABEL, 'btn btn--x');
     shareBtn.addEventListener('click', () => shareToX(post, shareBtn, step, steps.length));
     actions.append(shareBtn);
 
@@ -426,7 +485,9 @@ function postCard(post, saved, today) {
     }
   }
 
-  if (shots.length > 0 && step.kind === 'main') {
+  // 選択を空にすると出たり消えたりしてボタンの位置がずれるので、候補があるなら常に出す。
+  // 何も選んでいないときに押されたら、saveMedia がその場で理由を出す。
+  if (gallery.length > 0 && step.kind === 'main') {
     const saveBtn = button('画像を保存', 'btn btn--sub');
     saveBtn.addEventListener('click', () => saveMedia(post));
     actions.append(saveBtn);
