@@ -73,9 +73,17 @@ function appCard(app, accounts) {
         .map((t) => `<span class="app__tag">${escapeHtml(t)}</span>`)
         .join('');
 
+    // ⚠️ ランチャーへの行き先は index.html（相対）。絶対 URL にしない。
+    //    このページはランチャーと同じ場所から配信されるので、相対で足りるし、
+    //    手元で `npm run serve` して見たときにも本番へ飛ばされない。
+    //
+    //    一覧を見ていて「これの話を書きたい」と思った瞬間に始められるようにするための導線である。
+    //    ここが無かったあいだ、アプリを選ぶには 52 件の名前を思い出す必要があった。
+    const make = `<a class="app__make" href="index.html#make/${encodeURIComponent(app.name)}">投稿をつくる</a>`;
+
     const links = url
-        ? `<a class="app__open" href="${escapeHtml(url)}">ひらく</a><a class="app__code" href="${escapeHtml(code)}">ソース</a>`
-        : `<a class="app__code" href="${escapeHtml(code)}">GitHub で見る</a>`;
+        ? `<a class="app__open" href="${escapeHtml(url)}">ひらく</a><a class="app__code" href="${escapeHtml(code)}">ソース</a>${make}`
+        : `<a class="app__code" href="${escapeHtml(code)}">GitHub で見る</a>${make}`;
 
     // 公開 URL が無いもの（Chrome 拡張・GAS など）は、開けない理由を書く。
     // ボタンだけあって押しても何も起きないより、書いてあるほうが親切である。

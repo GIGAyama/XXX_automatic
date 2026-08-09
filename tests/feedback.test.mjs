@@ -302,3 +302,42 @@ test('集計は何度取り込んでも同じ値になる（hooks と posted も
     assert.deepEqual(second.merged.hooks, first.merged.hooks);
     assert.deepEqual(second.merged.posted, first.merged.posted);
 });
+
+/* ── 枠（slot）──────────────────────────────
+ *
+ * ［つくる］で作らせた投稿は、IDが '2026-08-09-promo-ab12c1' のように
+ * 毎回変わる。枠をIDの後半から読んでいたままだと、bySlot が一度きりのキーで埋まり、
+ * 「どの枠なら実際に出せているか」が読めなくなる（config/slots.json を見なおす材料が濁る）。
+ * 注文ぶんは slot='promo' でまとまる。 */
+
+test('slot を持つ記録は、その枠として数える', () => {
+    const payload = payloadOf([
+        entry(0, { id: '2026-08-09-promo-ab12c1', slot: 'promo', posted: true }),
+        entry(1, { id: '2026-08-09-promo-ab12c2', slot: 'promo', posted: true }),
+    ]);
+    const { merged } = mergeFeedback(null, [{ payload, issueNumber: 9 }]);
+    assert.equal(merged.posted.bySlot.promo, 2);
+    assert.deepEqual(Object.keys(merged.posted.bySlot), ['promo']);
+});
+
+test('slot を持たない古い記録は、これまでどおりIDから読む', () => {
+    const payload = payloadOf([entry(0), entry(1)]); // morning / evening
+    const { merged } = mergeFeedback(null, [{ payload, issueNumber: 10 }]);
+    assert.equal(merged.posted.bySlot.morning, 1);
+    assert.equal(merged.posted.bySlot.evening, 1);
+});
+
+test('slot の形がおかしければ Issue ごと拒否する', () => {
+    for (const bad of ['../ほか', 'MORNING', 'a'.repeat(30), '朝']) {
+        const payload = payloadOf([entry(0, { slot: bad })]);
+        const { ok } = validatePayload(payload, { themeIds: THEMES, repoNames: REPOS });
+        assert.equal(ok, false, `通ってはいけない: ${bad}`);
+    }
+});
+
+test('人が読む要約は、slot があるときそちらを使う', () => {
+    const body = renderIssueBody(payloadOf([entry(0, { id: '2026-08-09-promo-ab12c1', slot: 'promo' })]), {
+        slotLabels: { promo: 'つくった投稿' },
+    });
+    assert.match(body, /つくった投稿/);
+});

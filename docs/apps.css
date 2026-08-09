@@ -139,6 +139,8 @@ body {
 }
 .app__open { background: var(--accent); color: #fff; }
 .app__code { background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); }
+/* ランチャーの［つくる］へ、このアプリを選んだ状態で飛ぶ */
+.app__make { background: var(--bg); color: var(--accent); border: 1.5px solid var(--accent); }
 .app__nopages { font-size: 12.5px; color: var(--ink-weak); margin: 0; }
 
 /* ── 脚注 ────────────────────────────────── */

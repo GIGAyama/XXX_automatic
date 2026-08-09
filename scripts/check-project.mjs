@@ -20,6 +20,8 @@ import { ROOT, paths, readJson, readText, rel } from './lib/io.mjs';
 import { isoWeekId, jstDateString, nextWeekDates } from './lib/jst.mjs';
 import { extractUrls } from './lib/x-text.mjs';
 import { KEEP_WEEKS } from './archive-history.mjs';
+import { KEEP_RESULTS } from './generate-promo.mjs';
+import { ORDER_ID_RE, RESULT_SCHEMA_ID as PROMO_RESULT_SCHEMA_ID } from '../docs/lib/order.js';
 import { lintArticle } from './lib/note-lint.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
@@ -66,10 +68,15 @@ const REQUIRED = [
     'docs/lib/format.js',
     'docs/lib/x-length.js',
     'docs/lib/feedback-payload.js',
+    'docs/lib/media-pick.js',
+    'docs/lib/order.js',
+    'docs/lib/mine.js',
+    'scripts/generate-promo.mjs',
     '.github/workflows/weekly.yml',
     '.github/workflows/daily-notify.yml',
     '.github/workflows/deploy-pages.yml',
     '.github/workflows/reply-draft.yml',
+    '.github/workflows/promo-order.yml',
 ];
 
 for (const file of REQUIRED) {
@@ -276,6 +283,162 @@ try {
     }
 } catch (e) {
     error('SW_UNREADABLE', e.message, 'docs/sw.js');
+}
+
+/* ── 8'. docs/lib/ のファイルがシェルに入っているか ──────
+ *
+ * app.js が import しているのに SHELL に無いファイルは、
+ * オンラインでは動くのに圏外だけ落ちる（しかも真っ白になる）。
+ * ファイルを1つ足すたびに sw.js を直す、というのを人の注意力に任せない。 */
+
+try {
+    const sw = fs.readFileSync(paths.docs('sw.js'), 'utf8');
+    const shell = /const SHELL\s*=\s*\[([^\]]*)\]/s.exec(sw)?.[1] ?? '';
+    const libDir = paths.docs('lib');
+    if (fs.existsSync(libDir)) {
+        for (const name of fs.readdirSync(libDir).filter((f) => f.endsWith('.js'))) {
+            if (!shell.includes(`lib/${name}`)) {
+                error(
+                    'SW_SHELL_INCOMPLETE',
+                    `docs/lib/${name} が SHELL に入っていません。オンラインでは動きますが、圏外で画面が真っ白になります`,
+                    'docs/sw.js'
+                );
+            }
+        }
+    }
+
+    // 頼んだ投稿の結果は「さっきまで無かったものが増える」場所である。
+    // キャッシュすると、一度 404 を覚えた時点で以後いつまでも届かない。
+    if (shell.includes('orders/')) {
+        error(
+            'ORDERS_CACHED',
+            'SHELL に orders/ が入っています。ここをキャッシュすると、頼んだ投稿が永久に届きません',
+            'docs/sw.js'
+        );
+    }
+    // ⚠️ 「どこかに orders/ と書いてある」では見たことにならない（コメントに当たる）。
+    //    実際に行き先を見て分けている行があるかを確かめる。
+    if (!/url\.pathname[^\n]*orders/.test(sw)) {
+        error(
+            'ORDERS_NOT_BYPASSED',
+            'orders/ を素通しする分岐がありません。無いと、まだ無いファイルへの要求に offline.html（HTML）が返り、' +
+                '受け取る側は JSON として読めずに「壊れています」と言うことになります',
+            'docs/sw.js'
+        );
+    }
+} catch {
+    // 1. で報告ずみ
+}
+
+/* ── 8''. docs/ を push するワークフローが配信につながっているか ──
+ *
+ * ⚠️ これが無いと、いちばん分かりにくい壊れ方をする。
+ *
+ *   GITHUB_TOKEN による push は、他のワークフローを起動しない（GitHub の仕様）。
+ *   つまり docs/ をコミットして push しただけでは GitHub Pages に配信されない。
+ *   配信は deploy-pages.yml の workflow_run が、対象ワークフローの完了を合図に行う。
+ *
+ *   そこに名前が載っていないワークフローは、緑で終わり、コミットも入っているのに、
+ *   画面だけが永久に古いままになる。どこにもエラーが出ないので、まず気づけない。
+ *   deploy-pages.yml 自身がコメントでそう警告しているが、警告文は実行されない。 */
+
+try {
+    const deployPath = path.join(ROOT, '.github', 'workflows', 'deploy-pages.yml');
+    const deploy = readText(deployPath, null);
+
+    if (deploy !== null) {
+        // `workflows:` のあとの配列を読む。ブロック形式（- 'a'）とインライン形式（['a']）の両方。
+        const block = /workflows:\s*\n((?:[ \t]*-[ \t]*.+\n)+)/.exec(deploy)?.[1] ?? '';
+        const inline = /workflows:\s*\[([^\]]*)\]/.exec(deploy)?.[1] ?? '';
+        const listed = new Set(
+            [...`${block}\n${inline}`.matchAll(/['"]([^'"]+)['"]/g)].map((m) => m[1])
+        );
+
+        for (const file of walk(path.join(ROOT, '.github', 'workflows'))) {
+            if (file === deployPath) continue;
+            const yaml = fs.readFileSync(file, 'utf8');
+
+            // docs/ をコミットして push しているワークフローだけが対象。
+            const writesDocs = /git\s+add\b[^\n]*\bdocs\b/.test(yaml);
+            const pushes = /git\s+push\b/.test(yaml);
+            if (!writesDocs || !pushes) continue;
+
+            const name = /^name:\s*(.+)$/m.exec(yaml)?.[1]?.trim().replace(/^['"]|['"]$/g, '');
+            if (!name) {
+                warn('WORKFLOW_NO_NAME', 'name: が読めないので、配信につながっているか確かめられません', rel(file));
+                continue;
+            }
+            if (!listed.has(name)) {
+                error(
+                    'PAGES_NOT_TRIGGERED',
+                    `「${name}」は docs/ を push しますが、deploy-pages.yml の workflow_run に載っていません。` +
+                        'GITHUB_TOKEN による push は他のワークフローを起動しないので、' +
+                        'このままだと push はされるのに配信されず、画面が永久に古いままになります',
+                    '.github/workflows/deploy-pages.yml'
+                );
+            }
+        }
+
+        // 逆向きも見る。名前を変えたのに片方だけ直した、を捕まえる。
+        const names = new Set(
+            walk(path.join(ROOT, '.github', 'workflows'))
+                .map((f) => /^name:\s*(.+)$/m.exec(fs.readFileSync(f, 'utf8'))?.[1]?.trim().replace(/^['"]|['"]$/g, ''))
+                .filter(Boolean)
+        );
+        for (const listedName of listed) {
+            if (!names.has(listedName)) {
+                error(
+                    'PAGES_TRIGGER_STALE',
+                    `workflow_run が「${listedName}」を待っていますが、そういう名前のワークフローはありません。この合図は永久に来ません`,
+                    '.github/workflows/deploy-pages.yml'
+                );
+            }
+        }
+    }
+} catch (e) {
+    error('CONFIG_UNREADABLE', e.message, '.github/workflows/deploy-pages.yml');
+}
+
+/* ── 8'''. 頼んだ投稿の結果が壊れていないか ────────────
+ *
+ * docs/orders/ はワークフローが書き、ランチャーが読む。
+ * 壊れたものが配信されると、画面には「結果を読み取れませんでした」としか出ない。
+ * しかも1件ずつ増えていくので、放っておくとリポジトリが太る。 */
+
+{
+    const ordersDir = paths.docs('orders');
+    if (fs.existsSync(ordersDir)) {
+        const files = fs.readdirSync(ordersDir).filter((f) => f.endsWith('.json'));
+        for (const name of files) {
+            const json = readJson(path.join(ordersDir, name), null);
+            const id = name.replace(/\.json$/, '');
+
+            if (!json || json.schema !== PROMO_RESULT_SCHEMA_ID) {
+                error('BROKEN_ORDER', `schema が ${PROMO_RESULT_SCHEMA_ID} ではありません`, `docs/orders/${name}`);
+                continue;
+            }
+            // 注文IDはそのままファイル名になる。ずれていたら、書いた側か名前のどちらかが壊れている。
+            if (json.orderId !== id) {
+                error('BROKEN_ORDER', `中身の orderId（${json.orderId}）とファイル名が違います`, `docs/orders/${name}`);
+            }
+            if (!ORDER_ID_RE.test(id)) {
+                error('BROKEN_ORDER', '注文IDの形が違います（ファイル名になる文字列なので形を決めてあります）', `docs/orders/${name}`);
+            }
+            if (!Array.isArray(json.posts)) {
+                error('BROKEN_ORDER', 'posts が配列ではありません', `docs/orders/${name}`);
+            }
+        }
+
+        // KEEP_RESULTS（40）に、掃除が1〜2回落ちたぶんの余裕を足した線。
+        if (files.length > 60) {
+            warn(
+                'ORDERS_PILING_UP',
+                `頼んだ投稿の結果が ${files.length} 件たまっています（${KEEP_RESULTS} 件で消えるはずです）。` +
+                    'scripts/generate-promo.mjs の掃除が効いていない可能性があります',
+                'docs/orders'
+            );
+        }
+    }
 }
 
 /* ── 9. 画像とアイコンが実在するか ────────────────────

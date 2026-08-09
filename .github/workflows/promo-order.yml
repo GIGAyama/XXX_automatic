@@ -1,0 +1,110 @@
+name: 宣伝ポストを作る
+
+# ランチャーの［つくる］が、アプリ名と本数を載せた Issue を立てる。
+# それを受けて投稿を作り、docs/orders/<注文ID>.json に置いて push する。
+# ランチャーはそのファイルを拾って端末に貯める。
+#
+# labeled も見ているのは、あとからラベルを付けて頼み直せるようにするため
+# （返信の下書き reply-draft.yml とまったく同じ考え方）。
+on:
+  issues:
+    types: [opened, labeled]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: '対象の Issue 番号（空なら開いているものぜんぶ）'
+        type: string
+
+# ⚠️ contents: write が要る。返信の下書きと違い、結果をリポジトリに置くためである。
+#    書く先は docs/orders/ と data/gemini-model.json だけ。
+permissions:
+  contents: write
+  issues: write
+
+# ⚠️ 週次と同じグループにしない。週次は45分かかることがあり、
+#    そのあいだ「いま作ってほしい」が待たされるのでは、この機能の意味が無い。
+#    push がぶつかったときは、下の pull --rebase が受け止める。
+concurrency:
+  group: promo-order-${{ github.event.issue.number || 'manual' }}
+  cancel-in-progress: false
+
+jobs:
+  make:
+    # ラベルが付いているときだけ動かす。ふつうの Issue にいちいち投稿を作らない。
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(join(github.event.issue.labels.*.name, ','), '宣伝ポスト')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # push するので、既定ブランチの最新を持ってくる。
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 依存は入れない。ここで使うのは fetch と Node 標準だけなので、
+      # npm ci のぶんだけ返事が遅くなるのを避ける（頼んだ人は待っている）。
+      - name: 宣伝ポストを作る
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node scripts/generate-promo.mjs \
+            ${{ github.event.issue.number && format('--issue {0}', github.event.issue.number) || '' }} \
+            ${{ inputs.issue && format('--issue {0}', inputs.issue) || '' }}
+
+      # 検査を通してから push する。ここを飛ばすと、壊れた結果ファイルが
+      # そのまま配信されて、ランチャー側で「読めない」としか分からなくなる。
+      - name: 検査 — 品質ゲート
+        run: npm run check
+
+      - name: コミットする
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          # 書き出す先はこの2つだけ。ほかが混ざっていたら、それは意図しない変更である。
+          git add docs/orders data/gemini-model.json
+          if git diff --staged --quiet; then
+            echo "作れたものがありませんでした（結果ファイルに変化なし）"
+            exit 0
+          fi
+          git commit -m "chore: 宣伝ポストの注文に応える"
+          # 週次や他の注文が同時に push していることがある。1回だけ取り込んで再試行する。
+          git push || (git pull --rebase origin "${GITHUB_REF_NAME}" && git push)
+
+      # ⚠️ ここで終わりではない。
+      #    GITHUB_TOKEN による push は他のワークフローを起動しない（GitHub の仕様）。
+      #    つまり docs/ を push しただけでは Pages に配信されず、ランチャーには永久に届かない。
+      #    配信は deploy-pages.yml の workflow_run が、このワークフローの完了を合図に行う。
+      #    あちらの workflow_run に「宣伝ポストを作る」という名前が要る。
+      #    名前を変えるときは両方を直すこと（`npm run check` がずれを検出する）。
+
+  notify-failure:
+    needs: make
+    if: failure()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 失敗を知らせる
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/notify-failure.mjs --workflow '宣伝ポスト' --run-id '${{ github.run_id }}'

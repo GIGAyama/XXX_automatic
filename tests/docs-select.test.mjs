@@ -8,7 +8,16 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { emptyMessageFor, selectPosts, summaryOf, todaysPool, unsentRatings, unsentRecords } from '../docs/lib/select.js';
+import {
+    emptyMessageFor,
+    matchApps,
+    routeFromHash,
+    selectPosts,
+    summaryOf,
+    todaysPool,
+    unsentRatings,
+    unsentRecords,
+} from '../docs/lib/select.js';
 
 const WEEK = '2026-W33';
 const PAST = '2026-W32';
@@ -198,4 +207,62 @@ test('launcher.json から消えていても、控えた hook から送れる', 
     assert.equal(got.length, 1);
     assert.equal(got[0].hook, 'confess');
     assert.equal(got[0].posted, true);
+});
+
+/* ── ［つくる］でアプリをさがす ───────────────── */
+
+const APPS = [
+    { name: 'KANJI_Town', label: '漢字の町', oneLine: '漢字を町づくりで覚える', subject: '国語', grade: '小3〜6' },
+    { name: 'Qalc', label: '計算の確認', oneLine: '計算の答え合わせを一度に', subject: '算数', grade: '小1〜6' },
+    { name: 'Typa', label: 'タイピング', oneLine: 'ローマ字入力の練習', subject: '国語', grade: '小3〜6' },
+];
+
+test('名前・一言・教科のどれからでもさがせる', () => {
+    assert.deepEqual(matchApps(APPS, 'kanji').map((a) => a.name), ['KANJI_Town']);
+    assert.deepEqual(matchApps(APPS, '算数').map((a) => a.name), ['Qalc']);
+    assert.deepEqual(matchApps(APPS, 'ローマ字').map((a) => a.name), ['Typa']);
+    assert.deepEqual(matchApps(APPS, '国語').map((a) => a.name), ['KANJI_Town', 'Typa']);
+});
+
+test('空白で区切ると絞りこみになる', () => {
+    assert.deepEqual(matchApps(APPS, '国語 タイピング').map((a) => a.name), ['Typa']);
+    assert.deepEqual(matchApps(APPS, '国語 算数'), []);
+});
+
+test('何も入れなければ全部出す', () => {
+    assert.equal(matchApps(APPS, '').length, 3);
+    assert.equal(matchApps(APPS, '   ').length, 3);
+    assert.equal(matchApps(null, 'あ').length, 0);
+});
+
+/* ── ハッシュから行き先を決める ─────────────────── */
+
+const TABS = ['today', 'week', 'now', 'make', 'note', 'done', 'past'];
+const NAMES = APPS.map((a) => a.name);
+
+test('通知から #done で飛んでこられる', () => {
+    assert.deepEqual(routeFromHash('#done', TABS, NAMES), { view: 'done', repo: '' });
+    assert.deepEqual(routeFromHash('', TABS, NAMES), { view: 'today', repo: '' });
+    assert.deepEqual(routeFromHash('#しらないタブ', TABS, NAMES), { view: 'today', repo: '' });
+});
+
+test('アプリ一覧から #make/<アプリ名> で飛んでこられる', () => {
+    assert.deepEqual(routeFromHash('#make/Qalc', TABS, NAMES), { view: 'make', repo: 'Qalc' });
+    assert.deepEqual(routeFromHash('#make/KANJI_Town', TABS, NAMES), { view: 'make', repo: 'KANJI_Town' });
+});
+
+test('知らないアプリ名は通さない（URL は外から来る）', () => {
+    // ここを素通しすると、リンクを踏ませるだけで画面に任意の文字列を出せる。
+    assert.deepEqual(routeFromHash('#make/よそのアプリ', TABS, NAMES), { view: 'make', repo: '' });
+    assert.deepEqual(routeFromHash('#make/<img src=x>', TABS, NAMES), { view: 'make', repo: '' });
+    assert.deepEqual(routeFromHash('#make/%E4%B8%8D%E6%98%8E', TABS, NAMES), { view: 'make', repo: '' });
+});
+
+test('URL として壊れたハッシュでも落ちない', () => {
+    // decodeURIComponent('%') は例外を投げる。画面が丸ごと出なくなってはいけない。
+    assert.deepEqual(routeFromHash('#make/%', TABS, NAMES), { view: 'make', repo: '' });
+});
+
+test('#make だけならアプリは選ばれない', () => {
+    assert.deepEqual(routeFromHash('#make', TABS, NAMES), { view: 'make', repo: '' });
 });

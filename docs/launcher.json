@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-08T04:56:23.447Z",
-  "generatedAtJst": "2026-08-08 13:56 JST",
+  "generatedAt": "2026-08-09T01:21:20.311Z",
+  "generatedAtJst": "2026-08-09 10:21 JST",
   "weekIds": [
     "2026-W32",
     "2026-W33"
@@ -2178,6 +2178,461 @@
       "pickReason": null,
       "hook": "contrast",
       "reprise": null
+    }
+  ],
+  "apps": [
+    {
+      "name": "app_launcher",
+      "label": "タブ迷子を防ぐ学校向けアプリランチャー",
+      "oneLine": "よく使う学習アプリをまとめタブの迷子を防ぐ拡張機能",
+      "subject": "ICT活用・校務",
+      "grade": "小学生・教職員",
+      "hasPages": false
+    },
+    {
+      "name": "Blackboard_Timer",
+      "label": "画面を切り替えても消えない最前面タイマー",
+      "oneLine": "タブを切り替えても最前面に表示できるChrome拡張タイマー。",
+      "subject": "全教科・校務",
+      "grade": "全学年・教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "Class_tweet",
+      "label": "AI先生が見守るクラス専用掲示板",
+      "oneLine": "GASで動く、AIパトロール機能付きのクラス掲示板アプリ。",
+      "subject": "学級経営",
+      "grade": "小学生・教員",
+      "hasPages": false
+    },
+    {
+      "name": "Digital_textbook",
+      "label": "PDFを取り込み書き込んで端末へ直接配布！",
+      "oneLine": "PDFを読み込んで自由に書き込みや端末間共有ができるWebアプリ。",
+      "subject": "全教科",
+      "grade": "全学年・教員向け",
+      "hasPages": true
+    },
+    {
+      "name": "Digital-Newspaper",
+      "label": "集めた記事を新聞風レイアウトに",
+      "oneLine": "スプレッドシートの記事を新聞風に配置するWebアプリ。",
+      "subject": "記載なし",
+      "grade": "記載なし",
+      "hasPages": false
+    },
+    {
+      "name": "DigitalCloset",
+      "label": "写真で服を登録・AIがコーデ提案や分析",
+      "oneLine": "手持ちの服を写真で登録し、コーデや着用記録・使用頻度を管理する。",
+      "subject": "指定なし",
+      "grade": "指定なし",
+      "hasPages": true
+    },
+    {
+      "name": "Fax-maker",
+      "label": "FAX送信をGASで管理！",
+      "oneLine": "Google Apps Scriptを利用したFAX送信管理システム",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "Gamification",
+      "label": "あそんだ記録が経験値になる学びポータル",
+      "oneLine": "学習アプリの記録を集めてゲーミフィケーションし一元管理する",
+      "subject": "算数・国語・道徳・特別活動・校務",
+      "grade": "小学校全学年・教員向け",
+      "hasPages": true
+    },
+    {
+      "name": "Gem",
+      "label": "問題生成からNote作成までを支援",
+      "oneLine": "Qalc問題生成やスライド作成、Note記事作成を行うツール",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "Gmail_cleaner",
+      "label": "指定期間のGmailを自動・手動削除",
+      "oneLine": "指定期間内のGmailを手動・自動で削除するWebアプリ。",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "Gobblet",
+      "label": "パクッとかぶせて3つ並べる対戦ゲーム",
+      "oneLine": "1台の端末を2人で囲んで遊べる3×3マスの対戦ゲーム",
+      "subject": "学級経営",
+      "grade": "小1〜小6",
+      "hasPages": true
+    },
+    {
+      "name": "Google-Data-Transfer",
+      "label": "組織ファイルの個人アカウント移行を自動化",
+      "oneLine": "Googleドライブのファイルを別アカウントへ直接コピー・転送するツール",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "Hagetaka-game",
+      "label": "あいことばで遊べる心理戦カードゲーム！",
+      "oneLine": "あいことばで簡単に友達やロボと対戦できるカードゲームアプリ。",
+      "subject": "休み時間・学級活動",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "Haiku-meeting",
+      "label": "3分のコピペで導入できるGIGA句会プラザ",
+      "oneLine": "GASにコピペするだけで導入できる句会・振り返りアプリ。",
+      "subject": "国語・全教科の振り返り",
+      "grade": "全学年",
+      "hasPages": false
+    },
+    {
+      "name": "Homework_barcordreader",
+      "label": "毎朝10秒！宿題提出ときもちの記録",
+      "oneLine": "毎朝の宿題提出と体調記録を数タップで完了できるブラウザアプリ",
+      "subject": "学級経営",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "Ice_slide-puzzle",
+      "label": "ペンギン対アザラシ！滑らせ対戦ゲーム",
+      "oneLine": "氷上のコマを滑らせて王冠をゴールに導く2人対戦ゲーム",
+      "subject": "学級経営",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "KAKE_Master",
+      "label": "本物のカードのようにめくって学べる九九",
+      "oneLine": "本物のカードのようにめくって仕分けるかけ算九九アプリ。",
+      "subject": "算数",
+      "grade": "小2",
+      "hasPages": true
+    },
+    {
+      "name": "KANJI_Town",
+      "label": "学んで町を育てよう！漢字1026字対応アプリ",
+      "oneLine": "教育漢字1026字を読み・意味・書字・筆順で学び町を育てるアプリ",
+      "subject": "国語",
+      "grade": "小1〜小6",
+      "hasPages": true
+    },
+    {
+      "name": "KEISAN-BLOCK",
+      "label": "ブロックとさくらんぼ計算で仕組みがわかる",
+      "oneLine": "算数ブロックを動かし繰り上がり・繰り下がりの計算を学ぶアプリ",
+      "subject": "算数",
+      "grade": "小1",
+      "hasPages": true
+    },
+    {
+      "name": "Keisan-Card",
+      "label": "デジタルでめくる！小1の計算カード",
+      "oneLine": "小学1年生の算数で使う計算カードをブラウザで練習できるアプリ",
+      "subject": "算数",
+      "grade": "小1",
+      "hasPages": true
+    },
+    {
+      "name": "Linker-Clipper",
+      "label": "サイトリンクを素早く収集",
+      "oneLine": "閲覧中のサイトリンクをまとめて収集する拡張機能。",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "MIRAI-Compass",
+      "label": "自由進度学習の計画から見取りまでこれ1つ",
+      "oneLine": "児童の自由進度学習の計画・実行・振り返りと教員の見取りを支援。",
+      "subject": "全教科",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "MIRAI-Passport",
+      "label": "AIでワークシート作成、提出、添削まで！",
+      "oneLine": "AIでワークシート作成から提出・添削までを一貫して支援する学習アプリ",
+      "subject": "全教科",
+      "grade": "小学校",
+      "hasPages": true
+    },
+    {
+      "name": "Moral_note",
+      "label": "対話と所見作成を助ける道徳授業アプリ",
+      "oneLine": "道徳の対話から学習履歴管理・所見作成まで行う授業用アプリ",
+      "subject": "道徳",
+      "grade": "教員・児童",
+      "hasPages": false
+    },
+    {
+      "name": "Music-production_studio",
+      "label": "マス目をポチポチ塗るだけで直感作曲！",
+      "oneLine": "マス目を塗るだけで簡単に曲が作れる小学生向け音楽制作アプリ。",
+      "subject": "音楽",
+      "grade": "小学生〜",
+      "hasPages": true
+    },
+    {
+      "name": "NotebookSample_Generator",
+      "label": "入力するだけ！マス目に合ったノート見本",
+      "oneLine": "小学校のノート指導で使うノート見本を作成しA4印刷できるツール",
+      "subject": "国語・算数",
+      "grade": "教員向け（小1〜小6）",
+      "hasPages": true
+    },
+    {
+      "name": "Officefile_converter",
+      "label": "OfficeファイルをGoogle形式へ一括変換",
+      "oneLine": "ドライブ内のOfficeファイルをGoogle形式に一括変換する。",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "online-100square-calculation",
+      "label": "GIGA端末でサクサク動く100マス計算",
+      "oneLine": "AI手書きや自動採点に対応したブラウザ版100マス計算アプリ",
+      "subject": "算数",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "online-manuscript-paper",
+      "label": "縦書き作文、これ一本！",
+      "oneLine": "GIGAスクール向け縦書き作文Webアプリ",
+      "subject": "国語",
+      "grade": "全学年",
+      "hasPages": false
+    },
+    {
+      "name": "online-manuscript-paper-lite",
+      "label": "サーバー不要！ブラウザで動く縦書き原稿用紙",
+      "oneLine": "ブラウザで作文・縦書き確認・保存・印刷ができるWebアプリ",
+      "subject": "国語",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "online-manuscript-paper-pro",
+      "label": "打つと縦書き原稿用紙！なぞって赤ペン添削",
+      "oneLine": "入力欄に打つと縦書き原稿用紙になりP2PやAIで添削できるアプリ",
+      "subject": "国語",
+      "grade": "全学年・教員",
+      "hasPages": true
+    },
+    {
+      "name": "Online-Publisher-pro",
+      "label": "原稿用紙も本も！書いて添削して読み合える",
+      "oneLine": "児童の作文作成・本づくりと教員のAI添削ができるWebアプリ",
+      "subject": "国語・学級経営",
+      "grade": "主に小学校",
+      "hasPages": true
+    },
+    {
+      "name": "PhysicalEducation_note",
+      "label": "体育のめあてと振り返りを端末で記録！",
+      "oneLine": "Google環境で体育のめあて設定や振り返りを記録するWebアプリ",
+      "subject": "体育",
+      "grade": "小学生・教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "Qalc",
+      "label": "全学年対応！1万問超の算数マルチプレイ",
+      "oneLine": "全小1〜6年の算数を1万問以上収録したブラウザ計算ゲーム。",
+      "subject": "算数",
+      "grade": "小1〜小6",
+      "hasPages": true
+    },
+    {
+      "name": "Quarto",
+      "label": "相手が置くコマを選ぶ！1台で2人対戦",
+      "oneLine": "1台の端末を2人で囲んで対戦する3Dボードゲームアプリ。",
+      "subject": "学級経営",
+      "grade": "小学校中学年〜",
+      "hasPages": true
+    },
+    {
+      "name": "Quoridor",
+      "label": "1台を2人でシェア！カベカベ合戦",
+      "oneLine": "1台の端末を2人で囲んで遊ぶ教育用対戦パズルゲーム。",
+      "subject": "学級経営",
+      "grade": "小学生全学年",
+      "hasPages": true
+    },
+    {
+      "name": "Reflection_Journal",
+      "label": "心のバイタルを可視化する交換日記アプリ",
+      "oneLine": "児童の感情変化を可視化し、AIが先生の返答作成を支援するツール。",
+      "subject": "学級経営",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "Reversi",
+      "label": "1台を2人で！低学年も遊べる可変リバーシ",
+      "oneLine": "1台の端末を2人で囲み手軽に遊べるルビ付きリバーシ。",
+      "subject": "学級経営",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "School_plan_note",
+      "label": "AIで校務をスマートに！",
+      "oneLine": "週案作成と校務をAIで支援するWebアプリ",
+      "subject": "校務",
+      "grade": "小学校教員向け",
+      "hasPages": true
+    },
+    {
+      "name": "SchoolPlan_Editor",
+      "label": "週案作成から時数管理までこれ1つで",
+      "oneLine": "小学校教員向けの週案作成や時数管理を行うWebアプリ",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": true
+    },
+    {
+      "name": "Screenshot-PDF",
+      "label": "Web教材を自動撮影してまとめてPDF化",
+      "oneLine": "自動でページをめくり連続撮影しPDF保存するChrome拡張。",
+      "subject": "校務",
+      "grade": "教員・児童",
+      "hasPages": false
+    },
+    {
+      "name": "Shapes_Canvas",
+      "label": "URLで問題共有！指で動かす図形キャンバス",
+      "oneLine": "画面上で図形操作や定規・分度器が使える算数学習Webアプリ",
+      "subject": "算数",
+      "grade": "低学年〜小学校全般",
+      "hasPages": true
+    },
+    {
+      "name": "Shared-Folder-Sync",
+      "label": "Driveフォルダのデータ更新・削除を同期",
+      "oneLine": "Google Driveの親フォルダの更新を子フォルダへ同期するアプリ",
+      "subject": "校務",
+      "grade": "教員向け",
+      "hasPages": false
+    },
+    {
+      "name": "Shiritori_fighter",
+      "label": "ことばで戦え！声でも遊べるしりとり",
+      "oneLine": "声やキーボードで入力して戦う対戦型しりとりWebアプリ",
+      "subject": "国語",
+      "grade": "小学生",
+      "hasPages": true
+    },
+    {
+      "name": "Slide_Guild",
+      "label": "クエストで挑むスライド学習",
+      "oneLine": "スライド学習をゲーミフィケーション化するサイドバーツール",
+      "subject": "記載なし",
+      "grade": "記載なし",
+      "hasPages": false
+    },
+    {
+      "name": "Townmap_Mikke",
+      "label": "地図を囲んで対話が生まれる協働マップ",
+      "oneLine": "地図画像に児童がピンや写真、メモを貼り協働学習するアプリ",
+      "subject": "社会・生活・総合",
+      "grade": "小学生（全学年）",
+      "hasPages": true
+    },
+    {
+      "name": "Treasure_Words",
+      "label": "集めた言葉を自分の表現につなげる",
+      "oneLine": "言葉を見つける・集める・使う・確かめる国語学習PWA",
+      "subject": "国語",
+      "grade": "小学生",
+      "hasPages": true
+    },
+    {
+      "name": "Typa",
+      "label": "開いた瞬間打ちはじめるタイピング練習",
+      "oneLine": "開いた瞬間打ちはじめられる小学生向けタイピング学習アプリ",
+      "subject": "情報",
+      "grade": "小学生",
+      "hasPages": true
+    },
+    {
+      "name": "Video-editing_studio",
+      "label": "ふりがな付き！ブラウザで動画編集",
+      "oneLine": "子どもがブラウザ上で動画をつなぎテロップやBGMを付けられる",
+      "subject": "総合",
+      "grade": "全学年",
+      "hasPages": true
+    },
+    {
+      "name": "Werewolf",
+      "label": "1台のタブレットを回して遊べる人狼",
+      "oneLine": "1台の端末を回して遊べる小学生向けの人狼ゲームWebアプリ。",
+      "subject": "学級経営",
+      "grade": "小学校中学年〜",
+      "hasPages": true
+    },
+    {
+      "name": "word_basket",
+      "label": "みんなで遊べるリアルタイムしりとり",
+      "oneLine": "端末1つで2〜6人で遊べるリアルタイムしりとりゲーム",
+      "subject": "学級活動",
+      "grade": "小学生〜大人",
+      "hasPages": true
+    },
+    {
+      "name": "yomikaki",
+      "label": "小1の読み書き、一人で完結！",
+      "oneLine": "小1向け拗音・促音・長音・ひらがなカタカナの読み書き練習アプリ",
+      "subject": "国語",
+      "grade": "小1",
+      "hasPages": true
+    }
+  ],
+  "themes": [
+    {
+      "id": "intro",
+      "label": "アプリ紹介",
+      "intent": "そのアプリが何をするものかを、機能の羅列ではなく『どんな場面で開くか』から書く。授業のどの5分に使うのかが読者に浮かぶようにする。最後にアプリの URL を置く。"
+    },
+    {
+      "id": "pain",
+      "label": "困りごと→解決",
+      "intent": "教室で実際に起きる困りごとをまず具体的に描写し、そのアプリがその困りごとのどこを引き受けるかを書く。困りごとの描写にいちばん字数を使う。共感が入口になる。"
+    },
+    {
+      "id": "tips",
+      "label": "使い方Tips",
+      "intent": "そのアプリの、README を読んだだけでは気づかない使い方を1つだけ紹介する。欲張って複数入れない。『明日そのまま真似できる』粒度にする。"
+    },
+    {
+      "id": "making",
+      "label": "開発の裏側",
+      "intent": "なぜその作りにしたのかを書く。学校のネットワークが CDN を塞ぐから外部通信をゼロにした、児童の端末が古いから依存ゼロにした、といった現場発の設計判断は、同じ現場の人にいちばん刺さる。"
+    },
+    {
+      "id": "insight",
+      "label": "教育×AIの気づき",
+      "intent": "アプリそのものではなく、AI を使って教材を作る過程で気づいたことを書く。ここだけはアプリの URL が無くてもよい（その場合はランチャーではなく代表アプリの URL を置く）。宣伝色を薄める役割の型。"
+    },
+    {
+      "id": "update",
+      "label": "アップデート報告",
+      "intent": "直近で更新されたアプリについて、何がどう変わったかを書く。『使っている人の困りごとを直した』という文脈があると読まれる。data/repos.json の pushedAt が新しいものだけを対象にする。"
+    },
+    {
+      "id": "howto",
+      "label": "教材づくりの小ネタ",
+      "intent": "アプリを作る過程で使った技や考え方を、教材づくりをしたい先生に向けて共有する。読者が自分でも作れそうだと思える具体性にする。"
     }
   ]
 }

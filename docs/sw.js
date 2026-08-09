@@ -10,17 +10,23 @@
  *    原因がとても分かりにくい症状になる。中身が毎週入れかわるファイルなので、
  *    常にネットワークを見にいく。
  *
+ * ⚠️ orders/ もキャッシュしない。しかも 404 のときに offline.html を返してはいけない。
+ *    ここは「さっきまで無かったものが増える」場所である（［つくる］で頼んだ結果が届く）。
+ *    404 を一度でも覚えられると以後いつまでも届かないし、
+ *    下の「それ以外」に落ちると offline.html（HTML）が返り、
+ *    受け取る側は JSON として読めずに「壊れています」と言うことになる。
+ *
  * ⚠️ VERSION の行は `npm run build:sw` が書き換える。手で直さないこと。
  *    シェルの中身から計算した値が入っているので、画面を直せば必ず版が変わり、
  *    端末のキャッシュも入れかわる。`npm run check` がずれを検出する。
  */
 
-const VERSION = 'v0ffe3939';
+const VERSION = 'v500609fa';
 const SHELL_CACHE = `launcher-shell-${VERSION}`;
 const MEDIA_CACHE = `launcher-media-${VERSION}`;
 
 /** 画面を出すのに要る最小限。ここが揃っていれば圏外でも真っ白にならない。 */
-const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js', './lib/media-pick.js'];
+const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js', './lib/media-pick.js', './lib/order.js', './lib/mine.js'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -59,6 +65,13 @@ self.addEventListener('fetch', (event) => {
         caches.match(request).then((hit) => hit || new Response('{"posts":[],"notes":[]}', { headers: { 'content-type': 'application/json' } }))
       )
     );
+    return;
+  }
+
+  // ── 頼んだ投稿の結果: 素通しする ──
+  // まだ無いことに意味がある（作っている最中）。キャッシュも肩代わりもしない。
+  if (url.pathname.includes('/orders/')) {
+    event.respondWith(fetch(request));
     return;
   }
 
