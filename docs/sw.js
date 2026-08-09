@@ -21,7 +21,7 @@
  *    端末のキャッシュも入れかわる。`npm run check` がずれを検出する。
  */
 
-const VERSION = 'v50924588';
+const VERSION = 'vf1490254';
 const SHELL_CACHE = `launcher-shell-${VERSION}`;
 const MEDIA_CACHE = `launcher-media-${VERSION}`;
 

@@ -179,6 +179,71 @@ export function matchApps(apps, query) {
 }
 
 /**
+ * 画面の分けかた。
+ *
+ * ⚠️ 「タブ」と「見るもの（view）」を分けてある。
+ *
+ *   タブは4つしかないが、view は7つある。今日・今週・予備は同じ「出す」タブの中の
+ *   切りかえで、投稿ずみ・過去は「記録」タブの中の切りかえである。
+ *
+ *   分けている理由は2つ。
+ *   ① 送信ずみの Issue に `#now` や `#done` というリンクが残っている。
+ *      すでに人の手もとにあるものは、こちらの都合で無効にできない。
+ *      view の名前を変えなければ、古いリンクはそのまま正しい場所を開く。
+ *   ② 一覧の中身を決めているのは view（selectPosts）である。
+ *      タブと1対1にすると、タブを増やすたびに一覧の選び方を書きかえることになる。
+ *
+ *   もとは7つのタブが横に並んでいた。スマホでは端が切れて横スクロールになり、
+ *   ［過去］は画面の外にあった。押せないものが並んでいるのは、無いのと変わらない。
+ */
+export const TABS = [
+    {
+        id: 'post',
+        label: '出す',
+        // 「いま出すもの」がぜんぶここにある。毎日ひらくのはこのタブだけでよい。
+        views: [
+            { id: 'today', label: '今日' },
+            { id: 'week', label: '今週' },
+            { id: 'now', label: '予備' },
+        ],
+    },
+    {
+        id: 'make',
+        label: 'つくる',
+        // 「頼んで作ってもらう」ものをここに集める（宣伝ポストと、返信の下書き）。
+        views: [{ id: 'make', label: 'つくる' }],
+    },
+    {
+        id: 'note',
+        label: 'note',
+        views: [{ id: 'note', label: 'note' }],
+    },
+    {
+        id: 'log',
+        label: '記録',
+        // 出したあとに来る場所。反応を送るのもここ。
+        views: [
+            { id: 'done', label: '投稿ずみ' },
+            { id: 'past', label: '過去' },
+        ],
+    },
+];
+
+/** ハッシュとタブの切りかえで使う view の名前。並びは画面の並びと同じ。 */
+export const VIEWS = TABS.flatMap((tab) => tab.views.map((view) => view.id));
+
+/** その view を含むタブ。知らない名前なら最初のタブ。 */
+export function tabOfView(view) {
+    return TABS.find((tab) => tab.views.some((v) => v.id === view)) ?? TABS[0];
+}
+
+/** そのタブを開いたときに最初に見せる view。 */
+export function firstViewOf(tabId) {
+    const tab = TABS.find((t) => t.id === tabId) ?? TABS[0];
+    return tab.views[0].id;
+}
+
+/**
  * URL のハッシュから、開くタブと選んでおくアプリを決める。
  *
  * '#done' … 通知の Issue から飛んでくる

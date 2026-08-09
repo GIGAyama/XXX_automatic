@@ -18,6 +18,19 @@ export function truncate(text, max) {
   return value.length <= max ? value : `${value.slice(0, max)}…`;
 }
 
+/**
+ * note のカードに出す、本文の頭。
+ *
+ * 貼り付ける本文（plain）は1行目がタイトルなので、そのまま切り出すと
+ * カードにタイトルが2回並ぶ。読む手がかりになるのは、その次からである。
+ */
+export function bodyPreview(title, plain, max = 160) {
+  const body = String(plain ?? '');
+  const head = String(title ?? '');
+  const rest = head && body.startsWith(head) ? body.slice(head.length) : body;
+  return truncate(rest.trim(), max);
+}
+
 /** launcher.json の themes からラベルの対応表を作る。Issue の本文を人が読める形にするため。 */
 export function themeLabelMap(data) {
   const out = {};

@@ -60,27 +60,56 @@ body {
 }
 
 /* ── タブ ────────────────────────────────── */
+/*
+ * 4つを画面幅いっぱいに等分する。もとは7つ並べて横スクロールにしていたが、
+ * 端が切れて［過去］が画面の外にあった。横に流さなければ、どれがあるかが一目で分かる。
+ */
 .tabs {
-  display: flex; gap: 8px; padding: 6px 16px 14px;
-  overflow-x: auto; scrollbar-width: none;
+  display: flex; gap: 8px; padding: 6px 16px 12px;
 }
-.tabs::-webkit-scrollbar { display: none; }
 
 .tab {
-  flex: none; border: 1.5px solid var(--line); background: var(--card); color: var(--ink-weak);
-  border-radius: 999px; padding: 9px 18px; font-size: 14px; font-weight: 700;
-  cursor: pointer; font-family: inherit;
+  flex: 1 1 0; min-width: 0;
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink-weak);
+  border-radius: 999px; padding: 10px 6px; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: inherit; white-space: nowrap;
 }
 .tab.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
 .tab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-/* 未送信の反応がたまっていることを、タブを開かなくても分かるようにする */
+/* タブを開かなくても分かるようにする（今日の残り・未送信の記録・待っている注文） */
 .tab[data-badge]:not([data-badge=""])::after {
   content: attr(data-badge);
-  display: inline-block; margin-left: 6px; min-width: 18px; padding: 0 5px;
+  display: inline-block; margin-left: 5px; min-width: 18px; padding: 0 5px;
   background: var(--warn); color: #fff; border-radius: 999px;
   font-size: 11px; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums;
 }
+.tab.is-on[data-badge]:not([data-badge=""])::after { background: rgba(255, 255, 255, .28); }
+
+/* ── タブの中の切りかえ ───────────────────────
+ *
+ * 今日 / 今週 / 予備、投稿ずみ / 過去。
+ * ⚠️ タブと同じ見た目にしない。同じに見えると、どちらが上位なのか分からなくなる。
+ *    こちらは下線で示し、色で塗らない。
+ */
+.seg {
+  display: flex; gap: 4px; margin: -4px 0 2px; padding: 2px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+}
+.seg__btn {
+  flex: 1 1 0; border: none; background: transparent; color: var(--ink-weak);
+  border-radius: 10px; padding: 9px 4px; font-size: 13.5px; font-weight: 700;
+  cursor: pointer; font-family: inherit; white-space: nowrap;
+}
+.seg__btn.is-on { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+.seg__btn:focus-visible { outline: 3px solid var(--accent); outline-offset: -2px; }
+.seg__count {
+  margin-left: 5px; font-size: 11px; color: var(--ink-weak); font-variant-numeric: tabular-nums;
+}
+.seg__btn.is-on .seg__count { color: var(--accent); }
+
+/* 一覧の頭に置く一文。ここが何の場所かを、空でも空でなくても言う */
+.lede { margin: 2px 2px 0; font-size: 13px; line-height: 1.6; color: var(--ink-weak); }
 
 /* ── カード ───────────────────────────────── */
 .list { padding: 0 16px 28px; display: flex; flex-direction: column; gap: 14px; }
@@ -325,6 +354,43 @@ body {
 
 /* 消すボタンだけの行。ふつうの操作と同じ重さに見せない */
 .card__actions--sub { padding-top: 0; opacity: .85; }
+
+/* ── 一覧の絞りこみ（型・アプリ）─────────────────
+ *
+ * タブでも切りかえでもなく「いま出ている一覧をしぼる」もの。
+ * 3段目に見えないよう、いちばん小さく・弱く出す。
+ */
+.jump {
+  display: flex; gap: 6px; flex-wrap: wrap; margin: 2px 2px 0;
+}
+.jump__btn {
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink-weak);
+  border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+}
+.jump__btn.is-on { background: var(--ink); border-color: var(--ink); color: var(--card); }
+.jump__btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* ── ほかの操作（［…］に畳んであるもの）───────────
+ *
+ * ⚠️ 隠すのであって、無くすのではない。開けば全部が縦に並ぶ。
+ *    折りたたみを入れ子にしない（2回押さないと出ないものは、無いのと同じ）。
+ */
+/* ⚠️ 伸ばさない（flex-grow を 0 に）。ふだん押さないものが、
+ *    毎日押すボタンと同じ幅で並んでいては畳んだ意味が無い。 */
+.btn--more {
+  flex: 0 0 auto; min-width: 56px; padding: 0 14px;
+  font-size: 18px; line-height: 1; letter-spacing: .12em;
+}
+.btn--more.is-on { background: var(--ink); border-color: var(--ink); color: var(--card); }
+.more {
+  display: flex; flex-direction: column; gap: 6px; padding: 0 14px 14px;
+}
+.more__item { justify-content: flex-start; text-align: left; }
+.more__item--danger { color: #a52020; border-color: #f3b6b6; }
+@media (prefers-color-scheme: dark) {
+  .more__item--danger { color: #ff9c9c; border-color: #6b2c2c; }
+}
 
 /* ── ホーム画面への追加の案内 ────────────────── */
 .howto {

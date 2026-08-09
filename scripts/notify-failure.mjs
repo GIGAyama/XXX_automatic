@@ -54,7 +54,7 @@ async function main() {
         '### 直したら',
         '',
         '`Actions → 「週次 — 翌週の投稿を用意する」→ Run workflow` で手動実行できます。',
-        'それまでのあいだは、ランチャーの[［いま出す］タブ](' + accounts.launcherUrl + '#now) に用意してある予備が使えます。',
+        'それまでのあいだは、ランチャーの[［出す］→［予備］](' + accounts.launcherUrl + '#now) に作り置きしたものが使えます。',
         '',
         `<sub>この Issue は、直ったら閉じてください。開いているあいだは同じ知らせを重ねて出しません。`,
         `scripts/notify-failure.mjs — ${jstStamp()}</sub>`,
