@@ -324,6 +324,32 @@ CHROMIUM_PATH=/path/to/chrome npm run media
 
 ---
 
+## 画面を実測する
+
+`npm run check` は**静的に読めることしか見ていない**。
+色が読めるか・指で押せるか・Service Worker が本当に登録されるかは、
+ファイルを読んでも分からない。実際のブラウザで開いて測る道具を置いてある。
+
+```bash
+CHROMIUM_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())") \
+NO_PROXY=localhost,127.0.0.1 node tools/measure-ui.mjs   # 色・タップ領域・CSP違反・横スクロール
+CHROMIUM_PATH=... NO_PROXY=localhost,127.0.0.1 node tools/measure-pwa.mjs  # 登録・更新・圏外
+```
+
+測るときに踏みやすい落とし穴を、あらかじめ避けてある。
+
+- **色は 1px 実際に塗って読む。** `getComputedStyle` の文字列から数字を拾うと、
+  `oklch()` を返すブラウザで全部が「ほぼ真っ黒」と判定される
+- **昼と夜の両方を測る。** 片方だけだと、暗いほうの薄い文字を丸ごと見落とす
+  （実際、夜だけ素のリンク青（比 1.93）が出ていた）
+- **他アプリのキャッシュを2つ置いてから測る。** 同一オリジンを共有しているので、
+  「自分のもの以外を消す」実装だと他アプリのオフラインが壊れる
+- **「押すまで切り替わらない」だけで満足しない。** 押したら本当に切り替わるかまで見る。
+  でないと、押しても何も起きないボタンを置いたまま合格になる
+
+結果と、**測っていないもの**は [AUDIT.md](AUDIT.md) にまとめてある。
+測っていないものを ✅ と書かないこと。
+
 ## 気をつける点
 
 - **時刻はすべて JST。** GitHub Actions の cron は UTC です。日付の判定は必ず
