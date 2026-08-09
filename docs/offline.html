@@ -4,17 +4,42 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>オフラインです - 投稿ランチャー</title>
+
+<!--
+  ⚠️ この画面だけは外の資産にも JavaScript にも頼らない。
+     「ネットにつながらず、アプリ本体も端末に無い」ときに出るページなので、
+     読みにいく先があると、そこで止まって真っ白になる。
+     だから CSS はここに直接書く（ほかの画面と違って外に出さない）。
+
+  そのうえで、いちばん強い CSP を当てる。
+  ここは JavaScript も画像も一切使わないので、default-src 'none' で全部止められる。
+  style-src だけ 'unsafe-inline' を開けるのは、上の理由で外部ファイルにできないためである
+  （'self' にすると、この画面自身のスタイルが当たらず、文字だけが並ぶ）。
+-->
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
 <style>
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  /* ⚠️ 100vh を単独で使わない。スマホのアドレスバーのぶんだけはみ出す（§2-2） */
+  body{margin:0;min-height:100dvh;display:flex;align-items:center;justify-content:center;
        background:#f4f6f9;color:#1a2233;
        font-family:'Hiragino Sans','Noto Sans JP','Yu Gothic',Meiryo,sans-serif;
-       line-height:1.8;padding:24px;text-align:center}
+       line-height:1.8;padding:24px;text-align:center;
+       padding-left:calc(24px + env(safe-area-inset-left));
+       padding-right:calc(24px + env(safe-area-inset-right))}
+  /* dvh を知らない古い端末向け。dvh を先に書いて、こちらで受ける */
+  @supports not (height: 100dvh){body{min-height:100vh}}
   @media (prefers-color-scheme:dark){body{background:#12161d;color:#e8edf5}}
   .box{max-width:22rem}
-  h1{font-size:20px;margin:0 0 12px}
-  p{font-size:14.5px;margin:0 0 8px;opacity:.85}
-  a{display:inline-block;margin-top:18px;color:inherit;font-weight:700;
+  h1{font-size:clamp(19px,2.4vw + 12px,26px);margin:0 0 12px}
+  p{font-size:clamp(14px,1vw + 11px,16px);margin:0 0 8px;opacity:.85}
+  a{display:inline-flex;align-items:center;justify-content:center;
+    min-height:44px;margin-top:18px;color:inherit;font-weight:700;
     border:1.5px solid currentColor;border-radius:999px;padding:10px 22px;text-decoration:none}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;scroll-behavior:auto !important}
+  }
+  @media (forced-colors: active){a{border:2px solid ButtonText}}
 </style>
 </head>
 <body>
