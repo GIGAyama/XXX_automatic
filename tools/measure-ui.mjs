@@ -110,7 +110,17 @@ const SCAN = `(() => {
       }
     }
   }
-  return { contrast, taps, scrollW: document.documentElement.scrollWidth, clientW: document.documentElement.clientWidth };
+  // ── hidden 属性が効いているか ──
+  // hidden は「display:none」を UA スタイルで当てているだけなので、
+  // クラス側で display を書くと黙って無効になる。閉じているつもりのものが
+  // ずっと開いたままになり、押しても何も起きないボタンに見える。
+  // 実際 .more がこれで、［…］の中身が最初から全部出ていた。
+  const hiddenBroken = [...document.querySelectorAll('[hidden]')]
+    .filter((el) => getComputedStyle(el).display !== 'none')
+    .map((el) => ({ tag: el.tagName, cls: String(el.className || ''), display: getComputedStyle(el).display }))
+    .filter((v, i, all) => all.findIndex((x) => x.tag === v.tag && x.cls === v.cls) === i);
+
+  return { contrast, taps, hiddenBroken, scrollW: document.documentElement.scrollWidth, clientW: document.documentElement.clientWidth };
 })()`;
 
 const browser = await chromium.launch({
@@ -178,9 +188,10 @@ results.push({ name: 'offline.html 夜', ...await scanPage(`${BASE}/offline.html
 console.log('\n===== コントラスト / タップ / 横スクロール =====');
 for (const r of results) {
   const oflow = r.scrollW > r.clientW ? `⚠ 横スクロール ${r.scrollW}>${r.clientW}` : 'ok';
-  console.log(`\n■ ${r.name}  … コントラスト未満 ${r.contrast.length}件 / タップ44px未満 ${r.taps.length}件 / ${oflow} / JSエラー ${r.errors.length} / CSP ${r.csp.length}`);
+  console.log(`\n■ ${r.name}  … コントラスト未満 ${r.contrast.length}件 / タップ44px未満 ${r.taps.length}件 / hidden無効 ${r.hiddenBroken.length}件 / ${oflow} / JSエラー ${r.errors.length} / CSP ${r.csp.length}`);
   for (const c of r.contrast) console.log(`   [contrast ${c.ratio} < ${c.need}] <${c.tag} class="${c.cls}"> ${c.fontSize}px ${c.color} … "${c.text}"`);
   for (const t of r.taps) console.log(`   [tap ${t.w}x${t.h}] <${t.tag} class="${t.cls}"> "${t.text}"`);
+  for (const h of r.hiddenBroken) console.log(`   [hidden無効 display:${h.display}] <${h.tag} class="${h.cls}">`);
   for (const e of r.errors.slice(0, 5)) console.log(`   [js] ${e.slice(0, 200)}`);
   for (const e of r.csp.slice(0, 5)) console.log(`   [csp] ${e.slice(0, 200)}`);
 }
