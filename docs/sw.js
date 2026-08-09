@@ -19,11 +19,22 @@
  * ⚠️ VERSION の行は `npm run build:sw` が書き換える。手で直さないこと。
  *    シェルの中身から計算した値が入っているので、画面を直せば必ず版が変わり、
  *    端末のキャッシュも入れかわる。`npm run check` がずれを検出する。
+ *
+ * ⚠️ activate で自アプリ以外のキャッシュを消さない。
+ *    gigayama.github.io は数十本のアプリが同一オリジンを共有している。
+ *    caches.keys() を「自分のもの以外」で消すと、このランチャーを1度開いただけで
+ *    同じ端末に入れてある他のアプリのオフライン用キャッシュが全部消える。
+ *    消えたことは誰にも見えず、次に圏外で開いたときに「壊れた」としか分からない。
+ *    だから CACHE_PREFIX で始まるものだけを掃除する。
+ *
+ * Service Worker は localStorage を一切操作しない。
  */
 
-const VERSION = 'vf1490254';
-const SHELL_CACHE = `launcher-shell-${VERSION}`;
-const MEDIA_CACHE = `launcher-media-${VERSION}`;
+const VERSION = 'v7a910b3a';
+/** 自アプリの目印。ここで始まるキャッシュだけが掃除の対象になる。 */
+const CACHE_PREFIX = 'launcher-';
+const SHELL_CACHE = `${CACHE_PREFIX}shell-${VERSION}`;
+const MEDIA_CACHE = `${CACHE_PREFIX}media-${VERSION}`;
 
 /** 画面を出すのに要る最小限。ここが揃っていれば圏外でも真っ白にならない。 */
 const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js', './lib/media-pick.js', './lib/order.js', './lib/mine.js', './lib/note-doc.js'];
@@ -35,7 +46,10 @@ self.addEventListener('install', (event) => {
       // 1つでも欠けると addAll 全体が失敗する。アイコンなど欠けても動くものは入れない。
       // 実在するかは npm run build:sw / npm run check が先に見ている。
       .then((cache) => cache.addAll(SHELL))
-      .then(() => self.skipWaiting())
+    // ⚠️ ここで skipWaiting() しない。
+    //    ［本文を直す］で打ちかけの文は、押すまで端末に保存されない。
+    //    配信のたびに勝手に入れかわると、書いている最中に画面ごと消える。
+    //    切りかえるのは、画面側で［さいしんに する］を押してもらってからにする。
   );
 });
 
@@ -44,10 +58,24 @@ self.addEventListener('activate', (event) => {
     caches
       .keys()
       .then((keys) =>
-        Promise.all(keys.filter((k) => k !== SHELL_CACHE && k !== MEDIA_CACHE).map((k) => caches.delete(k)))
+        Promise.all(
+          keys
+            // ⚠️ 「自分のもの以外」ではなく「自分のもののうち古いもの」を消す。
+            //    同一オリジンを共有している他アプリを巻き添えにしないため。
+            .filter((k) => k.startsWith(CACHE_PREFIX) && k !== SHELL_CACHE && k !== MEDIA_CACHE)
+            .map((k) => caches.delete(k))
+        )
       )
       .then(() => self.clients.claim())
   );
+});
+
+/**
+ * 画面から「入れかわってよい」と言われたときだけ、待機中の版を有効にする。
+ * 押すまでは待たせる（install で skipWaiting しない理由と同じ）。
+ */
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('fetch', (event) => {
