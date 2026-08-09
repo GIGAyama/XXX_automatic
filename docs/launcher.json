@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-09T02:21:52.879Z",
-  "generatedAtJst": "2026-08-09 11:21 JST",
+  "generatedAt": "2026-08-09T11:48:59.280Z",
+  "generatedAtJst": "2026-08-09 20:48 JST",
   "weekIds": [
     "2026-W32",
     "2026-W33"
@@ -187,6 +187,114 @@
         "src": "media/Ice_slide-puzzle-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/01-home.png",
+        "kind": "repo",
+        "label": "ホーム画面"
+      },
+      {
+        "id": "repo:docs/note/images/02-rules.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/02-rules.png",
+        "kind": "repo",
+        "label": "あそびかたの画面"
+      },
+      {
+        "id": "repo:docs/note/images/03-select.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/03-select.png",
+        "kind": "repo",
+        "label": "コマをえらんだところ"
+      },
+      {
+        "id": "repo:docs/note/images/04-sliding.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/04-sliding.png",
+        "kind": "repo",
+        "label": "すべっているところ"
+      },
+      {
+        "id": "repo:docs/note/images/05-stopped.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/05-stopped.png",
+        "kind": "repo",
+        "label": "ぶつかって止まったところ"
+      },
+      {
+        "id": "repo:docs/note/images/06-wall.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/06-wall.png",
+        "kind": "repo",
+        "label": "相手のコマにぶつかって止まる"
+      },
+      {
+        "id": "repo:docs/note/images/07-block.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/07-block.png",
+        "kind": "repo",
+        "label": "ゴールの向こうに壁ができた"
+      },
+      {
+        "id": "repo:docs/note/images/08-goal.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/08-goal.png",
+        "kind": "repo",
+        "label": "王冠がゴールに止まった"
+      },
+      {
+        "id": "repo:docs/note/images/09-win.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/09-win.png",
+        "kind": "repo",
+        "label": "勝ったところ"
+      },
+      {
+        "id": "repo:docs/note/images/10-restart.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/10-restart.png",
+        "kind": "repo",
+        "label": "やりなおしたあと"
+      },
+      {
+        "id": "repo:docs/note/images/11-random-toast.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/11-random-toast.png",
+        "kind": "repo",
+        "label": "サイコロを押したところ"
+      },
+      {
+        "id": "repo:docs/note/images/12-random-board.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/12-random-board.png",
+        "kind": "repo",
+        "label": "ばらばらに並んだ盤面"
+      },
+      {
+        "id": "repo:docs/note/images/13-landscape.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/13-landscape.png",
+        "kind": "repo",
+        "label": "横向きにしたところ"
+      },
+      {
+        "id": "repo:docs/note/images/14-tablet.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/14-tablet.png",
+        "kind": "repo",
+        "label": "タブレットで開いたところ"
+      },
+      {
+        "id": "repo:docs/note/images/15-pc.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/15-pc.png",
+        "kind": "repo",
+        "label": "パソコンで開いたところ"
+      },
+      {
+        "id": "repo:docs/note/images/16-pc-select.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/16-pc-select.png",
+        "kind": "repo",
+        "label": "パソコンでコマをえらんだところ"
+      },
+      {
+        "id": "repo:docs/note/images/17-offline.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/17-offline.png",
+        "kind": "repo",
+        "label": "つながっていないときの画面"
+      },
+      {
+        "id": "repo:docs/note/images/18-update.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Ice_slide-puzzle/19aa44898bc4095511eafd241a7398a344dc45e3/docs/note/images/18-update.png",
+        "kind": "repo",
+        "label": "新しい版があるときの案内"
       }
     ],
     "word_basket": [
@@ -195,6 +303,132 @@
         "src": "media/word_basket-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-setup.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/01-setup.png",
+        "kind": "repo",
+        "label": "遊ぶ準備の画面"
+      },
+      {
+        "id": "repo:docs/note/images/02-setup-6nin-10byo.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/02-setup-6nin-10byo.png",
+        "kind": "repo",
+        "label": "6人と10秒を選んだ画面"
+      },
+      {
+        "id": "repo:docs/note/images/03-play-2nin-phone.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/03-play-2nin-phone.png",
+        "kind": "repo",
+        "label": "2人で遊んでいる画面"
+      },
+      {
+        "id": "repo:docs/note/images/04-card-selected.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/04-card-selected.png",
+        "kind": "repo",
+        "label": "カードを1回タップした画面"
+      },
+      {
+        "id": "repo:docs/note/images/05-card-played.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/05-card-played.png",
+        "kind": "repo",
+        "label": "カードを場に出したあとの画面"
+      },
+      {
+        "id": "repo:docs/note/images/06-play-4nin-tablet.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/06-play-4nin-tablet.png",
+        "kind": "repo",
+        "label": "4人でタブレットを囲んでいる画面"
+      },
+      {
+        "id": "repo:docs/note/images/07-play-3nin-tablet.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/07-play-3nin-tablet.png",
+        "kind": "repo",
+        "label": "3人で遊んでいる画面"
+      },
+      {
+        "id": "repo:docs/note/images/08-play-6nin-landscape.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/08-play-6nin-landscape.png",
+        "kind": "repo",
+        "label": "6人で横向きに遊んでいる画面"
+      },
+      {
+        "id": "repo:docs/note/images/09-agari.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/09-agari.png",
+        "kind": "repo",
+        "label": "あがりの画面"
+      },
+      {
+        "id": "repo:docs/note/images/10-board-wild-line.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/10-board-wild-line.png",
+        "kind": "repo",
+        "label": "「ら行」のカードがお題になった画面"
+      },
+      {
+        "id": "repo:docs/note/images/11-board-wild-number.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/11-board-wild-number.png",
+        "kind": "repo",
+        "label": "「5文字」のカードがお題になった画面"
+      },
+      {
+        "id": "repo:docs/note/images/12-rules-tablet.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/12-rules-tablet.png",
+        "kind": "repo",
+        "label": "あそびかたの画面"
+      },
+      {
+        "id": "repo:docs/note/images/13-timer-red.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/13-timer-red.png",
+        "kind": "repo",
+        "label": "残り3秒で赤くなった画面"
+      },
+      {
+        "id": "repo:docs/note/images/14-timeout-toast.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/14-timeout-toast.png",
+        "kind": "repo",
+        "label": "時間切れのお知らせが出た画面"
+      },
+      {
+        "id": "repo:docs/note/images/15-pass-toast.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/15-pass-toast.png",
+        "kind": "repo",
+        "label": "パスしたときのお知らせが出た画面"
+      },
+      {
+        "id": "repo:docs/note/images/16-draw-to-hand.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/16-draw-to-hand.png",
+        "kind": "repo",
+        "label": "山札から1枚引いて手札が増えた画面"
+      },
+      {
+        "id": "repo:docs/note/images/17-sound-off.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/17-sound-off.png",
+        "kind": "repo",
+        "label": "音を切った状態の画面"
+      },
+      {
+        "id": "repo:docs/note/images/18-rules-phone.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/18-rules-phone.png",
+        "kind": "repo",
+        "label": "スマートフォンで見たあそびかたの画面"
+      },
+      {
+        "id": "repo:docs/note/images/19-rules-special.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/19-rules-special.png",
+        "kind": "repo",
+        "label": "特別なカードの説明"
+      },
+      {
+        "id": "repo:docs/note/images/20-reset-confirm.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/20-reset-confirm.png",
+        "kind": "repo",
+        "label": "最初に戻るかどうかの確認"
+      },
+      {
+        "id": "repo:docs/note/images/21-deck-empty.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/word_basket/4566eac220090a3ef3d639fe981fc4c9c48bff42/docs/note/images/21-deck-empty.png",
+        "kind": "repo",
+        "label": "山札がなくなった画面"
       }
     ],
     "Shiritori_fighter": [
@@ -206,13 +440,13 @@
       },
       {
         "id": "repo:docs/screenshot-battle.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Shiritori_fighter/21c555fc1ef8ccbe37fc023d8bdc3bbf405b526f/docs/screenshot-battle.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Shiritori_fighter/b7ce588316e8796b87fe2fbda8b86085c33546fa/docs/screenshot-battle.png",
         "kind": "repo",
         "label": "バトル画面"
       },
       {
         "id": "repo:docs/screenshot-setup.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Shiritori_fighter/21c555fc1ef8ccbe37fc023d8bdc3bbf405b526f/docs/screenshot-setup.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Shiritori_fighter/b7ce588316e8796b87fe2fbda8b86085c33546fa/docs/screenshot-setup.png",
         "kind": "repo",
         "label": "セットアップ画面"
       }
@@ -383,158 +617,296 @@
         "src": "media/Online-Publisher-pro-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-student-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/01-student-home.png",
+        "kind": "repo",
+        "label": "児童モードの初期画面"
+      },
+      {
+        "id": "repo:docs/note/images/02-student-write.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/02-student-write.png",
+        "kind": "repo",
+        "label": "本文を書いたところ"
+      },
+      {
+        "id": "repo:docs/note/images/03-paper-settings.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/03-paper-settings.png",
+        "kind": "repo",
+        "label": "用紙の設定"
+      },
+      {
+        "id": "repo:docs/note/images/04-illustration.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/04-illustration.png",
+        "kind": "repo",
+        "label": "挿絵の設定"
+      },
+      {
+        "id": "repo:docs/note/images/05-book-preview.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/05-book-preview.png",
+        "kind": "repo",
+        "label": "本モードのプレビュー"
+      },
+      {
+        "id": "repo:docs/note/images/06-print-a4.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/06-print-a4.png",
+        "kind": "repo",
+        "label": "A4横の印刷"
+      },
+      {
+        "id": "repo:docs/note/images/07-autosave.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/07-autosave.png",
+        "kind": "repo",
+        "label": "クラウド保存済の表示"
+      },
+      {
+        "id": "repo:docs/note/images/08-submitted.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/08-submitted.png",
+        "kind": "repo",
+        "label": "提出したあと"
+      },
+      {
+        "id": "repo:docs/note/images/09-teacher-login.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/09-teacher-login.png",
+        "kind": "repo",
+        "label": "先生用ログイン"
+      },
+      {
+        "id": "repo:docs/note/images/10-teacher-list.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/10-teacher-list.png",
+        "kind": "repo",
+        "label": "提出一覧と添削画面"
+      },
+      {
+        "id": "repo:docs/note/images/11-correction-input.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/11-correction-input.png",
+        "kind": "repo",
+        "label": "添削コメントの入力"
+      },
+      {
+        "id": "repo:docs/note/images/12-correction-done.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/12-correction-done.png",
+        "kind": "repo",
+        "label": "赤線が入った原稿"
+      },
+      {
+        "id": "repo:docs/note/images/13-ai-bulk.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/13-ai-bulk.png",
+        "kind": "repo",
+        "label": "まとめてAI添削の確認"
+      },
+      {
+        "id": "repo:docs/note/images/14-diff.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/14-diff.png",
+        "kind": "repo",
+        "label": "差分表示"
+      },
+      {
+        "id": "repo:docs/note/images/15-shortcuts.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/15-shortcuts.png",
+        "kind": "repo",
+        "label": "ショートカット一覧"
+      },
+      {
+        "id": "repo:docs/note/images/16-teacher-settings.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/16-teacher-settings.png",
+        "kind": "repo",
+        "label": "システム設定"
+      },
+      {
+        "id": "repo:docs/note/images/17-open-modal.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/17-open-modal.png",
+        "kind": "repo",
+        "label": "保存した作品を開く"
+      },
+      {
+        "id": "repo:docs/note/images/18-student-comment.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/18-student-comment.png",
+        "kind": "repo",
+        "label": "子どもの画面に届いた先生のコメント"
+      },
+      {
+        "id": "repo:docs/note/images/19-gallery.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/19-gallery.png",
+        "kind": "repo",
+        "label": "みんなの作品だな"
+      },
+      {
+        "id": "repo:docs/note/images/20-reader.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/20-reader.png",
+        "kind": "repo",
+        "label": "全画面のブックリーダー"
+      },
+      {
+        "id": "repo:docs/note/images/21-reader-comment.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/21-reader-comment.png",
+        "kind": "repo",
+        "label": "感想を送ったあと"
+      },
+      {
+        "id": "repo:docs/note/images/22-mobile-write.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/22-mobile-write.png",
+        "kind": "repo",
+        "label": "スマートフォンのかく画面"
+      },
+      {
+        "id": "repo:docs/note/images/23-mobile-preview.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/23-mobile-preview.png",
+        "kind": "repo",
+        "label": "スマートフォンのプレビュー"
+      },
+      {
+        "id": "repo:docs/note/images/24-pwa.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Online-Publisher-pro/ee1cce179832bbb62448f483dfe95961f0d47cb3/docs/note/images/24-pwa.png",
+        "kind": "repo",
+        "label": "ホーム画面に置くための入り口"
       }
     ],
-    "KEISAN-BLOCK": [
+    "Homework_barcordreader": [
       {
         "id": "card:0",
-        "src": "media/KEISAN-BLOCK-card.png",
+        "src": "media/Homework_barcordreader-card.png",
         "kind": "card",
         "label": "紹介カード"
       },
       {
-        "id": "repo:docs/note/images/01-home.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/01-home.png",
+        "id": "repo:docs/note/images/01-standby.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/01-standby.png",
         "kind": "repo",
-        "label": "ホーム（レベル・ミッション・6つのメニュー）"
+        "label": "受付画面（テンキー）"
       },
       {
-        "id": "repo:docs/note/images/02-add-step1.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/02-add-step1.png",
+        "id": "repo:docs/note/images/02-keypad.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/02-keypad.png",
         "kind": "repo",
-        "label": "たしざん 1つめの問い（8は あと いくつで 10）"
+        "label": "出席番号を入れたところ"
       },
       {
-        "id": "repo:docs/note/images/03-add-split.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/03-add-split.png",
+        "id": "repo:docs/note/images/03-tasks.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/03-tasks.png",
         "kind": "repo",
-        "label": "さくらんぼに 2が入り、ばらが2かたまりに分かれる"
+        "label": "今日だすものの一覧"
       },
       {
-        "id": "repo:docs/note/images/04-add-task.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/04-add-task.png",
+        "id": "repo:docs/note/images/04-tasks-selected.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/04-tasks-selected.png",
         "kind": "repo",
-        "label": "「わけた 2こを タップして…」の作業画面"
+        "label": "出すものを選んだ状態"
       },
       {
-        "id": "repo:docs/note/images/05-add-frame.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/05-add-frame.png",
+        "id": "repo:docs/note/images/07-pin.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/07-pin.png",
         "kind": "repo",
-        "label": "10がそろって わくが緑に光った状態"
+        "label": "先生用メニューのPIN入力"
       },
       {
-        "id": "repo:docs/note/images/06-add-last.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/06-add-last.png",
+        "id": "repo:docs/note/images/08-dashboard.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/08-dashboard.png",
         "kind": "repo",
-        "label": "最後の問い（10と 4で いくつ）"
+        "label": "ダッシュボード（提出・きもち・出欠の一覧）"
       },
       {
-        "id": "repo:docs/note/images/07-add-howto.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/07-add-howto.png",
+        "id": "repo:docs/note/images/09-dashboard-manual.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/09-dashboard-manual.png",
         "kind": "repo",
-        "label": "「けいさんの しかた」4行と5秒の待ち"
+        "label": "課題バッジを押して提出をその場で記録"
       },
       {
-        "id": "repo:docs/note/images/08-set-clear.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/08-set-clear.png",
+        "id": "repo:docs/note/images/10-operations.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/10-operations.png",
         "kind": "repo",
-        "label": "5もん クリアと バッジ獲得のおしらせ"
+        "label": "今日の校務（優先行動リスト）"
       },
       {
-        "id": "repo:docs/note/images/09-sub-select.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/09-sub-select.png",
+        "id": "repo:docs/note/images/11-handover-brief.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/11-handover-brief.png",
         "kind": "repo",
-        "label": "ひきざんの さくせんえらび"
+        "label": "校内引き継ぎブリーフの内容確認"
       },
       {
-        "id": "repo:docs/note/images/10-genka-take.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/10-genka-take.png",
+        "id": "repo:docs/note/images/12-class-insights.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/12-class-insights.png",
         "kind": "repo",
-        "label": "10のまとまりから ブロックを5こ とる作業（11−5）"
+        "label": "学級DXインサイトと改善プラン"
       },
       {
-        "id": "repo:docs/note/images/12-genka-count.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/12-genka-count.png",
+        "id": "repo:docs/note/images/13-forgotten-form.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/13-forgotten-form.png",
         "kind": "repo",
-        "label": "10にななめ線と残りの5、ブロックに数えた番号"
+        "label": "忘れ物のかんたん記録"
       },
       {
-        "id": "repo:docs/note/images/13-hint.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/13-hint.png",
+        "id": "repo:docs/note/images/14-support-candidates.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/14-support-candidates.png",
         "kind": "repo",
-        "label": "2回まちがえたときのヒント（11−2）"
+        "label": "今日の確認候補"
       },
       {
-        "id": "repo:docs/note/images/14-gengen.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/14-gengen.png",
+        "id": "repo:docs/note/images/15-support-record.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/15-support-record.png",
         "kind": "repo",
-        "label": "ばらから ひいて 10から ひく さくせん（16−9）"
+        "label": "支援を記録する画面"
       },
       {
-        "id": "repo:docs/note/images/16-timed-result.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/16-timed-result.png",
+        "id": "repo:docs/note/images/16-support-impact.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/16-support-impact.png",
         "kind": "repo",
-        "label": "タイムアタックの結果"
+        "label": "効果レビュー（支援の前後比較）"
       },
       {
-        "id": "repo:docs/note/images/17-dev-select.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/17-dev-select.png",
+        "id": "repo:docs/note/images/17-support-timeline.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/17-support-timeline.png",
         "kind": "repo",
-        "label": "はってんの えらび画面"
+        "label": "児童タイムライン"
       },
       {
-        "id": "repo:docs/note/images/18-dev-add.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/18-dev-add.png",
+        "id": "repo:docs/note/images/18-family.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/18-family.png",
         "kind": "repo",
-        "label": "10のぼうに合体したところ（36＋7）"
+        "label": "家庭連携"
       },
       {
-        "id": "repo:docs/note/images/19-dev-sub.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/19-dev-sub.png",
+        "id": "repo:docs/note/images/19-roster.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/19-roster.png",
         "kind": "repo",
-        "label": "はってんの ひきざん（44−5）"
+        "label": "名簿管理"
       },
       {
-        "id": "repo:docs/note/images/20-free-input.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/20-free-input.png",
+        "id": "repo:docs/note/images/20-task-rules.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/20-task-rules.png",
         "kind": "repo",
-        "label": "じぶんで しきを いれる（13−9・さくせんえらび付き）"
+        "label": "課題ルールの一覧"
       },
       {
-        "id": "repo:docs/note/images/21-free-explain.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/21-free-explain.png",
+        "id": "repo:docs/note/images/21-rest-suggestion.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/21-rest-suggestion.png",
         "kind": "repo",
-        "label": "せつめいモードの「こたえを 見る」（42−17）"
+        "label": "おやすみ日の提案（6/2・11%）"
       },
       {
-        "id": "repo:docs/note/images/22-free-reveal.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/22-free-reveal.png",
+        "id": "repo:docs/note/images/22-settings.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/22-settings.png",
         "kind": "repo",
-        "label": "押したあと。手順の言い方が出る"
+        "label": "設定タブ（バックアップと復元ポイント）"
       },
       {
-        "id": "repo:docs/note/images/23-free-rods.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/23-free-rods.png",
+        "id": "repo:docs/note/images/23-ai-panel.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/23-ai-panel.png",
         "kind": "repo",
-        "label": "10のぼうをタップして動かす"
+        "label": "AI教師支援（未設定の状態と送信内容）"
       },
       {
-        "id": "repo:docs/note/images/24-present.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/24-present.png",
+        "id": "repo:docs/note/images/24-report.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/24-report.png",
         "kind": "repo",
-        "label": "大きく表示（電子黒板・1366×768）"
+        "label": "レポートセンター"
       },
       {
-        "id": "repo:docs/note/images/26-records-log.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/26-records-log.png",
+        "id": "repo:docs/note/images/25-report-print.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Homework_barcordreader/a3050fef3643decc981d4fcffdaa55806e8eda2e/docs/note/images/25-report-print.png",
         "kind": "repo",
-        "label": "きろく／あしあと"
-      },
-      {
-        "id": "repo:docs/note/images/27-records-map.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/KEISAN-BLOCK/0546780fbc8dd7df882446ecd26c6604f405294e/docs/note/images/27-records-map.png",
-        "kind": "repo",
-        "label": "きろく／けいさんマップ"
+        "label": "保護者面談サマリーの印刷レイアウト"
       }
     ],
     "Keisan-Card": [
@@ -619,6 +991,150 @@
         "src": "media/Gamification-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-login-bonus.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/01-login-bonus.png",
+        "kind": "repo",
+        "label": "ログインボーナス"
+      },
+      {
+        "id": "repo:docs/note/images/02-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/02-home.png",
+        "kind": "repo",
+        "label": "ホーム画面"
+      },
+      {
+        "id": "repo:docs/note/images/03-assignments.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/03-assignments.png",
+        "kind": "repo",
+        "label": "届いたかだい"
+      },
+      {
+        "id": "repo:docs/note/images/04-assignment-claim.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/04-assignment-claim.png",
+        "kind": "repo",
+        "label": "うけとったところ"
+      },
+      {
+        "id": "repo:docs/note/images/05-apps.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/05-apps.png",
+        "kind": "repo",
+        "label": "がくしゅうアプリ"
+      },
+      {
+        "id": "repo:docs/note/images/06-missions.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/06-missions.png",
+        "kind": "repo",
+        "label": "ミッション"
+      },
+      {
+        "id": "repo:docs/note/images/07-record-menu.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/07-record-menu.png",
+        "kind": "repo",
+        "label": "きろくをえらぶ"
+      },
+      {
+        "id": "repo:docs/note/images/08-record-form.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/08-record-form.png",
+        "kind": "repo",
+        "label": "しつもんはひとつずつ"
+      },
+      {
+        "id": "repo:docs/note/images/09-record-saved.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/09-record-saved.png",
+        "kind": "repo",
+        "label": "きろくできた"
+      },
+      {
+        "id": "repo:docs/note/images/10-effort-calendar.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/10-effort-calendar.png",
+        "kind": "repo",
+        "label": "がんばりカレンダー"
+      },
+      {
+        "id": "repo:docs/note/images/11-badges.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/11-badges.png",
+        "kind": "repo",
+        "label": "バッジ"
+      },
+      {
+        "id": "repo:docs/note/images/12-gacha-result.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/12-gacha-result.png",
+        "kind": "repo",
+        "label": "ガチャの結果"
+      },
+      {
+        "id": "repo:docs/note/images/13-cheer.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/13-cheer.png",
+        "kind": "repo",
+        "label": "おうえんする"
+      },
+      {
+        "id": "repo:docs/note/images/14-font-large.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/14-font-large.png",
+        "kind": "repo",
+        "label": "文字を大きくしたところ"
+      },
+      {
+        "id": "repo:docs/note/images/15-portal-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/15-portal-home.png",
+        "kind": "repo",
+        "label": "学習ポータル"
+      },
+      {
+        "id": "repo:docs/note/images/16-portal-send.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/16-portal-send.png",
+        "kind": "repo",
+        "label": "きろくを送ったところ"
+      },
+      {
+        "id": "repo:docs/note/images/17-portal-settings.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/17-portal-settings.png",
+        "kind": "repo",
+        "label": "せっていと接続テスト"
+      },
+      {
+        "id": "repo:docs/note/images/18-teacher-dashboard.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/18-teacher-dashboard.png",
+        "kind": "repo",
+        "label": "ダッシュボード"
+      },
+      {
+        "id": "repo:docs/note/images/19-teacher-assignment-form.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/19-teacher-assignment-form.png",
+        "kind": "repo",
+        "label": "課題を出す"
+      },
+      {
+        "id": "repo:docs/note/images/20-teacher-assignment-rate.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/20-teacher-assignment-rate.png",
+        "kind": "repo",
+        "label": "提出率と未提出者"
+      },
+      {
+        "id": "repo:docs/note/images/21-teacher-matrix.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/21-teacher-matrix.png",
+        "kind": "repo",
+        "label": "児童と課題の一覧"
+      },
+      {
+        "id": "repo:docs/note/images/22-teacher-studylog.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/22-teacher-studylog.png",
+        "kind": "repo",
+        "label": "学習アプリのとりくみ"
+      },
+      {
+        "id": "repo:docs/note/images/23-teacher-stumbles.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/23-teacher-stumbles.png",
+        "kind": "repo",
+        "label": "クラスのつまずき問題"
+      },
+      {
+        "id": "repo:docs/note/images/24-teacher-grades.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Gamification/f20afcf64b2a9e8d561b019bf0e5c9375265e457/docs/note/images/24-teacher-grades.png",
+        "kind": "repo",
+        "label": "テスト成績の一覧"
       }
     ],
     "online-100square-calculation": [
@@ -743,6 +1259,150 @@
         "src": "media/Hagetaka-game-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/01-home.png",
+        "kind": "repo",
+        "label": "ホーム画面"
+      },
+      {
+        "id": "repo:docs/note/images/02-rules.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/02-rules.png",
+        "kind": "repo",
+        "label": "「？」から開くあそびかた"
+      },
+      {
+        "id": "repo:docs/note/images/03-create-name.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/03-create-name.png",
+        "kind": "repo",
+        "label": "へやをつくる。なまえ入力"
+      },
+      {
+        "id": "repo:docs/note/images/04-waiting-alone.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/04-waiting-alone.png",
+        "kind": "repo",
+        "label": "できたての待機室。あいことばが出ている"
+      },
+      {
+        "id": "repo:docs/note/images/05-join-form.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/05-join-form.png",
+        "kind": "repo",
+        "label": "へやにはいる。なまえとあいことば入力"
+      },
+      {
+        "id": "repo:docs/note/images/06-waiting-host.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/06-waiting-host.png",
+        "kind": "repo",
+        "label": "4人そろった待機室（ホスト側）"
+      },
+      {
+        "id": "repo:docs/note/images/07-waiting-guest.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/07-waiting-guest.png",
+        "kind": "repo",
+        "label": "待機室（入った子ども側）"
+      },
+      {
+        "id": "repo:docs/note/images/08-selecting.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/08-selecting.png",
+        "kind": "repo",
+        "label": "対戦中。えものと手札"
+      },
+      {
+        "id": "repo:docs/note/images/09-selected.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/09-selected.png",
+        "kind": "repo",
+        "label": "カードを出したあと。しるしだけ付く"
+      },
+      {
+        "id": "repo:docs/note/images/10-minus-prize.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/10-minus-prize.png",
+        "kind": "repo",
+        "label": "マイナスのえもののラウンド"
+      },
+      {
+        "id": "repo:docs/note/images/11-batting.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/11-batting.png",
+        "kind": "repo",
+        "label": "2人がバッティングし、別の人が取った"
+      },
+      {
+        "id": "repo:docs/note/images/12-carry-over.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/12-carry-over.png",
+        "kind": "repo",
+        "label": "全員バッティングで もちこし が発生"
+      },
+      {
+        "id": "repo:docs/note/images/13-carry-total.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/13-carry-total.png",
+        "kind": "repo",
+        "label": "もちこしが乗った次のラウンド"
+      },
+      {
+        "id": "repo:docs/note/images/14-revealing.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/14-revealing.png",
+        "kind": "repo",
+        "label": "全員そろって「けっかを みる！」が出た"
+      },
+      {
+        "id": "repo:docs/note/images/15-pc.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/15-pc.png",
+        "kind": "repo",
+        "label": "パソコンの横長画面"
+      },
+      {
+        "id": "repo:docs/note/images/16-scoring-win.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/16-scoring-win.png",
+        "kind": "repo",
+        "label": "プラスのえものを取った"
+      },
+      {
+        "id": "repo:docs/note/images/17-scoring-lose.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/17-scoring-lose.png",
+        "kind": "repo",
+        "label": "マイナスを引き取ってしまった"
+      },
+      {
+        "id": "repo:docs/note/images/18-final.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/18-final.png",
+        "kind": "repo",
+        "label": "15ラウンド終了。結果発表"
+      },
+      {
+        "id": "repo:docs/note/images/19-final-guest.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/19-final-guest.png",
+        "kind": "repo",
+        "label": "同じ場面を別の子の端末で見たところ"
+      },
+      {
+        "id": "repo:docs/note/images/20-robot-waiting.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/20-robot-waiting.png",
+        "kind": "repo",
+        "label": "ロボを2体入れた待機室"
+      },
+      {
+        "id": "repo:docs/note/images/21-robot-selecting.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/21-robot-selecting.png",
+        "kind": "repo",
+        "label": "ロボとの対戦中"
+      },
+      {
+        "id": "repo:docs/note/images/22-robot-revealing.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/22-robot-revealing.png",
+        "kind": "repo",
+        "label": "ロボが自動でカードを出し終えた"
+      },
+      {
+        "id": "repo:docs/note/images/23-robot-result.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/23-robot-result.png",
+        "kind": "repo",
+        "label": "人とロボがバッティングし、もう1体が取った"
+      },
+      {
+        "id": "repo:docs/note/images/24-robot-final.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Hagetaka-game/4e90b65228a45854120a376455818dfced20843d/docs/note/images/24-robot-final.png",
+        "kind": "repo",
+        "label": "ロボとの勝負の結果発表"
       }
     ],
     "Typa": [
@@ -751,6 +1411,150 @@
         "src": "media/Typa-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/01-home.png",
+        "kind": "repo",
+        "label": "ひらいた画面"
+      },
+      {
+        "id": "repo:docs/note/images/02-typing.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/02-typing.png",
+        "kind": "repo",
+        "label": "打っているところ"
+      },
+      {
+        "id": "repo:docs/note/images/03-star3.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/03-star3.png",
+        "kind": "repo",
+        "label": "★3つでつぎのステージへ"
+      },
+      {
+        "id": "repo:docs/note/images/04-result.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/04-result.png",
+        "kind": "repo",
+        "label": "けっか画面"
+      },
+      {
+        "id": "repo:docs/note/images/05-result-detail.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/05-result-detail.png",
+        "kind": "repo",
+        "label": "けっか画面をくわしく見たところ"
+      },
+      {
+        "id": "repo:docs/note/images/06-select.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/06-select.png",
+        "kind": "repo",
+        "label": "えらぶ"
+      },
+      {
+        "id": "repo:docs/note/images/07-courses.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/07-courses.png",
+        "kind": "repo",
+        "label": "コース一覧"
+      },
+      {
+        "id": "repo:docs/note/images/08-stages.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/08-stages.png",
+        "kind": "repo",
+        "label": "ローマ字コースのステージ一覧"
+      },
+      {
+        "id": "repo:docs/note/images/09-romaji.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/09-romaji.png",
+        "kind": "repo",
+        "label": "ローマ字のステージ"
+      },
+      {
+        "id": "repo:docs/note/images/10-word.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/10-word.png",
+        "kind": "repo",
+        "label": "ことばのステージ"
+      },
+      {
+        "id": "repo:docs/note/images/11-sentence.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/11-sentence.png",
+        "kind": "repo",
+        "label": "文のステージ"
+      },
+      {
+        "id": "repo:docs/note/images/12-shortcut.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/12-shortcut.png",
+        "kind": "repo",
+        "label": "ショートカットのステージ"
+      },
+      {
+        "id": "repo:docs/note/images/13-shortcut-done.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/13-shortcut-done.png",
+        "kind": "repo",
+        "label": "ショートカットで貼り付けたところ"
+      },
+      {
+        "id": "repo:docs/note/images/14-challenge-pick.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/14-challenge-pick.png",
+        "kind": "repo",
+        "label": "チャレンジのえらび"
+      },
+      {
+        "id": "repo:docs/note/images/15-challenge-result.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/15-challenge-result.png",
+        "kind": "repo",
+        "label": "チャレンジのけっか"
+      },
+      {
+        "id": "repo:docs/note/images/16-weak.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/16-weak.png",
+        "kind": "repo",
+        "label": "にがて とっくん"
+      },
+      {
+        "id": "repo:docs/note/images/17-record-today.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/17-record-today.png",
+        "kind": "repo",
+        "label": "きろく きょう"
+      },
+      {
+        "id": "repo:docs/note/images/18-record-weak.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/18-record-weak.png",
+        "kind": "repo",
+        "label": "きろく にがて"
+      },
+      {
+        "id": "repo:docs/note/images/19-record-treasure.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/19-record-treasure.png",
+        "kind": "repo",
+        "label": "きろく たからもの"
+      },
+      {
+        "id": "repo:docs/note/images/20-record-progress.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/20-record-progress.png",
+        "kind": "repo",
+        "label": "きろく あゆみ"
+      },
+      {
+        "id": "repo:docs/note/images/21-settings-hint.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/21-settings-hint.png",
+        "kind": "repo",
+        "label": "せってい ヒント"
+      },
+      {
+        "id": "repo:docs/note/images/22-settings-look.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/22-settings-look.png",
+        "kind": "repo",
+        "label": "せってい みため"
+      },
+      {
+        "id": "repo:docs/note/images/23-settings-keyboard.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/23-settings-keyboard.png",
+        "kind": "repo",
+        "label": "せってい キーボード"
+      },
+      {
+        "id": "repo:docs/note/images/24-settings-data.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Typa/a1acd8f65211cc95afcfdf6965b835c8ce551c7f/docs/note/images/24-settings-data.png",
+        "kind": "repo",
+        "label": "せってい データ"
       }
     ],
     "SchoolPlan_Editor": [
@@ -905,6 +1709,150 @@
         "src": "media/MIRAI-Compass-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-setup.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/01-setup.png",
+        "kind": "repo",
+        "label": "初期設定の画面"
+      },
+      {
+        "id": "repo:docs/note/images/02-teacher-guide.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/02-teacher-guide.png",
+        "kind": "repo",
+        "label": "先生画面のはじめかたガイド"
+      },
+      {
+        "id": "repo:docs/note/images/03-unit-templates.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/03-unit-templates.png",
+        "kind": "repo",
+        "label": "単元テンプレート4種"
+      },
+      {
+        "id": "repo:docs/note/images/04-unit-design.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/04-unit-design.png",
+        "kind": "repo",
+        "label": "単元設計ビュー（縦長）"
+      },
+      {
+        "id": "repo:docs/note/images/05-roster.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/05-roster.png",
+        "kind": "repo",
+        "label": "名簿の貼り付け登録"
+      },
+      {
+        "id": "repo:docs/note/images/06-schedule.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/06-schedule.png",
+        "kind": "repo",
+        "label": "授業配信の入力画面"
+      },
+      {
+        "id": "repo:docs/note/images/07-student-login.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/07-student-login.png",
+        "kind": "repo",
+        "label": "児童のはじめる画面"
+      },
+      {
+        "id": "repo:docs/note/images/08-student-today.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/08-student-today.png",
+        "kind": "repo",
+        "label": "計画を立てる前の「きょう」"
+      },
+      {
+        "id": "repo:docs/note/images/09-teacher-message.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/09-teacher-message.png",
+        "kind": "repo",
+        "label": "先生からのメッセージ"
+      },
+      {
+        "id": "repo:docs/note/images/10-plan.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/10-plan.png",
+        "kind": "repo",
+        "label": "けいかく（並べる前）"
+      },
+      {
+        "id": "repo:docs/note/images/11-plan-done.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/11-plan-done.png",
+        "kind": "repo",
+        "label": "けいかく（並べたあと・縦長）"
+      },
+      {
+        "id": "repo:docs/note/images/12-ws-create.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/12-ws-create.png",
+        "kind": "repo",
+        "label": "WS作成の完了表示"
+      },
+      {
+        "id": "repo:docs/note/images/13-ws-editor-empty.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/13-ws-editor-empty.png",
+        "kind": "repo",
+        "label": "空のワークシート編集画面"
+      },
+      {
+        "id": "repo:docs/note/images/14-ws-manual-ai.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/14-ws-manual-ai.png",
+        "kind": "repo",
+        "label": "手動AI（プロンプトと貼り付け欄）"
+      },
+      {
+        "id": "repo:docs/note/images/15-ws-editor-filled.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/15-ws-editor-filled.png",
+        "kind": "repo",
+        "label": "できあがったワークシート"
+      },
+      {
+        "id": "repo:docs/note/images/16-today-planned.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/16-today-planned.png",
+        "kind": "repo",
+        "label": "計画を立てたあとの「きょう」（縦長）"
+      },
+      {
+        "id": "repo:docs/note/images/17-ws-student-open.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/17-ws-student-open.png",
+        "kind": "repo",
+        "label": "児童が開いたワークシート"
+      },
+      {
+        "id": "repo:docs/note/images/18-ws-student-written.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/18-ws-student-written.png",
+        "kind": "repo",
+        "label": "児童が書きこんだところ"
+      },
+      {
+        "id": "repo:docs/note/images/19-ws-submitted.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/19-ws-submitted.png",
+        "kind": "repo",
+        "label": "提出しましたの表示"
+      },
+      {
+        "id": "repo:docs/note/images/20-task-done.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/20-task-done.png",
+        "kind": "repo",
+        "label": "「できた！」を押したところ"
+      },
+      {
+        "id": "repo:docs/note/images/21-reflection.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/21-reflection.png",
+        "kind": "repo",
+        "label": "ふりかえり（8つの力）"
+      },
+      {
+        "id": "repo:docs/note/images/22-portfolio.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/22-portfolio.png",
+        "kind": "repo",
+        "label": "ポートフォリオ（縦長）"
+      },
+      {
+        "id": "repo:docs/note/images/23-gallery.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/23-gallery.png",
+        "kind": "repo",
+        "label": "みんなのけいかく"
+      },
+      {
+        "id": "repo:docs/note/images/24-sos.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/MIRAI-Compass/7d57879c2ff26856bdf50ec0c503e8683c57814f/docs/note/images/24-sos.png",
+        "kind": "repo",
+        "label": "SOS を押した児童画面"
       }
     ],
     "online-manuscript-paper-pro": [
@@ -913,6 +1861,150 @@
         "src": "media/online-manuscript-paper-pro-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-student-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/01-student-home.png",
+        "kind": "repo",
+        "label": "児童のホーム画面"
+      },
+      {
+        "id": "repo:docs/note/images/02-paper-settings.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/02-paper-settings.png",
+        "kind": "repo",
+        "label": "用紙の設定"
+      },
+      {
+        "id": "repo:docs/note/images/03-writing.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/03-writing.png",
+        "kind": "repo",
+        "label": "作文を書いているところ"
+      },
+      {
+        "id": "repo:docs/note/images/04-open-file.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/04-open-file.png",
+        "kind": "repo",
+        "label": "保存した作品を開く"
+      },
+      {
+        "id": "repo:docs/note/images/05-teacher-empty.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/05-teacher-empty.png",
+        "kind": "repo",
+        "label": "先生モードの管理画面"
+      },
+      {
+        "id": "repo:docs/note/images/06-teacher-pin.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/06-teacher-pin.png",
+        "kind": "repo",
+        "label": "四桁のPINコード"
+      },
+      {
+        "id": "repo:docs/note/images/07-connect-pin.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/07-connect-pin.png",
+        "kind": "repo",
+        "label": "児童のPIN入力"
+      },
+      {
+        "id": "repo:docs/note/images/08-connected.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/08-connected.png",
+        "kind": "repo",
+        "label": "先生と同期済"
+      },
+      {
+        "id": "repo:docs/note/images/09-teacher-3connected.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/09-teacher-3connected.png",
+        "kind": "repo",
+        "label": "三人つながった先生の画面"
+      },
+      {
+        "id": "repo:docs/note/images/10-submit-confirm.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/10-submit-confirm.png",
+        "kind": "repo",
+        "label": "提出の確認"
+      },
+      {
+        "id": "repo:docs/note/images/11-submitted.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/11-submitted.png",
+        "kind": "repo",
+        "label": "提出済で編集できなくなる"
+      },
+      {
+        "id": "repo:docs/note/images/12-teacher-roster.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/12-teacher-roster.png",
+        "kind": "repo",
+        "label": "先生の名簿"
+      },
+      {
+        "id": "repo:docs/note/images/13-drag-select.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/13-drag-select.png",
+        "kind": "repo",
+        "label": "文字をなぞって範囲を選ぶ"
+      },
+      {
+        "id": "repo:docs/note/images/14-correction-modal.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/14-correction-modal.png",
+        "kind": "repo",
+        "label": "コメントを書く"
+      },
+      {
+        "id": "repo:docs/note/images/15-corrected.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/15-corrected.png",
+        "kind": "repo",
+        "label": "赤ペンが入った原稿用紙"
+      },
+      {
+        "id": "repo:docs/note/images/16-student-live-correction.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/16-student-live-correction.png",
+        "kind": "repo",
+        "label": "児童の画面にその場で届いている"
+      },
+      {
+        "id": "repo:docs/note/images/17-student-returned.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/17-student-returned.png",
+        "kind": "repo",
+        "label": "再提出で返したところ"
+      },
+      {
+        "id": "repo:docs/note/images/18-student-bell.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/18-student-bell.png",
+        "kind": "repo",
+        "label": "先生からの返却の一覧"
+      },
+      {
+        "id": "repo:docs/note/images/19-student-comment.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/19-student-comment.png",
+        "kind": "repo",
+        "label": "赤いマスを押すとコメントが読める"
+      },
+      {
+        "id": "repo:docs/note/images/20-student-revised.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/20-student-revised.png",
+        "kind": "repo",
+        "label": "直したあとの作文"
+      },
+      {
+        "id": "repo:docs/note/images/21-teacher-diff.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/21-teacher-diff.png",
+        "kind": "repo",
+        "label": "差分ビュー"
+      },
+      {
+        "id": "repo:docs/note/images/22-student-completed.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/22-student-completed.png",
+        "kind": "repo",
+        "label": "完了になった子どもの画面"
+      },
+      {
+        "id": "repo:docs/note/images/23-teacher-filter.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/23-teacher-filter.png",
+        "kind": "repo",
+        "label": "名簿の絞り込み"
+      },
+      {
+        "id": "repo:docs/note/images/24-teacher-bulk.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/online-manuscript-paper-pro/a83c1d899a6940c9b54b3f5d65383c2e44c74782/docs/note/images/24-teacher-bulk.png",
+        "kind": "repo",
+        "label": "一括操作"
       }
     ],
     "Treasure_Words": [
@@ -932,139 +2024,139 @@
       },
       {
         "id": "repo:docs/note/images/01-home.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/01-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/01-home.png",
         "kind": "repo",
         "label": "アプリを開いたところ"
       },
       {
         "id": "repo:docs/note/images/02-library.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/02-library.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/02-library.png",
         "kind": "repo",
         "label": "PDFを読みこんだあとの棚"
       },
       {
         "id": "repo:docs/note/images/03-textbook.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/03-textbook.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/03-textbook.png",
         "kind": "repo",
         "label": "プリントを開いたところ"
       },
       {
         "id": "repo:docs/note/images/04-toolbar.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/04-toolbar.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/04-toolbar.png",
         "kind": "repo",
         "label": "道具を出したところ"
       },
       {
         "id": "repo:docs/note/images/05-pen.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/05-pen.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/05-pen.png",
         "kind": "repo",
         "label": "えんぴつで丸をつけたところ"
       },
       {
         "id": "repo:docs/note/images/06-marker.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/06-marker.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/06-marker.png",
         "kind": "repo",
         "label": "マーカーで線を引いたところ"
       },
       {
         "id": "repo:docs/note/images/07-sticky.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/07-sticky.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/07-sticky.png",
         "kind": "repo",
         "label": "ふせんを貼ったところ"
       },
       {
         "id": "repo:docs/note/images/08-marked.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/08-marked.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/08-marked.png",
         "kind": "repo",
         "label": "丸つけをしたプリント"
       },
       {
         "id": "repo:docs/note/images/09-stamp-eval.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/09-stamp-eval.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/09-stamp-eval.png",
         "kind": "repo",
         "label": "評価のスタンプ"
       },
       {
         "id": "repo:docs/note/images/10-stamp-math.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/10-stamp-math.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/10-stamp-math.png",
         "kind": "repo",
         "label": "算数のスタンプ"
       },
       {
         "id": "repo:docs/note/images/11-stamp-jp.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/11-stamp-jp.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/11-stamp-jp.png",
         "kind": "repo",
         "label": "国語のスタンプ"
       },
       {
         "id": "repo:docs/note/images/12-math-tools.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/12-math-tools.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/12-math-tools.png",
         "kind": "repo",
         "label": "算数の道具を置いたところ"
       },
       {
         "id": "repo:docs/note/images/13-mystamp.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/13-mystamp.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/13-mystamp.png",
         "kind": "repo",
         "label": "マイスタンプを作る"
       },
       {
         "id": "repo:docs/note/images/14-view-menu.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/14-view-menu.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/14-view-menu.png",
         "kind": "repo",
         "label": "表示のしかたを選ぶ"
       },
       {
         "id": "repo:docs/note/images/15-half.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/15-half.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/15-half.png",
         "kind": "repo",
         "label": "半ページ表示"
       },
       {
         "id": "repo:docs/note/images/16-presentation.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/16-presentation.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/16-presentation.png",
         "kind": "repo",
         "label": "提示モードにしたところ"
       },
       {
         "id": "repo:docs/note/images/17-timer.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/17-timer.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/17-timer.png",
         "kind": "repo",
         "label": "タイマー"
       },
       {
         "id": "repo:docs/note/images/18-shortcuts.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/18-shortcuts.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/18-shortcuts.png",
         "kind": "repo",
         "label": "ショートカット一覧"
       },
       {
         "id": "repo:docs/note/images/19-share.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/19-share.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/19-share.png",
         "kind": "repo",
         "label": "共有の画面"
       },
       {
         "id": "repo:docs/note/images/20-received.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/20-received.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/20-received.png",
         "kind": "repo",
         "label": "子どもの端末に入ったところ"
       },
       {
         "id": "repo:docs/note/images/21-kid-library.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/21-kid-library.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/21-kid-library.png",
         "kind": "repo",
         "label": "子どもの棚"
       },
       {
         "id": "repo:docs/note/images/22-jp-vertical.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/22-jp-vertical.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/22-jp-vertical.png",
         "kind": "repo",
         "label": "国語のプリントに使ったところ"
       },
       {
         "id": "repo:docs/note/images/23-backup.png",
-        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/91dd79fd6453f8d5f1611cd3c374f8e07ff54220/docs/note/images/23-backup.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Digital_textbook/0e8018de93dceb2cd1d4600a6c79973b847ea8a7/docs/note/images/23-backup.png",
         "kind": "repo",
         "label": "バックアップを取り込む画面"
       }
@@ -1075,6 +2167,138 @@
         "src": "media/Reversi-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-home.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/01-home.png",
+        "kind": "repo",
+        "label": "ひらいた直後の 8x8"
+      },
+      {
+        "id": "repo:docs/note/images/02-flip.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/02-flip.png",
+        "kind": "repo",
+        "label": "石を置いてめくれている途中"
+      },
+      {
+        "id": "repo:docs/note/images/03-after-move.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/03-after-move.png",
+        "kind": "repo",
+        "label": "1手打ち終わったところ"
+      },
+      {
+        "id": "repo:docs/note/images/04-cannot-place.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/04-cannot-place.png",
+        "kind": "repo",
+        "label": "「そこには置けません。」"
+      },
+      {
+        "id": "repo:docs/note/images/05-undo.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/05-undo.png",
+        "kind": "repo",
+        "label": "「待った！をしました。」"
+      },
+      {
+        "id": "repo:docs/note/images/06-rules.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/06-rules.png",
+        "kind": "repo",
+        "label": "あそびかたモーダル"
+      },
+      {
+        "id": "repo:docs/note/images/07-sound-off.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/07-sound-off.png",
+        "kind": "repo",
+        "label": "音を消した状態"
+      },
+      {
+        "id": "repo:docs/note/images/08-board-4.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/08-board-4.png",
+        "kind": "repo",
+        "label": "4x4 の盤面"
+      },
+      {
+        "id": "repo:docs/note/images/09-size-error.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/09-size-error.png",
+        "kind": "repo",
+        "label": "5 を入れたときの案内"
+      },
+      {
+        "id": "repo:docs/note/images/10-board-12.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/10-board-12.png",
+        "kind": "repo",
+        "label": "12x12 の盤面"
+      },
+      {
+        "id": "repo:docs/note/images/11-pass.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/11-pass.png",
+        "kind": "repo",
+        "label": "パスの案内"
+      },
+      {
+        "id": "repo:docs/note/images/12-midgame.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/12-midgame.png",
+        "kind": "repo",
+        "label": "中盤の 8x8"
+      },
+      {
+        "id": "repo:docs/note/images/13-winner.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/13-winner.png",
+        "kind": "repo",
+        "label": "勝敗モーダルと紙吹雪"
+      },
+      {
+        "id": "repo:docs/note/images/14-again.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/14-again.png",
+        "kind": "repo",
+        "label": "「もう一度」の直後"
+      },
+      {
+        "id": "repo:docs/note/images/15-keyboard-focus.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/15-keyboard-focus.png",
+        "kind": "repo",
+        "label": "Tab で選んだマスの白い枠"
+      },
+      {
+        "id": "repo:docs/note/images/16-keyboard-placed.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/16-keyboard-placed.png",
+        "kind": "repo",
+        "label": "Enter で置いたところ"
+      },
+      {
+        "id": "repo:docs/note/images/17-phone.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/17-phone.png",
+        "kind": "repo",
+        "label": "390x844（スマートフォン）"
+      },
+      {
+        "id": "repo:docs/note/images/18-chromebook.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/18-chromebook.png",
+        "kind": "repo",
+        "label": "1366x768（Chromebook）"
+      },
+      {
+        "id": "repo:docs/note/images/19-narrow-320.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/19-narrow-320.png",
+        "kind": "repo",
+        "label": "320x568（下限）"
+      },
+      {
+        "id": "repo:docs/note/images/20-landscape.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/20-landscape.png",
+        "kind": "repo",
+        "label": "844x390（横向き）"
+      },
+      {
+        "id": "repo:docs/note/images/21-offline.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/21-offline.png",
+        "kind": "repo",
+        "label": "offline.html"
+      },
+      {
+        "id": "repo:docs/note/images/22-update.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/Reversi/def001e790c0798073c3eb70e849353d77dce0dd/docs/note/images/22-update.png",
+        "kind": "repo",
+        "label": "更新の帯"
       }
     ],
     "DigitalCloset": [
@@ -1083,6 +2307,126 @@
         "src": "media/DigitalCloset-card.png",
         "kind": "card",
         "label": "紹介カード"
+      },
+      {
+        "id": "repo:docs/note/images/01-closet-empty.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/01-closet-empty.png",
+        "kind": "repo",
+        "label": "まだ何も登録していない画面"
+      },
+      {
+        "id": "repo:docs/note/images/03-add-photo.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/03-add-photo.png",
+        "kind": "repo",
+        "label": "写真を選んだところ"
+      },
+      {
+        "id": "repo:docs/note/images/04-add-form.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/04-add-form.png",
+        "kind": "repo",
+        "label": "入力を終えたところ"
+      },
+      {
+        "id": "repo:docs/note/images/05-closet.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/05-closet.png",
+        "kind": "repo",
+        "label": "クローゼットの一覧"
+      },
+      {
+        "id": "repo:docs/note/images/06-filter.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/06-filter.png",
+        "kind": "repo",
+        "label": "絞りこみと並べ替え"
+      },
+      {
+        "id": "repo:docs/note/images/07-closet-outer.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/07-closet-outer.png",
+        "kind": "repo",
+        "label": "アウターだけを表示したところ"
+      },
+      {
+        "id": "repo:docs/note/images/08-search.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/08-search.png",
+        "kind": "repo",
+        "label": "名前で検索したところ"
+      },
+      {
+        "id": "repo:docs/note/images/09-calendar-month.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/09-calendar-month.png",
+        "kind": "repo",
+        "label": "カレンダー"
+      },
+      {
+        "id": "repo:docs/note/images/10-calendar-add.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/10-calendar-add.png",
+        "kind": "repo",
+        "label": "着た服を選ぶ"
+      },
+      {
+        "id": "repo:docs/note/images/11-calendar-day.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/11-calendar-day.png",
+        "kind": "repo",
+        "label": "その日の記録"
+      },
+      {
+        "id": "repo:docs/note/images/12-coord-select.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/12-coord-select.png",
+        "kind": "repo",
+        "label": "組み合わせを選ぶ"
+      },
+      {
+        "id": "repo:docs/note/images/13-coord-list.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/13-coord-list.png",
+        "kind": "repo",
+        "label": "保存した組み合わせ"
+      },
+      {
+        "id": "repo:docs/note/images/14-detail.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/14-detail.png",
+        "kind": "repo",
+        "label": "アイテムの詳細"
+      },
+      {
+        "id": "repo:docs/note/images/15-stats.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/15-stats.png",
+        "kind": "repo",
+        "label": "ダッシュボード"
+      },
+      {
+        "id": "repo:docs/note/images/16-settings.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/16-settings.png",
+        "kind": "repo",
+        "label": "設定の画面"
+      },
+      {
+        "id": "repo:docs/note/images/17-dispose-confirm.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/17-dispose-confirm.png",
+        "kind": "repo",
+        "label": "廃棄の確認"
+      },
+      {
+        "id": "repo:docs/note/images/18-disposed.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/18-disposed.png",
+        "kind": "repo",
+        "label": "廃棄済みの一覧"
+      },
+      {
+        "id": "repo:docs/note/images/19-ai-add.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/19-ai-add.png",
+        "kind": "repo",
+        "label": "写真から読みとる"
+      },
+      {
+        "id": "repo:docs/note/images/20-ai-stylist.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/20-ai-stylist.png",
+        "kind": "repo",
+        "label": "AIスタイリスト"
+      },
+      {
+        "id": "repo:docs/note/images/21-ai-chat.png",
+        "src": "https://raw.githubusercontent.com/GIGAyama/DigitalCloset/cb2ccabf4daf957d6effe70fa8f25e1c50e9c81f/docs/note/images/21-ai-chat.png",
+        "kind": "repo",
+        "label": "AI相談室"
       }
     ],
     "School_plan_note": [
@@ -1126,8 +2470,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "毎朝5分の帯時間、端末を開いてもログインや設定で半分の時間が消えていました。そこで事前準備が一切いらない漢字アプリを作りました。学年を選んでボタンを押すだけで個別練習が始まり、まちづくりを楽しめます。\n\n#KANJI_Town #漢字学習 #GIGAスクール",
-          "weightedLength": 236
+          "text": "毎朝5分の漢字練習、書き順が怪しい子に一人ずつ声をかけるのは限界があります。\nそこで、書き順やとめはねを自動採点するWebアプリを作りました。音読からテストまでの4段階で、4けたの数字でマイドリルを配れます。個別練習に役立つと思います。\n\n#KANJI_Town #漢字学習 #GIGAスクール",
+          "weightedLength": 266
         },
         {
           "kind": "link",
@@ -1136,25 +2480,25 @@
           "weightedLength": 74
         }
       ],
-      "text": "毎朝5分の帯時間、端末を開いてもログインや設定で半分の時間が消えていました。そこで事前準備が一切いらない漢字アプリを作りました。学年を選んでボタンを押すだけで個別練習が始まり、まちづくりを楽しめます。\n\n#KANJI_Town #漢字学習 #GIGAスクール",
+      "text": "毎朝5分の漢字練習、書き順が怪しい子に一人ずつ声をかけるのは限界があります。\nそこで、書き順やとめはねを自動採点するWebアプリを作りました。音読からテストまでの4段階で、4けたの数字でマイドリルを配れます。個別練習に役立つと思います。\n\n#KANJI_Town #漢字学習 #GIGAスクール",
       "url": "https://gigayama.github.io/KANJI_Town/",
       "media": "media/KANJI_Town-card.png",
       "mediaList": [
         "media/KANJI_Town-card.png"
       ],
-      "weightedLength": 236,
+      "weightedLength": 266,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "読めるけれど書けない子の練習方法に、ずっと頭を悩ませていました。そこで筆順や形まで自動採点するアプリを作りました。書き順の間違いは上限69点にして確実に覚え直せます。毎朝の5分で自分のペースで進められます。",
+          "body": "アカウント登録の作業だけで授業の10分が消えていた以前の漢字練習。\nいまは登録不要で、4けたの数字を入れるだけでマイドリルが配れます。1026字の4技能を端末内に個別記録し、書き順の間違いも自動判定します。2学期の帯時間にぴったりです。",
           "thread": []
         },
         {
-          "body": "配って説明するまで2分。アカウント登録なしで始められる漢字アプリを作りました。先生が作ったマイドリルも4けたの数字を入れるだけで配布できます。読みから筆順まで4技能を記録し、授業のスキマ時間にも活躍します。",
+          "body": "漢字のテスト前、子どもによって苦手な字がバラバラで困っていませんか。\n読みや筆順など4技能ごとに習熟度を記録するアプリを用意しました。100点満点の自動採点で、書き順違いは69点上限で弾きます。マイドリルもURLひとつで共有可能です。",
           "thread": []
         }
       ],
-      "pickReason": "朝の5分間帯時間という現場のリアルな時間的制約とトラブル描写から始まっており、一目で場面が目に浮かびます。",
+      "pickReason": "毎朝の漢字練習で書き順指導に手が回らないという具体的な場面が浮かび、教員の共感を得やすいため。",
       "hook": "scene",
       "reprise": null
     },
@@ -1173,8 +2517,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "雨の日の休み時間、端末の画面サイズによってゲーム盤面が崩れることがありました。そこで画面に合わせて自動拡大するよう改修しました。1台の端末を2人で挟んで遊べるスライダーパズルです。オフラインでも滑らかに動きます。\n\n#南極スライダー #ボードゲーム #PWA",
-          "weightedLength": 246
+          "text": "1台の端末を2人で囲んで遊べる、雨の日の休み時間用ゲームです。\n画面更新時にキャッシュが正しく消えるよう内部構造を直しました。スワイプ操作でコマを滑らせて王冠を狙うルールで、ネット環境が不安定な教室でも止まらず動きます。\n\n#ボードゲーム #PWA #お休み時間",
+          "weightedLength": 249
         },
         {
           "kind": "link",
@@ -1183,26 +2527,26 @@
           "weightedLength": 74
         }
       ],
-      "text": "雨の日の休み時間、端末の画面サイズによってゲーム盤面が崩れることがありました。そこで画面に合わせて自動拡大するよう改修しました。1台の端末を2人で挟んで遊べるスライダーパズルです。オフラインでも滑らかに動きます。\n\n#南極スライダー #ボードゲーム #PWA",
+      "text": "1台の端末を2人で囲んで遊べる、雨の日の休み時間用ゲームです。\n画面更新時にキャッシュが正しく消えるよう内部構造を直しました。スワイプ操作でコマを滑らせて王冠を狙うルールで、ネット環境が不安定な教室でも止まらず動きます。\n\n#ボードゲーム #PWA #お休み時間",
       "url": "https://gigayama.github.io/Ice_slide-puzzle/",
       "media": "media/Ice_slide-puzzle-card.png",
       "mediaList": [
         "media/Ice_slide-puzzle-card.png"
       ],
-      "weightedLength": 246,
+      "weightedLength": 249,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "以前はネットがつながらないと遊べませんでしたが、オフラインでも動くPWAに対応しました。雨の日に教室で2人対戦できる氷上パズルゲームです。セキュリティの仕様も見直し、どの端末でも安心して遊べるように更新しました。",
+          "body": "以前のバージョンは、校内の古いキャッシュが残って更新が反映されませんでした。\nそこで今回の更新でCACHE_VERSIONを上げる仕組みへ改修しました。雨の日の休み時間に1台の端末を2人で囲み、オフラインでもすぐ遊べる氷スライドパズルです。",
           "thread": []
         },
         {
-          "body": "児童の端末に古いプログラムが残ってしまうのを防ぐため、キャッシュの管理方法を更新しました。画面のコントラストも改善し、休み時間に1台を2人で囲んで遊べる対戦パズルです。ランダム配置機能で何度も楽しめます。",
+          "body": "学校のWi-Fiが急に切れても遊べるよう、完全オフラインのPWAで作りました。\nスクリプトを外部から分離する修正を行い、より安全に動くよう更新しています。サイコロボタンを押すだけで盤面が切り替わり、雨の日の休み時間に2人で対戦できます。",
           "thread": []
         }
       ],
-      "pickReason": "雨の日の休み時間と端末の画面サイズ崩れという具体的な場面設定が、読者の実体験に強く重なります。",
-      "hook": "scene",
+      "pickReason": "雨の日の休み時間に1台の端末を2人で囲むという教室の情景が鮮明で、試してみたくなるため。",
+      "hook": "number",
       "reprise": null
     },
     {
@@ -1220,8 +2564,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "雨の日の10分休み、カードゲームの現物が足りずに困る場面がありました。画面共有や1台の端末で2から6人が遊べるアプリを導入して、ルール共有や片付けの手間が省けると気づきました。激ムズから無制限まで調整も自在です。\n\n#しりとり #カードゲーム #レク",
-          "weightedLength": 238
+          "text": "低学年の児童だけだと説明文の漢字が読めず、ルール説明で15分つぶれていました。\nAIで教材を作る際、画面のあらゆる漢字にふりがなを振る大切さに気づきました。言葉の学習アプリでも1台を班で囲み、子どもたちだけで自主的に遊べるようになります。\n\n#しりとり #国語 #語彙",
+          "weightedLength": 255
         },
         {
           "kind": "link",
@@ -1230,26 +2574,26 @@
           "weightedLength": 76
         }
       ],
-      "text": "雨の日の10分休み、カードゲームの現物が足りずに困る場面がありました。画面共有や1台の端末で2から6人が遊べるアプリを導入して、ルール共有や片付けの手間が省けると気づきました。激ムズから無制限まで調整も自在です。\n\n#しりとり #カードゲーム #レク",
+      "text": "低学年の児童だけだと説明文の漢字が読めず、ルール説明で15分つぶれていました。\nAIで教材を作る際、画面のあらゆる漢字にふりがなを振る大切さに気づきました。言葉の学習アプリでも1台を班で囲み、子どもたちだけで自主的に遊べるようになります。\n\n#しりとり #国語 #語彙",
       "url": "https://gigayama.github.io/word_basket/",
       "media": "media/word_basket-card.png",
       "mediaList": [
         "media/word_basket-card.png"
       ],
-      "weightedLength": 238,
+      "weightedLength": 255,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "休み時間のカードゲームで、カードの紛失や片付けに時間がかかっていませんか。1台の端末を囲んで遊べるしりとりアプリを試して気づいたのは、物理的な管理を減らすと子どもが遊びに集中できることです。準備ゼロで楽しめます。",
+          "body": "紙のカードゲームだと紛失や片付けで毎回10分近くかかっていました。\nデジタル化により片付けの負担がゼロになると同時に、低学年でも読めるよう全漢字にルビを振る工夫が重要だと感じます。1台を2〜6人で囲み語彙力を伸ばすきっかけになります。",
           "thread": []
         },
         {
-          "body": "以前はレクの準備でカードの整理に毎回10分以上使っていました。デジタルで完結する仕組みを試して、ルールの理解が早まり全員が参加しやすくなると気づきました。オフライン動作でいつでも教室で遊べる環境が作れます。",
+          "body": "共用端末のデータ消去作業をなくすため、個人情報の入力を全廃しました。\nAIを活用したアプリ開発では、機能を足すことより「現場の手間を減らすために削る」視点が大切だと実感しています。言葉集めの時間に1台でサクッと遊べる設計を目指します。",
           "thread": []
         }
       ],
-      "pickReason": "雨の日の10分休みという具体的な時間と場所の状況設定により、カード不足の困りごとが目の前で実感できます。",
-      "hook": "scene",
+      "pickReason": "低学年で説明文の漢字が読めず授業がつぶれるというリアルな困りごとからルビの重要性に繋げており納得感が高いため。",
+      "hook": "confess",
       "reprise": null
     },
     {
@@ -1267,8 +2611,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "知らない言葉が出て言い争いになりそうなときは、国語辞典を開くルールにしています。しりとりアプリの判定結果に頼りすぎず自分で調べるきっかけになり、辞書引きの練習にもつながります。CPU対戦でも一人で活用できます。\n\n#しりとり #小学校 #国語",
-          "weightedLength": 232
+          "text": "拡大モードで電子黒板に映すと、教室の一番後ろの席からでもはっきり見えます。\nしりとり対戦アプリを使うときは、この表示モードがおすすめです。音声入力やひらがな自動変換がついているので、タイピングが苦手な低学年でもクラス全体で楽しめます。\n\n#しりとり #Webアプリ #国語",
+          "weightedLength": 261
         },
         {
           "kind": "link",
@@ -1277,25 +2621,25 @@
           "weightedLength": 68
         }
       ],
-      "text": "知らない言葉が出て言い争いになりそうなときは、国語辞典を開くルールにしています。しりとりアプリの判定結果に頼りすぎず自分で調べるきっかけになり、辞書引きの練習にもつながります。CPU対戦でも一人で活用できます。\n\n#しりとり #小学校 #国語",
+      "text": "拡大モードで電子黒板に映すと、教室の一番後ろの席からでもはっきり見えます。\nしりとり対戦アプリを使うときは、この表示モードがおすすめです。音声入力やひらがな自動変換がついているので、タイピングが苦手な低学年でもクラス全体で楽しめます。\n\n#しりとり #Webアプリ #国語",
       "url": "https://gigayama.github.io/Shiritori_fighter/",
       "media": "media/Shiritori_fighter-card.png",
       "mediaList": [
         "media/Shiritori_fighter-card.png"
       ],
-      "weightedLength": 232,
+      "weightedLength": 261,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "1回の対戦はHP30の10秒設定にしています。この短時間設定にすると授業のすきま2分でサクッと国語の言葉遊びができます。キーボードが苦手な子もマイクで入力できるので、低学年でも対戦を楽しめるのが魅力だと思います。",
+          "body": "1台の端末を二人で交代しながら使えば、休み時間の5分間で楽しく遊べます。\n「大きく表示」機能を使うのがポイントです。電子黒板に映してクラス全体で見せることもでき、外部通信が一切ないため学校のフィルタリングに引っかかる心配もありません。",
           "thread": []
         },
         {
-          "body": "紙のしりとりでは入力の遅い子が不利でしたが、音声入力を使うとタイピングの速さに関係なく対戦できます。ひらがなに自動変換されるので低学年でもすぐ参加できます。休み時間の1台交互利用にもおすすめの工夫です。",
+          "body": "雨の日の休み時間、低学年の子がキーボード入力で苦戦していませんか。\nマイク入力や全自動ひらがな変換を有効にして使うのがコツです。ローマ字が未履修の学年でも言葉の発声でサクサク対戦でき、1台の端末で楽しく語彙力を伸ばせます。",
           "thread": []
         }
       ],
-      "pickReason": "トラブル対応から国語辞典の活用へと授業の指導工夫に昇華させており、明日からそのまま教室で実践できる内容です。",
+      "pickReason": "電子黒板に映した際の教室の一番後ろからの視認性という、実際の授業ですぐ役立つTipsになっているため。",
       "hook": "scene",
       "reprise": null
     },
@@ -1314,8 +2658,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "算数の時間、紙の計算カードを落としてバラバラにする場面がよくありました。そこで画面上でめくって仕分ける九九アプリを作りました。選んだカードが「できた」になるまで終わらないので、苦手な問題だけをくり返し練習できます。\n\n#九九 #かけ算 #算数",
-          "weightedLength": 235
+          "text": "九九の練習で、苦手なカードだけを抜き出して並べ替えるのは一苦労です。\nそこで作ったのが、めくって「できた」「もういちど」に仕分けるアプリです。全問正解するまで終わらない設計で、朝の5分の反復練習やペア学習ですぐに使えます。\n\n#九九 #計算カード #算数",
+          "weightedLength": 245
         },
         {
           "kind": "link",
@@ -1324,25 +2668,25 @@
           "weightedLength": 80
         }
       ],
-      "text": "算数の時間、紙の計算カードを落としてバラバラにする場面がよくありました。そこで画面上でめくって仕分ける九九アプリを作りました。選んだカードが「できた」になるまで終わらないので、苦手な問題だけをくり返し練習できます。\n\n#九九 #かけ算 #算数",
+      "text": "九九の練習で、苦手なカードだけを抜き出して並べ替えるのは一苦労です。\nそこで作ったのが、めくって「できた」「もういちど」に仕分けるアプリです。全問正解するまで終わらない設計で、朝の5分の反復練習やペア学習ですぐに使えます。\n\n#九九 #計算カード #算数",
       "url": "https://gigayama.github.io/KAKE_Master/",
       "media": "media/KAKE_Master-card.png",
       "mediaList": [
         "media/KAKE_Master-card.png"
       ],
-      "weightedLength": 235,
+      "weightedLength": 245,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "紙のカードではペア学習の交代に時間がかかっていました。このアプリの「ふたりでもんだい」モードなら、1台で友達と交互に問題を出し合えます。通信不要で個人情報も保持しないため、毎日の反復練習に安心して使えます。",
+          "body": "紙の計算カードだとペアで答え合わせをする際に10分以上かかっていました。\nこのアプリの「ふたりでもんだい」を使えば、隣同士で○×判定がスムーズにできます。全問正解するまで仕分けが続くので、苦手な段の克服に活用できると考えています。",
           "thread": []
         },
         {
-          "body": "配って準備するまで1分。通信環境が不安定な教室でも止まらず動く九九アプリを作りました。電子黒板に全画面表示してクラス全体で確認するのにも使えます。誤答のある記録を残さない全問正解基準で達成感も育ちます。",
+          "body": "2年生の九九学習で、いつも同じ段でつまずく子はいませんか。\n間違えたカードが何度も出る仕分け型の九九アプリを作りました。1人でカードをめくる練習はもちろん、ペアで問題を出し合うモードも搭載しており、毎日の反復学習に最適です。",
           "thread": []
         }
       ],
-      "pickReason": "低学年担任が誰もが経験する計算カード落下の光景から入っており、共感と引き込みが非常に強いです。",
+      "pickReason": "九九カードで苦手な問題だけを抜き出す手間の再現度が高く、紙からアプリにする理由が明確だから。",
       "hook": "scene",
       "reprise": null
     },
@@ -1361,8 +2705,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "単元のワークシートをゼロから作り、放課後に全員分を添削する作業に毎日1時間以上かかっていました。そこでAIがワークシート作成から添削まで支援するアプリを作りました。名前入力だけでログイン不要で使え、返却もスムーズです。\n\n#みらいパスポート #AI #ワークシート",
-          "weightedLength": 252
+          "text": "提出された全員分のシートに手書きでコメントを返すのは、放課後まるまる必要でした。\nこのアプリならAIが自動でワークシートを生成し、提出物の添削まで補助してくれます。アカウント設定も不要なので、2学期の自由進度学習で大幅に準備を減らせます。\n\n#自由進度学習 #GAS #教育DX",
+          "weightedLength": 262
         },
         {
           "kind": "link",
@@ -1371,26 +2715,26 @@
           "weightedLength": 80
         }
       ],
-      "text": "単元のワークシートをゼロから作り、放課後に全員分を添削する作業に毎日1時間以上かかっていました。そこでAIがワークシート作成から添削まで支援するアプリを作りました。名前入力だけでログイン不要で使え、返却もスムーズです。\n\n#みらいパスポート #AI #ワークシート",
+      "text": "提出された全員分のシートに手書きでコメントを返すのは、放課後まるまる必要でした。\nこのアプリならAIが自動でワークシートを生成し、提出物の添削まで補助してくれます。アカウント設定も不要なので、2学期の自由進度学習で大幅に準備を減らせます。\n\n#自由進度学習 #GAS #教育DX",
       "url": "https://gigayama.github.io/MIRAI-Passport/",
       "media": "media/MIRAI-Passport-card.png",
       "mediaList": [
         "media/MIRAI-Passport-card.png"
       ],
-      "weightedLength": 252,
+      "weightedLength": 262,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "ワークシートを印刷するたび、レイアウトが崩れて調整に10分費やしていました。このアプリなら画面上で作成し児童へリンク配布できます。スプレッドシート等で動作し、個人のAPIキーで安全に管理しながら添削負担を減らせます。",
+          "body": "以前はワークシートをゼロから自作するのに毎晩1時間以上かかっていました。\nプリントの印刷やレイアウト調整も大変です。今はAIが計画から提出・添削までを支援するアプリを作りました。児童はログイン不要で名前を入れるだけで提出まで完了します。",
           "thread": []
         },
         {
-          "body": "以前は児童のアカウント登録やログインのトラブルで授業の最初の5分が潰れていました。アカウント不要の設計に変えたことで、名前を入れるだけで全員が課題を始められます。自由進度学習の個別コメント記入も楽になりました。",
+          "body": "従来は印刷のたびに枠線が崩れ、修正のために何度も刷り直していました。\nGoogleスプレッドシート上で動作するAI活用アプリに変えてからは、リンク配付だけで完結します。作成から採点・返却まで一貫して行えるため、教材研究の時間を確保できます。",
           "thread": []
         }
       ],
-      "pickReason": "放課後の全員分添削で1時間以上かかるというリアルな時間的コストの困りごとに直接切り込んでいます。",
-      "hook": "confess",
+      "pickReason": "放課後まるまる潰れる手書きコメント返信の負担を解消するという、今まさに悩んでいる点に響くため。",
+      "hook": "number",
       "reprise": null
     },
     {
@@ -1408,8 +2752,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "児童の回線切れや保存忘れで文章が消えてしまうトラブルに悩んでいました。そのため20秒ごとの自動保存とオフラインの一時保存機能を実装しました。原稿用紙や本形式のプレビューができ、友達の作品をめくって読み合えます。\n\n#原稿用紙 #GoogleAppsScript #Webアプリ",
-          "weightedLength": 248
+          "text": "Chromebookのタブをうっかり閉じられて作文が消える事故を防ぐために作りました。\n20秒ごとの自動保存とオフライン保存を組み込んでいます。GASと単一HTMLで構築したためサーバー不要で導入でき、放課後のAI添削補助まで一貫して行えます。\n\n#オンライン出版社Pro #作文 #GAS",
+          "weightedLength": 255
         },
         {
           "kind": "link",
@@ -1418,26 +2762,26 @@
           "weightedLength": 76
         }
       ],
-      "text": "児童の回線切れや保存忘れで文章が消えてしまうトラブルに悩んでいました。そのため20秒ごとの自動保存とオフラインの一時保存機能を実装しました。原稿用紙や本形式のプレビューができ、友達の作品をめくって読み合えます。\n\n#原稿用紙 #GoogleAppsScript #Webアプリ",
+      "text": "Chromebookのタブをうっかり閉じられて作文が消える事故を防ぐために作りました。\n20秒ごとの自動保存とオフライン保存を組み込んでいます。GASと単一HTMLで構築したためサーバー不要で導入でき、放課後のAI添削補助まで一貫して行えます。\n\n#オンライン出版社Pro #作文 #GAS",
       "url": "https://gigayama.github.io/Online-Publisher-pro/",
       "media": "media/Online-Publisher-pro-card.png",
       "mediaList": [
         "media/Online-Publisher-pro-card.png"
       ],
-      "weightedLength": 248,
+      "weightedLength": 255,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "外部サーバーの契約や面倒なビルド作業があると学校で導入できない制約がありました。そこでGASと単一HTMLだけで完結する作文アプリを作りました。環境構築なしですぐ使え、Gemini AIによる小学生向けの添削支援も動きます。",
+          "body": "原稿用紙のマス目や改行の指導だけで、45分の授業が半分終わってしまうことがありました。\nそこで縦書きプレビューとAI添削アシストがついたWebエディタを開発しました。ビルド作業不要の構成にしたので、校内ネットワークでも安全・軽量に動きます。",
           "thread": []
         },
         {
-          "body": "赤ペンでの添削作業に1クラス30人分で1時間以上かかっていました。ドラッグ操作の赤入れとAI添削アシストを組み合わせたアプリにした結果、チェック時間が大幅に短縮できました。学年に合わせてマス目の切り替えも可能です。",
+          "body": "全員の作文に1枚ずつ手動で赤入れをする作業に、毎回放課後の2時間を費やしていました。\n教員の負担を減らすため、原稿用紙上での直感赤入れとGeminiによるAI添削機能を実装しました。通信量を抑える画像縮小処理も施し、Chromebookでも軽快です。",
           "thread": []
         }
       ],
-      "pickReason": "通信エラーによる文章消失という現場のヒヤリハットに対応した自動保存機能のありがたさが直感的に伝わります。",
-      "hook": "confess",
+      "pickReason": "タブを誤って閉じてデータが消えるというChromebook活用時の大惨事を防ぐ視点が現場に刺さるため。",
+      "hook": "reason",
       "reprise": null
     },
     {
@@ -1450,40 +2794,40 @@
       "hour": 21,
       "theme": "tips",
       "themeLabel": "使い方Tips",
-      "repo": "KEISAN-BLOCK",
+      "repo": "Homework_barcordreader",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "正解後の手順表示はあえて5秒間「つぎへ」を押せない仕様にしています。正解してすぐに次へ行かず、画面に出た計算のしかたを全員で声に出して確認するためです。この短い時間を作ることで計算手順の定着が深まると感じています。\n\n#小学校1年生 #PWA #ICT教育",
-          "weightedLength": 241
+          "text": "朝の会までの3分間で、宿題の提出と児童の体調把握を同時に終わらせるコツがあります。\n受付端末にテンキーで番号を打たせ、宿題ときもちを選ばせる運用です。過去の提出率から「おやすみ日」を自動判定するため、不当な未提出扱いを防いで記録を管理できます。\n\n#校務DX #忘れ物記録 #ICT活用",
+          "weightedLength": 272
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/KEISAN-BLOCK/",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/Homework_barcordreader/",
           "weightedLength": 68
         }
       ],
-      "text": "正解後の手順表示はあえて5秒間「つぎへ」を押せない仕様にしています。正解してすぐに次へ行かず、画面に出た計算のしかたを全員で声に出して確認するためです。この短い時間を作ることで計算手順の定着が深まると感じています。\n\n#小学校1年生 #PWA #ICT教育",
-      "url": "https://gigayama.github.io/KEISAN-BLOCK/",
-      "media": "media/KEISAN-BLOCK-card.png",
+      "text": "朝の会までの3分間で、宿題の提出と児童の体調把握を同時に終わらせるコツがあります。\n受付端末にテンキーで番号を打たせ、宿題ときもちを選ばせる運用です。過去の提出率から「おやすみ日」を自動判定するため、不当な未提出扱いを防いで記録を管理できます。\n\n#校務DX #忘れ物記録 #ICT活用",
+      "url": "https://gigayama.github.io/Homework_barcordreader/",
+      "media": "media/Homework_barcordreader-card.png",
       "mediaList": [
-        "media/KEISAN-BLOCK-card.png"
+        "media/Homework_barcordreader-card.png"
       ],
-      "weightedLength": 241,
+      "weightedLength": 272,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "授業の冒頭、電子黒板に「大きく表示」で映して教師が問いかけながら全体指導をしています。さくらんぼ計算の手順やブロックの動きが視覚的に伝わるので、1年生が繰り上がり・繰り下がりのイメージを持ちやすくなると思います。",
+          "body": "登校してすぐの朝の受付時間に、教室の端末前で番号入力と提出確認をさせます。\n宿題の提出状況と4つの「きもち」を同時に選ばせる使い方がおすすめです。未確認の児童や欠席者が一覧で把握でき、朝の会の直後に校務チェックが1分で完了します。",
           "thread": []
         },
         {
-          "body": "児童がプリントでつまずいた式、どう共有していますか。「じぶんでしきをいれる」モードを使い、その場で式を入力してブロック操作を見せると全体で解説できます。通信なしで動作し個人記録も荒らさないのでデモにも最適です。",
+          "body": "毎朝の宿題チェックと健康観察で、朝の会の開始が遅れていませんか。\n受付用の端末を1台置いて、児童自身に番号入力と状況選択をさせる方法が効果的です。出欠や忘れ物履歴まで一括管理できるため、提出忘れの集計にかかる手間が大幅に減ります。",
           "thread": []
         }
       ],
-      "pickReason": "あえて5秒待たせるという具体的な指導上の工夫が書かれており、授業づくりの参考として価値が高いです。",
+      "pickReason": "朝の会までの3分間で宿題確認と体調把握を終わらせる手順が極めて具体的で真似しやすいため。",
       "hook": "number",
       "reprise": null
     },
@@ -1502,8 +2846,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "間違えたカードを飛ばしてしまい計算が定着しないことに悩んでいました。全問正解するまで間違えた問題が繰り返し出る仕様にして気づいたのは、「1回目で正解した枚数」を指標にすると子どもの成長が実感しやすくなることです。\n\n#小学1年生 #GIGAスクール #算数",
-          "weightedLength": 243
+          "text": "紙の計算カードは落としてバラバラになり、探すだけで5分経つことがよくありました。\nAIを活用してアプリ化する際、単にデジタル化するだけでなく「間違えた問題だけ最後に繰り返し出る」ロジックを入れる重要性に気づきました。隙間時間の反復に効果的です。\n\n#計算カード #算数 #小学1年生",
+          "weightedLength": 270
         },
         {
           "kind": "link",
@@ -1512,25 +2856,25 @@
           "weightedLength": 74
         }
       ],
-      "text": "間違えたカードを飛ばしてしまい計算が定着しないことに悩んでいました。全問正解するまで間違えた問題が繰り返し出る仕様にして気づいたのは、「1回目で正解した枚数」を指標にすると子どもの成長が実感しやすくなることです。\n\n#小学1年生 #GIGAスクール #算数",
+      "text": "紙の計算カードは落としてバラバラになり、探すだけで5分経つことがよくありました。\nAIを活用してアプリ化する際、単にデジタル化するだけでなく「間違えた問題だけ最後に繰り返し出る」ロジックを入れる重要性に気づきました。隙間時間の反復に効果的です。\n\n#計算カード #算数 #小学1年生",
       "url": "https://gigayama.github.io/Keisan-Card/",
       "media": "media/Keisan-Card-card.png",
       "mediaList": [
         "media/Keisan-Card-card.png"
       ],
-      "weightedLength": 243,
+      "weightedLength": 270,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "学校のフィルタリングで外部CDNが遮断され画面が白くなる問題を防ぐため、全コードを同梱する作りにしました。制約の中でアプリを作る際、通信に依存しない構造にすることが教室での安定した活用に不可欠だと実感しました。",
+          "body": "学校の厳しい通信制限で画面が白くなるのを防ぐため、全コードを同梱して作りました。\n教材アプリの開発では、ネット接続を前提としない設計が現場では不可欠だと実感しています。全問正解するまで終わらない仕組みで、1年生の計算力を無理なく高められます。",
           "thread": []
         },
         {
-          "body": "1年生が間違えて誤操作してしまう場面を減らすため、答えを表示した後にのみスワイプを受け付けるようにしました。AIツールで設計する際も、児童の操作行動を細かく限定することが混乱を防ぐ鍵になると考えています。",
+          "body": "紙では苦手な式を飛ばしてしまいがちでしたが、アプリなら全問正解までループできます。\n間違えたカードが自動で再出題される仕組みを組むことで、子どもが達成感を味わいやすいと気づきました。1回目の正答率を記録して、日々の成長を可視化できます。",
           "thread": []
         }
       ],
-      "pickReason": "間違いを飛ばしてしまう子への指導上の悩みに焦点を当てており、学力定着に向けた具体的な気づきとなっています。",
+      "pickReason": "散らばったカードを探すだけで5分経つという1年生担任共通の痛みに完璧に寄り添えているため。",
       "hook": "confess",
       "reprise": null
     },
@@ -1549,8 +2893,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "動画編集の授業で漢字の操作画面が読めず、低学年の子から何度も質問されて対応に追われていました。すべての操作文字にふりがなを付け、アカウント不要で動くアプリを用意したところ、子どもが一人で進められるようになりました。\n\n#動画編集 #GIGAスクール #ふりがな",
-          "weightedLength": 249
+          "text": "低学年の動画編集、漢字が読めず質問攻めで作業が2分ごとに中断していました。そこで全画面ふりがな付きでログイン不要のアプリを用意。外部送信もないので、2学期の総合の授業でも安心して使ってもらえるとわたしは考えています。\n\n#動画編集 #GIGAスクール #Webアプリ",
+          "weightedLength": 250
         },
         {
           "kind": "link",
@@ -1559,25 +2903,16 @@
           "weightedLength": 74
         }
       ],
-      "text": "動画編集の授業で漢字の操作画面が読めず、低学年の子から何度も質問されて対応に追われていました。すべての操作文字にふりがなを付け、アカウント不要で動くアプリを用意したところ、子どもが一人で進められるようになりました。\n\n#動画編集 #GIGAスクール #ふりがな",
+      "text": "低学年の動画編集、漢字が読めず質問攻めで作業が2分ごとに中断していました。そこで全画面ふりがな付きでログイン不要のアプリを用意。外部送信もないので、2学期の総合の授業でも安心して使ってもらえるとわたしは考えています。\n\n#動画編集 #GIGAスクール #Webアプリ",
       "url": "https://gigayama.github.io/Video-editing_studio/",
       "media": "media/Video-editing_studio-card.png",
       "mediaList": [
         "media/Video-editing_studio-card.png"
       ],
-      "weightedLength": 249,
+      "weightedLength": 250,
       "overLimit": false,
-      "alternatives": [
-        {
-          "body": "ログインやアカウント作成の手続きだけで、45分の授業の半分が消えてしまうことがありました。ブラウザ上で端末内完結で動く作りに変更し、動画データも外部送信しないためセキュリティ面も安心させて動画作成に取り組めます。",
-          "thread": []
-        },
-        {
-          "body": "以前は動画の書き出し中に別のタブを開いてデータが飛ぶ失敗が続出していました。AIが生成した編集レシピの貼り付けに対応したことで、複雑な編集もスムーズに行えます。画面の端が切れないセーフエリア表示も便利です。",
-          "thread": []
-        }
-      ],
-      "pickReason": "低学年が漢字の操作画面を読めず質問攻めになる具体的な困りごとから始まっており、現場の教員に深く刺さります。",
+      "alternatives": [],
+      "pickReason": null,
       "hook": "confess",
       "reprise": null
     },
@@ -1596,8 +2931,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "放課後、ポータルと連携したスプレッドシートの「課題・提出」タブを確認しています。未提出者が一目で一覧抽出され、個別に声をかけやすくなりました。記録が集約されるので学年末の所見や要録作成の手間もかなり軽減されます。\n\n#ゲーミフィケーション #学習ポータル #GoogleAppsScript",
-          "weightedLength": 267
+          "text": "学期末の所見作成、一人ひとりの学習ログを探すだけで放課後が丸ごと消えていました。アプリの記録をシート1枚に自動集約する仕掛けを作ってみました。ボタン1つでAI所見の案が出るので、2学期の負担が大きく減るとわたしは思っています。\n\n#ゲーミフィケーション #GIGAスクール #AI所見",
+          "weightedLength": 266
         },
         {
           "kind": "link",
@@ -1606,26 +2941,17 @@
           "weightedLength": 68
         }
       ],
-      "text": "放課後、ポータルと連携したスプレッドシートの「課題・提出」タブを確認しています。未提出者が一目で一覧抽出され、個別に声をかけやすくなりました。記録が集約されるので学年末の所見や要録作成の手間もかなり軽減されます。\n\n#ゲーミフィケーション #学習ポータル #GoogleAppsScript",
+      "text": "学期末の所見作成、一人ひとりの学習ログを探すだけで放課後が丸ごと消えていました。アプリの記録をシート1枚に自動集約する仕掛けを作ってみました。ボタン1つでAI所見の案が出るので、2学期の負担が大きく減るとわたしは思っています。\n\n#ゲーミフィケーション #GIGAスクール #AI所見",
       "url": "https://gigayama.github.io/Gamification/",
       "media": "media/Gamification-card.png",
       "mediaList": [
         "media/Gamification-card.png"
       ],
-      "weightedLength": 267,
+      "weightedLength": 266,
       "overLimit": false,
-      "alternatives": [
-        {
-          "body": "以前は複数の学習アプリの取り組み状況を1つずつ手動で確認していました。ポータルの「おくる」ボタン1つで経験値化し集約する工夫をしてから、学習の遅れや「むずかしい」が続く子にすぐ気づいて支援できるようになりました。",
-          "thread": []
-        },
-        {
-          "body": "設定はスプレッドシート1枚のみです。児童がアプリで遊んで「おくる」を押すとガチャや着せ替えを楽しめ、先生側は自動提出判定やAI所見下書き作成まで行えます。文字サイズ変更や誤操作防止機能もついて低学年でも安心です。",
-          "thread": []
-        }
-      ],
-      "pickReason": "放課後に提出状況を確認し要録や所見に活かすという事務処理の実装イメージが明確です。",
-      "hook": "scene",
+      "alternatives": [],
+      "pickReason": null,
+      "hook": "contrast",
       "reprise": null
     },
     {
@@ -1643,8 +2969,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "以前はタブレットの画面キーボードが出て入力欄が隠れてしまう失敗がありました。キーボードの出現を抑えAI手書きやテンキーで直接入力できる設計にし、タイムだけでなく初回正答率も保存して実力変化を見やすくしました。\n\n#AI手書き #算数 #Webアプリ",
-          "weightedLength": 234
+          "text": "回線が重くてアプリが止まり、朝の5分間の計算練習が中断するのが悩みでした。学校の制限に強い完全オフラインで動く100マス計算を試作。キーボードも出ない画面設計にしたので、2学期の帯時間で重宝するとわたしは考えています。\n\n#100マス計算 #GIGAスクール #算数",
+          "weightedLength": 247
         },
         {
           "kind": "link",
@@ -1653,26 +2979,17 @@
           "weightedLength": 76
         }
       ],
-      "text": "以前はタブレットの画面キーボードが出て入力欄が隠れてしまう失敗がありました。キーボードの出現を抑えAI手書きやテンキーで直接入力できる設計にし、タイムだけでなく初回正答率も保存して実力変化を見やすくしました。\n\n#AI手書き #算数 #Webアプリ",
+      "text": "回線が重くてアプリが止まり、朝の5分間の計算練習が中断するのが悩みでした。学校の制限に強い完全オフラインで動く100マス計算を試作。キーボードも出ない画面設計にしたので、2学期の帯時間で重宝するとわたしは考えています。\n\n#100マス計算 #GIGAスクール #算数",
       "url": "https://gigayama.github.io/online-100square-calculation/",
       "media": "media/online-100square-calculation-card.png",
       "mediaList": [
         "media/online-100square-calculation-card.png"
       ],
-      "weightedLength": 234,
+      "weightedLength": 247,
       "overLimit": false,
-      "alternatives": [
-        {
-          "body": "校内ネット回線が重くてアプリの読み込みが止まるのを防ぐため、外部CDNを使わず完全オフラインで動く作りにしました。環境の影響を受けず、朝の帯時間でもストレスなく100マス計算を始められる環境が整いました。",
-          "thread": []
-        },
-        {
-          "body": "一斉答え合わせのとき遠くの席から画面が見えにくい場面がありました。電子黒板用に幅上限を外す提示モードを実装したことで、教室の後ろからでもはっきり見えます。白紙印刷機能で紙のテストとしても利用できます。",
-          "thread": []
-        }
-      ],
-      "pickReason": "画面キーボードで入力欄が隠れてしまうというあるある失敗談から改善に至る流れが具体的で信頼できます。",
-      "hook": "confess",
+      "alternatives": [],
+      "pickReason": null,
+      "hook": "scene",
       "reprise": null
     },
     {
@@ -1690,8 +3007,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "雨の日の休み時間、1人で過ごす子が暇そうにしている場面がありました。思考アルゴリズムを持つ対戦ロボを実装したアプリを体験させ、1人でも対戦相手に困らず遊べる選択肢を作ることの大切さを実感しました。全漢字にルビ付きです。\n\n#オンライン対戦 #あいことば #PWA",
-          "weightedLength": 250
+          "text": "長いURLを共有するだけで、低学年の授業は10分以上止まってしまいます。数字4桁のあいことばで入る仕組みを作ってみて、ICTツールは機能よりも「すぐ始められるか」が一番大切だとわたしは気づきました。2学期の準備に活かします。\n\n#カードゲーム #GIGAスクール #学級経営",
+          "weightedLength": 253
         },
         {
           "kind": "link",
@@ -1700,26 +3017,17 @@
           "weightedLength": 80
         }
       ],
-      "text": "雨の日の休み時間、1人で過ごす子が暇そうにしている場面がありました。思考アルゴリズムを持つ対戦ロボを実装したアプリを体験させ、1人でも対戦相手に困らず遊べる選択肢を作ることの大切さを実感しました。全漢字にルビ付きです。\n\n#オンライン対戦 #あいことば #PWA",
+      "text": "長いURLを共有するだけで、低学年の授業は10分以上止まってしまいます。数字4桁のあいことばで入る仕組みを作ってみて、ICTツールは機能よりも「すぐ始められるか」が一番大切だとわたしは気づきました。2学期の準備に活かします。\n\n#カードゲーム #GIGAスクール #学級経営",
       "url": "https://gigayama.github.io/Hagetaka-game/",
       "media": "media/Hagetaka-game-card.png",
       "mediaList": [
         "media/Hagetaka-game-card.png"
       ],
-      "weightedLength": 250,
+      "weightedLength": 253,
       "overLimit": false,
-      "alternatives": [
-        {
-          "body": "複雑なURL共有だと低学年の子が部屋に入れず時間がかかっていました。4桁のあいことば入力にするUI設計を試して、児童の発達段階に合わせた動線作りがいかに重要かに気づきました。友達やCPUとすぐカード対戦ができます。",
-          "thread": []
-        },
-        {
-          "body": "ルール説明の漢字が読めずに遊び方を諦めてしまう子の存在を見落としていました。重要な漢字すべてにルビを振り図解を入れるプロンプト調整を行い、誰でも自己解決して遊べる環境を用意することが支援の基本だと学びました。",
-          "thread": []
-        }
-      ],
-      "pickReason": "雨の日の休み時間に1人で過ごす児童の姿が浮かび、学級経営の配慮として共感できます。",
-      "hook": "scene",
+      "alternatives": [],
+      "pickReason": null,
+      "hook": "number",
       "reprise": null
     },
     {
@@ -1737,8 +3045,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "以前は手元と画面を往復して人差し指2本で打つ癖がつく子が多くいました。キーボード画面の真下に押す指を示す手のイラストを重ねて配置する更新を行い、視線を動かさずに正しい指使いを学べるように改善しました。\n\n#タイピング練習 #Chromebook #オフライン",
-          "weightedLength": 240
+          "text": "途中で練習をやめると記録が消えてしまい、子どもたちのやる気を削いでしまっていました。\n今回の更新で、3問だけ打って中断しても記録が残り、続きから再開できるよう改善しました。朝の会や給食前の2分間の隙間時間でも、無駄なくホームポジションの練習ができます。\n\n#タイピング #Chromebook #Typa",
+          "weightedLength": 280
         },
         {
           "kind": "link",
@@ -1747,46 +3055,46 @@
           "weightedLength": 80
         }
       ],
-      "text": "以前は手元と画面を往復して人差し指2本で打つ癖がつく子が多くいました。キーボード画面の真下に押す指を示す手のイラストを重ねて配置する更新を行い、視線を動かさずに正しい指使いを学べるように改善しました。\n\n#タイピング練習 #Chromebook #オフライン",
+      "text": "途中で練習をやめると記録が消えてしまい、子どもたちのやる気を削いでしまっていました。\n今回の更新で、3問だけ打って中断しても記録が残り、続きから再開できるよう改善しました。朝の会や給食前の2分間の隙間時間でも、無駄なくホームポジションの練習ができます。\n\n#タイピング #Chromebook #Typa",
       "url": "https://gigayama.github.io/Typa/",
       "media": "media/Typa-card.png",
       "mediaList": [
         "media/Typa-card.png"
       ],
-      "weightedLength": 240,
+      "weightedLength": 280,
       "overLimit": false,
       "alternatives": [
         {
-          "body": "朝の会前や給食を待つ数分のスキマ時間、起動に時間がかかるアプリだと練習を諦める子がいました。そこで開いた瞬間0タップで打ちはじめられる仕様に改修しました。3問だけ打って途中で閉じても記録が自動保存されます。",
+          "body": "朝の会前のほんの1分間、ホーム画面を選ばずに開いた瞬間にすぐタイピングを開始できます。\nキー直下に手のイラストを置く改修を行い、正しい指使いが直感的に伝わるようにしました。★3獲得で自動で次のステージに進むため、短時間の練習でも集中力が続きます。",
           "thread": []
         },
         {
-          "body": "学校のChromebookのJIS配列と画面キーの配置がズレて迷うのを防ぐため、配列表示を正確に修正しました。名前入力も不要で完全オフラインで動作するため、インターネットがつながらない体育館などでも安心して使えます。",
+          "body": "わずか2分の隙間時間でもタイピング練習に取り組めるよう、スタートボタンを廃止しました。\n開いてすぐ打てる設計に直したことで、人差し指2本打ちの防止につながっています。Chromebookと同じ配列画面なので、情報や国語の時間の直前練習にもぴったりです。",
           "thread": []
         }
       ],
-      "pickReason": "人差し指2本打ちの癖というタイピング指導における具体的な課題とその解決策が的確に示されています。",
-      "hook": "contrast",
+      "pickReason": "途中でやめると記録が消えてモチベーションが下がるという児童目線の課題を改善した点が伝わるため。",
+      "hook": "confess",
       "reprise": null
     }
   ],
   "notes": [
     {
       "weekId": "2026-W33",
-      "title": "「児童ごとに漢字の苦手がちがう」に。4つの技能を個別に記録して町を育てる漢字学習アプリ「KANJI_Town」",
+      "title": "「子どもごとに苦手な技能がバラバラ」読み・意味・書字・筆順を分けて記録する漢字学習アプリ「KANJI_Town」",
       "tags": [
-        "小学校",
-        "国語科",
         "漢字学習",
         "GIGAスクール",
-        "ICT活用",
-        "自作アプリ",
-        "個別最適な学び",
-        "教員の働き方改革",
-        "学級経営",
-        "帯時間",
-        "まちづくりゲーム",
-        "タブレット活用"
+        "小学校国語",
+        "ICT教育",
+        "小学校教員",
+        "個別の指導機能",
+        "教材研究",
+        "アプリ紹介",
+        "筆順判定",
+        "端末活用",
+        "小学校",
+        "朝の帯時間"
       ],
       "featured": [
         "KANJI_Town",
@@ -1794,11 +3102,111 @@
         "word_basket",
         "Shiritori_fighter"
       ],
-      "plain": "教室で使えるかもしれないもの作り #◯ 「児童ごとに漢字の苦手がちがう」に。4つの技能を個別に記録して町を育てる漢字学習アプリ「KANJI_Town」\n\n🏫 はじめに\n\n漢字練習の指導において、全員に同じ漢字ドリルやプリントを配って一斉に取り組ませていると、子どもたちによって困りごとが全く異なることに気づかされる場面はありませんか。漢字を読むのは得意だけれど書こうとすると手が止まってしまう子がいたり、形自体は綺麗に書けているものの書き順やとめ、はねの処理が自己流になっていてテストで不合格になってしまう子がいたりと、一人ひとりの苦手に応じた個別指導をおこなうのは非常に難しいと感じることはないでしょうか。45分の授業時間や放課後の短時間で、クラス全員分の漢字ノートやプリントの細部まで朱書きして採点するのは、先生方にとって大きな負担になっているのではないかと思います。\n\n子どもたちにとっても、自分がどこでつまずいているのかが分からないまま、ただひたすら同じ漢字を何度も書いて練習するのは、なかなか負担が大きい作業だと感じます。すでにしっかり覚えている得意な文字まで繰り返し書かされたり、逆にどこを直せば正しい文字になるのか判断できないまま作業が進んでしまったりすると、学習に対する意欲そのものが下がってしまう懸念もありますよね。このような一人ひとりの苦手な技能の違いに細かく寄り添いながら、同時に子どもたちが自分から進んで取り組めるような工夫が整えばよいのにと考えている先生も多いのではないでしょうか。\n\nそこで、そうした課題を解決したいと考えて作ったのが、WebアプリのKANJI_Town（ https://gigayama.github.io/KANJI_Town/ ）です。このアプリは、読み、意味、書字、筆順という4つの技能を個別に判定して記録し、漢字を覚えながら自分だけの町を育てていくことができる教材です。事前のアカウント登録や端末の設定作業は一切必要なく、配布されたURLを開くだけですぐに使い始めることができます。45分の授業時間のうち、子どもたちに配って説明するのに2分で済む手軽さで教室に取り入れられるように設計しました。\n\n［画像: 01-home.png］\n\nアプリを開いたときの最初の画面\n\nクラス全体で一斉に同じペースで進めるのではなく、それぞれの習熟度に応じた課題に自分のペースで向き合える環境を整えることで、漢字に対する苦手意識を少しずつ減らしていけると考えています。まずは1回あたりの練習時間を短く設定し、無理なく成功体験を重ねられるような仕組みを意識しました。子どもたちが楽しみながら正しい文字の形や書き順を定着させ、自分から進んで学習に向かう姿を支えるツールとして使っていただければ幸いです。\n\nhttps://gigayama.github.io/KANJI_Town/\n\n📱 このアプリでできること\n\n毎朝の10分間におこなわれる帯時間などにおいて、子どもたちが端末を開いて自分のペースで目標字数の練習に取り組む場面で活躍すると考えています。アプリを開くと、学年ごとの漢字学習や、今日挑戦する目標字数が画面にわかりやすく表示されます。子どもたちは画面の指示に従って、漢字の読み方を確認したり、画面上でなぞり書きをしたりしながら練習を進めることができます。一斉指導の場面とは異なり、自分の理解度に合わせてテンポよく進められるのが大きな特徴だと思います。全体の進行状況を気にせず集中できる環境が整います。\n\n［画像: 02-s7bn7y.png］\n\n学習の流れをわかりやすく示すガイド画面\n\n画面上で漢字を書く際には、単に全体の形が合っているかどうかだけでなく、筆順や線の重なり具合までが細かく判定されます。もし書き順を間違えてしまった場合は、見た目の形が綺麗に書けていたとしても不合格となり、獲得できる点数が上限69点に制限される仕組みになっています。間違えた理由がその場で明確に示されるため、正しい書き順や丁寧なとめ、はねをその場ですぐに覚え直すことができるように設計しました。何度もやり直す中で、正しい指の動かし方が自然と身についていくのではないかと期待しています。\n\n漢字の練習を進めて正解を重ねていくと、ポイントが貯まり、自分の町に新しい建物や住人を増やすことができます。このように覚えた分だけ自分の町が広がっていく仕組みがあることで、単調になりがちな繰り返しの漢字練習も、子どもたちが自発的に楽しみながら続けられるのではないかと見込んでいます。目標を達成することで町が発展していく感覚が、次の学習への意欲へと自然につながっていくことを期待しています。毎日少しずつ町が大きくなる喜びを感じてもらいたいです。\n\n［画像: 13-s8ihv.png］\n\n漢字を覚えることで土地を開拓できる画面\n\nまた、授業の中だけではなく、雨の日の休み時間などに室内で過ごす場面でも活用できると考えています。本アプリで自分の町を育てる開拓を進めるだけでなく、同じ作者が公開している関連アプリのIce_slide-puzzleやShiritori_fighterなどを利用することも可能です。これらのアプリは1台の端末を友達と一緒に囲んで遊ぶことができるため、雨の日の教室で仲良くコミュニケーションを取りながら過ごすきっかけになるのではないでしょうか。言葉遊びやパズルを通して楽しく触れ合えます。\n\nさらに、授業のすきま時間に短い時間で復習を行いたい場合や、単元テストの直前などにクラス全体で確認をしたい場面でも役立ちます。フラッシュカードのように素早く読みや意味を確認する機能や、敵と戦うような感覚で復習ができるモードも備えています。学習済みの漢字を繰り返し思い出す機会を作ることで、記憶の定着がより確実なものになっていくのではないかと考えて作りました。一人ひとりの学習履歴に基づいて出題されるため、それぞれの習熟度に合わせた定着の向上が見込めると思います。\n\n🏘️ 覚えた分だけ自分の町が広がる「マイ漢字タウン」の工夫\n\nマイ漢字タウンという機能では、学習の成果がそのまま自分だけの町として目に見える形になります。最初はただの空き地からスタートしますが、漢字の読みや書き順などのテストをクリアして経験値を溜めていくことで、町のレベルが上がり、住人が増えたり新しい建物を建てたりできるようになります。単にテストで点数を取るだけでなく、努力した過程が成果物として残ることで、学習に対する持続的なモチベーションを維持できるのではないかと考えています。友達と町の様子を見せ合いながら楽しく学べる環境を目指しました。\n\nまちづくりの要素を導入する一方で、漢字の定着に関しては妥協しない厳格な採点基準を設けています。一般的な手書き判定では見逃されがちな、書き順の誤りや線の交差、とめやはねの不備などを100点満点で精密に判定します。正しく覚えていないまま先へ進んでしまうことを防ぐために、あえて判定を厳しく設定しており、誤った癖がつく前に正しい字形を定着させることができるように意識して調整しました。細かい線の伸ばし方一つにもこだわる意識が育つと考えています。\n\n特に書き順を間違えた際には、どんなに形が整っていても点数が69点までに制限される仕様にしています。これは、子どもたちに書き順の大切さを実感してもらい、もう一度正しい順序でなぞり直す行動を促すための工夫です。満点を取るためには正しい筆順を意識せざるを得ない作りにすることで、自然と正しい書き順が身につくような指導の流れを作り出せると考えています。間違えた箇所をその場ですぐに直す習慣が身につくことを狙っています。\n\nまた、町を育てるためのアイテムを獲得できるお楽しみの要素も取り入れています。漢字学習で獲得したコインを使ってガチャを回し、珍しいアイテムや装飾を手に入れて自分の町を自由に飾り付けられます。こうした小さな工夫を散りばめることで、漢字が苦手と感じている子でも、日々の学習を楽しみな時間へと変えていけるのではないかと期待しています。コツコツ取り組んだ分だけ結果が目に見える喜びを感じてほしいと思っています。\n\n［画像: 14-s7d7fy.png］\n\n学習でためたコインでまわせるガチャ画面\n\n✨ 導入のメリット\n\n三つのいいことが期待できます。一つ目は、書き順やとめ・はねまで自動採点されるため、先生が細かく朱書き採点する負担が減り心にゆとりが生まれることです。これまで放課後の時間や休み時間に時間をかけておこなっていた大量のノートやプリントの赤入れ作業が大幅に短縮されるため、その分の時間を翌日の授業準備や子どもたち一人ひとりとじっくり対話する時間に充てられるようになると考えています。毎日の採点業務に追われていた先生方の負担軽減に貢献できるのではないかと思います。\n\n二つ目は、子どもたちごとの苦手な技能に合わせた最適な漢字が出題されるため、無理なく定着に向かうことです。読みは得意だけれど書くのが苦手な子には書字の練習を中心に提示し、筆順が怪しい子にはなぞり書きを重点的に促すなど、一人ひとりのつまずきに応じた個別の出題がおこなわれるため、苦手意識を持つ子でも嫌がらずに無理のないペースで定着を図ることができるのではないかと思います。全員に同じ課題を一方的に与えるのではなく、個別最適な学びを実現しやすい構造になっています。\n\n三つ目は、自作のマイドリルを4桁の数字で共有でき、プリント印刷の手間なく解き直しができることです。先生が単元や習熟度に合わせて作成したオリジナルの漢字問題を短い番号一つで素早く共有できるため、紙のプリントを大量に印刷して配ったり、回収して管理したりする手間が一切かからなくなると期待できます。間違えた問題だけを再度解き直させる作業も画面上で完結するため、やりっぱなしを防ぎ確実な定着へ導くことができると考えています。\n\n🛠️ 【管理者向け】導入手順\n\n学校現場での導入にあたり、情報担当の先生や管理職の先生に確認していただく事項も非常にシンプルにまとめられています。ネットワークの制限が設けられている場合は、指定のWebアドレスである https://gigayama.github.io/KANJI_Town/ へのアクセス許可をご確認いただくだけで準備が完了します。特別なソフトウェアの設置や端末への複雑な設定作業は不要ですので、学校の運用環境に合わせてスムーズに導入を進めていただけるかと思います。\n\n個人情報の扱いに関しても安心できる設計になっています。子どもたちの名前や学習の進捗履歴、採点結果などの情報は、外部のサーバーへ一切送信されず、すべて使用しているその端末のなかだけに残ります。そのため、名前やIDを登録するためのアカウント作成作業やパスワードの管理などが一切不要です。情報漏洩のリスクを減らした状態で、すぐに日常の学習に取り入れられると考えています。新年度のユーザー登録作業なども発生しません。\n\nさらに、ネットワーク回線への負荷を抑える仕組みも整えています。ドリルを共有する際にも端末どうしの直接のやりとりをおこなうため、中央のサーバーに集中してアクセスが発生することがありません。また、一度ページを開いておけば端末に一度読みこんだものを用いてオフラインでも動作するため、大人数が同時に接続して回線が重くなるといったトラブルを防ぐことができます。通信環境が不安定な教室でも安心してご利用いただけます。\n\n📖 【利用者向け】使い方のガイド\n\n1. ブラウザでアプリのページを開きます。端末のブラウザのアドレスバーに指定のURLを入力してアクセスします。事前のログインやユーザー登録は不要で、ページが表示されればすぐに学習を開始できる状態になります。ブックマークやショートカットを画面上に配置しておけば、低学年の子どもたちでもワンタップで呼び出すことができるようになります。画面が開いたら、スムーズに操作を進めることができます。\n\n2. 学年を選び、ホーム画面のボタンを押して学習を始めます。自分の学年を選択したあと、画面中央にある赤いボタンを押すことで、その日に取り組むべき漢字の学習セッションがスタートします。現在の学習状態や目標字数が明確に提示されるため、子どもたちは迷うことなく自分の課題に集中して取り組むことができます。画面の案内もシンプルで分かりやすい表記になっています。\n\n3. 音読や書き順、テストのステップを進めて判定を受けます。画面の案内に沿って読み方を確認し、筆順に合わせて指やタッチペンで画面をなぞります。最後にテストをおこない、自動判定の結果を確認します。判定結果はその場で画面にフィードバックされるため、自分の得意や苦手な部分をすぐに把握して次の練習に活かすことができます。間違えたところはすぐにやり直せます。\n\n4. 獲得したポイントで建物や住人を増やし町を広げます。テストに合格して得た経験値やコインを使って、マイ漢字タウンの画面で新しい土地を開拓したり、住人を呼び込んだりして自分だけの町を発展させていきます。集めたアイテムを自由に配置して自分好みの町を作り上げる楽しみが、継続的な学習の原動力となります。少しずつ町が賑やかになっていく様子を楽しめます。\n\n5. 先生がドリルを配る際は、マイドリル画面で漢字を選び、表示された4桁の数字を子どもたちに伝えて入力させます。作成画面で練習させたい漢字を選択すると発行される4桁の番号を黒板などに書いて子どもたちに共有し、各自の画面で番号を入力させることで同じドリルを一斉に開かせることができます。これにより、印刷の手間をかけずに狙った漢字の集中練習をおこなうことができます。\n\n［画像: 12-s1jcitm.png］\n\nオリジナルの漢字問題を共有できるマイドリル画面\n\n📝 まとめ\n\nこれまで漢字のドリル採点やプリントの作成、配布準備にかかっていた膨大な時間をアプリに任せることで、先生方の時間と心にゆとりが生まれるのではないかと思います。そして、そこで生まれた時間を、この子はどこでつまずいているのかなと寄り添い、優しく声をかける時間に充てることができるようになると考えています。ICT機器は決して作業を自動化することだけが目的ではなく、教室における人と人との温かい対話や関わりをより豊かに増やすための大切な道具なのだと信じています。\n\n日々教室で子どもたち一人ひとりと真摯に向き合い、授業づくりや学級経営に奮闘し続けている先生方の力に、このアプリが少しでもお役に立てばこれ以上の喜びはありません。まずは朝の10分間や学習のすきま時間など、できるところから試してみていただければ幸いです。一歩踏み出そうとする先生を、私はいつでも全力で応援しています。\n\nこの記事で触れたほかのアプリです。\n\nIce_slide-puzzle（氷上のコマを滑らせて王冠をゴールに導く2人対戦ゲーム）\nhttps://gigayama.github.io/Ice_slide-puzzle/\n\nword_basket（端末1つで2〜6人で遊べるリアルタイムしりとりゲーム）\nhttps://gigayama.github.io/word_basket/\n\nShiritori_fighter（声やキーボードで入力して戦う対戦型しりとりWebアプリ）\nhttps://gigayama.github.io/Shiritori_fighter/\n\n#小学校 #国語科 #漢字学習 #GIGAスクール #ICT活用 #自作アプリ #個別最適な学び #教員の働き方改革 #学級経営 #帯時間 #まちづくりゲーム #タブレット活用",
-      "charCount": 6525
+      "plain": "教室で使えるかもしれないもの作り #◯ 「子どもごとに苦手な技能がバラバラ」読み・意味・書字・筆順を分けて記録する漢字学習アプリ「KANJI_Town」\n\n🏫 はじめに\n\n漢字の練習時間、読むのは得意なのに書くことになると途中で手が止まってしまう子どもや、形自体はきれいに書けているのに書き順を間違えて覚えてしまっている子どもはいませんか。同じ学年の子どもたちであっても、苦手を感じている部分や得意な領域は一人ひとりまったく異なりますよね。クラス全員に同じ漢字プリントを何枚も配って一斉に練習させるだけでは、本当にサポートが必要な一人ひとりの課題に手が行き届かない場面があるのではないかと考えています。\n\n読み、意味の理解、文字の形を書くこと、そして正しい筆順を覚えるという作業は、それぞれ独立した別の技能です。そのため、子どもがどこでつまずいているのかを正確に見極めて指導するのはなかなか難しいことではないでしょうか。全員に一律の指導を行うだけでは、書くことが得意な子には物足りず、苦手な子には負担が大きくなってしまうという悩みも生じがちです。\n\nそこで今回は、読み、意味、書字、筆順をそれぞれ分けて個別に判定し、学んだ分だけ自分の町が大きく育っていく無料のWebアプリ「KANJI_Town」をご紹介します。このアプリでは、子どもたちが自分の得意な部分を伸ばしながら、苦手な技能に焦点を当てて自分のペースで学べるように設計されています。特別なソフトウェアを新しく組み込む必要もありませんし、名前やパスワードなどのアカウント登録も一切必要ありません。\n\n［画像: 01-home.png］\n\nアプリを開くと自分だけの町を育てる画面が広がります\n\n朝の帯時間や毎日の授業の中で、今日からすぐに試していただける教材になっています。アプリの公開元はこちらのページになります。（ https://gigayama.github.io/KANJI_Town/ ）漢字の学習が子どもたちにとって苦痛な反復作業になるのではなく、自分の町を育てていく達成感とともに楽しく学べる時間になればという思いを込めて作りました。具体的な画面や活用法を交えながら順番にお伝えしていきますね。\n\nhttps://gigayama.github.io/KANJI_Town/\n\n📱 このアプリでできること\n\n毎朝の10分間などの短い時間で、子どもたちが自分自身の端末を使ってホーム画面を開くところから学習がスタートします。画面上で自分の学年を選択すると、その日に取り組むべき目標の文字数がわかりやすく表示されます。まずは漢字を見て確認し、次に手で書き、最後にテストに挑戦するという段階を踏んだステップで練習が進んでいきます。一方的に暗記を強いるのではなく、自分の力で着実にステップを登っていけるようなつくりにしています。\n\n［画像: 02-s7bn7y.png］\n\n見る書くテストの3ステップで学べる案内画面です\n\n画面上で指やタッチペンを使って漢字を書くと、線の形だけでなく、書き順やとめ、はね、線同士の交差までが画面上で細かく自動判定されます。ただ形を真似してなぞるだけの練習ではなく、正しい筆順で一筆一筆書けているかがその場で確認できる仕組みです。どこで間違えてしまったのかがすぐに視覚的に伝わるため、先生が一人ひとりの手元をずっと見守っていなくても、子どもたちが自分自身の力で誤りに気づいて修正していくことができます。\n\n漢字の練習やテストをクリアして覚えることができると、画面の中にコインが少しずつ溜まっていきます。集めたコインを使って新しい建物を建てたり、町に住む住民を呼び込んだりして、自分だけのオリジナルの町を少しずつ大きく広げていくことができます。退屈になりがちな漢字の反復練習が、自分の町を育てるという楽しみと直接結びつくことで、毎日のドリル学習に自発的に取り組むモチベーションに変わっていくと考えています。\n\n［画像: 13-s8ihv.png］\n\n集めたコインを使ってあき地を開拓していきます\n\n授業の終わりのわずかな時間や復習の時間には、カード形式で次々と出題されるモードや、覚え直した漢字を使って挑戦するモードを活用して、過去に習った漢字を何度も繰り返し確認できます。単に読み方を答えるだけでなく、言葉の意味や書き順までバランスよく出題されるため、子どもごとに偏りがちな苦手技能を重点的にピックアップして練習させることができます。繰り返し練習を重ねることで、定着度を高める効果が期待できます。\n\nまた、音読の練習などで声を出す機能も備わっていますが、声を外部のサーバーに送信して処理するような仕組みは一切使っていません。マイクが音の大きさを検出する仕組みだけを利用して音読の確認を行っています。そのため、子どもの音声データがネットワークを通じて外に出ることがなく、個人情報保護の面でも安心して教室でご活用いただけます。通信量も最小限に抑えられるため、校内ネットワークへの負担も非常に軽くなっています。\n\nさらに、学習を進める中で得られる経験値やコインの仕組みは、子どもたちの学習意欲を途切れさせない工夫として機能します。毎日少しずつ取り組むことで自分の町が確実に発展していく様子が目に見えるため、学習の習慣化にもつながります。苦手意識を持ちやすい漢字学習において、スモールステップで達成感を積み重ねられる設計は、教室での学びを支える大きな力になると考えています。\n\n💡 100点満点の自動採点と町を育てる仕組み\n\nこのアプリの最も大きなこだわりは、100点満点で判定される自動採点システムの裏側にある評価の仕組みです。一般的な採点では見た目の形が合っていれば合格になりがちですが、このアプリでは筆順の判定を非常に重視しています。たとえ画面上に書かれた漢字の最終的な形が完璧に合っていたとしても、書き順を一度でも間違えてしまうと、得点の上限が69点までに制限されるようになっています。合格ラインである70点以上を取るためには、正しい書き順で最後まで書ききらなければなりません。\n\nこの制限があるおかげで、見た目さえ合っていれば正解だと思い込んで書き順を間違えたまま覚えてしまうという、よくある失敗を防ぐことができます。画面に69点と表示された子どもは、なぜ形があっているのに満点にならないのだろうと疑問を持ち、自分から書き順のお手本アニメーションを見返すようになります。自分で自分の間違いの原因を探し、正解の書き順を学び直すという主体的で深い学びのプロセスが自然と生まれると考えています。\n\nさらに、漢字を覚えることで画面の中の町がどんどん広がっていくシステムも、学びを継続させるための大切な要素です。最初は何も存在しないあき地からスタートしますが、漢字を練習してコインを獲得し、施設を建てることで賑やかな街並みに変化していきます。自分の努力の積み重ねが目に見える形として蓄積されていくため、達成感を味わいやすく、次の学習への意欲を自然な形で引き出すことができると思っています。\n\n［画像: 14-s7d7fy.png］\n\nコインを使ってガチャを回し新しいアイテムを獲得できます\n\n漢字の技能ごとの記録が画面上に残るため、読みは得意だけれど書字が苦手、あるいは形は書けるけれど書き順を間違えやすいといった、個人の特性が視覚的に把握できます。これにより、子ども自身が自分は書き順を中心に練習しようと目的意識を持って学習に取り組めるようになります。一律の指導では届きにくかった細かい課題に対して、子どもたちが自分に合った方法でアプローチできる環境を整えられます。\n\n間違えた箇所をその場ですぐに自己修正できる体験は、子どもたちの自信につながります。先生が一斉に朱書きを入れて返却するのを待つのではなく、デジタル技術の即時性を生かすことで、間違いをその場で正しい知識へと上書きすることができます。このような小さな成功体験の積み重ねが、漢字に対する苦手意識を少しずつ解消していくきっかけになると考えています。\n\n✨ 導入のメリット\n\n三つのいいことが期待できます。一つ目は、子どもが自分で書き順の誤りに気づいて直せることです。画面上で自動的に判定が行われ、正しいお手本の動きと比較できるため、先生が一人ひとりのノートを手作業で確認して書き順を赤ペンで直す必要がなくなります。子どもたち自身が自分で画面を見て間違いを確認し、お手本に合わせて書き直す習慣が自然と身についていきます。\n\n二つ目は、読みや書きなど技能ごとの苦手が記録されるため、指導のポイントが明確になることです。全員に対して同じドリルを一律で解かせるのではなく、読むことに課題がある子には読みの練習、書き順が曖昧な子には筆順の確認というように、個々の実態に合わせた具体的なアドバイスや支援を行うことができます。先生の観察とデジタルデータの補完によって、より手厚い指導が可能になります。\n\n三つ目は、アカウント登録や事前準備が一切不要で、配りたいドリルをURLや4桁の数字ですぐ共有できることです。クラス全員分の利用者登録を行ったり、パスワードを忘れた子に対応したりする手間が一切ありません。授業の冒頭や朝の帯時間であっても、提示した数字を入力してもらうだけで、全員が一斉に同じ課題に取り組み始めることができます。\n\nこれらのメリットによって、毎日の漢字指導にかかる準備や確認の時間を大幅に減らし、先生方の負担を和らげることができます。そして生み出された時間を使って、真に個別のアドバイスが必要な子どもたちのサポートに集中できるようになります。教室での限られた時間を有効に活用するための強力なツールとして機能することが期待できます。\n\n🛠️ 【管理者向け】導入手順\n\n管理者の先生への説明も、とても簡潔に済ませることができます。このアプリは外部のサーバーに子どもたちの個人情報や学習履歴を送信しない設計になっており、すべてのデータはその端末の中だけに安全に保持されます。子どもたちの名前や識別番号、成績データなどが外部のネットワークに出ることがないため、学校の個人情報保護方針に照らしても安心してご採用いただけます。\n\nまた、事前のユーザー登録や名簿の取り込み作業が完全に不要なため、年度始めや学期の変わり目に発生する面倒なアカウント作成や更新作業の手間が全くかかりません。Webブラウザから該当のリンクを開くだけで、すぐに利用を開始できる状態になります。端末を複数の学年やクラスで共用して使用している学校であっても、前の利用者のデータが残って混乱が生じるような心配も少なくなっています。\n\n通信環境に関しても非常に柔軟な対応が可能です。最初にWebページを開いて必要な素材を端末に一度読み込んでしまえば、その後の学習はインターネットに接続されていないオフラインの状態でも動作します。校内の無線LAN環境が一時的に不安定になったり、厳しいフィルタリング制限が設けられていたりする場合でも、指定のアドレスへのアクセス許可を一度登録しておくだけで、止まることなく快適に運用していただけます。\n\nこのように、安全面と運用のしやすさの双方に配慮された設計となっているため、情報担当の先生や管理職への提案もスムーズに行うことができます。特別な環境構築や追加の費用設定も必要なく、既存のGIGA端末環境でそのまま運用を開始できる点は、忙しい現場にとって大きなメリットであると考えています。\n\n📖 【利用者向け】使い方のガイド\n\n実際の使い方はとてもシンプルに整理されています。朝の帯時間や毎日の授業の終わりなどに、子どもたちが自分の端末を操作して次のような手順で進めていきます。複雑な操作や細かい初期設定は一切含まれていませんので、低学年の子どもたちであっても、最初の数回で操作を覚えて自分一人でスムーズに学習を進めることができるようになります。\n\n1 アプリを開いて自分の学年を選びます。画面のメニューから該当する学年のボタンを押すと、その学年で配当されている漢字のリストが一括で画面に表示されます。自分の学習したい範囲やターゲットとなる漢字を簡単に探すことができるつくりになっています。\n\n2 見る、書く、テストの順で画面のなぞり書きやテストに取り組みます。画面上に流れるお手本の書き順を確認してから、自分の指やタッチペンを使って画面上のガイドに合わせて正しくなぞり書きやテストを行います。段階的なステップを踏むことで、段階的に知識を定着させることができます。\n\n3 漢字の練習を達成して溜まったコインを活用して、自分の町を開拓したり、ガチャを回して新しい建物やアイテムを増やしたりします。手に入れた建物は画面上の好きな場所に自由に配置することができ、自分だけのオリジナルの街並みを自由に作り上げていくことができます。\n\n［画像: 12-s1jcitm.png］\n\nオリジナルドリルを作成・共有する画面です\n\n4 先生が作成したマイドリルを使う場合は、画面上で提示された4桁の数字を入力してドリルデータを受け取ります。端末同士での直接のやりとりで即座に手元に届きます。複雑な通信設定を介さずに短時間で全員に課題を行き渡らせることができるため、授業の進行を妨げません。\n\n📝 まとめ\n\n一人ひとりの漢字の採点や、個別のドリル準備にかかっていた膨大な時間をWebアプリで補助することによって、子どもたち一人ひとりのつまずきや悩みにじっくりと耳を傾ける大切な時間が生まれます。ICT機器を現場に導入して生まれる本当の価値は、作業時間を機械的に短縮すること自体ではなく、削られた時間を使って子どもたちと温かく対話できるゆとりを確保することにあると考えています。\n\n漢字の書き順で何度も間違えて悩んでいる子にそっと寄り添って言葉をかけたり、努力して自分の町を立派に育て上げた子の成長を一緒になって喜んだりするような時間が、教室の中に少しでも増えていけばこれ以上の喜びはありません。デジタルツールを賢く活用して生まれた心のゆとりを、子どもたち一人ひとりと温かく向き合う貴重な時間へと変えていきましょう。\n\n現場の先生方が抱える日々の負担が少しでも軽減され、子どもたちと向き合う笑顔の時間が増えることを心から願っています。教職の素晴らしさを再確認しながら、一緒に歩んでいきましょう。一歩踏み出そうとする先生を、私はいつでも全力で応援しています。\n\nこの記事で触れたほかのアプリです。\n\nIce_slide-puzzle（氷の上を滑るコマを操り王冠をゴールへ導く2人対戦ゲーム。）\nhttps://gigayama.github.io/Ice_slide-puzzle/\n\nword_basket（1台の端末を2〜6人で囲んで遊ぶリアルタイムしりとりアプリ。）\nhttps://gigayama.github.io/word_basket/\n\nShiritori_fighter（音声入力やかな変換に対応した対戦型しりとりWebアプリ）\nhttps://gigayama.github.io/Shiritori_fighter/\n\n#漢字学習 #GIGAスクール #小学校国語 #ICT教育 #小学校教員 #個別の指導機能 #教材研究 #アプリ紹介 #筆順判定 #端末活用 #小学校 #朝の帯時間",
+      "charCount": 6366
     }
   ],
   "noteArticles": [
+    {
+      "id": "Digital-Newspaper",
+      "repo": "Digital-Newspaper",
+      "title": "教室で使えるかもしれないもの作り #◯ 「学級新聞、いつ作るんですか」ハサミもノリもいらない学級新聞アプリ「デジタル・クラス新聞社」",
+      "charCount": 7575,
+      "imageCount": 25,
+      "problems": 0,
+      "styleWarnings": 5,
+      "src": "note-articles/Digital-Newspaper.json"
+    },
+    {
+      "id": "DigitalCloset",
+      "repo": "DigitalCloset",
+      "title": "教室で使えるかもしれないもの作り #◯ 「今日は何を着よう」で朝を削らない。手持ちの服だけで考えるクローゼット帳アプリ「デジタルワードローブ」",
+      "charCount": 7643,
+      "imageCount": 21,
+      "problems": 0,
+      "styleWarnings": 2,
+      "src": "note-articles/DigitalCloset.json"
+    },
+    {
+      "id": "Digital_textbook",
+      "repo": "Digital_textbook",
+      "title": "教室で使えるかもしれないもの作り #◯ 「このプリント、そのまま大きく映したい」PDFに直接書きこめるアプリ「デジタル教科書メーカー」",
+      "charCount": 9878,
+      "imageCount": 23,
+      "problems": 0,
+      "styleWarnings": 5,
+      "src": "note-articles/Digital_textbook.json"
+    },
+    {
+      "id": "Gamification",
+      "repo": "Gamification",
+      "title": "教室で使えるかもしれないもの作り #◯ 「だれが出してないんだっけ」を数えなくていい。がんばりが経験値でたまる学習記録アプリ「まなびクエスト」",
+      "charCount": 8988,
+      "imageCount": 25,
+      "problems": 0,
+      "styleWarnings": 4,
+      "src": "note-articles/Gamification.json"
+    },
+    {
+      "id": "Gobblet",
+      "repo": "Gobblet",
+      "title": "教室で使えるかもしれないもの作り #◯ 「あと5分、なにしよう」がなくなる。1年生でも自分で読めるボードゲーム「パクパクゴブレット」",
+      "charCount": 7914,
+      "imageCount": 22,
+      "problems": 0,
+      "styleWarnings": 2,
+      "src": "note-articles/Gobblet.json"
+    },
+    {
+      "id": "Hagetaka-game",
+      "repo": "Hagetaka-game",
+      "title": "教室で使えるかもしれないもの作り #◯ 「あと10分、どうしよう」を読み合いの時間に。あいことばだけでつながるカードゲームアプリ「ハゲタカのえじき」",
+      "charCount": 8865,
+      "imageCount": 24,
+      "problems": 0,
+      "styleWarnings": 4,
+      "src": "note-articles/Hagetaka-game.json"
+    },
+    {
+      "id": "Haiku-meeting",
+      "repo": "Haiku-meeting",
+      "title": "教室で使えるかもしれないもの作り #◯ 「書いて出して、終わり」にしない。クラス全員で読み合う句会アプリ「GIGA句会プラザ」",
+      "charCount": 7942,
+      "imageCount": 24,
+      "problems": 0,
+      "styleWarnings": 4,
+      "src": "note-articles/Haiku-meeting.json"
+    },
+    {
+      "id": "Homework_barcordreader",
+      "repo": "Homework_barcordreader",
+      "title": "教室で使えるかもしれないもの作り #◯ 「宿題出した？」を毎朝聞いて回らない。提出も朝のきもちも十秒で終わる記録アプリ「宿題ポスト」",
+      "charCount": 7513,
+      "imageCount": 25,
+      "problems": 0,
+      "styleWarnings": 6,
+      "src": "note-articles/Homework_barcordreader.json"
+    },
+    {
+      "id": "Ice_slide-puzzle",
+      "repo": "Ice_slide-puzzle",
+      "title": "教室で使えるかもしれないもの作り #◯ 「あと5分、なにしよう」を埋める。ルール3つで始まる2人対戦ゲーム「南極スライダー」",
+      "charCount": 7395,
+      "imageCount": 18,
+      "problems": 0,
+      "styleWarnings": 4,
+      "src": "note-articles/Ice_slide-puzzle.json"
+    },
+    {
+      "id": "KAKE_Master",
+      "repo": "KAKE_Master",
+      "title": "教室で使えるかもしれないもの作り #◯ 「九九カード、どこにいったの?」なくさない、丸付けもいらない計算カードアプリ「九九カード」",
+      "charCount": 7836,
+      "imageCount": 25,
+      "problems": 0,
+      "styleWarnings": 2,
+      "src": "note-articles/KAKE_Master.json"
+    },
     {
       "id": "KANJI_Town",
       "repo": "KANJI_Town",
@@ -1808,6 +3216,186 @@
       "problems": 0,
       "styleWarnings": 3,
       "src": "note-articles/KANJI_Town.json"
+    },
+    {
+      "id": "KEISAN-BLOCK",
+      "repo": "KEISAN-BLOCK",
+      "title": "教室で使えるかもしれないもの作り #◯ 「どうして そこで わけるの？」で止まらない。ブロックを自分で動かす計算アプリ「さんすうブロック」",
+      "charCount": 8545,
+      "imageCount": 26,
+      "problems": 0,
+      "styleWarnings": 2,
+      "src": "note-articles/KEISAN-BLOCK.json"
+    },
+    {
+      "id": "Keisan-Card",
+      "repo": "Keisan-Card",
+      "title": "教室で使えるかもしれないもの作り #◯ 「計算カード、ぜんぶ聞いてあげられない」タイムと伸びが自動で残る計算カードアプリ「けいさんカード」",
+      "charCount": 8141,
+      "imageCount": 17,
+      "problems": 0,
+      "styleWarnings": 2,
+      "src": "note-articles/Keisan-Card.json"
+    },
+    {
+      "id": "MIRAI-Compass",
+      "repo": "MIRAI-Compass",
+      "title": "教室で使えるかもしれないもの作り #◯ 「先生、つぎ何やればいいですか」が減る。子どもが自分で計画を立てる自由進度学習アプリ「みらいコンパス」",
+      "charCount": 7908,
+      "imageCount": 27,
+      "problems": 0,
+      "styleWarnings": 6,
+      "src": "note-articles/MIRAI-Compass.json"
+    },
+    {
+      "id": "NotebookSample_Generator",
+      "repo": "NotebookSample_Generator",
+      "title": "教室で使えるかもしれないもの作り #◯ 「マスの数、また数えるんですか」打った文章がそのまま見本になるアプリ「ノート見本作成ツール PRO」",
+      "charCount": 7949,
+      "imageCount": 20,
+      "problems": 0,
+      "styleWarnings": 3,
+      "src": "note-articles/NotebookSample_Generator.json"
+    },
+    {
+      "id": "Online-Publisher-pro",
+      "repo": "Online-Publisher-pro",
+      "title": "教室で使えるかもしれないもの作り #◯ 「赤ペンの束を持ち帰る夜」をなくす。クラスの作文が一冊の本になるアプリ「オンライン出版社 Pro」",
+      "charCount": 7868,
+      "imageCount": 24,
+      "problems": 0,
+      "styleWarnings": 5,
+      "src": "note-articles/Online-Publisher-pro.json"
+    },
+    {
+      "id": "Qalc",
+      "repo": "Qalc",
+      "title": "教室で使えるかもしれないもの作り #◯ 「せんせい、わかりません」で止まらない。考える図が出てくる計算学習アプリ「Qalc（カルク）」",
+      "charCount": 8192,
+      "imageCount": 21,
+      "problems": 0,
+      "styleWarnings": 0,
+      "src": "note-articles/Qalc.json"
+    },
+    {
+      "id": "Quarto",
+      "repo": "Quarto",
+      "title": "教室で使えるかもしれないもの作り #◯ 「早く終わった子」の5分が変わる。1台を2人で囲む3Dボードゲーム「GIGAクアルト！」",
+      "charCount": 7405,
+      "imageCount": 17,
+      "problems": 0,
+      "styleWarnings": 3,
+      "src": "note-articles/Quarto.json"
+    },
+    {
+      "id": "Quoridor",
+      "repo": "Quoridor",
+      "title": "教室で使えるかもしれないもの作り #◯ 「それ反則だよ！」でけんかにならない。1台を二人で囲む対戦パズルアプリ「カベカベ合戦！」",
+      "charCount": 7493,
+      "imageCount": 21,
+      "problems": 0,
+      "styleWarnings": 3,
+      "src": "note-articles/Quoridor.json"
+    },
+    {
+      "id": "Reflection_Journal",
+      "repo": "Reflection_Journal",
+      "title": "教室で使えるかもしれないもの作り #◯ 「せんせい、なにを書けばいいの」で止まらない。書き出しのことばが出てくるふりかえりアプリ「ふりかえりジャーナル」",
+      "charCount": 7514,
+      "imageCount": 23,
+      "problems": 0,
+      "styleWarnings": 7,
+      "src": "note-articles/Reflection_Journal.json"
+    },
+    {
+      "id": "Reversi",
+      "repo": "Reversi",
+      "title": "教室で使えるかもしれないもの作り #◯ 「1人1台」の教室で、あえて1台を2人で。盤面の大きさを変えられる対戦アプリ「リバーシ」",
+      "charCount": 7379,
+      "imageCount": 22,
+      "problems": 0,
+      "styleWarnings": 3,
+      "src": "note-articles/Reversi.json"
+    },
+    {
+      "id": "SchoolPlan_Editor",
+      "repo": "SchoolPlan_Editor",
+      "title": "教室で使えるかもしれないもの作り #◯ 「週案がまだ書けていない」から抜け出す。時数も振り返りもまとめて引き受ける校務アプリ「週案エディタ」",
+      "charCount": 9038,
+      "imageCount": 23,
+      "problems": 0,
+      "styleWarnings": 5,
+      "src": "note-articles/SchoolPlan_Editor.json"
+    },
+    {
+      "id": "Townmap_Mikke",
+      "repo": "Townmap_Mikke",
+      "title": "教室で使えるかもしれないもの作り #◯ 「見つけたよ」が、その子のノートで終わらない。町たんけんの気づきが1枚の地図に集まるアプリ「みっけ！」",
+      "charCount": 8097,
+      "imageCount": 25,
+      "problems": 0,
+      "styleWarnings": 5,
+      "src": "note-articles/Townmap_Mikke.json"
+    },
+    {
+      "id": "Typa",
+      "repo": "Typa",
+      "title": "教室で使えるかもしれないもの作り #◯ 名簿もログインもなし。ひらいた画面がもう打つ画面のタイピング学習アプリ「Typa（タイパ）」",
+      "charCount": 7914,
+      "imageCount": 25,
+      "problems": 0,
+      "styleWarnings": 5,
+      "src": "note-articles/Typa.json"
+    },
+    {
+      "id": "Werewolf",
+      "repo": "Werewolf",
+      "title": "教室で使えるかもしれないもの作り #◯ 「先生が司会をしなくていい」ふりがなつきで1台からできる人狼ゲームアプリ「人狼ゲーム」",
+      "charCount": 7672,
+      "imageCount": 25,
+      "problems": 0,
+      "styleWarnings": 2,
+      "src": "note-articles/Werewolf.json"
+    },
+    {
+      "id": "online-100square-calculation",
+      "repo": "online-100square-calculation",
+      "title": "教室で使えるかもしれないもの作り #◯ 「40人ぶんの丸つけ、いつやりますか」書いた瞬間に採点される100マス計算アプリ「100マス計算」",
+      "charCount": 7919,
+      "imageCount": 19,
+      "problems": 0,
+      "styleWarnings": 3,
+      "src": "note-articles/online-100square-calculation.json"
+    },
+    {
+      "id": "online-manuscript-paper-lite",
+      "repo": "online-manuscript-paper-lite",
+      "title": "教室で使えるかもしれないもの作り #◯ 「書き直し」で作文がきらいになる前に。打てば縦書きになる原稿用紙アプリ「オンライン原稿用紙 Lite」",
+      "charCount": 7445,
+      "imageCount": 18,
+      "problems": 0,
+      "styleWarnings": 3,
+      "src": "note-articles/online-manuscript-paper-lite.json"
+    },
+    {
+      "id": "online-manuscript-paper-pro",
+      "repo": "online-manuscript-paper-pro",
+      "title": "教室で使えるかもしれないもの作り #◯ 作文の赤ペンで放課後が終わる。原稿用紙をなぞって返せる作文アプリ「オンライン原稿用紙 Pro」",
+      "charCount": 7866,
+      "imageCount": 29,
+      "problems": 0,
+      "styleWarnings": 4,
+      "src": "note-articles/online-manuscript-paper-pro.json"
+    },
+    {
+      "id": "word_basket",
+      "repo": "word_basket",
+      "title": "教室で使えるかもしれないもの作り #◯ 「順番が来るまでひま」をなくす。全員でいっせいにことばを探すカードゲームアプリ「ワードバスケット」",
+      "charCount": 7677,
+      "imageCount": 21,
+      "problems": 0,
+      "styleWarnings": 1,
+      "src": "note-articles/word_basket.json"
     }
   ],
   "stock": [
@@ -1826,8 +3414,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "学期末の時数計算に毎回1時間以上かかっていました。そこで週案入力と同時に過不足を自動計算するツールを作りました。過去の記録を探さず進捗がひと目で分かります。2学期の計画作りに役立つと思います。\n\n#週案 #校務効率化 #時数管理",
-          "weightedLength": 219
+          "text": "配って説明するまで2分。時数計算に追われる夏休みの校務を減らしたくて作りました。過去の進捗や週案の入力、15時以降の音声振り返りまでこれ1つ。年間計画のPDF自動取り込み機能もあります。\n\n#週案 #校務効率化 #時数管理",
+          "weightedLength": 208
         },
         {
           "kind": "link",
@@ -1836,13 +3424,13 @@
           "weightedLength": 76
         }
       ],
-      "text": "学期末の時数計算に毎回1時間以上かかっていました。そこで週案入力と同時に過不足を自動計算するツールを作りました。過去の記録を探さず進捗がひと目で分かります。2学期の計画作りに役立つと思います。\n\n#週案 #校務効率化 #時数管理",
+      "text": "配って説明するまで2分。時数計算に追われる夏休みの校務を減らしたくて作りました。過去の進捗や週案の入力、15時以降の音声振り返りまでこれ1つ。年間計画のPDF自動取り込み機能もあります。\n\n#週案 #校務効率化 #時数管理",
       "url": "https://gigayama.github.io/SchoolPlan_Editor/",
       "media": "media/SchoolPlan_Editor-card.png",
       "mediaList": [
         "media/SchoolPlan_Editor-card.png"
       ],
-      "weightedLength": 219,
+      "weightedLength": 208,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
@@ -1864,8 +3452,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "同姓同名のお子さんがいると、記録が混ざる失敗がありました。そのため、氏名ではなくメールアドレスを基準に識別する仕様に更新しました。自由進度学習のワークシートや自己評価が、確実に本人に届くよう工夫しています。\n\n#自由進度学習 #GIGAスクール #学習管理",
-          "weightedLength": 245
+          "text": "夏休みの端末更新作業中、外部通信が切れて画面が崩れる問題に対応しました。全コードを自己ホスト化し、学校のネットワーク制限でも崩れず動きます。新学期の自由進度学習が止まらないよう直しました。\n\n#自由進度学習 #GIGAスクール #Chromebook",
+          "weightedLength": 229
         },
         {
           "kind": "link",
@@ -1874,17 +3462,17 @@
           "weightedLength": 74
         }
       ],
-      "text": "同姓同名のお子さんがいると、記録が混ざる失敗がありました。そのため、氏名ではなくメールアドレスを基準に識別する仕様に更新しました。自由進度学習のワークシートや自己評価が、確実に本人に届くよう工夫しています。\n\n#自由進度学習 #GIGAスクール #学習管理",
+      "text": "夏休みの端末更新作業中、外部通信が切れて画面が崩れる問題に対応しました。全コードを自己ホスト化し、学校のネットワーク制限でも崩れず動きます。新学期の自由進度学習が止まらないよう直しました。\n\n#自由進度学習 #GIGAスクール #Chromebook",
       "url": "https://gigayama.github.io/MIRAI-Compass/",
       "media": "media/MIRAI-Compass-card.png",
       "mediaList": [
         "media/MIRAI-Compass-card.png"
       ],
-      "weightedLength": 245,
+      "weightedLength": 229,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "confess",
+      "hook": "scene",
       "reprise": null
     },
     {
@@ -1902,8 +3490,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "AI添削に児童の名前を送信しない仕組みにしました。個人情報を守るためです。本文と題名だけを渡しても、AIは十分なアドバイスを返してくれます。安全性を担保しながらAIを授業で活用するヒントになると感じています。\n\n#オンライン原稿用紙 #Gemini #作文添削",
-          "weightedLength": 241
+          "text": "2学期の作文指導の準備中、AI添削へ送るデータから名前を外す設計の大切さに気づきました。個人情報を保護しながら思考を促す青ペン・赤ペンが自動で出せる形を目指しています。まずは安全な環境作りから始めます。\n\n#作文指導 #AI添削 #国語",
+          "weightedLength": 224
         },
         {
           "kind": "link",
@@ -1912,17 +3500,17 @@
           "weightedLength": 68
         }
       ],
-      "text": "AI添削に児童の名前を送信しない仕組みにしました。個人情報を守るためです。本文と題名だけを渡しても、AIは十分なアドバイスを返してくれます。安全性を担保しながらAIを授業で活用するヒントになると感じています。\n\n#オンライン原稿用紙 #Gemini #作文添削",
+      "text": "2学期の作文指導の準備中、AI添削へ送るデータから名前を外す設計の大切さに気づきました。個人情報を保護しながら思考を促す青ペン・赤ペンが自動で出せる形を目指しています。まずは安全な環境作りから始めます。\n\n#作文指導 #AI添削 #国語",
       "url": "https://gigayama.github.io/online-manuscript-paper-pro/",
       "media": "media/online-manuscript-paper-pro-card.png",
       "mediaList": [
         "media/online-manuscript-paper-pro-card.png"
       ],
-      "weightedLength": 241,
+      "weightedLength": 224,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "reason",
+      "hook": "confess",
       "reprise": null
     },
     {
@@ -1940,8 +3528,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "国語で調べた言葉は、そのままマイたからばこに保存させています。単発の検索で終わらせず、集めた言葉を使って一文作文を書く流れを作ると、言葉の定着がかなり変わると思います。明日からの語彙学習におすすめです。\n\n#国語 #語彙学習 #小学校",
-          "weightedLength": 227
+          "text": "学習記録を外部サーバーではなく端末内に保存する作りにしました。児童が調べた語彙を自分だけの「マイたからばこ」に溜め、そこから一文作文を作る流れが、通信環境を気にせず2学期の授業ですぐ使えます。\n\n#語彙学習 #国語 #PWA",
+          "weightedLength": 213
         },
         {
           "kind": "link",
@@ -1950,17 +3538,17 @@
           "weightedLength": 80
         }
       ],
-      "text": "国語で調べた言葉は、そのままマイたからばこに保存させています。単発の検索で終わらせず、集めた言葉を使って一文作文を書く流れを作ると、言葉の定着がかなり変わると思います。明日からの語彙学習におすすめです。\n\n#国語 #語彙学習 #小学校",
+      "text": "学習記録を外部サーバーではなく端末内に保存する作りにしました。児童が調べた語彙を自分だけの「マイたからばこ」に溜め、そこから一文作文を作る流れが、通信環境を気にせず2学期の授業ですぐ使えます。\n\n#語彙学習 #国語 #PWA",
       "url": "https://gigayama.github.io/Treasure_Words/",
       "media": "media/Treasure_Words-card.png",
       "mediaList": [
         "media/Treasure_Words-card.png"
       ],
-      "weightedLength": 227,
+      "weightedLength": 213,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "scene",
+      "hook": "reason",
       "reprise": null
     },
     {
@@ -1978,8 +3566,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "紙だと拡大できない見開きも、画面なら半ページで大きく映せます。縦持ちタブレットで教科書を読む際に画面が小さく困っていたので、右開き対応のツールを作りました。書き込みの共有も2分で済む設計にしています。\n\n#デジタル教科書 #PDF活用 #ICT教育",
-          "weightedLength": 234
+          "text": "縦向き端末で拡大表示に苦労していた画面も、半ページ表示で読みやすくなります。授業中の提示や167種のスタンプ配置がスムーズに行えるアプリを作りました。プリントのQRコードもドラッグ指定ですぐ開けます。\n\n#デジタル教科書 #教材作成 #ペーパーレス",
+          "weightedLength": 236
         },
         {
           "kind": "link",
@@ -1988,13 +3576,13 @@
           "weightedLength": 76
         }
       ],
-      "text": "紙だと拡大できない見開きも、画面なら半ページで大きく映せます。縦持ちタブレットで教科書を読む際に画面が小さく困っていたので、右開き対応のツールを作りました。書き込みの共有も2分で済む設計にしています。\n\n#デジタル教科書 #PDF活用 #ICT教育",
+      "text": "縦向き端末で拡大表示に苦労していた画面も、半ページ表示で読みやすくなります。授業中の提示や167種のスタンプ配置がスムーズに行えるアプリを作りました。プリントのQRコードもドラッグ指定ですぐ開けます。\n\n#デジタル教科書 #教材作成 #ペーパーレス",
       "url": "https://gigayama.github.io/Digital_textbook/",
       "media": "media/Digital_textbook-card.png",
       "mediaList": [
         "media/Digital_textbook-card.png"
       ],
-      "weightedLength": 234,
+      "weightedLength": 236,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
@@ -2016,8 +3604,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "10分の休み時間では、8×8の盤面が終わらず途中で諦める子も。これまでは時間切れで悔しい思いをしていました。今は4×4の小盤面に切り替えて、短い時間でも最後まで決着がつく遊び方ができるようにしています。\n\n#リバーシ #休み時間 #GIGAスクール",
-          "weightedLength": 229
+          "text": "雨の日の休み時間、1台の端末を2人で仲良く使う方法に困っていませんか。低学年でも短時間で決着がつく4×4盤面から遊べるリバーシを作りました。音量オフやキーボード操作対応で、誰でも安心して遊べます。\n\n#学級経営 #Chromebook #GIGAスクール",
+          "weightedLength": 228
         },
         {
           "kind": "link",
@@ -2026,17 +3614,17 @@
           "weightedLength": 74
         }
       ],
-      "text": "10分の休み時間では、8×8の盤面が終わらず途中で諦める子も。これまでは時間切れで悔しい思いをしていました。今は4×4の小盤面に切り替えて、短い時間でも最後まで決着がつく遊び方ができるようにしています。\n\n#リバーシ #休み時間 #GIGAスクール",
+      "text": "雨の日の休み時間、1台の端末を2人で仲良く使う方法に困っていませんか。低学年でも短時間で決着がつく4×4盤面から遊べるリバーシを作りました。音量オフやキーボード操作対応で、誰でも安心して遊べます。\n\n#学級経営 #Chromebook #GIGAスクール",
       "url": "https://gigayama.github.io/Reversi/",
       "media": "media/Reversi-card.png",
       "mediaList": [
         "media/Reversi-card.png"
       ],
-      "weightedLength": 229,
+      "weightedLength": 228,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "scene",
+      "hook": "question",
       "reprise": null
     },
     {
@@ -2054,8 +3642,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "学校と同じように、データは外部へ送信せず端末内に保存させました。セキュリティ上の制約を考慮し、IndexedDBを活用した完全ローカル設計にしています。ネットワークに頼らず安全に動く仕組みを意識しました。\n\n#IndexedDB #PWA #セキュリティ",
-          "weightedLength": 226
+          "text": "毎朝の出勤前に着ていく服で迷い、2分以上悩む日々を減らしたくて作りました。写真を端末内だけに保存し、着用回数から1回あたりの単価を算出します。出張や研修が増える夏の着回し整理にも役立つと思います。\n\n#服の管理 #デジタルクローゼット #校務",
+          "weightedLength": 233
         },
         {
           "kind": "link",
@@ -2064,17 +3652,17 @@
           "weightedLength": 68
         }
       ],
-      "text": "学校と同じように、データは外部へ送信せず端末内に保存させました。セキュリティ上の制約を考慮し、IndexedDBを活用した完全ローカル設計にしています。ネットワークに頼らず安全に動く仕組みを意識しました。\n\n#IndexedDB #PWA #セキュリティ",
+      "text": "毎朝の出勤前に着ていく服で迷い、2分以上悩む日々を減らしたくて作りました。写真を端末内だけに保存し、着用回数から1回あたりの単価を算出します。出張や研修が増える夏の着回し整理にも役立つと思います。\n\n#服の管理 #デジタルクローゼット #校務",
       "url": "https://gigayama.github.io/DigitalCloset/",
       "media": "media/DigitalCloset-card.png",
       "mediaList": [
         "media/DigitalCloset-card.png"
       ],
-      "weightedLength": 226,
+      "weightedLength": 233,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "reason",
+      "hook": "confess",
       "reprise": null
     },
     {
@@ -2092,8 +3680,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "2分で終わる放課後作業。片付けをしながら音声で振返りを残します。キーボードを打つ余裕がなくても、音声入力でその日の記録を残せば、週報づくりや次の授業準備が格段にラクになります。忙しい夕方におすすめです。\n\n#週案 #校務支援 #生成AI",
-          "weightedLength": 226
+          "text": "15分かかっていた週案作成や行事PDFの転記を、AI連携で短縮する使い方をおすすめします。準備物やタスクの自動サジェストを活用することで、2学期に向けた時間割作成や時数管理の負担を大きく減らせます。\n\n#週案 #校務支援 #生成AI",
+          "weightedLength": 215
         },
         {
           "kind": "link",
@@ -2102,13 +3690,13 @@
           "weightedLength": 80
         }
       ],
-      "text": "2分で終わる放課後作業。片付けをしながら音声で振返りを残します。キーボードを打つ余裕がなくても、音声入力でその日の記録を残せば、週報づくりや次の授業準備が格段にラクになります。忙しい夕方におすすめです。\n\n#週案 #校務支援 #生成AI",
+      "text": "15分かかっていた週案作成や行事PDFの転記を、AI連携で短縮する使い方をおすすめします。準備物やタスクの自動サジェストを活用することで、2学期に向けた時間割作成や時数管理の負担を大きく減らせます。\n\n#週案 #校務支援 #生成AI",
       "url": "https://gigayama.github.io/School_plan_note/",
       "media": "media/School_plan_note-card.png",
       "mediaList": [
         "media/School_plan_note-card.png"
       ],
-      "weightedLength": 226,
+      "weightedLength": 215,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
@@ -2130,8 +3718,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "低学年の算数で、画面の漢字が読めずに手が止まる子はいませんか。アプリ内の案内をすべてルビ付きにしたところ、説明の時間を減らせました。教材作成時に文字の読みやすさを配慮することが大切だと改めて感じています。\n\n#算数 #図形学習 #ICT教育",
-          "weightedLength": 230
+          "text": "低学年でも迷わず使えるよう、全漢字にルビを付け操作部を大きく設計しました。サーバー不要でURL共有のみで図形問題が届く仕組みにすると、準備時間が減り、2学期の算数授業で即活用できると感じています。\n\n#算数 #図形学習 #GIGAスクール",
+          "weightedLength": 223
         },
         {
           "kind": "link",
@@ -2140,17 +3728,17 @@
           "weightedLength": 76
         }
       ],
-      "text": "低学年の算数で、画面の漢字が読めずに手が止まる子はいませんか。アプリ内の案内をすべてルビ付きにしたところ、説明の時間を減らせました。教材作成時に文字の読みやすさを配慮することが大切だと改めて感じています。\n\n#算数 #図形学習 #ICT教育",
+      "text": "低学年でも迷わず使えるよう、全漢字にルビを付け操作部を大きく設計しました。サーバー不要でURL共有のみで図形問題が届く仕組みにすると、準備時間が減り、2学期の算数授業で即活用できると感じています。\n\n#算数 #図形学習 #GIGAスクール",
       "url": "https://gigayama.github.io/Shapes_Canvas/",
       "media": "media/Shapes_Canvas-card.png",
       "mediaList": [
         "media/Shapes_Canvas-card.png"
       ],
-      "weightedLength": 230,
+      "weightedLength": 223,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "question",
+      "hook": "reason",
       "reprise": null
     },
     {
@@ -2168,8 +3756,8 @@
         {
           "kind": "main",
           "label": "本文",
-          "text": "以前は間違えると「×」が出て、やる気を失う子がいました。なぞり書きで判定が厳しすぎると諦めてしまいます。今は「×」を出さず、3段階のヒントと達成度で自発的に解き直せるようにアプリの仕組みを整えています。\n\n#国語 #1年生 #読み書き",
-          "weightedLength": 223
+          "text": "1年生の促音や長音のつまずきに、個別対応する時間が足りないと悩んでいませんか。間違えても×を出さず、音声と3段階ヒントで一人で進められるアプリを作りました。1回3分の練習で達成感が味わえます。\n\n#国語 #1年生 #読み書き",
+          "weightedLength": 211
         },
         {
           "kind": "link",
@@ -2178,17 +3766,17 @@
           "weightedLength": 76
         }
       ],
-      "text": "以前は間違えると「×」が出て、やる気を失う子がいました。なぞり書きで判定が厳しすぎると諦めてしまいます。今は「×」を出さず、3段階のヒントと達成度で自発的に解き直せるようにアプリの仕組みを整えています。\n\n#国語 #1年生 #読み書き",
+      "text": "1年生の促音や長音のつまずきに、個別対応する時間が足りないと悩んでいませんか。間違えても×を出さず、音声と3段階ヒントで一人で進められるアプリを作りました。1回3分の練習で達成感が味わえます。\n\n#国語 #1年生 #読み書き",
       "url": "https://gigayama.github.io/yomikaki/",
       "media": "media/yomikaki-card.png",
       "mediaList": [
         "media/yomikaki-card.png"
       ],
-      "weightedLength": 223,
+      "weightedLength": 211,
       "overLimit": false,
       "alternatives": [],
       "pickReason": null,
-      "hook": "contrast",
+      "hook": "question",
       "reprise": null
     }
   ],
@@ -2219,26 +3807,26 @@
     },
     {
       "name": "Digital_textbook",
-      "label": "PDFを取り込み書き込んで端末へ直接配布！",
-      "oneLine": "PDFを読み込んで自由に書き込みや端末間共有ができるWebアプリ。",
+      "label": "サーバー不要でPDFをデジタル教科書に",
+      "oneLine": "PDFを取り込み書き込みや端末間共有ができるWebアプリ",
       "subject": "全教科",
-      "grade": "全学年・教員向け",
+      "grade": "教員向け",
       "hasPages": true
     },
     {
       "name": "Digital-Newspaper",
-      "label": "集めた記事を新聞風レイアウトに",
-      "oneLine": "スプレッドシートの記事を新聞風に配置するWebアプリ。",
-      "subject": "記載なし",
-      "grade": "記載なし",
+      "label": "児童の投稿を集めてつくる、本格学級新聞！",
+      "oneLine": "児童が投稿した記事を並べてA4の学級新聞として印刷できるアプリ",
+      "subject": "学級経営",
+      "grade": "全学年",
       "hasPages": false
     },
     {
       "name": "DigitalCloset",
-      "label": "写真で服を登録・AIがコーデ提案や分析",
-      "oneLine": "手持ちの服を写真で登録し、コーデや着用記録・使用頻度を管理する。",
-      "subject": "指定なし",
-      "grade": "指定なし",
+      "label": "手持ち服で賢く着回す！AIクローゼット",
+      "oneLine": "手持ち服を写真登録しAI相談や着用記録ができるクローゼット帳。",
+      "subject": "校務",
+      "grade": "教員向け",
       "hasPages": true
     },
     {
@@ -2251,10 +3839,10 @@
     },
     {
       "name": "Gamification",
-      "label": "あそんだ記録が経験値になる学びポータル",
-      "oneLine": "学習アプリの記録を集めてゲーミフィケーションし一元管理する",
-      "subject": "算数・国語・道徳・特別活動・校務",
-      "grade": "小学校全学年・教員向け",
+      "label": "遊んで送ってレベルアップ！学びを見える化",
+      "oneLine": "学習記録の自動送信やレベル化と教務管理を一体化するアプリ",
+      "subject": "全教科・学級経営・校務",
+      "grade": "全学年・教員",
       "hasPages": true
     },
     {
@@ -2275,49 +3863,49 @@
     },
     {
       "name": "Gobblet",
-      "label": "パクッとかぶせて3つ並べる対戦ゲーム",
-      "oneLine": "1台の端末を2人で囲んで遊べる3×3マスの対戦ゲーム",
+      "label": "1台を2人で囲んで遊べる対戦ボードゲーム",
+      "oneLine": "大きい駒で小さい駒を被せ3つ並べる2人対戦ボードゲーム",
       "subject": "学級経営",
-      "grade": "小1〜小6",
+      "grade": "全学年",
       "hasPages": true
     },
     {
       "name": "Google-Data-Transfer",
-      "label": "組織ファイルの個人アカウント移行を自動化",
-      "oneLine": "Googleドライブのファイルを別アカウントへ直接コピー・転送するツール",
+      "label": "学校のファイルを個人ドライブへ一括コピー！",
+      "oneLine": "学校のGoogleファイルを個人アカウントへ一括コピーするツール",
       "subject": "校務",
       "grade": "教員向け",
       "hasPages": false
     },
     {
       "name": "Hagetaka-game",
-      "label": "あいことばで遊べる心理戦カードゲーム！",
-      "oneLine": "あいことばで簡単に友達やロボと対戦できるカードゲームアプリ。",
-      "subject": "休み時間・学級活動",
+      "label": "4桁あいことばで心理戦カードバトル！",
+      "oneLine": "4桁のあいことばで友達やロボと心理戦ができるカードゲーム",
+      "subject": "学級経営",
       "grade": "全学年",
       "hasPages": true
     },
     {
       "name": "Haiku-meeting",
-      "label": "3分のコピペで導入できるGIGA句会プラザ",
-      "oneLine": "GASにコピペするだけで導入できる句会・振り返りアプリ。",
-      "subject": "国語・全教科の振り返り",
-      "grade": "全学年",
+      "label": "1つの画面で完結するGIGA時代の句会",
+      "oneLine": "クラス全員で俳句を詠み、読み合い、投票して発表まで行うWebアプリ。",
+      "subject": "国語、理科、体育",
+      "grade": "小学生・教員",
       "hasPages": false
     },
     {
       "name": "Homework_barcordreader",
-      "label": "毎朝10秒！宿題提出ときもちの記録",
-      "oneLine": "毎朝の宿題提出と体調記録を数タップで完了できるブラウザアプリ",
-      "subject": "学級経営",
+      "label": "朝の宿題チェックときもちの記録を10秒で",
+      "oneLine": "児童の宿題提出ときもちの記録を一括デジタル化する学級経営アプリ",
+      "subject": "学級経営・校務",
       "grade": "全学年",
       "hasPages": true
     },
     {
       "name": "Ice_slide-puzzle",
-      "label": "ペンギン対アザラシ！滑らせ対戦ゲーム",
-      "oneLine": "氷上のコマを滑らせて王冠をゴールに導く2人対戦ゲーム",
-      "subject": "学級経営",
+      "label": "王冠をゴールへ！氷の上の2人対戦ゲーム",
+      "oneLine": "氷の上を滑るコマを操り王冠をゴールへ導く2人対戦ゲーム。",
+      "subject": "特別活動・休み時間",
       "grade": "全学年",
       "hasPages": true
     },
@@ -2363,10 +3951,10 @@
     },
     {
       "name": "MIRAI-Compass",
-      "label": "自由進度学習の計画から見取りまでこれ1つ",
-      "oneLine": "児童の自由進度学習の計画・実行・振り返りと教員の見取りを支援。",
+      "label": "自分で計画・実行・振り返る自由進度学習",
+      "oneLine": "自由進度学習で児童の計画と振り返り、先生の見取りを支える",
       "subject": "全教科",
-      "grade": "全学年",
+      "grade": "全学年・教員向け",
       "hasPages": true
     },
     {
@@ -2395,10 +3983,10 @@
     },
     {
       "name": "NotebookSample_Generator",
-      "label": "入力するだけ！マス目に合ったノート見本",
-      "oneLine": "小学校のノート指導で使うノート見本を作成しA4印刷できるツール",
-      "subject": "国語・算数",
-      "grade": "教員向け（小1〜小6）",
+      "label": "マス目を数えて黒板に手書きする準備をゼロに",
+      "oneLine": "文章を打つだけでマス目に合ったA4印刷用ノート見本を作るツール",
+      "subject": "国語・算数・校務",
+      "grade": "小1〜小6・教員向け",
       "hasPages": true
     },
     {
@@ -2427,26 +4015,26 @@
     },
     {
       "name": "online-manuscript-paper-lite",
-      "label": "サーバー不要！ブラウザで動く縦書き原稿用紙",
-      "oneLine": "ブラウザで作文・縦書き確認・保存・印刷ができるWebアプリ",
+      "label": "登録不要！ブラウザで即縦書き原稿用紙に",
+      "oneLine": "入力すると即座に縦書き原稿用紙へ反映されA4印刷できるアプリ",
       "subject": "国語",
       "grade": "全学年",
       "hasPages": true
     },
     {
       "name": "online-manuscript-paper-pro",
-      "label": "打つと縦書き原稿用紙！なぞって赤ペン添削",
-      "oneLine": "入力欄に打つと縦書き原稿用紙になりP2PやAIで添削できるアプリ",
+      "label": "4桁PINで即つながる！縦書き原稿用紙",
+      "oneLine": "横書き入力で縦書きに自動組版されリアルタイム添削ができる作文アプリ",
       "subject": "国語",
-      "grade": "全学年・教員",
+      "grade": "小1〜小6（全学年）",
       "hasPages": true
     },
     {
       "name": "Online-Publisher-pro",
-      "label": "原稿用紙も本も！書いて添削して読み合える",
-      "oneLine": "児童の作文作成・本づくりと教員のAI添削ができるWebアプリ",
-      "subject": "国語・学級経営",
-      "grade": "主に小学校",
+      "label": "原稿用紙と本で書いて添削・読み合える",
+      "oneLine": "児童が原稿用紙や本形式で作文を書き教員が添削・共有できるWebアプリ",
+      "subject": "国語",
+      "grade": "小学校全学年・教員",
       "hasPages": true
     },
     {
@@ -2467,32 +4055,32 @@
     },
     {
       "name": "Quarto",
-      "label": "相手が置くコマを選ぶ！1台で2人対戦",
-      "oneLine": "1台の端末を2人で囲んで対戦する3Dボードゲームアプリ。",
+      "label": "相手が渡すコマで勝負！1台2人対戦クアルト",
+      "oneLine": "1台を2人で囲み、相手の選んだコマを置いて競う3Dボードゲーム。",
       "subject": "学級経営",
       "grade": "小学校中学年〜",
       "hasPages": true
     },
     {
       "name": "Quoridor",
-      "label": "1台を2人でシェア！カベカベ合戦",
-      "oneLine": "1台の端末を2人で囲んで遊ぶ教育用対戦パズルゲーム。",
+      "label": "1台を2人で囲んで遊ぶ対戦パズルゲーム！",
+      "oneLine": "1台の端末を2人でシェアして対戦する小学生向けパズルゲーム。",
       "subject": "学級経営",
       "grade": "小学生全学年",
       "hasPages": true
     },
     {
       "name": "Reflection_Journal",
-      "label": "心のバイタルを可視化する交換日記アプリ",
-      "oneLine": "児童の感情変化を可視化し、AIが先生の返答作成を支援するツール。",
+      "label": "毎日の5分で子どもの心に寄り添うふりかえり",
+      "oneLine": "児童の心のバイタルを可視化しAIで教員を支えるふりかえりツール",
       "subject": "学級経営",
       "grade": "全学年",
       "hasPages": true
     },
     {
       "name": "Reversi",
-      "label": "1台を2人で！低学年も遊べる可変リバーシ",
-      "oneLine": "1台の端末を2人で囲み手軽に遊べるルビ付きリバーシ。",
+      "label": "1台を2人で囲んで遊べるリバーシ",
+      "oneLine": "1台の端末を2人で使い交代で石を置くリバーシゲーム。",
       "subject": "学級経営",
       "grade": "全学年",
       "hasPages": true
@@ -2539,10 +4127,10 @@
     },
     {
       "name": "Shiritori_fighter",
-      "label": "ことばで戦え！声でも遊べるしりとり",
-      "oneLine": "声やキーボードで入力して戦う対戦型しりとりWebアプリ",
+      "label": "声でも打てる！言葉で戦うしりとりバトル",
+      "oneLine": "音声入力やかな変換に対応した対戦型しりとりWebアプリ",
       "subject": "国語",
-      "grade": "小学生",
+      "grade": "小学生（低学年〜高学年）",
       "hasPages": true
     },
     {
@@ -2555,10 +4143,10 @@
     },
     {
       "name": "Townmap_Mikke",
-      "label": "地図を囲んで対話が生まれる協働マップ",
-      "oneLine": "地図画像に児童がピンや写真、メモを貼り協働学習するアプリ",
-      "subject": "社会・生活・総合",
-      "grade": "小学生（全学年）",
+      "label": "写真やメモのピンを地図に貼って共有",
+      "oneLine": "地図画像に写真やメモのピンを貼り共有する学習アプリ。",
+      "subject": "探究学習・生活・社会",
+      "grade": "小学生・教員向け",
       "hasPages": true
     },
     {
@@ -2571,9 +4159,9 @@
     },
     {
       "name": "Typa",
-      "label": "開いた瞬間打ちはじめるタイピング練習",
-      "oneLine": "開いた瞬間打ちはじめられる小学生向けタイピング学習アプリ",
-      "subject": "情報",
+      "label": "ひらいたら、もう打てる。",
+      "oneLine": "指の位置を見ながらローマ字や操作を練習できるタイピングアプリ",
+      "subject": "タイピング・情報",
       "grade": "小学生",
       "hasPages": true
     },
@@ -2587,17 +4175,17 @@
     },
     {
       "name": "Werewolf",
-      "label": "1台のタブレットを回して遊べる人狼",
-      "oneLine": "1台の端末を回して遊べる小学生向けの人狼ゲームWebアプリ。",
+      "label": "1台の端末を回して遊べる小学生向け人狼",
+      "oneLine": "1台のタブレットを回して遊べる小学生向けの人狼ゲームアプリ",
       "subject": "学級経営",
       "grade": "小学校中学年〜",
       "hasPages": true
     },
     {
       "name": "word_basket",
-      "label": "みんなで遊べるリアルタイムしりとり",
-      "oneLine": "端末1つで2〜6人で遊べるリアルタイムしりとりゲーム",
-      "subject": "学級活動",
+      "label": "1台を囲んでみんなでリアルタイムしりとり",
+      "oneLine": "1台の端末を2〜6人で囲んで遊ぶリアルタイムしりとりアプリ。",
+      "subject": "国語",
       "grade": "小学生〜大人",
       "hasPages": true
     },
