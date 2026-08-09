@@ -15,152 +15,46 @@
 import fs from 'node:fs';
 import { fail, info, loadConfig, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { addDays, isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf } from './lib/jst.mjs';
+import { buildGalleries, toLauncherPost } from './lib/launcher-post.mjs';
 import { lintAlternative } from './lib/lint.mjs';
-import { rawUrl } from './lib/repo-images.mjs';
-import { composeSteps, seedFrom, weightedLength } from './lib/x-text.mjs';
 
 /** 「今週ぶん」として扱う週のほかに、さかのぼって載せる週の数。 */
 const PAST_WEEKS = 3;
 
 /**
- * 表示に要るものだけを抜き出す。
+ * ［つくる］でアプリを選ぶための一覧。
  *
- * steps（連投の手順）を持たない古い週の投稿は、本文1コマの連投として組み立てなおす。
- * ランチャー側に「steps がある場合とない場合」の分岐を持ち込まないためである。
+ * アプリ一覧のページ（docs/apps.html）とは別に、ここにも要る。
+ * あちらは検索と OGP のために静的な HTML として作ってあり、
+ * ランチャーの JS からは中身を読めないためである。
+ * 選ぶのに要るものだけにする（52件ぶん載るので、説明文まで入れると重くなる）。
  */
-function toLauncherPost(post, weekId, maxLength, placement = 'reply', gate = null) {
-    const mediaList = mediaPathsFor(post.repo);
-    const steps = (post.steps ?? legacySteps(post, placement)).map((step) => ({
-        kind: step.kind,
-        label: step.label,
-        text: step.text,
-        weightedLength: step.weightedLength ?? weightedLength(step.text),
-    }));
-    const main = steps[0];
-
-    return {
-        id: post.id,
-        weekId,
-        date: post.date,
-        weekday: post.weekday,
-        slot: post.slot,
-        slotLabel: post.slotLabel,
-        hour: post.hour,
-        theme: post.theme,
-        themeLabel: post.themeLabel,
-        repo: post.repo,
-        steps,
-        // text は本文（1コマ目）。通知や古い版の画面がここだけを見ていても壊れないように残す。
-        text: main.text,
-        url: post.url,
-        // media は1枚目。古い Service Worker が配っている app.js が読んでも壊れないように残す。
-        media: mediaList[0] ?? post.media ?? null,
-        mediaList,
-        weightedLength: main.weightedLength,
-        overLimit: main.weightedLength > maxLength,
-        // 落選案。ランチャーから差し替えられるようにする。本文だけ渡せば足りる。
-        //
-        // ⚠️ 配信の直前にもガードレール検査をかける。
-        //    ［別の案］はワンタップで本文になるので、本文と同じ基準を通っていないものを
-        //    押せる場所に置いてはいけない。生成側（generate-week.mjs）でも同じことをしているが、
-        //    data/queue/ には検査が無かったころの週が残りつづける。ここが最後の関所になる。
-        alternatives: (post.alternatives ?? [])
-            .filter((a) => !gate || gate(a, post))
-            .map((a) => ({ body: a.body, thread: a.thread ?? [] })),
-        pickReason: post.pickReason ?? null,
-        hook: post.hook ?? null,
-        // 出しなおしかどうか。画面で分かるようにしておかないと、
-        // 「前も見た気がする」が不安（同じものを二度出してしまったのでは）になる。
-        reprise: post.reprise ?? null,
-    };
+function appsForPicker(profiles, byName) {
+    return profiles
+        .map((p) => ({
+            name: p.name,
+            label: p.catchCopy || p.name,
+            oneLine: p.oneLine ?? '',
+            subject: p.subject ?? '',
+            grade: p.targetGrade ?? '',
+            // 公開 URL が無いアプリ（Chrome 拡張・GAS など）は、投稿にしても行き先が無い。
+            // 選べなくはしない（作った話は書ける）が、印は付けておく。
+            hasPages: Boolean(byName.get(p.name)?.pagesUrl ?? p.pagesUrl),
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/**
- * steps を持たない古い週の投稿を、連投の形に組みなおす。
- *
- * 古い形は「本文 + URL + ハッシュタグ」を1つの文につなげてあった。
- * そのまま出すと本文に URL が入った投稿になり、X にほとんど表示されない。
- * 幸い body / url / hashtags は別々に残してあるので、正確に組みなおせる。
- *
- * これは移行のための一度きりの処理ではなく、置いたままにする。
- * data/queue/ には過去の週が残りつづけるし、
- * 画面側に「古い形」の分岐を持ち込まないための場所がここだからである。
- */
-function legacySteps(post, placement) {
-    if (post.body && post.url) {
-        return composeSteps({
-            body: post.body,
-            thread: [],
-            url: post.url,
-            hashtags: post.hashtags ?? [],
-            placement,
-            seed: seedFrom(post.id),
-        });
-    }
-    // body すら無いものは、そのまま1コマとして出すしかない。
-    return [{ kind: 'main', label: '本文', text: post.text }];
-}
-
-/**
- * 添付できる画像の一覧を、アプリごとに組む。
- *
- * 中身は2種類ある。
- *   card … このリポジトリで作った紹介カード（docs/media/）。既定で選ばれる。
- *   repo … アプリのリポジトリに置いてある画像（note の記事のために撮ったものなど）。
- *
- * repo のほうは raw.githubusercontent.com を直接指す。
- * このリポジトリに取り込まないのは、KANJI_Town だけで28枚・約5MB あり、
- * 毎週コミットする以上それがそのままリポジトリの重さになるためである（config/media.json）。
- *
- * URL はコミット SHA で固定する。ブランチ名で組むと、アプリ側で画像を差しかえたときに
- * 画面に出ている絵と共有される絵が食い違い、しかも気づけない。
- */
-function buildGalleries(repoNames, owner) {
-    const collected = readJson(paths.data('repos.json'), { repos: [] }).repos ?? [];
-    const byName = new Map(collected.map((repo) => [repo.name, repo]));
-    const galleries = {};
-
-    for (const name of repoNames) {
-        const items = mediaPathsFor(name).map((src, i) => ({
-            id: `card:${i}`,
-            src,
-            kind: 'card',
-            label: i === 0 ? '紹介カード' : `紹介カード ${i + 1}`,
-        }));
-
-        const repo = byName.get(name);
-        if (repo?.headSha) {
-            for (const image of repo.images ?? []) {
-                items.push({
-                    // id はパスで作る。SHA で作ると、アプリ側に1つコミットが入っただけで
-                    // 端末に残した「この画像を選んだ」が全部はずれる。
-                    id: `repo:${image.path}`,
-                    src: rawUrl(owner, name, repo.headSha, image.path),
-                    kind: 'repo',
-                    label: image.label,
-                });
-            }
-        }
-
-        if (items.length > 0) galleries[name] = items;
-    }
-
-    return galleries;
-}
-
-/** その投稿に付く画像のパス（複数コマがあれば全部）。 */
-function mediaPathsFor(repo) {
-    const found = [];
-    for (let i = 1; i <= 4; i += 1) {
-        const name = i === 1 ? `${repo}-card.png` : `${repo}-card-${i}.png`;
-        if (fs.existsSync(paths.media(name))) found.push(`media/${name}`);
-        else if (i > 1) break;
-    }
-    return found;
+function loadProfiles() {
+    const dir = paths.data('profiles');
+    if (!fs.existsSync(dir)) return [];
+    return fs
+        .readdirSync(dir)
+        .filter((f) => f.endsWith('.json'))
+        .map((f) => readJson(paths.data('profiles', f)));
 }
 
 function main() {
-    const { accounts, slots, guardrails, monetization } = loadConfig();
+    const { accounts, slots, themes, guardrails, monetization } = loadConfig();
 
     // 落選案が本文と同じ基準を満たしているか。満たさないものは配信物に載せない。
     // 何件外したかを数えて最後に出す（黙って減ると、案が3つのはずが2つでも気づけない）。
@@ -225,8 +119,20 @@ function main() {
     }
 
     // 画面に出るアプリのぶんだけ、添付できる画像の一覧を載せる。
+    //
+    // ⚠️ 52件ぜんぶを載せない。KANJI_Town だけで28枚あるので、
+    //    全アプリぶんを入れるとスマホが最初に読むファイルが理由もなく重くなる。
+    //    ［つくる］で注文して作った投稿は、添付候補を結果ファイルと一緒に受け取る
+    //    （scripts/generate-promo.mjs）ので、ここに無くても画像を選べる。
     const usedRepos = new Set([...posts, ...stock].map((post) => post.repo).filter(Boolean));
     const galleries = buildGalleries(usedRepos, accounts.githubOwner);
+
+    // ［つくる］でアプリと型を選ぶための材料。
+    const profiles = loadProfiles();
+    const reposByName = new Map(
+        (readJson(paths.data('repos.json'), { repos: [] }).repos ?? []).map((r) => [r.name, r])
+    );
+    const apps = appsForPicker(profiles, reposByName);
 
     const outPath = paths.docs('launcher.json');
     writeJson(outPath, {
@@ -252,6 +158,11 @@ function main() {
         notes,
         // 予定に無い投稿を「いま出したい」ときの引き出し。週次で作り置きしてある。
         stock,
+        // ［つくる］でアプリを選ぶための一覧と、頼める型。
+        // 型は config/themes.json をそのまま写す（posts から拾うと、
+        // その週にたまたま出なかった型を注文できなくなる）。
+        apps,
+        themes: themes.themes.map((t) => ({ id: t.id, label: t.label, intent: t.intent })),
     });
 
     info(`⑤ 完了 — ${rel(outPath)}`);
@@ -272,6 +183,10 @@ function main() {
     }
     if (droppedAlternatives > 0) {
         info(`   ※ 別の案 ${droppedAlternatives} 件は基準を満たさないので載せませんでした（\`npm run lint:drafts\` に理由が出ます）`);
+    }
+    info(`   ［つくる］で選べるアプリ: ${apps.length} 件 / 頼める型: ${themes.themes.length} 種`);
+    if (apps.length === 0) {
+        info('   ※ アプリの一覧が空です。［つくる］でアプリを選べません（`npm run profiles`）');
     }
 }
 

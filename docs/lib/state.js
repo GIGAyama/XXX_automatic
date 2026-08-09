@@ -105,5 +105,14 @@ function idToDate(id) {
  * ここに無いと型が分からなくなる。いちばん効く軸なので取りこぼさない。
  */
 export function traceOf(post) {
-  return { repo: post.repo, theme: post.theme, date: post.date, weekId: post.weekId, hook: post.hook ?? null };
+  return {
+    repo: post.repo,
+    theme: post.theme,
+    date: post.date,
+    weekId: post.weekId,
+    hook: post.hook ?? null,
+    // 枠も控える。［つくる］で作った投稿は launcher.json に載らないので、
+    // ここに無いと「どの枠のぶんか」が投稿IDからしか読めなくなる（そして読めない）。
+    slot: post.slot ?? null,
+  };
 }

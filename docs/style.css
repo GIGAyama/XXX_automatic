@@ -256,6 +256,43 @@ body {
 }
 .sendbar__text { margin: 0; padding: 0 14px 12px; font-size: 14px; color: var(--ink); font-weight: 700; }
 
+/* ── つくる（アプリを選んで注文する）───────────── */
+.make { padding: 14px 0 4px; }
+.make .sendbar__text { padding-bottom: 4px; }
+.make__label { margin: 14px 14px 6px; font-size: 12.5px; font-weight: 700; color: var(--ink-weak); }
+.make__search {
+  display: block; width: calc(100% - 28px); margin: 0 14px;
+  padding: 11px 12px; font-size: 16px; /* 16px 未満だと iOS が勝手に拡大する */
+  border: 1.5px solid var(--line); border-radius: 10px;
+  background: var(--bg); color: var(--ink); font-family: inherit;
+}
+.make__apps { margin: 8px 14px 0; max-height: 44vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.make__app {
+  display: block; width: 100%; text-align: left; margin-bottom: 6px;
+  padding: 10px 12px; min-height: 44px;
+  background: var(--bg); color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: 10px; font-family: inherit; cursor: pointer;
+}
+.make__app:active { transform: translateY(1px); }
+.make__appName { display: block; font-size: 14.5px; font-weight: 700; }
+.make__appMeta { display: block; font-size: 12px; color: var(--ink-weak); margin-top: 2px; }
+.make__appOne { display: block; font-size: 12.5px; color: var(--ink-weak); margin-top: 3px; line-height: 1.5; }
+.make__count { margin: 4px 2px 0; font-size: 12px; color: var(--ink-weak); }
+.make__picked { margin: 0 14px; padding: 12px; background: var(--bg); border: 1.5px solid var(--accent); border-radius: 10px; }
+.make__pickedName { margin: 0; font-size: 15px; font-weight: 800; }
+.make__pickedOne { margin: 4px 0 10px; font-size: 13px; color: var(--ink-weak); line-height: 1.6; }
+.make__warn { margin: 0 0 10px; font-size: 12.5px; color: #8a5a12; line-height: 1.6; }
+@media (prefers-color-scheme: dark) { .make__warn { color: #e0b96a; } }
+.make__row { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px; }
+.make .editor__area { width: calc(100% - 28px); margin: 0 14px; }
+.make .card__actions { padding: 14px 14px 4px; }
+.make .steps__guide { margin-bottom: 12px; }
+.make .editor { padding: 12px 14px 14px; }
+.make .editor .card__actions { padding: 8px 0 0; }
+
+/* 消すボタンだけの行。ふつうの操作と同じ重さに見せない */
+.card__actions--sub { padding-top: 0; opacity: .85; }
+
 /* ── ホーム画面への追加の案内 ────────────────── */
 .howto {
   background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);

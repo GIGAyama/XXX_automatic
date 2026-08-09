@@ -61,6 +61,13 @@ export function newSubmissionId() {
  * posted（出したかどうか）を載せるのは、出し忘れが誰にも見えなかったからである。
  * ［投稿した］は端末のなかにしか無く、「用意したのに出せなかった枠」が
  * どこにも残らなかった。評価を押さなくても、出したことだけは送れるようにする。
+ *
+ * slot（どの枠か）を載せるのは、［つくる］で作った投稿が混ざるようになったからである。
+ * それまで枠は投稿IDの後半（'2026-08-10-morning' の morning）から読んでいた。
+ * 注文して作った投稿のIDは日付ごとに変わるので、そのまま数えると
+ * bySlot が一度きりのキーで埋まり、「どの枠なら実際に出せているか」が読めなくなる。
+ * 注文ぶんは slot='promo' でまとまる。古い記録には入っていないので、
+ * 無ければこれまでどおりIDから読む。
  */
 export function buildPayload(entries, { submissionId, sentAtJst }) {
   return {
@@ -78,6 +85,7 @@ export function buildPayload(entries, { submissionId, sentAtJst }) {
       if (e.rating) entry.rating = e.rating;
       if (e.hook) entry.hook = e.hook;
       if (e.posted) entry.posted = true;
+      if (e.slot) entry.slot = e.slot;
       return entry;
     }),
   };
@@ -101,7 +109,8 @@ export function renderIssueBody(payload, { themeLabels = {}, slotLabels = {} } =
   const lines = ['反応の記録です。送信ボタンを押すと、次の週次生成に反映されます。', ''];
 
   for (const e of payload.entries) {
-    const slot = slotLabels[slotIdOf(e.id)] ?? slotIdOf(e.id);
+    const slotId = e.slot || slotIdOf(e.id);
+    const slot = slotLabels[slotId] ?? slotId;
     const theme = themeLabels[e.theme] ?? e.theme;
     // 評価がない記録もある（「出した」だけを送る場合）。何を送ろうとしているかが
     // 送信ボタンを押す前に見えることが大事なので、そこも言葉にする。
@@ -222,6 +231,8 @@ export function validatePayload(payload, { themeIds, repoNames, hookIds, maxEntr
       errors.push(`${at}.rating は good か bad です: ${e.rating}`);
     }
     if (e.posted != null && typeof e.posted !== 'boolean') errors.push(`${at}.posted は true/false です: ${e.posted}`);
+    // slot は任意。あるときだけ形を見る（枠は config/slots.json のほかに 'promo' もある）。
+    if (e.slot != null && !/^[a-z0-9_-]{1,20}$/.test(String(e.slot))) errors.push(`${at}.slot の形が違います: ${e.slot}`);
 
     if (themes.size > 0 && !themes.has(e.theme)) errors.push(`${at}.theme が config/themes.json にありません: ${e.theme}`);
     if (repos.size > 0 && !repos.has(e.repo)) errors.push(`${at}.repo が data/profiles/ にありません: ${e.repo}`);
@@ -268,10 +279,12 @@ export function mergeFeedback(current, payloads) {
         date: e.date,
         weekId: e.weekId ?? '',
         rating: e.rating ?? null,
-        // 古い形の記録には hook / posted が無い。
+        // 古い形の記録には hook / posted / slot が無い。
         // 評価が付いているということは出したということなので、posted は真とみなす。
         hook: e.hook ?? null,
         posted: e.posted === true || Boolean(e.rating),
+        // 枠。無ければ投稿IDの後半から読む（これまでどおりの動き）。
+        slot: e.slot || slotIdOf(e.id),
         atJst: payload.sentAtJst ?? '',
       };
     }
@@ -332,7 +345,8 @@ function postedTally(posts) {
     if (!post.posted) continue;
     total += 1;
 
-    const slot = slotIdOf(id);
+    // 枠は記録に書いてあるものを優先する。無い（古い）記録だけIDから読む。
+    const slot = post.slot || slotIdOf(id);
     if (slot) bySlot[slot] = (bySlot[slot] ?? 0) + 1;
 
     // 曜日の判定は jst-client.js に寄せる。ここで書き写すと、

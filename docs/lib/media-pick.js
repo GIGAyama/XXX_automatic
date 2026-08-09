@@ -46,7 +46,13 @@ export function isAllowedMediaSrc(src) {
  * という組み合わせが普通に起きるためである。
  */
 export function galleryOf(post, galleries = {}) {
-    const fromGalleries = (galleries ?? {})[post?.repo];
+    // ⚠️ 投稿自身が持っている一覧を最優先する。
+    //    ［つくる］で注文して作った投稿は、launcher.json の galleries には載っていない
+    //    （あそこにはその週に出てくるアプリぶんしか入れていない。52件ぜんぶ載せると、
+    //      スマホが最初に読むファイルが理由もなく重くなるため）。
+    //    代わりに結果ファイルと一緒に受け取った一覧を、投稿にくっつけて持ち歩いている。
+    const own = post?.gallery;
+    const fromGalleries = Array.isArray(own) && own.length > 0 ? own : (galleries ?? {})[post?.repo];
     const items = Array.isArray(fromGalleries) && fromGalleries.length > 0
         ? fromGalleries
         : (post?.mediaList ?? (post?.media ? [post.media] : [])).map((src, i) => ({

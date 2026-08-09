@@ -88,9 +88,22 @@ test('traceOf は記録を送るのに要る項目だけを抜き出す', () => 
         date: '2026-08-10',
         weekId: '2026-W33',
         hook: 'scene',
+        slot: 'morning',
         text: '長い本文',
     });
-    assert.deepEqual(trace, { repo: 'Typa', theme: 'intro', date: '2026-08-10', weekId: '2026-W33', hook: 'scene' });
+    assert.deepEqual(trace, {
+        repo: 'Typa',
+        theme: 'intro',
+        date: '2026-08-10',
+        weekId: '2026-W33',
+        hook: 'scene',
+        slot: 'morning',
+    });
+});
+
+test('traceOf は slot を持たない古い launcher.json でも落ちない', () => {
+    const trace = traceOf({ repo: 'Typa', theme: 'intro', date: '2026-08-10', weekId: '2026-W33' });
+    assert.equal(trace.slot, null);
 });
 
 test('traceOf は hook を持たない古い launcher.json でも落ちない', () => {

@@ -41,7 +41,16 @@
 
 import { jstDateString, jstStamp } from './lib/jst-client.js';
 import { overLimitMessage, slotLabelMap, stepGuide, themeLabelMap, truncate } from './lib/format.js';
-import { activeWeekIds, emptyMessageFor, selectPosts, summaryOf, unsentRatings, unsentRecords } from './lib/select.js';
+import {
+  activeWeekIds,
+  emptyMessageFor,
+  matchApps,
+  routeFromHash,
+  selectPosts,
+  summaryOf,
+  unsentRatings,
+  unsentRecords,
+} from './lib/select.js';
 import { STORAGE_KEY, applyPatch, pruneState, traceOf } from './lib/state.js';
 import { MAX_WEIGHTED_LENGTH, weightedLength } from './lib/x-length.js';
 import { buildIssueUrl, buildPayload, chunkEntries, newSubmissionId } from './lib/feedback-payload.js';
@@ -54,6 +63,35 @@ import {
   selectedItems,
   toggleSelection,
 } from './lib/media-pick.js';
+import {
+  DEFAULT_COUNT,
+  MAX_COUNT,
+  MAX_NOTE_CHARS,
+  MAX_THEMES,
+  MIN_COUNT,
+  buildOrder,
+  buildOrderIssueUrl,
+  newOrderId,
+  resultPathOf,
+  validateResult,
+} from './lib/order.js';
+import {
+  DONE as ORDER_DONE,
+  FAILED as ORDER_FAILED,
+  MINE_KEY,
+  WAITING as ORDER_WAITING,
+  addOrder,
+  addPosts,
+  dropOrder,
+  dropPost,
+  fromBackupText,
+  minePosts,
+  normalizeMine,
+  patchOrder,
+  repoCounts,
+  toBackupText,
+  waitingOrders,
+} from './lib/mine.js';
 
 const DATA_URL = 'launcher.json';
 
@@ -106,6 +144,30 @@ function patchState(id, patch) {
   return next;
 }
 
+/* ── 自分で作らせた投稿（［つくる］タブ）──
+ *
+ * 週の投稿とは別の入れ物にする。週のぶんは launcher.json から毎週やってくるが、
+ * こちらは注文して作らせたもので、出すまでのあいだ誰も預かってくれない。 */
+
+function loadMine() {
+  try {
+    return normalizeMine(JSON.parse(localStorage.getItem(MINE_KEY) || '{}'));
+  } catch {
+    return normalizeMine(null);
+  }
+}
+
+function saveMine(store) {
+  try {
+    localStorage.setItem(MINE_KEY, JSON.stringify(store));
+    return true;
+  } catch {
+    // ここは黙ってはいけない。作らせた投稿は他にどこにも無い。
+    toast('この端末に保存できませんでした（容量不足かプライベートモード？）');
+    return false;
+  }
+}
+
 /* ────────────────────────────────────────────
  *  画面
  * ──────────────────────────────────────────── */
@@ -114,9 +176,37 @@ function todayJst() {
   return jstDateString();
 }
 
+/**
+ * 反応を記録できる投稿ぜんぶ。
+ *
+ * 週の投稿（launcher.json）に、［つくる］で作らせたものを足す。
+ * あちらは端末のなかにしか無いので、ここで足さないと
+ * 「反応よかった」を押しても翌週の生成に届かない
+ * （型・アプリ・フックの手応えは、どちらの投稿から来ても同じだけ価値がある）。
+ */
+function recordablePosts() {
+  return [...(data.posts ?? []), ...loadMine().posts];
+}
+
+/**
+ * そのタブの母数になる投稿。
+ *
+ * ［投稿ずみ］だけは、［つくる］で作らせたものも混ぜる。
+ * 出したものを見返す場所であって、どこから来た投稿かは関係ないからである。
+ * ここを分けていたあいだ、作った投稿に［投稿した］を押すと
+ * 「未送信の記録 1 件」のバッジだけが立って、一覧は「まだ投稿ずみのものはありません」と
+ * 言う、という食い違いが出ていた。
+ *
+ * ほかのタブには混ぜない。あちらは「今週ぶん」を週IDで見ているので、
+ * 週を持たない投稿を入れると［過去］に全部落ちる。
+ */
+function poolFor(name) {
+  return name === 'done' ? recordablePosts() : data.posts ?? [];
+}
+
 function visiblePosts() {
   return selectPosts({
-    posts: data.posts ?? [],
+    posts: poolFor(view),
     state: loadState(),
     view,
     today: todayJst(),
@@ -164,6 +254,12 @@ function render() {
     return;
   }
 
+  if (view === 'make') {
+    renderMake(list);
+    updateSummary();
+    return;
+  }
+
   const posts = visiblePosts();
 
   if (view === 'done') renderSendBar(list);
@@ -173,7 +269,7 @@ function render() {
       emptyBox(
         emptyMessageFor({
           view,
-          posts: data.posts ?? [],
+          posts: poolFor(view),
           state: loadState(),
           today: todayJst(),
           activeWeeks: activeWeekIds(data),
@@ -666,12 +762,12 @@ function myTimelineUrl() {
  */
 function renderSendBar(list) {
   const state = loadState();
-  const pending = unsentRecords({ posts: data.posts ?? [], state });
+  const pending = unsentRecords({ posts: recordablePosts(), state });
   if (pending.length === 0) return;
 
   // 評価を押していない「出しただけ」の記録も一緒に送る。
   // 出せた枠・出せなかった枠が分かるのは、この記録だけである。
-  const rated = unsentRatings({ posts: data.posts ?? [], state }).length;
+  const rated = unsentRatings({ posts: recordablePosts(), state }).length;
   const postedOnly = pending.length - rated;
 
   const bar = document.createElement('div');
@@ -780,6 +876,15 @@ function renderNow(list) {
 
 let nowFilter = 'すべて';
 
+/* ［つくる］の入力。画面を作りなおしても消えないように、ここに置く。 */
+let makeRepo = '';
+let makeCount = DEFAULT_COUNT;
+let makeThemes = new Set();
+let makeNote = '';
+let appQuery = '';
+/** マイ投稿の絞りこみ（アプリ名。空ならすべて）。 */
+let mineFilter = '';
+
 /**
  * 返信の下書きを頼む。
  *
@@ -844,6 +949,641 @@ function replyIssueUrl(source) {
     labels: '返信の下書き',
   });
   return `${base}/issues/new?${params.toString()}`;
+}
+
+/* ────────────────────────────────────────────
+ *  つくる — アプリを選んで宣伝ポストを頼む
+ * ──────────────────────────────────────────── */
+
+/**
+ * ［つくる］タブ。
+ *
+ * 週次の生成は日曜の夜にしか動かない。ところが「このアプリの話を、いま出したい」は
+ * 予定と関係なくやってくる（誰かに聞かれた、その教科の研究授業が近い、など）。
+ * ［いま出す］の予備の引き出しは作り置きなので、アプリを選べない。
+ *
+ * その場で文章を作るにはブラウザから Gemini を呼ぶことになり、
+ * それには API キーを画面に置くしかない（できない / CLAUDE.md §2）。
+ * だから注文を Issue にして送り、ワークフローが作ったものを拾いにいく。
+ * 反応の記録と返信の下書きが、すでに同じ問題を同じやり方で解いている。
+ *
+ * 受け取った投稿はこの端末に貯める（docs/lib/mine.js）。
+ * 週の投稿と違って誰も預かってくれないので、出すまでのあいだ手元に置いておく。
+ */
+function renderMake(list) {
+  list.append(orderForm());
+
+  const store = loadMine();
+
+  const pending = waitingOrders(store);
+  if (pending.length > 0) list.append(pendingBox(pending));
+
+  // 作れなかった注文は、画面に理由を出す。
+  // トーストだけだと、そのとき別のタブを見ていた人には何も残らず、
+  // 「頼んだはずなのに何も無い」になる。
+  const failed = store.orders.filter((o) => o.state === ORDER_FAILED);
+  if (failed.length > 0) list.append(failedBox(failed));
+
+  const state = loadState();
+  const posts = minePosts(store, { repo: mineFilter, isDone: (id) => Boolean(state[id]?.done) });
+  const counts = repoCounts(store);
+
+  if (counts.length > 1) list.append(mineFilterBar(counts, store));
+
+  if (posts.length === 0) {
+    list.append(
+      emptyBox(
+        store.posts.length === 0
+          ? '作った投稿はまだありません。\n上でアプリを選んで［この内容で頼む］を押すと、1〜2分でここに並びます。'
+          : 'この絞りこみに当てはまる投稿はありません。'
+      )
+    );
+  } else {
+    for (const post of posts) list.append(minePostCard(post, state[post.id] || {}));
+    prefetchMedia(posts);
+  }
+
+  if (store.posts.length > 0) list.append(backupBox(store));
+}
+
+/** ［つくる］の入力。押すまでは端末の外に何も出ない。 */
+function orderForm() {
+  const box = document.createElement('div');
+  box.className = 'card make';
+
+  const title = document.createElement('p');
+  title.className = 'sendbar__text';
+  title.textContent = 'アプリを選んで、宣伝の投稿を作ってもらう';
+  box.append(title);
+
+  const apps = data.apps ?? [];
+  if (apps.length === 0) {
+    const help = document.createElement('p');
+    help.className = 'steps__guide';
+    help.textContent =
+      'アプリの一覧をまだ読み込めていません。週次の生成が一度も動いていないか、古い版が端末に残っています。';
+    box.append(help);
+    return box;
+  }
+
+  const chosen = apps.find((a) => a.name === makeRepo) ?? null;
+
+  // ── ① アプリ ──
+  box.append(fieldLabel('① どのアプリの投稿にしますか'));
+
+  if (chosen) {
+    const picked = document.createElement('div');
+    picked.className = 'make__picked';
+
+    const name = document.createElement('p');
+    name.className = 'make__pickedName';
+    name.textContent = chosen.name;
+    picked.append(name);
+
+    const one = document.createElement('p');
+    one.className = 'make__pickedOne';
+    one.textContent = chosen.oneLine || '';
+    picked.append(one);
+
+    if (!chosen.hasPages) {
+      // 公開 URL が無いアプリ（拡張機能・GAS など）は、投稿にリンクを置けない。
+      // 押せなくはしないが、出したあとで気づくことにならないよう先に言う。
+      const warn = document.createElement('p');
+      warn.className = 'make__warn';
+      warn.textContent = 'このアプリはブラウザで直接ひらく形ではないので、リンクの返信が付かないことがあります。';
+      picked.append(warn);
+    }
+
+    const change = button('別のアプリにする', 'btn btn--sub');
+    change.addEventListener('click', () => {
+      makeRepo = '';
+      render();
+    });
+    picked.append(change);
+    box.append(picked);
+  } else {
+    const search = document.createElement('input');
+    search.type = 'search';
+    search.className = 'make__search';
+    search.placeholder = 'アプリ名・教科・学年でさがす';
+    search.value = appQuery;
+    search.setAttribute('aria-label', 'アプリをさがす');
+    box.append(search);
+
+    const results = document.createElement('div');
+    results.className = 'make__apps';
+    box.append(results);
+
+    const draw = () => {
+      results.innerHTML = '';
+      const hits = matchApps(apps, appQuery);
+      for (const app of hits.slice(0, APP_LIST_MAX)) {
+        const row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'make__app';
+
+        const name = document.createElement('span');
+        name.className = 'make__appName';
+        name.textContent = app.name;
+        row.append(name);
+
+        const meta = document.createElement('span');
+        meta.className = 'make__appMeta';
+        meta.textContent = [app.subject, app.grade].filter(Boolean).join(' / ');
+        row.append(meta);
+
+        const one = document.createElement('span');
+        one.className = 'make__appOne';
+        one.textContent = app.oneLine || '';
+        row.append(one);
+
+        row.addEventListener('click', () => {
+          makeRepo = app.name;
+          appQuery = '';
+          render();
+        });
+        results.append(row);
+      }
+
+      const note = document.createElement('p');
+      note.className = 'make__count';
+      note.textContent =
+        hits.length === 0
+          ? '見つかりませんでした。ひらがな・英字のつづりを変えてみてください。'
+          : hits.length > APP_LIST_MAX
+            ? `${hits.length} 件のうち ${APP_LIST_MAX} 件を出しています。しぼりこんでください。`
+            : `${hits.length} 件`;
+      results.append(note);
+    };
+
+    // ⚠️ ここで render() を呼ばない。一覧ごと作りなおすと入力欄が作りかえられ、
+    //    1文字打つたびにキーボードが閉じる。書きかえるのは結果のところだけにする。
+    search.addEventListener('input', () => {
+      appQuery = search.value;
+      draw();
+    });
+    draw();
+  }
+
+  // ── ② 本数 ──
+  box.append(fieldLabel('② 何本つくりますか'));
+  const counts = document.createElement('div');
+  counts.className = 'make__row';
+  for (let n = MIN_COUNT; n <= MAX_COUNT; n += 1) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tab' + (n === makeCount ? ' is-on' : '');
+    b.textContent = `${n}本`;
+    b.setAttribute('aria-pressed', String(n === makeCount));
+    b.addEventListener('click', () => {
+      makeCount = n;
+      render();
+    });
+    counts.append(b);
+  }
+  box.append(counts);
+
+  // ── ③ 型 ──
+  box.append(fieldLabel(`③ 投稿の型（選ばなければおまかせ・${MAX_THEMES}つまで）`));
+  const themes = document.createElement('div');
+  themes.className = 'make__row';
+
+  const auto = document.createElement('button');
+  auto.type = 'button';
+  auto.className = 'tab' + (makeThemes.size === 0 ? ' is-on' : '');
+  auto.textContent = 'おまかせ';
+  auto.addEventListener('click', () => {
+    makeThemes.clear();
+    render();
+  });
+  themes.append(auto);
+
+  for (const theme of data.themes ?? []) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    const on = makeThemes.has(theme.id);
+    b.className = 'tab' + (on ? ' is-on' : '');
+    b.textContent = theme.label;
+    b.title = theme.intent ?? '';
+    b.setAttribute('aria-pressed', String(on));
+    b.addEventListener('click', () => {
+      if (on) makeThemes.delete(theme.id);
+      else if (makeThemes.size >= MAX_THEMES) {
+        toast(`型は${MAX_THEMES}つまでです。どれかを外してから選んでください`);
+        return;
+      } else makeThemes.add(theme.id);
+      render();
+    });
+    themes.append(b);
+  }
+  box.append(themes);
+
+  // ── ④ 切り口 ──
+  box.append(fieldLabel('④ こういう切り口で、があれば（任意）'));
+  const note = document.createElement('textarea');
+  note.className = 'editor__area';
+  note.rows = 2;
+  note.maxLength = MAX_NOTE_CHARS;
+  note.placeholder = '例）2学期のはじめに使う場面で／低学年の先生に向けて';
+  note.value = makeNote;
+  note.setAttribute('aria-label', '切り口の指定');
+  note.addEventListener('input', () => {
+    makeNote = note.value;
+  });
+  box.append(note);
+
+  // ── 送る ──
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+
+  const ask = button('この内容で頼む', 'btn btn--x');
+  ask.addEventListener('click', () => submitOrder());
+  row.append(ask);
+  box.append(row);
+
+  const guide = document.createElement('p');
+  guide.className = 'steps__guide';
+  guide.textContent =
+    'GitHub の画面がひらきます。緑の［Create］を押すと作りはじめ、1〜2分でこの画面に並びます。' +
+    '（文章を作るのに AI を使うので、この端末からは直接呼べません）';
+  box.append(guide);
+
+  return box;
+}
+
+/** 一覧に出すアプリの上限。 */
+const APP_LIST_MAX = 12;
+
+function fieldLabel(text) {
+  const p = document.createElement('p');
+  p.className = 'make__label';
+  p.textContent = text;
+  return p;
+}
+
+/** 注文を送る。Issue の作成画面をひらいて、控えを端末に残す。 */
+function submitOrder() {
+  if (!makeRepo) {
+    toast('先にアプリを選んでください');
+    return;
+  }
+  if (!data.repoUrl) {
+    toast('送り先が分かりません（launcher.json が古い可能性があります）');
+    return;
+  }
+
+  const order = buildOrder({
+    orderId: newOrderId(),
+    repo: makeRepo,
+    count: makeCount,
+    themes: [...makeThemes],
+    note: makeNote,
+    askedAtJst: jstStamp(),
+  });
+
+  // ⚠️ window.open は同期で、いちばん先に呼ぶ。
+  //    ここより前に await を挟むと「ユーザー操作の直後」の資格が切れて、
+  //    iOS Safari のポップアップブロックに落ちる。共有シートとまったく同じ話。
+  const themeLabels = Object.fromEntries((data.themes ?? []).map((t) => [t.id, t.label]));
+  window.open(buildOrderIssueUrl(data.repoUrl, order, { themeLabels }), '_blank', 'noopener');
+
+  // 実際に送信ボタンを押したかは取れない。ひらいたところまでを控えておき、
+  // 押し忘れたときのために［取り消す］を出しておく。
+  saveMine(
+    addOrder(loadMine(), {
+      id: order.orderId,
+      repo: order.repo,
+      count: order.count,
+      themes: order.themes,
+      note: order.note,
+      askedAtJst: order.askedAtJst,
+      state: ORDER_WAITING,
+    })
+  );
+  makeNote = '';
+  render();
+  scheduleOrderCheck();
+  toast('GitHub の画面をひらきました。緑の［Create］を押すと作りはじめます');
+}
+
+/** 頼んだまま届いていない注文。 */
+function pendingBox(pending) {
+  const box = document.createElement('div');
+  box.className = 'sendbar';
+
+  const text = document.createElement('p');
+  text.className = 'sendbar__text';
+  text.textContent = `${pending.length} 件たのんでいます`;
+  box.append(text);
+
+  for (const order of pending) {
+    const line = document.createElement('p');
+    line.className = 'steps__guide';
+    line.textContent = `${order.repo} を ${order.count} 本（${order.askedAtJst || '時刻不明'}）`;
+    box.append(line);
+  }
+
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+
+  const check = button('届いたか見る', 'btn btn--x');
+  check.addEventListener('click', async () => {
+    check.disabled = true;
+    check.textContent = '見ています…';
+    const { got, still } = await checkOrders({ quiet: false });
+    check.disabled = false;
+    if (got === 0 && still > 0) {
+      toast('まだできていません。1〜2分ほどかかります（GitHub の［Create］は押しましたか）');
+    }
+    render();
+  });
+  row.append(check);
+
+  for (const order of pending) {
+    const cancel = button(pending.length > 1 ? `${order.repo} を取り消す` : '取り消す', 'btn btn--sub');
+    cancel.addEventListener('click', () => {
+      // 消すのは端末の控えだけ。Issue はそのまま残るので、作られたものは
+      // GitHub のコメントで読める（黙って無かったことにはならない）。
+      saveMine(dropOrder(loadMine(), order.id));
+      render();
+      toast('待つのをやめました。GitHub 側で作られたものはコメントに残ります');
+    });
+    row.append(cancel);
+  }
+
+  box.append(row);
+  return box;
+}
+
+/**
+ * 作れなかった注文。
+ *
+ * 多くは生成した文がガードレール検査に落ちた場合である
+ * （機械が知らないはずの教室の様子を書いた、など）。
+ * 何が起きたのかを画面に残さないと、頼んだ人には「無かったこと」に見える。
+ */
+function failedBox(failed) {
+  const box = document.createElement('div');
+  box.className = 'sendbar';
+
+  const text = document.createElement('p');
+  text.className = 'sendbar__text';
+  text.textContent = `${failed.length} 件は作れませんでした`;
+  box.append(text);
+
+  for (const order of failed) {
+    const line = document.createElement('p');
+    line.className = 'steps__guide';
+    line.textContent = `${order.repo}: ${order.message || '理由が分かりません'}`;
+    box.append(line);
+  }
+
+  const help = document.createElement('p');
+  help.className = 'steps__guide';
+  help.textContent = '切り口の一言を足して、もう一度頼んでみてください。作られたものがあれば GitHub のコメントに残っています。';
+  box.append(help);
+
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+  const close = button('分かった', 'btn btn--sub');
+  close.addEventListener('click', () => {
+    let store = loadMine();
+    for (const order of failed) store = dropOrder(store, order.id);
+    saveMine(store);
+    render();
+  });
+  row.append(close);
+  box.append(row);
+
+  return box;
+}
+
+/** アプリごとの絞りこみ。 */
+function mineFilterBar(counts, store) {
+  const bar = document.createElement('div');
+  bar.className = 'jump';
+
+  const all = document.createElement('button');
+  all.type = 'button';
+  all.className = 'tab' + (mineFilter === '' ? ' is-on' : '');
+  all.textContent = `すべて（${store.posts.length}）`;
+  all.addEventListener('click', () => {
+    mineFilter = '';
+    render();
+  });
+  bar.append(all);
+
+  for (const [repo, n] of counts) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tab' + (mineFilter === repo ? ' is-on' : '');
+    b.textContent = `${repo}（${n}）`;
+    b.addEventListener('click', () => {
+      mineFilter = mineFilter === repo ? '' : repo;
+      render();
+    });
+    bar.append(b);
+  }
+  return bar;
+}
+
+/** 作らせた投稿1件。週の投稿と同じカードに、消すところだけ足す。 */
+function minePostCard(post, saved) {
+  const card = postCard(post, saved, todayJst());
+
+  const row = document.createElement('div');
+  row.className = 'card__actions card__actions--sub';
+
+  const drop = button('この投稿を消す', 'btn btn--sub');
+  drop.addEventListener('click', () => {
+    // 一度きりの確認を入れる。ここにしか無いものを、押し間違いで消せてはいけない。
+    if (drop.dataset.armed !== 'yes') {
+      drop.dataset.armed = 'yes';
+      drop.textContent = '本当に消す（もう一度押す）';
+      setTimeout(() => {
+        drop.dataset.armed = '';
+        drop.textContent = 'この投稿を消す';
+      }, 4000);
+      return;
+    }
+    saveMine(dropPost(loadMine(), post.id));
+    render();
+    toast('消しました');
+  });
+  row.append(drop);
+  card.append(row);
+
+  return card;
+}
+
+/**
+ * 端末の外に逃がす道。
+ *
+ * ここに貯まっているものは、この端末のなかにしか無い。
+ * ブラウザのデータを消せば消えるし、機種変更でも消える。
+ * 取り返す手段が無いのは怖いので、書き出しと読みこみを置いておく。
+ */
+function backupBox(store) {
+  const box = document.createElement('div');
+  box.className = 'card make';
+
+  const title = document.createElement('p');
+  title.className = 'sendbar__text';
+  title.textContent = 'この端末のバックアップ';
+  box.append(title);
+
+  const help = document.createElement('p');
+  help.className = 'steps__guide';
+  help.textContent =
+    `作った投稿 ${store.posts.length} 件は、この端末のなかにしかありません。` +
+    'ブラウザのデータを消すと一緒に消えます。書き出してメモアプリなどに貼っておけば、別の端末でも読みこめます。';
+  box.append(help);
+
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+
+  const out = button('書き出す（コピー）', 'btn btn--sub');
+  out.addEventListener('click', async () => {
+    const ok = await copyText(toBackupText(loadMine()));
+    toast(ok ? `${store.posts.length} 件をコピーしました。メモアプリなどに貼って保存してください` : 'コピーできませんでした');
+  });
+  row.append(out);
+
+  const inBtn = button('読みこむ', 'btn btn--sub');
+  inBtn.addEventListener('click', () => openImport(box));
+  row.append(inBtn);
+
+  box.append(row);
+  return box;
+}
+
+function openImport(box) {
+  if (box.querySelector('.editor')) return;
+
+  const editor = document.createElement('div');
+  editor.className = 'editor';
+
+  const area = document.createElement('textarea');
+  area.className = 'editor__area';
+  area.rows = 5;
+  area.placeholder = '書き出したものを貼り付けてください';
+  area.setAttribute('aria-label', '書き出したバックアップ');
+
+  const row = document.createElement('div');
+  row.className = 'card__actions';
+
+  const go = button('読みこむ', 'btn btn--done');
+  go.addEventListener('click', () => {
+    const { store, added, error } = fromBackupText(loadMine(), area.value);
+    if (error) {
+      toast(error);
+      return;
+    }
+    saveMine(store);
+    render();
+    toast(added > 0 ? `${added} 件を足しました` : 'すべてこの端末にすでにありました');
+  });
+
+  const cancel = button('やめる', 'btn btn--sub');
+  cancel.addEventListener('click', () => editor.remove());
+
+  row.append(go, cancel);
+  editor.append(area, row);
+  box.append(editor);
+  area.focus();
+}
+
+/* ── 届いたかを見にいく ─────────────────────── */
+
+/**
+ * 頼んだ注文の結果を拾いにいく。
+ *
+ * 置き場は同一オリジンの docs/orders/<注文ID>.json。
+ * まだ無ければ 404 が返る（＝作っている最中）。
+ *
+ * ⚠️ cache: 'no-store' を付ける。ここは「さっきまで無かったものが増える」場所なので、
+ *    一度でも 404 をキャッシュされると、以後いつまでも届かない。
+ *    Service Worker 側も /orders/ をキャッシュしない（docs/sw.js）。
+ */
+async function checkOrders({ quiet = true } = {}) {
+  const pending = waitingOrders(loadMine());
+  let got = 0;
+
+  for (const order of pending) {
+    // 端末に残っている控えが壊れていることがある（古い版・手で触った localStorage）。
+    // resultPathOf は形の違う注文IDで投げるので、ここで受けないと以降の注文まで見にいけなくなる。
+    let path;
+    try {
+      path = resultPathOf(order.id);
+    } catch {
+      saveMine(patchOrder(loadMine(), order.id, { state: ORDER_FAILED, message: '注文の控えが壊れています' }));
+      continue;
+    }
+
+    let result = null;
+    try {
+      const res = await fetch(`${path}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) continue; // まだできていない
+      result = await res.json();
+    } catch {
+      continue; // 圏外・作成中。次に見にきたときに拾う
+    }
+
+    const { ok, errors } = validateResult(result, { orderId: order.id });
+    if (!ok) {
+      // 壊れたものを端末に貯めない。何が起きたかは残す。
+      saveMine(patchOrder(loadMine(), order.id, { state: ORDER_FAILED, message: errors[0] }));
+      continue;
+    }
+
+    if (result.posts.length === 0) {
+      // 作れなかった、も結果である。ここで受け取らないと画面が永久に「たのんでいます」になる。
+      saveMine(patchOrder(loadMine(), order.id, { state: ORDER_FAILED, message: result.message || '作れませんでした' }));
+      if (!quiet) toast(`${order.repo}: ${result.message || '作れませんでした'}`);
+      continue;
+    }
+
+    const { store, added } = addPosts(loadMine(), result.posts, {
+      orderId: order.id,
+      gallery: result.gallery ?? null,
+      gotAtJst: jstStamp(),
+    });
+    saveMine(patchOrder(store, order.id, { state: ORDER_DONE, gotAtJst: jstStamp() }));
+    got += added;
+  }
+
+  if (got > 0) {
+    // 届いたことは、そのタブを見ていなくても分かるようにする。
+    toast(`できあがりました（${got} 本）。［つくる］に並んでいます`);
+    updateSummary();
+  }
+
+  const still = waitingOrders(loadMine()).length;
+  return { got, still };
+}
+
+/**
+ * 届くまで、間を空けて見にいく。
+ *
+ * 生成に30秒ほど、GitHub Pages への配信にもう1分ほどかかる。
+ * 短い間隔で叩いても早く届くわけではないので、だんだん間を空ける。
+ * 5分ほど見て届かなければやめる（そのときは［届いたか見る］を手で押せる）。
+ */
+const CHECK_DELAYS = [20_000, 20_000, 30_000, 30_000, 45_000, 60_000, 60_000];
+let checkTimer = null;
+let checkAt = 0;
+
+function scheduleOrderCheck(step = 0) {
+  clearTimeout(checkTimer);
+  if (step >= CHECK_DELAYS.length) return;
+  if (waitingOrders(loadMine()).length === 0) return;
+
+  checkAt = step;
+  checkTimer = setTimeout(async () => {
+    const { got, still } = await checkOrders();
+    if (got > 0 && view === 'make') render();
+    if (still > 0) scheduleOrderCheck(checkAt + 1);
+  }, CHECK_DELAYS[step]);
 }
 
 /* ────────────────────────────────────────────
@@ -1198,7 +1938,7 @@ function updateSummary() {
   });
 
   // 未送信の記録があることは、タブを開かないと分からない。バッジで外に出す。
-  const pending = unsentRecords({ posts: data.posts ?? [], state: loadState() }).length;
+  const pending = unsentRecords({ posts: recordablePosts(), state: loadState() }).length;
   const doneTab = document.querySelector('.tab[data-view="done"]');
   if (doneTab) {
     doneTab.dataset.badge = pending > 0 ? String(pending) : '';
@@ -1210,7 +1950,7 @@ function updateSummary() {
  *  起動
  * ──────────────────────────────────────────── */
 
-const TABS = ['today', 'week', 'now', 'note', 'done', 'past'];
+const TABS = ['today', 'week', 'now', 'make', 'note', 'done', 'past'];
 
 function selectTab(name, { focus = false } = {}) {
   if (!TABS.includes(name)) name = 'today';
@@ -1248,10 +1988,16 @@ function bindTabs() {
   }
 }
 
-/** 通知の Issue から #done などで飛んでこられるようにする。 */
+/** 通知の Issue から #done、アプリ一覧から #make/Qalc で飛んでこられるようにする。 */
 function viewFromHash() {
-  const name = location.hash.replace(/^#/, '');
-  return TABS.includes(name) ? name : 'today';
+  return routeFromHash(location.hash, TABS, (data.apps ?? []).map((a) => a.name));
+}
+
+/** ハッシュを読んでタブを切りかえる。アプリの指定があれば選んでおく。 */
+function applyHash() {
+  const { view: name, repo } = viewFromHash();
+  if (repo) makeRepo = repo;
+  selectTab(name);
 }
 
 /**
@@ -1368,8 +2114,8 @@ async function boot() {
   registerServiceWorker();
   bindTabs();
   bindInstall();
-  view = viewFromHash();
-  window.addEventListener('hashchange', () => selectTab(viewFromHash()));
+  view = viewFromHash().view;
+  window.addEventListener('hashchange', applyHash);
 
   try {
     // Pages のキャッシュが古いと「新しい週が出てこない」という分かりにくい症状になる。
@@ -1390,14 +2136,36 @@ async function boot() {
 
   // 端末の記録を手入れする。放っておくと1年で数百件たまる。
   // 画面に出ているものと、まだ送っていない評価は残す（lib/state.js）。
+  //
+  // ⚠️ ［つくる］で作った投稿も keepIds に入れる。
+  //    あちらは launcher.json に載らないので、入れないと60日で
+  //    ［投稿した］や選んだ画像が消える（投稿そのものは残るので、いっそう分かりにくい）。
+  const mine = loadMine();
   const { state, removed } = pruneState(loadState(), {
-    keepIds: (data.posts ?? []).map((p) => p.id).concat((data.notes ?? []).map((n) => `note-${n.weekId}`)),
+    keepIds: (data.posts ?? [])
+      .map((p) => p.id)
+      .concat((data.notes ?? []).map((n) => `note-${n.weekId}`))
+      .concat(mine.posts.map((p) => p.id)),
     today: todayJst(),
   });
   if (removed > 0) saveState(state);
 
   document.getElementById('stamp').textContent = `下書きの作成: ${data.generatedAtJst || '不明'}`;
+
+  // ハッシュにアプリの指定（#make/Qalc）があれば、data を読んだいま反映できる。
+  const { repo } = viewFromHash();
+  if (repo) makeRepo = repo;
+
   selectTab(view);
+
+  // 頼んだまま届いていないものがあれば、開いた時点で見にいく。
+  // アプリを閉じているあいだに出来上がっていることのほうが多い。
+  if (waitingOrders(mine).length > 0) {
+    checkOrders().then(({ got }) => {
+      if (got > 0) render();
+      scheduleOrderCheck();
+    });
+  }
 }
 
 boot();

@@ -129,6 +129,7 @@ export function unsentRecords({ posts, state }) {
     const date = post?.date ?? saved.date;
     const weekId = post?.weekId ?? saved.weekId;
     const hook = post?.hook ?? saved.hook ?? null;
+    const slot = post?.slot ?? saved.slot ?? null;
     if (!repo || !theme || !date) continue;
     out.push({
       id,
@@ -137,6 +138,7 @@ export function unsentRecords({ posts, state }) {
       repo,
       theme,
       hook,
+      slot,
       rating: saved.rating ?? null,
       posted: Boolean(saved.done),
     });
@@ -157,6 +159,49 @@ export function unsentRatings({ posts, state }) {
 /** 「あすの日付」。空メッセージの言い回しに使う。 */
 export function tomorrowOf(today) {
   return addDays(today, 1);
+}
+
+/**
+ * ［つくる］でアプリをさがす。
+ *
+ * 52件あるので、一覧をただ並べても選べない。名前を正確に覚えている前提にもできない
+ * （「漢字のやつ」しか思い出せないほうがふつうである）。
+ * 名前・一言・教科・学年のどれかに当たれば出す。空白で区切ると絞りこみになる。
+ */
+export function matchApps(apps, query) {
+  const q = String(query ?? '').trim().toLowerCase();
+  if (!q) return apps ?? [];
+  const words = q.split(/\s+/).filter(Boolean);
+  return (apps ?? []).filter((app) => {
+    const haystack = [app.name, app.label, app.oneLine, app.subject, app.grade].join(' ').toLowerCase();
+    return words.every((w) => haystack.includes(w));
+  });
+}
+
+/**
+ * URL のハッシュから、開くタブと選んでおくアプリを決める。
+ *
+ * '#done' … 通知の Issue から飛んでくる
+ * '#make/Qalc' … アプリ一覧のページ（apps.html）の［投稿をつくる］から飛んでくる。
+ *                一覧を見ていて「これの話を書きたい」と思った瞬間に、探しなおさずに始められる。
+ *
+ * ⚠️ アプリ名は URL から来る文字列である。手元の一覧にあるものだけを通す。
+ *    そのまま使うと、リンクを踏ませるだけで画面に任意の文字列を出せることになる。
+ */
+export function routeFromHash(hash, tabs, appNames = []) {
+  const [name, param] = String(hash ?? '').replace(/^#/, '').split('/');
+  if (!tabs.includes(name)) return { view: tabs[0], repo: '' };
+  if (name !== 'make' || !param) return { view: name, repo: '' };
+
+  let decoded;
+  try {
+    decoded = decodeURIComponent(param);
+  } catch {
+    // '%' 単体など、URL として壊れたハッシュ。タブだけ開く。
+    return { view: name, repo: '' };
+  }
+  const known = appNames instanceof Set ? appNames : new Set(appNames);
+  return { view: name, repo: known.has(decoded) ? decoded : '' };
 }
 
 function byDateAsc(a, b) {

@@ -1,0 +1,9 @@
+ランチャーの［つくる］で頼んだ投稿の結果が、ここに <注文ID>.json として置かれる
+（scripts/generate-promo.mjs が書き、docs/app.js が読む）。
+
+このファイルがあるのは、ディレクトリを空のままコミットしておくためである。
+無いと、まだ一度も注文が無いときに .github/workflows/promo-order.yml の
+`git add docs/orders` が「そんなパスは無い」で落ちる。
+
+中身は古いものから消える（KEEP_RESULTS 件まで）。
+ランチャーは一度受け取ったら端末に写すので、ここから消えても手元の投稿は消えない。
