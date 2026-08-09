@@ -362,6 +362,9 @@ body {
   .notes__line { background: #3a2f1c; border-color: #6b5526; color: #f0cf9c; }
 }
 .shots { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px; }
+/* .more と同じ理由。ここが抜けていたので、いちど開いた画像の一覧は
+   ［画像を1枚ずつ渡す］をもう一度押しても閉じられなかった。 */
+.shots[hidden] { display: none; }
 .shots__guide { margin: 0 0 2px; font-size: 13px; color: var(--ink-weak); line-height: 1.6; }
 .shot {
   display: flex; gap: 10px; align-items: flex-start;
@@ -489,6 +492,11 @@ body {
 .more {
   display: flex; flex-direction: column; gap: 6px; padding: 0 14px 14px;
 }
+/* display を指定すると hidden 属性（＝ display:none）を上書きしてしまう。
+   これが抜けていたあいだ、［…］の中身は最初から全部出たままで、
+   毎日押す2つと、たまに押す4つが同じ大きさで並んでいた。
+   ［…］を押しても見た目が変わらないので、押しても何も起きないボタンにも見えていた。 */
+.more[hidden] { display: none; }
 .more__item { justify-content: flex-start; text-align: left; }
 .more__item--danger { color: #a52020; border-color: #f3b6b6; }
 @media (prefers-color-scheme: dark) {

@@ -30,7 +30,7 @@
  * Service Worker は localStorage を一切操作しない。
  */
 
-const VERSION = 'v7a910b3a';
+const VERSION = 'vbe44daf3';
 /** 自アプリの目印。ここで始まるキャッシュだけが掃除の対象になる。 */
 const CACHE_PREFIX = 'launcher-';
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${VERSION}`;
