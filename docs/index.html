@@ -40,14 +40,19 @@
   <p class="head__sub" id="summary" aria-live="polite">読み込んでいます…</p>
 </header>
 
+<!--
+  タブは4つ。もとは7つ並んでいて、スマホでは端が切れて横スクロールになっていた。
+  ［過去］は画面の外にあり、押せないものが並んでいるのは無いのと変わらなかった。
+
+  今日・今週・予備は［出す］の中の切りかえに、投稿ずみ・過去は［記録］の中の切りかえにしてある。
+  中身の選び方（docs/lib/select.js の view）は7つのままなので、
+  送信ずみの Issue に残っている #now / #done のリンクはこれまでどおり効く。
+-->
 <nav class="tabs" role="tablist" aria-label="表示の切りかえ">
-  <button class="tab is-on" id="tab-today" role="tab" data-view="today" aria-controls="list" aria-selected="true" tabindex="0">今日</button>
-  <button class="tab" id="tab-week" role="tab" data-view="week" aria-controls="list" aria-selected="false" tabindex="-1">今週ぜんぶ</button>
-  <button class="tab" id="tab-now" role="tab" data-view="now" aria-controls="list" aria-selected="false" tabindex="-1">いま出す</button>
-  <button class="tab" id="tab-make" role="tab" data-view="make" aria-controls="list" aria-selected="false" tabindex="-1">つくる</button>
-  <button class="tab" id="tab-note" role="tab" data-view="note" aria-controls="list" aria-selected="false" tabindex="-1">note</button>
-  <button class="tab" id="tab-done" role="tab" data-view="done" aria-controls="list" aria-selected="false" tabindex="-1">投稿ずみ</button>
-  <button class="tab" id="tab-past" role="tab" data-view="past" aria-controls="list" aria-selected="false" tabindex="-1">過去</button>
+  <button class="tab is-on" id="tab-post" role="tab" data-tab="post" aria-controls="list" aria-selected="true" tabindex="0">出す</button>
+  <button class="tab" id="tab-make" role="tab" data-tab="make" aria-controls="list" aria-selected="false" tabindex="-1">つくる</button>
+  <button class="tab" id="tab-note" role="tab" data-tab="note" aria-controls="list" aria-selected="false" tabindex="-1">note</button>
+  <button class="tab" id="tab-log" role="tab" data-tab="log" aria-controls="list" aria-selected="false" tabindex="-1">記録</button>
 </nav>
 
 <!--

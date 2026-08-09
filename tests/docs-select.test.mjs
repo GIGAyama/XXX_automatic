@@ -9,11 +9,15 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+    TABS,
+    VIEWS,
     emptyMessageFor,
+    firstViewOf,
     matchApps,
     routeFromHash,
     selectPosts,
     summaryOf,
+    tabOfView,
     todaysPool,
     unsentRatings,
     unsentRecords,
@@ -235,34 +239,64 @@ test('何も入れなければ全部出す', () => {
     assert.equal(matchApps(null, 'あ').length, 0);
 });
 
+/* ── タブと、その中の切りかえ ─────────────────── */
+
+test('タブは4つで、7つの view がそのどれかに入っている', () => {
+    // タブが増えるほど、毎日ひらく画面から遠いものが増える。
+    // 「4つに集約した」という前提が崩れたら、ここで気づけるようにしておく。
+    assert.equal(TABS.length, 4);
+    assert.deepEqual(TABS.map((t) => t.id), ['post', 'make', 'note', 'log']);
+
+    // ⚠️ view の名前は変えない。送信ずみの Issue に #now / #done のリンクが残っている。
+    assert.deepEqual(VIEWS, ['today', 'week', 'now', 'make', 'note', 'done', 'past']);
+});
+
+test('どの view からでも、それを含むタブが引ける', () => {
+    assert.equal(tabOfView('today').id, 'post');
+    assert.equal(tabOfView('now').id, 'post');
+    assert.equal(tabOfView('done').id, 'log');
+    assert.equal(tabOfView('past').id, 'log');
+    assert.equal(tabOfView('note').id, 'note');
+    // 知らない名前でも画面は出す（最初のタブに落とす）
+    assert.equal(tabOfView('しらない').id, 'post');
+});
+
+test('タブを押したら、そのタブの最初のものが出る', () => {
+    // 前に見ていた中身を覚えていると、［記録］を押したのに［過去］が出る、
+    // という「押した名前と出るものが違う」状態になる。
+    assert.equal(firstViewOf('post'), 'today');
+    assert.equal(firstViewOf('log'), 'done');
+    assert.equal(firstViewOf('make'), 'make');
+    assert.equal(firstViewOf('しらない'), 'today');
+});
+
 /* ── ハッシュから行き先を決める ─────────────────── */
 
-const TABS = ['today', 'week', 'now', 'make', 'note', 'done', 'past'];
 const NAMES = APPS.map((a) => a.name);
 
 test('通知から #done で飛んでこられる', () => {
-    assert.deepEqual(routeFromHash('#done', TABS, NAMES), { view: 'done', repo: '' });
-    assert.deepEqual(routeFromHash('', TABS, NAMES), { view: 'today', repo: '' });
-    assert.deepEqual(routeFromHash('#しらないタブ', TABS, NAMES), { view: 'today', repo: '' });
+    assert.deepEqual(routeFromHash('#done', VIEWS, NAMES), { view: 'done', repo: '' });
+    assert.deepEqual(routeFromHash('', VIEWS, NAMES), { view: 'today', repo: '' });
+    assert.deepEqual(routeFromHash('#しらないタブ', VIEWS, NAMES), { view: 'today', repo: '' });
 });
 
 test('アプリ一覧から #make/<アプリ名> で飛んでこられる', () => {
-    assert.deepEqual(routeFromHash('#make/Qalc', TABS, NAMES), { view: 'make', repo: 'Qalc' });
-    assert.deepEqual(routeFromHash('#make/KANJI_Town', TABS, NAMES), { view: 'make', repo: 'KANJI_Town' });
+    assert.deepEqual(routeFromHash('#make/Qalc', VIEWS, NAMES), { view: 'make', repo: 'Qalc' });
+    assert.deepEqual(routeFromHash('#make/KANJI_Town', VIEWS, NAMES), { view: 'make', repo: 'KANJI_Town' });
 });
 
 test('知らないアプリ名は通さない（URL は外から来る）', () => {
     // ここを素通しすると、リンクを踏ませるだけで画面に任意の文字列を出せる。
-    assert.deepEqual(routeFromHash('#make/よそのアプリ', TABS, NAMES), { view: 'make', repo: '' });
-    assert.deepEqual(routeFromHash('#make/<img src=x>', TABS, NAMES), { view: 'make', repo: '' });
-    assert.deepEqual(routeFromHash('#make/%E4%B8%8D%E6%98%8E', TABS, NAMES), { view: 'make', repo: '' });
+    assert.deepEqual(routeFromHash('#make/よそのアプリ', VIEWS, NAMES), { view: 'make', repo: '' });
+    assert.deepEqual(routeFromHash('#make/<img src=x>', VIEWS, NAMES), { view: 'make', repo: '' });
+    assert.deepEqual(routeFromHash('#make/%E4%B8%8D%E6%98%8E', VIEWS, NAMES), { view: 'make', repo: '' });
 });
 
 test('URL として壊れたハッシュでも落ちない', () => {
     // decodeURIComponent('%') は例外を投げる。画面が丸ごと出なくなってはいけない。
-    assert.deepEqual(routeFromHash('#make/%', TABS, NAMES), { view: 'make', repo: '' });
+    assert.deepEqual(routeFromHash('#make/%', VIEWS, NAMES), { view: 'make', repo: '' });
 });
 
 test('#make だけならアプリは選ばれない', () => {
-    assert.deepEqual(routeFromHash('#make', TABS, NAMES), { view: 'make', repo: '' });
+    assert.deepEqual(routeFromHash('#make', VIEWS, NAMES), { view: 'make', repo: '' });
 });

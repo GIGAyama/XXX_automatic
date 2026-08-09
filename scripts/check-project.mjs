@@ -23,6 +23,7 @@ import { KEEP_WEEKS } from './archive-history.mjs';
 import { KEEP_RESULTS } from './generate-promo.mjs';
 import { ORDER_ID_RE, RESULT_SCHEMA_ID as PROMO_RESULT_SCHEMA_ID } from '../docs/lib/order.js';
 import { ARTICLES_DIR, ARTICLE_ID_RE, validateArticle } from '../docs/lib/note-doc.js';
+import { TABS, VIEWS } from '../docs/lib/select.js';
 import { lintArticle } from './lib/note-lint.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
@@ -239,6 +240,45 @@ for (const name of ['index.html', 'apps.html', 'offline.html']) {
             error('BROKEN_LOCAL_REF', `参照先が見つかりません（${hit[1]}）`, `docs/${name}`);
         }
     }
+}
+
+/* ── 6'. 画面のタブと、中身の分けかたが合っているか ──────
+ *
+ * タブの名前（docs/index.html の data-tab）と、その定義（docs/lib/select.js の TABS）は
+ * 別のファイルにある。片方だけ直すと、押しても選ばれないタブが1つできる。
+ * しかもエラーは出ない（押しても何も変わらないだけ）ので、気づくのは使っているときになる。
+ *
+ * ハッシュ（#now / #done）は送信ずみの Issue に残っているリンクなので、
+ * view の名前が消えていないかもここで見る。消すと、過去の通知から飛べなくなる。 */
+
+try {
+    const html = readText(paths.docs('index.html'), '');
+    const inHtml = [...html.matchAll(/data-tab="([^"]+)"/g)].map((hit) => hit[1]);
+    const defined = TABS.map((tab) => tab.id);
+
+    for (const id of inHtml) {
+        if (!defined.includes(id)) {
+            error('UNKNOWN_TAB', `data-tab="${id}" は docs/lib/select.js の TABS にありません。押しても何も選ばれません`, 'docs/index.html');
+        }
+    }
+    for (const id of defined) {
+        if (!inHtml.includes(id)) {
+            error('MISSING_TAB', `TABS の "${id}" が画面に出ていません（docs/index.html に data-tab="${id}" が要ります）`, 'docs/index.html');
+        }
+    }
+
+    // 通知の Issue に残っているリンクの行き先。無くすと、過去の通知から飛べなくなる。
+    for (const view of ['today', 'now', 'make', 'note', 'done', 'past']) {
+        if (!VIEWS.includes(view)) {
+            error(
+                'LOST_VIEW',
+                `view "${view}" が無くなっています。送信ずみの Issue に #${view} のリンクが残っているので、名前は変えられません`,
+                'docs/lib/select.js'
+            );
+        }
+    }
+} catch (e) {
+    error('CONFIG_UNREADABLE', e.message, 'docs/index.html');
 }
 
 /* ── 7. Service Worker が launcher.json をキャッシュしていないか ──
@@ -696,7 +736,7 @@ if (history && !Array.isArray(history.posts)) {
  *
  * 生成は成功していても、予備を作る処理だけが例外で落ちることがある（実際にそうなっていた。
  * 日付を持たない枠に曜日の温度を引きにいって throw し、try/catch に吸われていた）。
- * その結果、ランチャーの［いま出す］タブは一度も中身を持ったことがなかった。
+ * その結果、ランチャーの［出す］→［予備］は一度も中身を持ったことがなかった。
  *
  * 週の投稿ができているのに予備だけ無い、という組み合わせでしか見つけられない壊れ方なので、
  * ここで見る。エラーにしないのは、初回の実行では正常に無いためである。 */
@@ -711,7 +751,7 @@ if (history && !Array.isArray(history.posts)) {
         warn(
             'EMPTY_STOCK',
             '週の下書きはあるのに、予備の引き出し（data/stock.json）が空です。' +
-                'ランチャーの［いま出す］タブに何も出ません。`npm run generate` のログに理由が出ています',
+                'ランチャーの［出す］→［予備］に何も出ません。`npm run generate` のログに理由が出ています',
             'data/stock.json'
         );
     }

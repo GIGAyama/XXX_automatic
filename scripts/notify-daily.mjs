@@ -238,7 +238,7 @@ async function notifyEmptyDay({ date, weekId, slotId, slotLabel, accounts, args,
             '',
             '### 今日はこれを出せます',
             '',
-            `[［いま出す］タブ](${accounts.launcherUrl}#now) に用意してある予備です。そのまま共有できます。`,
+            `[［出す］→［予備］](${accounts.launcherUrl}#now) に用意してあるものです。そのまま共有できます。`,
             ''
         );
         for (const post of stock) {
@@ -313,7 +313,7 @@ function buildBody({ date, todays, note, accounts }) {
         '',
         '### 反応を翌週にいかす',
         '',
-        `出し終わったら [［投稿ずみ］タブ](${accounts.launcherUrl}#done) で［投稿した］を押し、`,
+        `出し終わったら [［記録］タブ](${accounts.launcherUrl}#done) で［投稿した］を押し、`,
         '伸びたものに［反応よかった］、手応えがなかったものに［いまいち］を付けてください。',
         '',
         'そのあと **［反応をまとめて送る］** を押すと、記録を載せた Issue の作成画面が開きます。',

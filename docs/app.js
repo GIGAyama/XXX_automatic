@@ -40,14 +40,17 @@
  */
 
 import { jstDateString, jstStamp } from './lib/jst-client.js';
-import { overLimitMessage, slotLabelMap, stepGuide, themeLabelMap, truncate } from './lib/format.js';
+import { bodyPreview, overLimitMessage, slotLabelMap, stepGuide, themeLabelMap } from './lib/format.js';
 import {
+  VIEWS,
   activeWeekIds,
   emptyMessageFor,
+  firstViewOf,
   matchApps,
   routeFromHash,
   selectPosts,
   summaryOf,
+  tabOfView,
   unsentRatings,
   unsentRecords,
 } from './lib/select.js';
@@ -242,6 +245,11 @@ function stepsOf(post, saved) {
 function render() {
   const list = document.getElementById('list');
   list.innerHTML = '';
+
+  // タブの中の切りかえ（今日 / 今週 / 予備、投稿ずみ / 過去）。
+  // 一覧より先に置く。何を見ているのかが分からないまま中身を読むことになるのを防ぐ。
+  const seg = segmentBar();
+  if (seg) list.append(seg);
 
   if (view === 'note') {
     renderNotes(list);
@@ -444,6 +452,65 @@ function emptyBox(text) {
   return div;
 }
 
+/**
+ * たまにしか使わない操作を畳んでおくところ。
+ *
+ * ⚠️ 隠すのであって、無くすのではない。
+ *    ここに入るものにも「これが唯一の道」という場面がある
+ *    （共有シートに X が出ない端末の［コピーして X を開く］がまさにそれ）。
+ *    だから閉じているときも件数の分かる見た目にし、開けば全部が縦に並ぶようにする。
+ *    折りたたみを入れ子にしない。2回押さないと出てこないものは、無いのと同じである。
+ *
+ * @returns {{toggle: HTMLButtonElement, box: HTMLElement, add: (label: string, onClick: () => void) => void}}
+ */
+function moreMenu() {
+  const box = document.createElement('div');
+  box.className = 'more';
+  box.hidden = true;
+
+  const toggle = button('…', 'btn btn--sub btn--more');
+  toggle.setAttribute('aria-label', 'ほかの操作');
+  toggle.setAttribute('aria-expanded', 'false');
+  // 中身が1つも無いなら押す意味が無い。1つ足された時点で出す。
+  toggle.hidden = true;
+  toggle.addEventListener('click', () => {
+    box.hidden = !box.hidden;
+    toggle.setAttribute('aria-expanded', String(!box.hidden));
+    toggle.classList.toggle('is-on', !box.hidden);
+  });
+
+  return {
+    toggle,
+    box,
+    add(label, onClick) {
+      const b = button(label, 'btn btn--sub more__item');
+      b.addEventListener('click', onClick);
+      box.append(b);
+      toggle.hidden = false;
+      return b;
+    },
+  };
+}
+
+/**
+ * すでに組み上がったカードの［…］に、あとから1つ足す。
+ *
+ * ［つくる］で作った投稿にだけ付く操作（この投稿を消す）のためにある。
+ * カードの組み立てを2つに分けると、週の投稿と作った投稿で見た目が割れるので、
+ * 足す側がここを通る形にしてある。
+ */
+function addToMore(card, label, className, onClick) {
+  const box = card.querySelector('.more');
+  const toggle = card.querySelector('.btn--more');
+  if (!box || !toggle) return null;
+
+  const b = button(label, `btn btn--sub more__item ${className}`.trim());
+  b.addEventListener('click', onClick);
+  box.append(b);
+  toggle.hidden = false;
+  return b;
+}
+
 function postCard(post, saved, today) {
   const card = document.createElement('article');
   card.className = 'card' + (saved.done ? ' is-done' : '');
@@ -531,17 +598,24 @@ function postCard(post, saved, today) {
   card.append(body);
 
   // ── ボタン ──
+  //
+  // 主要な1つ（共有）と、押したあとの印（投稿した）だけを外に出す。
+  // 残り（コピー・本文を直す・別の案・画像を保存）は［…］の中に入れる。
+  //
+  // もとは7つが同じ大きさで横に並んでいた。ふだんの2タップ（共有 → 投稿した）と、
+  // たまにしか使わないものが同じ強さで置かれていると、毎日押すほうを探すことになる。
   const actions = document.createElement('div');
   actions.className = 'card__actions';
+  const more = moreMenu();
 
   if (step.kind === 'main') {
     shareBtn = button(shots.length > 0 ? SHARE_LABEL_WITH_MEDIA : SHARE_LABEL, 'btn btn--x');
     shareBtn.addEventListener('click', () => shareToX(post, shareBtn, step, steps.length));
     actions.append(shareBtn);
 
-    const copyBtn = button('コピーして X を開く', 'btn btn--sub');
-    copyBtn.addEventListener('click', () => openIntent(post, step));
-    actions.append(copyBtn);
+    // 共有シートに X が出ない端末では、これが唯一の道になる。
+    // 隠すが、いちばん上に置いて最初に目に入るようにする。
+    more.add('コピーして X を開く', () => openIntent(post, step));
   } else {
     // 返信は共有シートからは出せない（共有すると新しい投稿になってしまう）。
     // 本文をクリップボードに入れて、X で「返信」を押してから貼ってもらう。
@@ -552,15 +626,14 @@ function postCard(post, saved, today) {
     });
     actions.append(copyBtn);
 
-    const openBtn = button('X で自分の投稿を開く', 'btn btn--sub');
-    openBtn.addEventListener('click', () => {
+    more.add('X で自分の投稿を開く', () => {
       // ⚠️ window.open を同期で先に。await のあとだと iOS で開かない。
       window.open(myTimelineUrl(), '_blank', 'noopener');
       copyText(step.text);
     });
-    actions.append(openBtn);
   }
 
+  // 連投の途中は「次へ」がその場の続きなので、外に出しておく。
   if (at < steps.length - 1) {
     const nextBtn = button(`次へ（${steps[at + 1].label}）`, 'btn btn--sub btn--next');
     nextBtn.addEventListener('click', () => {
@@ -571,23 +644,14 @@ function postCard(post, saved, today) {
   }
 
   if (step.kind === 'main') {
-    const editBtn = button(saved.editedText ? '本文を直す（手直しずみ）' : '本文を直す', 'btn btn--sub');
-    editBtn.addEventListener('click', () => openEditor(card, post, body, lenChip));
-    actions.append(editBtn);
+    more.add(saved.editedText ? '本文を直す（手直しずみ）' : '本文を直す', () => openEditor(card, post, body, lenChip));
 
     if ((post.alternatives ?? []).length > 0) {
-      const altBtn = button(`別の案（${post.alternatives.length}）`, 'btn btn--sub');
-      altBtn.addEventListener('click', () => openAlternatives(card, post, body));
-      actions.append(altBtn);
+      more.add(`別の案を見る（${post.alternatives.length}）`, () => openAlternatives(card, post, body));
     }
-  }
 
-  // 選択を空にすると出たり消えたりしてボタンの位置がずれるので、候補があるなら常に出す。
-  // 何も選んでいないときに押されたら、saveMedia がその場で理由を出す。
-  if (gallery.length > 0 && step.kind === 'main') {
-    const saveBtn = button('画像を保存', 'btn btn--sub');
-    saveBtn.addEventListener('click', () => saveMedia(post));
-    actions.append(saveBtn);
+    // 候補があるなら常に出す。何も選んでいないときに押されたら、saveMedia がその場で理由を出す。
+    if (gallery.length > 0) more.add('画像を保存', () => saveMedia(post));
   }
 
   const doneBtn = button(saved.done ? '投稿ずみに戻す' : '投稿した', 'btn btn--sub' + (saved.done ? '' : ' btn--done'));
@@ -597,10 +661,11 @@ function postCard(post, saved, today) {
     render();
     // 「投稿した」を押すとカードが一覧から消える。
     // 何も出ないと消えたことに驚くので、どこへ行ったのかを必ず伝える。
-    toast(nowDone ? '［投稿ずみ］に移しました。反応はあとで記録できます' : '一覧に戻しました');
+    toast(nowDone ? '［記録］に移しました。反応はあとで記録できます' : '一覧に戻しました');
   });
   actions.append(doneBtn);
-  card.append(actions);
+  actions.append(more.toggle);
+  card.append(actions, more.box);
 
   // ── 反応の記録（翌週の生成に効く）──
   if (saved.done) {
@@ -840,9 +905,6 @@ function sendFeedback(pending) {
  * だから週次のときに作り置きしてある（data/stock.json）。押した瞬間に出せる。
  */
 function renderNow(list) {
-  // ── 返信の下書きを頼む ──
-  list.append(replyBox());
-
   const stock = data.stock ?? [];
   if (stock.length === 0) {
     list.append(
@@ -851,26 +913,35 @@ function renderNow(list) {
     return;
   }
 
+  const guide = document.createElement('p');
+  guide.className = 'lede';
+  guide.textContent = '予定に無い日でも出せるように作り置きしてあるものです。日付を持たないので、いつ出してもかまいません。';
+  list.append(guide);
+
   const state = loadState();
   const themes = [...new Set(stock.map((p) => p.themeLabel).filter(Boolean))];
 
-  const filter = document.createElement('div');
-  filter.className = 'jump';
-  const current = nowFilter;
-  for (const label of ['すべて', ...themes]) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'tab' + (label === current ? ' is-on' : '');
-    b.textContent = label;
-    b.addEventListener('click', () => {
-      nowFilter = label;
-      render();
-    });
-    filter.append(b);
+  // 型でしぼる。ここはタブでも切りかえでもなく、一覧の絞りこみである。
+  // 上の2段（タブ・切りかえ）と同じ見た目にすると、3段目に見えて迷う。
+  if (themes.length > 1) {
+    const filter = document.createElement('div');
+    filter.className = 'jump';
+    const current = nowFilter;
+    for (const label of ['すべて', ...themes]) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'jump__btn' + (label === current ? ' is-on' : '');
+      b.textContent = label;
+      b.addEventListener('click', () => {
+        nowFilter = label;
+        render();
+      });
+      filter.append(b);
+    }
+    list.append(filter);
   }
-  list.append(filter);
 
-  const shown = stock.filter((p) => current === 'すべて' || p.themeLabel === current);
+  const shown = stock.filter((p) => nowFilter === 'すべて' || p.themeLabel === nowFilter);
   for (const post of shown) list.append(postCard(post, state[post.id] || {}, todayJst()));
   prefetchMedia(shown);
 }
@@ -971,8 +1042,17 @@ function replyIssueUrl(source) {
  * 受け取った投稿はこの端末に貯める（docs/lib/mine.js）。
  * 週の投稿と違って誰も預かってくれないので、出すまでのあいだ手元に置いておく。
  */
+/**
+ * ［つくる］。
+ *
+ * 「頼んで作ってもらう」ものをここに集めてある。宣伝ポストと、返信の下書きである。
+ * 返信の下書きは以前［いま出す］にあったが、あちらは作り置きを出す場所で、
+ * 頼む相手も待ち方も違うものが同じ画面に並んでいた。
+ * どちらも「GitHub に注文を出して、できたものを受け取る」という同じ形なので、ここが正しい。
+ */
 function renderMake(list) {
   list.append(orderForm());
+  list.append(replyBox());
 
   const store = loadMine();
 
@@ -1133,7 +1213,7 @@ function orderForm() {
   for (let n = MIN_COUNT; n <= MAX_COUNT; n += 1) {
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = 'tab' + (n === makeCount ? ' is-on' : '');
+    b.className = 'jump__btn' + (n === makeCount ? ' is-on' : '');
     b.textContent = `${n}本`;
     b.setAttribute('aria-pressed', String(n === makeCount));
     b.addEventListener('click', () => {
@@ -1151,7 +1231,7 @@ function orderForm() {
 
   const auto = document.createElement('button');
   auto.type = 'button';
-  auto.className = 'tab' + (makeThemes.size === 0 ? ' is-on' : '');
+  auto.className = 'jump__btn' + (makeThemes.size === 0 ? ' is-on' : '');
   auto.textContent = 'おまかせ';
   auto.addEventListener('click', () => {
     makeThemes.clear();
@@ -1163,7 +1243,7 @@ function orderForm() {
     const b = document.createElement('button');
     b.type = 'button';
     const on = makeThemes.has(theme.id);
-    b.className = 'tab' + (on ? ' is-on' : '');
+    b.className = 'jump__btn' + (on ? ' is-on' : '');
     b.textContent = theme.label;
     b.title = theme.intent ?? '';
     b.setAttribute('aria-pressed', String(on));
@@ -1366,7 +1446,7 @@ function mineFilterBar(counts, store) {
 
   const all = document.createElement('button');
   all.type = 'button';
-  all.className = 'tab' + (mineFilter === '' ? ' is-on' : '');
+  all.className = 'jump__btn' + (mineFilter === '' ? ' is-on' : '');
   all.textContent = `すべて（${store.posts.length}）`;
   all.addEventListener('click', () => {
     mineFilter = '';
@@ -1377,7 +1457,7 @@ function mineFilterBar(counts, store) {
   for (const [repo, n] of counts) {
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = 'tab' + (mineFilter === repo ? ' is-on' : '');
+    b.className = 'jump__btn' + (mineFilter === repo ? ' is-on' : '');
     b.textContent = `${repo}（${n}）`;
     b.addEventListener('click', () => {
       mineFilter = mineFilter === repo ? '' : repo;
@@ -1392,11 +1472,10 @@ function mineFilterBar(counts, store) {
 function minePostCard(post, saved) {
   const card = postCard(post, saved, todayJst());
 
-  const row = document.createElement('div');
-  row.className = 'card__actions card__actions--sub';
-
-  const drop = button('この投稿を消す', 'btn btn--sub');
-  drop.addEventListener('click', () => {
+  // ⚠️ 消す操作は［…］の中に入れる。
+  //    ここに貯まっているものは、この端末のなかにしか無い。
+  //    毎日押すボタンの隣に置いておくものではない。
+  const drop = addToMore(card, 'この投稿を消す', 'more__item--danger', () => {
     // 一度きりの確認を入れる。ここにしか無いものを、押し間違いで消せてはいけない。
     if (drop.dataset.armed !== 'yes') {
       drop.dataset.armed = 'yes';
@@ -1411,8 +1490,6 @@ function minePostCard(post, saved) {
     render();
     toast('消しました');
   });
-  row.append(drop);
-  card.append(row);
 
   return card;
 }
@@ -1633,7 +1710,7 @@ function renderNotes(list) {
 
     const preview = document.createElement('p');
     preview.className = 'card__text card__text--preview';
-    preview.textContent = truncate(note.plain, 160);
+    preview.textContent = bodyPreview(note.title, note.plain);
     card.append(preview);
 
     const actions = document.createElement('div');
@@ -1653,6 +1730,7 @@ function renderNotes(list) {
     });
     actions.append(go);
 
+    // タイトルは note の別の欄に貼るもの。本文の次に必ず押すので外に出しておく。
     const copyTitle = button('タイトルをコピー', 'btn btn--sub');
     copyTitle.addEventListener('click', async () => {
       toast((await copyText(note.title)) ? 'タイトルをコピーしました' : 'コピーできませんでした');
@@ -1839,7 +1917,7 @@ function articleCard(entry, saved) {
       preview.textContent = `記事を読み取れませんでした（${articleFailed.get(entry.id) ?? '理由不明'}）`;
       return;
     }
-    preview.textContent = truncate(article.plain, 160);
+    preview.textContent = bodyPreview(article.title, article.plain);
 
     const lines = [
       ...article.problems,
@@ -2312,27 +2390,57 @@ function updateSummary() {
     activeWeeks: activeWeekIds(data),
   });
 
-  // 未送信の記録があることは、タブを開かないと分からない。バッジで外に出す。
-  const pending = unsentRecords({ posts: recordablePosts(), state: loadState() }).length;
-  const doneTab = document.querySelector('.tab[data-view="done"]');
-  if (doneTab) {
-    doneTab.dataset.badge = pending > 0 ? String(pending) : '';
-    doneTab.setAttribute('aria-label', pending > 0 ? `投稿ずみ（未送信の記録 ${pending} 件）` : '投稿ずみ');
-  }
+  // タブを開かないと分からないことを、バッジで外に出す。
+  // タブが4つになったぶん1つあたりが持つ中身は増えたので、
+  // 「開かないと分からない」を減らさないと、集約したぶんだけ見落としが増える。
+  const state = loadState();
+
+  // ① 出す … 今日ぶんの残り
+  const left = selectPosts({
+    posts: data.posts ?? [],
+    state,
+    view: 'today',
+    today: todayJst(),
+    activeWeeks: activeWeekIds(data),
+  }).length;
+  setTabBadge('post', left, `出す（今日はあと ${left} 件）`, '出す');
+
+  // ② 記録 … まだ送っていない記録
+  const pending = unsentRecords({ posts: recordablePosts(), state }).length;
+  setTabBadge('log', pending, `記録（未送信の記録 ${pending} 件）`, '記録');
+
+  // ③ つくる … 頼んだまま届いていない注文
+  const waiting = waitingOrders(loadMine()).length;
+  setTabBadge('make', waiting, `つくる（待っている注文 ${waiting} 件）`, 'つくる');
+}
+
+function setTabBadge(tabId, count, onLabel, offLabel) {
+  const tab = document.querySelector(`.tab[data-tab="${tabId}"]`);
+  if (!tab) return;
+  tab.dataset.badge = count > 0 ? String(count) : '';
+  tab.setAttribute('aria-label', count > 0 ? onLabel : offLabel);
 }
 
 /* ────────────────────────────────────────────
  *  起動
  * ──────────────────────────────────────────── */
 
-const TABS = ['today', 'week', 'now', 'make', 'note', 'done', 'past'];
-
+/**
+ * 見るものを切りかえる。
+ *
+ * name は view（today / week / now / make / note / done / past）で受ける。
+ * タブは4つだが、今日・今週・予備は「出す」の中の、投稿ずみ・過去は「記録」の中の
+ * 切りかえである（docs/lib/select.js の TABS）。
+ * 送信ずみの Issue に残っている `#now` `#done` のリンクを、これまでどおり効かせるため。
+ */
 function selectTab(name, { focus = false } = {}) {
-  if (!TABS.includes(name)) name = 'today';
+  if (!VIEWS.includes(name)) name = VIEWS[0];
   view = name;
+
+  const tab = tabOfView(name);
   const list = document.getElementById('list');
   for (const t of document.querySelectorAll('.tab')) {
-    const on = t.dataset.view === name;
+    const on = t.dataset.tab === tab.id;
     t.classList.toggle('is-on', on);
     t.setAttribute('aria-selected', String(on));
     // 選択中のタブだけをタブ順に載せる（roving tabindex）。
@@ -2349,7 +2457,10 @@ function selectTab(name, { focus = false } = {}) {
 function bindTabs() {
   const tabs = [...document.querySelectorAll('.tab')];
   for (const [i, tab] of tabs.entries()) {
-    tab.addEventListener('click', () => selectTab(tab.dataset.view));
+    // タブを押したら、そのタブの最初のものを見せる。
+    // 前に見ていた中身を覚えておくと、［記録］を押したのに［過去］が出る、
+    // という「押した名前と出るものが違う」状態になる。
+    tab.addEventListener('click', () => selectTab(firstViewOf(tab.dataset.tab)));
     tab.addEventListener('keydown', (event) => {
       const move = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
       let next = null;
@@ -2358,14 +2469,61 @@ function bindTabs() {
       else if (event.key === 'End') next = tabs[tabs.length - 1];
       if (!next) return;
       event.preventDefault();
-      selectTab(next.dataset.view, { focus: true });
+      selectTab(firstViewOf(next.dataset.tab), { focus: true });
     });
   }
 }
 
+/**
+ * タブの中の切りかえ（今日 / 今週 / 予備、投稿ずみ / 過去）。
+ *
+ * ⚠️ タブと同じ見た目にしない。同じに見えると、どちらが上位なのかが分からなくなる。
+ *    ここは「いま見ているタブの中で、どれを見るか」だけを決める。
+ */
+function segmentBar() {
+  const tab = tabOfView(view);
+  if (tab.views.length < 2) return null;
+
+  const bar = document.createElement('div');
+  bar.className = 'seg';
+  bar.setAttribute('role', 'tablist');
+  bar.setAttribute('aria-label', `${tab.label}の中の切りかえ`);
+
+  for (const item of tab.views) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'seg__btn' + (item.id === view ? ' is-on' : '');
+    b.textContent = item.label;
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-selected', String(item.id === view));
+    const count = countFor(item.id);
+    if (count > 0) {
+      const badge = document.createElement('span');
+      badge.className = 'seg__count';
+      badge.textContent = String(count);
+      b.append(badge);
+    }
+    b.addEventListener('click', () => selectTab(item.id));
+    bar.append(b);
+  }
+  return bar;
+}
+
+/** その切りかえに何件あるか。数が見えていないと、押してみるまで空かどうか分からない。 */
+function countFor(name) {
+  if (name === 'now') return (data.stock ?? []).length;
+  return selectPosts({
+    posts: poolFor(name),
+    state: loadState(),
+    view: name,
+    today: todayJst(),
+    activeWeeks: activeWeekIds(data),
+  }).length;
+}
+
 /** 通知の Issue から #done、アプリ一覧から #make/Qalc で飛んでこられるようにする。 */
 function viewFromHash() {
-  return routeFromHash(location.hash, TABS, (data.apps ?? []).map((a) => a.name));
+  return routeFromHash(location.hash, VIEWS, (data.apps ?? []).map((a) => a.name));
 }
 
 /** ハッシュを読んでタブを切りかえる。アプリの指定があれば選んでおく。 */
