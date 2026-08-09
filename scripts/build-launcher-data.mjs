@@ -17,6 +17,7 @@ import { fail, info, loadConfig, paths, readJson, rel, writeJson } from './lib/i
 import { addDays, isoWeekId, jstDateString, jstStamp, nextWeekDates, weekDatesOf } from './lib/jst.mjs';
 import { buildGalleries, toLauncherPost } from './lib/launcher-post.mjs';
 import { lintAlternative } from './lib/lint.mjs';
+import { ARTICLES_DIR, toIndexEntry, validateArticle } from '../docs/lib/note-doc.js';
 
 /** 「今週ぶん」として扱う週のほかに、さかのぼって載せる週の数。 */
 const PAST_WEEKS = 3;
@@ -42,6 +43,36 @@ function appsForPicker(profiles, byName) {
             hasPages: Boolean(byName.get(p.name)?.pagesUrl ?? p.pagesUrl),
         }))
         .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * アプリのリポジトリに用意された note 記事の一覧。
+ *
+ * 正は docs/note-articles/ に置いてあるファイルそのものにする（見出しだけの一覧を別に持たない）。
+ * 2つ持つと、片方だけ古くなったときに「一覧には出るのに開けない」
+ * 「置いてあるのに一覧に出ない」が起こり、どちらが正なのか決められなくなる。
+ *
+ * ⚠️ ここでも形を確かめる。配る直前が最後の関所である。
+ *    壊れたものを載せると、画面には「記事を読み取れませんでした」としか出ない。
+ */
+function noteArticlesFor() {
+    const dir = paths.docs(ARTICLES_DIR);
+    if (!fs.existsSync(dir)) return { entries: [], broken: [] };
+
+    const entries = [];
+    const broken = [];
+
+    for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {
+        const id = name.replace(/\.json$/, '');
+        const { ok, errors, article } = validateArticle(readJson(paths.docs(ARTICLES_DIR, name), null), { id });
+        if (!ok) {
+            broken.push(`${name} — ${errors.join(' / ')}`);
+            continue;
+        }
+        entries.push(toIndexEntry({ ...article, id }));
+    }
+
+    return { entries, broken };
 }
 
 function loadProfiles() {
@@ -114,7 +145,10 @@ function main() {
         toLauncherPost(post, '', maxLength, placement, altGate)
     );
 
-    if (posts.length === 0 && notes.length === 0) {
+    // アプリのリポジトリに用意された記事（本人が書いたもの）。週の下書きとは別に並べる。
+    const { entries: noteArticles, broken: brokenArticles } = noteArticlesFor();
+
+    if (posts.length === 0 && notes.length === 0 && noteArticles.length === 0) {
         info('⚠ 載せるものがありません。先に `npm run generate` を実行してください。');
     }
 
@@ -156,6 +190,9 @@ function main() {
         galleries,
         posts,
         notes,
+        // アプリのリポジトリに用意ずみの記事。見出しだけを載せる
+        // （本文と画像の説明は docs/note-articles/<id>.json にあり、開いたときに読みにいく）。
+        noteArticles,
         // 予定に無い投稿を「いま出したい」ときの引き出し。週次で作り置きしてある。
         stock,
         // ［つくる］でアプリを選ぶための一覧と、頼める型。
@@ -167,6 +204,17 @@ function main() {
 
     info(`⑤ 完了 — ${rel(outPath)}`);
     info(`   投稿 ${posts.length} 件 / note 下書き ${notes.length} 本 / 予備 ${stock.length} 件（今週ぶん: ${activeWeekIds.join(', ')}）`);
+    if (noteArticles.length > 0) {
+        const withProblems = noteArticles.filter((a) => a.problems > 0).length;
+        info(
+            `   リポジトリに用意された記事: ${noteArticles.length} 本（${noteArticles.map((a) => a.repo).join(', ')}）` +
+                (withProblems > 0 ? ` ※ ${withProblems} 本に気をつけることがあります` : '')
+        );
+    }
+    for (const line of brokenArticles) {
+        // 黙って落とさない。置いてあるのに画面に出ないのは、いちばん理由の追えない壊れ方である。
+        console.error(`   ✖ 記事を載せられませんでした: ${line}`);
+    }
     if (pastWeekIds.length > 0) info(`   過去週として ${pastWeekIds.filter((id) => posts.some((p) => p.weekId === id)).length} 週ぶんを載せました`);
 
     const missingMedia = posts.filter((p) => p.mediaList.length === 0).length;

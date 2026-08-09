@@ -44,7 +44,7 @@ const LEADING_NUMBER = /(^|\/)(\d{1,3})[-_]/;
  * そのパスが入っているディレクトリ。ルート直下なら空文字。
  * lastIndexOf('/') をそのまま slice に渡すと、'README.md' が 'README.m' になる。
  */
-function dirOf(filePath) {
+export function dirOf(filePath) {
     const at = String(filePath).lastIndexOf('/');
     return at < 0 ? '' : String(filePath).slice(0, at);
 }
@@ -199,7 +199,7 @@ export function parseCaptions(documents, imagePaths) {
 }
 
 /** 'docs/note' と 'images/01-home.png' から 'docs/note/images/01-home.png' を作る。 */
-function resolvePath(dir, relative) {
+export function resolvePath(dir, relative) {
     const parts = [...(dir ? dir.split('/') : []), ...String(relative).replace(/^\.\//, '').split('/')];
     const stack = [];
     for (const part of parts) {

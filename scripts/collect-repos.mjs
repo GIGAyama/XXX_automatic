@@ -21,6 +21,7 @@
 import { getFile, getHeadSha, getTree, listPublicRepos, listRecentCommits } from './lib/github.mjs';
 import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { jstStamp } from './lib/jst.mjs';
+import { assetPathsFor, pickArticlePaths } from './lib/note-article.mjs';
 import {
     DEFAULT_REPO_IMAGES,
     captionSourcePaths,
@@ -43,29 +44,16 @@ const SOURCE_FILES = [
  * note の記事を書くときに撮った画面（docs/note/images/01-home.png のような形）が
  * すでに入っている。実際に操作した結果の絵なので、機械が撮りなおすより中身が濃い。
  *
- * リクエストは repo あたり tree で1回、説明文の Markdown で最大2回。
+ * リクエストは説明文の Markdown で最大2回。一覧（tree）は呼び出し側が1回だけ取って渡す。
  * 画像そのものはここでは取らない（共有のときにランチャーが raw から直接読む）。
  *
  * ⚠️ 失敗しても投稿づくり全体は止めない。画像は「あれば添えられる」ものであって、
  *    無くても本文と紹介カードで成立する。ただし黙って0件にはせず、理由を出す。
  */
-async function collectImages(owner, repoName, branch, headSha, source, config) {
+async function collectImages(owner, repoName, headSha, source, config, tree) {
     if (!config.enabled) return [];
     if (!headSha) return []; // SHA で固定できないと、あとで絵が入れかわっても気づけない
-
-    let tree;
-    try {
-        tree = await getTree(owner, repoName, headSha);
-    } catch (error) {
-        console.error(`   … ${repoName} の一覧を取れませんでした（画像なしで続けます）— ${error.message}`);
-        return [];
-    }
-
-    if (tree.truncated) {
-        // 一覧が途中で切られた repo。拾えた範囲で続けるが、
-        // 「なぜあの画像が候補に出ないのか」を後から追えるようにここで言っておく。
-        console.error(`   … ${repoName} は一覧が大きすぎて途中までしか読めていません`);
-    }
+    if (!tree) return [];
 
     const picked = pickRepoImages(tree.entries, config);
     if (picked.length === 0) return [];
@@ -104,6 +92,59 @@ async function collectImages(owner, repoName, branch, headSha, source, config) {
         // 絞りたくなったときに、ファイル名から作ったものと区別できないと困る。
         described: captions.has(image.path),
     }));
+}
+
+/**
+ * リポジトリの一覧（tree）を1回だけ取る。
+ *
+ * 取れなくても収集そのものは続ける。README と説明文だけで投稿は作れるし、
+ * 1件のために55リポジトリの収集を落とすほうが損失が大きい。
+ * ただし黙って0件にはしない（「なぜこのアプリだけ画像が出ないのか」を後から追えなくなる）。
+ */
+async function getRepoTree(owner, repoName, headSha) {
+    if (!headSha) return null;
+    try {
+        const tree = await getTree(owner, repoName, headSha);
+        if (tree.truncated) {
+            // 一覧が途中で切られた repo。拾えた範囲で続けるが、
+            // 「なぜあの画像が候補に出ないのか」を後から追えるようにここで言っておく。
+            console.error(`   … ${repoName} は一覧が大きすぎて途中までしか読めていません`);
+        }
+        return tree;
+    } catch (error) {
+        console.error(`   … ${repoName} の一覧を取れませんでした（画像と記事なしで続けます）— ${error.message}`);
+        return null;
+    }
+}
+
+/**
+ * すでに書き上がっている note 記事を控える。
+ *
+ * アプリを作った本人が、そのアプリのリポジトリの中で記事を書いていることがある
+ * （docs/note/ に本文と、実際に操作して撮った画面と、貼る手順を書いた README）。
+ * 機械に書かせたものより中身が濃いのに、これまで投稿ランチャーからは見えなかった。
+ *
+ * ここで控えるのは場所だけである。本文を取りにいくのは scripts/collect-note-articles.mjs で、
+ * そちらが「貼れる形」に変えて docs/note-articles/ に置く。
+ * 工程を分けているのは、本文が1本22KBほどあり、52リポジトリぶんを抱える
+ * data/repos.json に混ぜると、記事を使わない工程まで重くなるためである。
+ *
+ * 画像の一覧も一緒に控える。本文が指している絵が本当にあるかを、
+ * あとで確かめられるようにするため（無い絵を指したまま配ると、
+ * ランチャーには壊れたサムネイルが並び、理由がどこにも出ない）。
+ */
+function collectNoteArticles(repoName, tree) {
+    if (!tree) return [];
+
+    const articles = pickArticlePaths(tree.entries).map((path) => ({
+        path,
+        images: assetPathsFor(tree.entries, path),
+    }));
+
+    if (articles.length > 0) {
+        info(`   … ${repoName} には書き上がった note 記事が ${articles.length} 本あります（${articles[0].path}）`);
+    }
+    return articles;
 }
 
 async function main() {
@@ -149,7 +190,12 @@ async function main() {
             ]);
 
             const source = Object.fromEntries(files);
-            const images = await collectImages(owner, repo.name, branch, headSha, source, repoImages);
+
+            // 一覧（tree）は repo あたり1回だけ取る。画像の候補と、用意された note 記事の
+            // 両方がここから決まる。工程ごとに取りにいくと、55リポジトリぶんの往復が倍になる。
+            const tree = await getRepoTree(owner, repo.name, headSha);
+            const images = await collectImages(owner, repo.name, headSha, source, repoImages, tree);
+            const noteArticles = collectNoteArticles(repo.name, tree);
 
             repos.push({
                 name: repo.name,
@@ -178,6 +224,11 @@ async function main() {
                 // リポジトリに置いてある画像（note の記事のために撮ったものなど）。
                 // 投稿に添える候補として、ランチャーが選べるようにする。
                 images,
+
+                // すでに書き上がっている note 記事。本文はここでは取らない
+                // （22KB ほどある。52リポジトリぶんを repos.json に抱えても、
+                //   使うのは note の工程だけである）。場所と、同じ場所にある画像だけ控える。
+                noteArticles,
             });
 
             const marks = [
@@ -185,6 +236,7 @@ async function main() {
                 source.manual ? 'MANUAL' : null,
                 repo.has_pages ? 'Pages' : null,
                 images.length > 0 ? `画像${images.length}` : null,
+                noteArticles.length > 0 ? `note記事${noteArticles.length}` : null,
             ]
                 .filter(Boolean)
                 .join(' ');
@@ -217,6 +269,12 @@ async function main() {
     const withImages = repos.filter((r) => (r.images ?? []).length > 0);
     const imageCount = withImages.reduce((sum, r) => sum + r.images.length, 0);
     info(`   添付できる画像: ${imageCount} 枚（${withImages.length} 件のアプリ）`);
+
+    const withArticles = repos.filter((r) => (r.noteArticles ?? []).length > 0);
+    if (withArticles.length > 0) {
+        const articleCount = withArticles.reduce((sum, r) => sum + r.noteArticles.length, 0);
+        info(`   用意ずみの note 記事: ${articleCount} 本（${withArticles.length} 件のアプリ）— \`npm run note:repo\` で取り込みます`);
+    }
     if (withReadme < repos.length) {
         info(`   ※ README の無い ${repos.length - withReadme} 件は、説明文とコミットlog だけで紹介文を書きます`);
     }

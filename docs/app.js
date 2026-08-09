@@ -75,6 +75,7 @@ import {
   resultPathOf,
   validateResult,
 } from './lib/order.js';
+import { articlePathOf, markerFor, validateArticle } from './lib/note-doc.js';
 import {
   DONE as ORDER_DONE,
   FAILED as ORDER_FAILED,
@@ -95,7 +96,7 @@ import {
 
 const DATA_URL = 'launcher.json';
 
-/** @type {{posts: any[], notes: any[], weekIds?: string[], slots?: any[], repoUrl?: string, noteEditorUrl?: string, galleries?: object}} */
+/** @type {{posts: any[], notes: any[], noteArticles?: any[], weekIds?: string[], slots?: any[], repoUrl?: string, noteEditorUrl?: string, galleries?: object}} */
 let data = { posts: [], notes: [] };
 let view = 'today';
 
@@ -1591,14 +1592,29 @@ function scheduleOrderCheck(step = 0) {
  * ──────────────────────────────────────────── */
 
 function renderNotes(list) {
-  if (!data.notes || data.notes.length === 0) {
-    list.append(emptyBox('note の下書きがまだありません。\n日曜の夜に週1本ぶんが自動で用意されます。'));
+  const articles = data.noteArticles ?? [];
+
+  if ((!data.notes || data.notes.length === 0) && articles.length === 0) {
+    list.append(
+      emptyBox(
+        'note の下書きがまだありません。\n日曜の夜に週1本ぶんが自動で用意されます。\n\n' +
+          'アプリのリポジトリの docs/note/ に記事を置いてあれば、それもここに出ます。'
+      )
+    );
     return;
   }
 
   const state = loadState();
 
-  for (const note of data.notes) {
+  // アプリのリポジトリに用意された記事を先に出す。
+  // こちらは本人が書き上げたもので、機械の下書きより先に出したいものだからである。
+  if (articles.length > 0) {
+    list.append(sectionLabel(`リポジトリに用意された記事（${articles.length}本）`));
+    for (const entry of articles) list.append(articleCard(entry, state[articleStateId(entry)] || {}));
+    if (data.notes && data.notes.length > 0) list.append(sectionLabel('今週の下書き（自動生成）'));
+  }
+
+  for (const note of data.notes ?? []) {
     const id = `note-${note.weekId}`;
     const saved = state[id] || {};
 
@@ -1652,6 +1668,365 @@ function renderNotes(list) {
 
     card.append(actions);
     list.append(card);
+  }
+}
+
+/* ────────────────────────────────────────────
+ *  note — アプリのリポジトリに用意された記事
+ *
+ * 週の下書き（自動生成）との違いは、出どころと画像である。
+ * こちらはアプリを作った本人が、そのアプリのリポジトリの中で書き上げたもので、
+ * 実際に操作して撮った画面が十数点ついている。
+ *
+ * note には公式の投稿 API が無く、画像を上げる口も無い。
+ * だからここでの仕事は「順番どおりに、迷わず渡せる形にする」ことに尽きる。
+ *   ① 本文をコピーして note を開く（画像の位置には ［画像1: …］ という目印が入っている）
+ *   ② 画像を上から1枚ずつ共有シートに渡す（目印と同じ番号が画面に出ている）
+ * 本文は7,900字あるので launcher.json には載せていない。開いたときに読みにいく。
+ * ──────────────────────────────────────────── */
+
+/** 読みこんだ記事。id で持つ（同じ記事を何度も取りにいかない）。 */
+const articleCache = new Map();
+/** 読んでいる最中のもの。押した瞬間に「準備中」と「壊れている」を区別するために要る。 */
+const articlePending = new Map();
+/** 読めなかった記事と、その理由。画面に出す。 */
+const articleFailed = new Map();
+
+/** 端末に残す印（公開した・どの画像まで渡したか）のキー。 */
+function articleStateId(entry) {
+  return `note-article-${entry.id}`;
+}
+
+/** 一覧のあいだに置く見出し。どちらの記事を見ているのかが分からなくなるのを防ぐ。 */
+function sectionLabel(text) {
+  const p = document.createElement('p');
+  p.className = 'section';
+  p.textContent = text;
+  return p;
+}
+
+/**
+ * 記事の本文を読みにいく。
+ *
+ * ⚠️ launcher.json の src をそのまま fetch に渡さない。
+ *    id から組みなおしたパスだけを使う（docs/lib/note-doc.js の articlePathOf が形を見ている）。
+ *    生成物とはいえ、もとはアプリのリポジトリ名という外から来た文字列である。
+ */
+function loadNoteArticle(entry) {
+  if (articleCache.has(entry.id)) return Promise.resolve(articleCache.get(entry.id));
+  if (articlePending.has(entry.id)) return articlePending.get(entry.id);
+
+  let path;
+  try {
+    path = articlePathOf(entry.id);
+  } catch (error) {
+    articleFailed.set(entry.id, error.message);
+    return Promise.resolve(null);
+  }
+
+  const task = fetch(path, { cache: 'no-cache' })
+    .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+    .then((json) => {
+      const { ok, errors, article } = validateArticle(json, { id: entry.id });
+      if (!ok) throw new Error(errors.join(' / '));
+      articleCache.set(entry.id, article);
+      articleFailed.delete(entry.id);
+      return article;
+    })
+    .catch((error) => {
+      articleFailed.set(entry.id, error.message);
+      console.warn(`記事を読めませんでした: ${entry.id}`, error);
+      return null;
+    })
+    .finally(() => articlePending.delete(entry.id));
+
+  articlePending.set(entry.id, task);
+  return task;
+}
+
+function articleCard(entry, saved) {
+  const card = document.createElement('article');
+  card.className = 'card' + (saved.done ? ' is-done' : '');
+
+  const meta = document.createElement('div');
+  meta.className = 'card__meta';
+  meta.append(chip(entry.repo), chip(`${entry.charCount}字`), chip(`画像${entry.imageCount}点`), chip('用意ずみ'));
+  card.append(meta);
+
+  const title = document.createElement('p');
+  title.className = 'card__text card__text--title';
+  title.textContent = entry.title;
+  card.append(title);
+
+  const preview = document.createElement('p');
+  preview.className = 'card__text card__text--preview';
+  preview.textContent = '本文を読み込んでいます…';
+  card.append(preview);
+
+  // 出す前に本人が見るべきこと（画像が足りない、連載の書き方から外れている、など）。
+  // 押す前に見えていないと、直す機会は投稿後にしか来ない。
+  const notes = document.createElement('div');
+  notes.className = 'notes';
+  notes.hidden = true;
+  card.append(notes);
+
+  const actions = document.createElement('div');
+  actions.className = 'card__actions';
+
+  const go = button('本文をコピーして note を開く', 'btn btn--note');
+  go.addEventListener('click', () => {
+    const article = articleCache.get(entry.id);
+    if (!article) {
+      // ⚠️ 読めていないときに window.open だけ先に呼ばない。
+      //    貼るものが無いまま note の新規記事が開くと、書きかけの記事が1本増えるだけになる。
+      toast(articleFailed.get(entry.id) ? '記事を読み取れませんでした' : '本文を読み込んでいます。もう一度押してください');
+      loadNoteArticle(entry).then(() => fill());
+      return;
+    }
+    // note には公式の投稿 API が無く、非公式 API は規約に触れる。
+    // ここも週の下書きと同じで、「クリップボードに入れてエディタを開く」までにする。
+    //
+    // ⚠️ window.open を先に、コピーを後に。逆にすると iOS Safari で新しいタブが開かない。
+    window.open(noteEditorUrl(), '_blank', 'noopener');
+    copyText(article.plain).then((ok) => {
+      toast(
+        ok
+          ? `コピーしました。貼ったあと、［画像1: …］の位置に画像を入れてください（${article.images.length}点）`
+          : 'コピーできませんでした。本文を長押しで選んでください'
+      );
+    });
+  });
+  actions.append(go);
+
+  const copyTitle = button('タイトルをコピー', 'btn btn--sub');
+  copyTitle.addEventListener('click', async () => {
+    toast((await copyText(entry.title)) ? 'タイトルをコピーしました' : 'コピーできませんでした');
+  });
+  actions.append(copyTitle);
+
+  const shotsBox = document.createElement('div');
+  shotsBox.className = 'shots';
+  shotsBox.hidden = true;
+
+  const toggle = button(`画像を1枚ずつ渡す（${entry.imageCount}点）`, 'btn btn--sub');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.addEventListener('click', () => {
+    const article = articleCache.get(entry.id);
+    if (!article) {
+      toast(articleFailed.get(entry.id) ? '記事を読み取れませんでした' : '読み込んでいます。もう一度押してください');
+      loadNoteArticle(entry).then(() => fill());
+      return;
+    }
+    shotsBox.hidden = !shotsBox.hidden;
+    toggle.setAttribute('aria-expanded', String(!shotsBox.hidden));
+    if (!shotsBox.hidden && shotsBox.childElementCount === 0) renderArticleShots(shotsBox, entry, article);
+  });
+  if (entry.imageCount > 0) actions.append(toggle);
+
+  const doneBtn = button(saved.done ? '公開ずみに戻す' : '公開した', 'btn btn--sub' + (saved.done ? '' : ' btn--done'));
+  doneBtn.addEventListener('click', () => {
+    patchState(articleStateId(entry), { done: !saved.done });
+    render();
+  });
+  actions.append(doneBtn);
+
+  card.append(actions, shotsBox);
+
+  /** 読み終わったら、本文の頭とお知らせを埋める。カード全体は作りなおさない（開いた画像の一覧が閉じる）。 */
+  const fill = () => {
+    const article = articleCache.get(entry.id);
+    if (!article) {
+      preview.textContent = `記事を読み取れませんでした（${articleFailed.get(entry.id) ?? '理由不明'}）`;
+      return;
+    }
+    preview.textContent = truncate(article.plain, 160);
+
+    const lines = [
+      ...article.problems,
+      ...article.styleWarnings.map((w) => `書き方: ${w}`),
+      article.imagesInText > article.images.length
+        ? `本文には画像が${article.imagesInText}点ありますが、渡せるのは${article.images.length}点です`
+        : null,
+    ].filter(Boolean);
+
+    notes.innerHTML = '';
+    notes.hidden = lines.length === 0;
+    for (const line of lines) {
+      const p = document.createElement('p');
+      p.className = 'notes__line';
+      p.textContent = line;
+      notes.append(p);
+    }
+  };
+
+  loadNoteArticle(entry).then(() => fill());
+  return card;
+}
+
+/**
+ * 画像を1枚ずつ渡すところ。
+ *
+ * 上から順に渡していけば、本文に入っている ［画像1: …］ の目印と番号が合う。
+ * 27点ある記事もあるので、どこまで渡したかを端末に残す。
+ * 残さないと、途中で中断したときに「次はどれだったか」を数えなおすことになる。
+ */
+function renderArticleShots(box, entry, article) {
+  const stateId = articleStateId(entry);
+
+  const guide = document.createElement('p');
+  guide.className = 'shots__guide';
+  guide.textContent =
+    '本文を貼ったあと、上から順に渡してください。渡した画像は note の ［画像n: …］ の行と入れかえて、その行を消します。';
+  box.append(guide);
+
+  for (const [at, image] of article.images.entries()) {
+    box.append(articleShotRow(stateId, entry, article, image, at));
+  }
+
+  // 先の数枚だけ先に読んでおく。押してから読みにいくと、その待ち時間で
+  // 「操作の直後」ではなくなり iOS で share() が拒否される。
+  // ⚠️ 全部は読まない。1本ぶんで5MBほどある（KANJI_Town の記事は27点）。
+  prefetchArticleImages(entry, article, 0);
+}
+
+function articleShotRow(stateId, entry, article, image, at) {
+  const row = document.createElement('div');
+  row.className = 'shot';
+  const doneList = () => loadState()[stateId]?.images ?? [];
+  if (doneList().includes(image.n)) row.classList.add('is-done');
+
+  const img = document.createElement('img');
+  img.className = 'shot__img';
+  img.src = image.src;
+  img.alt = image.label;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.addEventListener('error', () => {
+    mediaFailed.add(image.src);
+    row.classList.add('is-broken');
+  });
+  row.append(img);
+
+  const body = document.createElement('div');
+  body.className = 'shot__body';
+
+  const head = document.createElement('p');
+  head.className = 'shot__head';
+  head.textContent = `${markerFor(image)}`;
+  body.append(head);
+
+  if (image.caption) {
+    const caption = document.createElement('p');
+    caption.className = 'shot__caption';
+    caption.textContent = image.caption;
+    body.append(caption);
+  }
+
+  const actions = document.createElement('div');
+  actions.className = 'shot__actions';
+
+  const share = button('この画像を渡す', 'btn btn--sub');
+  share.addEventListener('click', () => shareArticleImage(entry, article, image, at, share, row));
+  actions.append(share);
+
+  if (image.caption) {
+    const copyCaption = button('説明をコピー', 'btn btn--sub');
+    copyCaption.addEventListener('click', async () => {
+      toast((await copyText(image.caption)) ? 'note のキャプション欄に貼れます' : 'コピーできませんでした');
+    });
+    actions.append(copyCaption);
+  }
+
+  // 共有シートを使わずに（PC でダウンロードした、前に上げてあった）進めることもある。
+  // 手で印を付け外しできないと、そこで並びの意味が失われる。
+  const mark = button(doneList().includes(image.n) ? '印を消す' : '渡した', 'btn btn--sub shot__mark');
+  mark.addEventListener('click', () => {
+    const done = doneList();
+    const next = done.includes(image.n) ? done.filter((n) => n !== image.n) : [...done, image.n];
+    patchState(stateId, { images: next });
+    const isDone = next.includes(image.n);
+    row.classList.toggle('is-done', isDone);
+    mark.textContent = isDone ? '印を消す' : '渡した';
+  });
+  actions.append(mark);
+
+  body.append(actions);
+  row.append(body);
+  return row;
+}
+
+/**
+ * 画像1枚を共有シートに渡す。
+ *
+ * X に出すときと同じ仕組み（navigator.share）だが、渡すのは画像だけである。
+ * note のエディタに直接入れる口は無いので、共有シートから「画像を保存」するか、
+ * note のアプリを選んで開く、という形になる。
+ */
+async function shareArticleImage(entry, article, image, at, btn, row) {
+  const item = { src: image.src, kind: 'repo', label: image.label };
+  const file = fileCache.get(image.src);
+
+  if (!file) {
+    // まだ読めていない。X の共有とまったく同じで、待たずに「もう一度」を返す
+    // （待つと「操作の直後」でなくなり、iOS で share() そのものが拒否される）。
+    loadMediaFile({ repo: article.repo }, item, at).then(() => {});
+    toast(mediaFailed.has(image.src) ? '画像を読み込めませんでした（圏外かもしれません）' : '画像を準備しています。もう一度押してください');
+    return;
+  }
+
+  // 画像のあとに貼るものを、先にクリップボードへ入れておく。
+  // await しないのは、ここで待つと share() が「操作の直後」でなくなるためである。
+  if (image.caption) copyText(image.caption);
+
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file] });
+    } else {
+      // 共有シートを持たない環境（PC の Chrome など）。開いて保存してもらう。
+      const a = document.createElement('a');
+      a.href = image.src;
+      a.download = fileNameFor(article.repo, item, at);
+      a.target = '_blank';
+      a.rel = 'noopener';
+      document.body.append(a);
+      a.click();
+      a.remove();
+    }
+  } catch (error) {
+    // 共有シートを閉じただけでも AbortError が来る。これは失敗ではない。
+    if (error && error.name === 'AbortError') return;
+    console.warn('画像を渡せませんでした', error);
+    toast('渡せませんでした。画像を長押しで保存してください');
+    return;
+  }
+
+  // 渡したところまでを残す。次に開いたときに、どこから続ければよいかが分かる。
+  const done = loadState()[articleStateId(entry)]?.images ?? [];
+  if (!done.includes(image.n)) patchState(articleStateId(entry), { images: [...done, image.n] });
+  row.classList.add('is-done');
+  const mark = row.querySelector('.shot__mark');
+  if (mark) mark.textContent = '印を消す';
+  btn.textContent = '渡しました';
+  setTimeout(() => {
+    btn.textContent = 'この画像を渡す';
+  }, 2500);
+
+  if (image.caption) toast('説明もコピーしました。note のキャプション欄に貼れます');
+
+  // 次に押すぶんを読んでおく。
+  prefetchArticleImages(entry, article, at + 1);
+}
+
+/**
+ * これから渡すぶんの画像を、少しだけ先に読んでおく。
+ *
+ * ⚠️ 全部は読まない。記事1本ぶんで数MBある。
+ *    通勤中に note タブを開いただけで通信量を使いきる、という形にはしない。
+ */
+function prefetchArticleImages(entry, article, from, count = 3) {
+  for (const [at, image] of article.images.entries()) {
+    if (at < from || at >= from + count) continue;
+    loadMediaFile({ repo: article.repo }, { src: image.src, kind: 'repo', label: image.label }, at);
   }
 }
 
@@ -2145,6 +2520,9 @@ async function boot() {
     keepIds: (data.posts ?? [])
       .map((p) => p.id)
       .concat((data.notes ?? []).map((n) => `note-${n.weekId}`))
+      // リポジトリに用意された記事の印（公開した・どの画像まで渡したか）も残す。
+      // 週の下書きと違って日付を持たないので、消されると「どこまで渡したか」が失われる。
+      .concat((data.noteArticles ?? []).map((a) => `note-article-${a.id}`))
       .concat(mine.posts.map((p) => p.id)),
     today: todayJst(),
   });

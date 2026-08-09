@@ -22,6 +22,7 @@ import { extractUrls } from './lib/x-text.mjs';
 import { KEEP_WEEKS } from './archive-history.mjs';
 import { KEEP_RESULTS } from './generate-promo.mjs';
 import { ORDER_ID_RE, RESULT_SCHEMA_ID as PROMO_RESULT_SCHEMA_ID } from '../docs/lib/order.js';
+import { ARTICLES_DIR, ARTICLE_ID_RE, validateArticle } from '../docs/lib/note-doc.js';
 import { lintArticle } from './lib/note-lint.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
@@ -71,7 +72,9 @@ const REQUIRED = [
     'docs/lib/media-pick.js',
     'docs/lib/order.js',
     'docs/lib/mine.js',
+    'docs/lib/note-doc.js',
     'scripts/generate-promo.mjs',
+    'scripts/collect-note-articles.mjs',
     '.github/workflows/weekly.yml',
     '.github/workflows/daily-notify.yml',
     '.github/workflows/deploy-pages.yml',
@@ -316,6 +319,24 @@ try {
             'docs/sw.js'
         );
     }
+    // 用意された記事も、キャッシュだけを返す枝に落としてはいけない。
+    // アプリ側で記事を直したのに、端末には古い本文が出つづける（しかも理由が見えない）。
+    if (shell.includes('note-articles/')) {
+        error(
+            'ARTICLES_CACHED',
+            'SHELL に note-articles/ が入っています。ここをキャッシュすると、直した記事が端末に届きません',
+            'docs/sw.js'
+        );
+    }
+    if (!/url\.pathname[^\n]*note-articles/.test(sw)) {
+        error(
+            'ARTICLES_NOT_HANDLED',
+            'note-articles/ を先にネットワークへ出す分岐がありません。無いと、下の「それ以外」に落ちて' +
+                'キャッシュが優先され、アプリ側で直した記事が端末に届かなくなります',
+            'docs/sw.js'
+        );
+    }
+
     // ⚠️ 「どこかに orders/ と書いてある」では見たことにならない（コメントに当たる）。
     //    実際に行き先を見て分けている行があるかを確かめる。
     if (!/url\.pathname[^\n]*orders/.test(sw)) {
@@ -437,6 +458,88 @@ try {
                     'scripts/generate-promo.mjs の掃除が効いていない可能性があります',
                 'docs/orders'
             );
+        }
+    }
+}
+
+/* ── 8''''. リポジトリに用意された note 記事が配れる形か ──
+ *
+ * docs/note-articles/ は収集（scripts/collect-note-articles.mjs）が書き、ランチャーが読む。
+ * 中身はこのリポジトリの外（アプリのリポジトリ）で書かれた文章と、
+ * よそのドメイン（raw.githubusercontent.com）を指す画像の URL である。
+ * 壊れたものが配信されると、画面には「記事を読み取れませんでした」としか出ない。 */
+
+{
+    const dir = paths.docs(ARTICLES_DIR);
+    if (fs.existsSync(dir)) {
+        const owner = readJson(paths.config('accounts.json'), {}).githubOwner ?? '';
+        const allowed = `https://raw.githubusercontent.com/${owner}/`;
+
+        for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.json'))) {
+            const id = name.replace(/\.json$/, '');
+            const file = `docs/${ARTICLES_DIR}/${name}`;
+            const json = readJson(path.join(dir, name), null);
+
+            // ファイル名は id から機械的に決まる。ずれていたら、書いた側か名前のどちらかが壊れている。
+            if (!ARTICLE_ID_RE.test(id)) {
+                error('BROKEN_ARTICLE', '記事の id の形が違います（そのままファイル名になる文字列です）', file);
+                continue;
+            }
+
+            const { ok, errors: problems, article } = validateArticle(json, { id });
+            if (!ok) {
+                error('BROKEN_ARTICLE', problems.join(' / '), file);
+                continue;
+            }
+
+            // 画像はよそのドメインを直接指す。ランチャーが外を読む唯一の場所なので行き先を確かめる。
+            for (const image of article.images) {
+                if (!String(image.src).startsWith(allowed)) {
+                    error(
+                        'FOREIGN_MEDIA',
+                        `記事の画像が想定外の場所を指しています（${image.src}）。ランチャーは ${allowed} 以下しか読みません`,
+                        file
+                    );
+                }
+            }
+
+            // ⚠️ 出せない状態のまま置かれていることは、エラーではなく警告にする。
+            //    画像が1点足りなくても記事は出せる。捨てるかどうかを決めるのは本人である。
+            for (const problem of article.problems) warn('ARTICLE_PROBLEM', problem, file);
+        }
+    }
+}
+
+/* ── 8'''''. launcher.json の一覧と、置いてある記事が合っているか ──
+ *
+ * 一覧に出ているのに開けない（ファイルが無い）と、画面には
+ * 「記事を読み取れませんでした」としか出ない。
+ * 逆に置いてあるのに一覧に無いと、そもそも画面に出てこない（`npm run build:index` の呼び忘れ）。 */
+
+{
+    const index = readJson(paths.docs('launcher.json'), null);
+    if (index) {
+        const listed = new Set((index.noteArticles ?? []).map((entry) => entry.id));
+        const dir = paths.docs(ARTICLES_DIR);
+        const placed = new Set(
+            fs.existsSync(dir)
+                ? fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => f.replace(/\.json$/, ''))
+                : []
+        );
+
+        for (const id of listed) {
+            if (!placed.has(id)) {
+                error('MISSING_ARTICLE', `一覧にある記事の本文がありません（${id}）`, 'docs/launcher.json');
+            }
+        }
+        for (const id of placed) {
+            if (!listed.has(id)) {
+                warn(
+                    'ARTICLE_NOT_LISTED',
+                    `docs/${ARTICLES_DIR}/${id}.json が一覧に載っていません。画面には出てきません（\`npm run build:index\`）`,
+                    'docs/launcher.json'
+                );
+            }
         }
     }
 }
