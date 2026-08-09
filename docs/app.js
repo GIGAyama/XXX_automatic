@@ -709,9 +709,21 @@ function openEditor(card, post, bodyEl, lenChip) {
 
   const area = document.createElement('textarea');
   area.className = 'editor__area';
-  area.value = textOf(post, saved);
+  // 書きかけが端末に残っていれば、そちらを先に出す（下の saveOpenDrafts を参照）。
+  const draft = typeof saved.draftText === 'string' && saved.draftText.trim() ? saved.draftText : null;
+  area.value = draft ?? textOf(post, saved);
   area.rows = 8;
   area.setAttribute('aria-label', '投稿の本文');
+  // pagehide のときに、どの投稿の書きかけなのかを引けるようにしておく。
+  area.dataset.draftId = post.id;
+  area.dataset.draftBase = post.text;
+
+  if (draft) {
+    const note = document.createElement('p');
+    note.className = 'editor__resumed';
+    note.textContent = '前に書きかけていた文を出しています。［この内容にする］を押すまでは確定しません。';
+    editor.append(note);
+  }
 
   const count = document.createElement('p');
   count.className = 'editor__count';
@@ -731,7 +743,8 @@ function openEditor(card, post, bodyEl, lenChip) {
   save.addEventListener('click', () => {
     const value = area.value.trim();
     // 元の文に戻したときは、直した記録ごと消す。「手直しずみ」の印が残ると紛らわしい。
-    patchState(post.id, { editedText: value && value !== post.text ? value : null, ...traceOf(post) });
+    // 確定したので、書きかけの控えは要らない。
+    patchState(post.id, { editedText: value && value !== post.text ? value : null, draftText: null, ...traceOf(post) });
     overLimitWarned.delete(post.id);
     render();
     toast(value && value !== post.text ? '本文を直しました（この端末にだけ残ります）' : '元の本文に戻しました');
@@ -744,7 +757,12 @@ function openEditor(card, post, bodyEl, lenChip) {
   });
 
   const cancel = button('やめる', 'btn btn--sub');
-  cancel.addEventListener('click', () => editor.remove());
+  cancel.addEventListener('click', () => {
+    // やめると言われた以上、書きかけの控えも残さない。
+    // 残すと、次に開いたときに「消したはずの文」が戻ってくる。
+    if (typeof loadState()[post.id]?.draftText === 'string') patchState(post.id, { draftText: null });
+    editor.remove();
+  });
 
   row.append(save, reset, cancel);
   editor.append(area, count, row);
@@ -2626,25 +2644,130 @@ function showInstallHowTo() {
  *    つまり「初回が圏外だった端末」には、以後シェルのキャッシュも offline.html も
  *    永久に用意されない。いちばんオフライン対応が要る場面で効かない、という形になっていた。
  */
+/**
+ * ［本文を直す］で開いている書きかけを、端末に控える。
+ *
+ * 打ちかけの文は、押すまで DOM のなかにしか無い。
+ * Chromebook はメモリが足りなくなるとタブを黙って捨てるので、
+ * 「書いていたのに戻ってきたら消えていた」が起きる。しかも理由が誰にも見えない。
+ * 確定（editedText）とは別の場所に置く。控えただけのものを確定にすると、
+ * 押していない文が「手直しずみ」として出てしまう。
+ */
+function saveOpenDrafts() {
+  for (const area of document.querySelectorAll('.editor__area[data-draft-id]')) {
+    const id = area.dataset.draftId;
+    const base = area.dataset.draftBase ?? '';
+    const saved = loadState()[id] ?? {};
+    const effective = typeof saved.editedText === 'string' && saved.editedText.trim() ? saved.editedText : base;
+    const value = area.value.trim();
+    if (value && value !== effective) patchState(id, { draftText: value });
+    else if (typeof saved.draftText === 'string') patchState(id, { draftText: null });
+  }
+}
+
+/**
+ * 画面を離れるときに必ず確定させる。
+ *
+ * ⚠️ beforeunload ではなく pagehide にする。
+ *    iOS Safari と、タブを捨てる Chromebook では beforeunload が呼ばれないことがある。
+ *    visibilitychange も見るのは、ホーム画面に戻したまま端末がアプリを終わらせる経路が
+ *    pagehide を通らないことがあるためである。
+ */
+function bindPageHide() {
+  window.addEventListener('pagehide', saveOpenDrafts);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') saveOpenDrafts();
+  });
+}
+
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
 
+  // ⚠️ controllerchange は、はじめて開いたときにも飛んでくる。
+  //    activate の clients.claim() でページが管理下に入るためである。
+  //    これを素直に受けると「初回訪問が必ず1回リロードされる」。
+  //    ［本文を直す］で打ちかけの文があれば、それが消える。
+  //
+  // ⚠️ 「もともと管理下だったか」で分けるのは駄目である。
+  //    入れた直後に［さいしんに する］を押した場合、切り替わったのに読み直されなくなる。
+  //    見るのは「利用者が押したかどうか」だけにする。
+  let userAskedUpdate = false;
   let reloaded = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    // 新しい版が有効になった。1回だけ読み直して、古い画面を残さない。
-    // これが無いと MANUAL の「アイコンを消して追加しなおしてください」が永久に残る。
-    if (reloaded) return;
+    if (!userAskedUpdate || reloaded) return;
     reloaded = true;
     location.reload();
   });
 
-  navigator.serviceWorker.register('sw.js').catch(() => {
-    // オフライン対応が効かないだけで、画面は動く。
+  const ask = (worker) => {
+    showUpdateBar(() => {
+      userAskedUpdate = true;
+      worker.postMessage({ type: 'SKIP_WAITING' });
+    });
+  };
+
+  navigator.serviceWorker
+    .register('sw.js')
+    .then((registration) => {
+      // controller が居る＝初回インストールではなく更新。
+      // 初回で出すと「入れた直後に新しい版があります」と言うことになり、意味が分からない。
+      if (registration.waiting && navigator.serviceWorker.controller) ask(registration.waiting);
+
+      registration.addEventListener('updatefound', () => {
+        const installing = registration.installing;
+        if (!installing) return;
+        installing.addEventListener('statechange', () => {
+          if (installing.state === 'installed' && navigator.serviceWorker.controller) ask(installing);
+        });
+      });
+    })
+    .catch(() => {
+      // オフライン対応が効かないだけで、画面は動く。
+    });
+}
+
+/**
+ * 新しい版が待っていることを伝える帯。
+ *
+ * トーストにしないのは、消えてしまうと押す機会が無くなるからである。
+ * 押されるまで出したままにする（［あとで］で引っこめられる）。
+ */
+function showUpdateBar(onAccept) {
+  if (document.getElementById('updatebar')) return;
+
+  const bar = document.createElement('div');
+  bar.id = 'updatebar';
+  bar.className = 'updatebar';
+  bar.setAttribute('role', 'status');
+
+  const text = document.createElement('p');
+  text.className = 'updatebar__text';
+  text.textContent = 'あたらしい版があります';
+  bar.append(text);
+
+  const row = document.createElement('div');
+  row.className = 'updatebar__row';
+
+  const yes = button('さいしんに する', 'btn btn--done');
+  yes.addEventListener('click', () => {
+    // 押した時点で、書きかけがあれば端末に控える。読み直しで消えるのを防ぐ。
+    saveOpenDrafts();
+    text.textContent = '入れかえています…';
+    yes.disabled = true;
+    onAccept();
   });
+
+  const later = button('あとで', 'btn btn--sub');
+  later.addEventListener('click', () => bar.remove());
+
+  row.append(yes, later);
+  bar.append(row);
+  document.body.append(bar);
 }
 
 async function boot() {
   registerServiceWorker();
+  bindPageHide();
   bindTabs();
   bindInstall();
   view = viewFromHash().view;

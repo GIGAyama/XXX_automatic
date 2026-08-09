@@ -5,6 +5,16 @@
  * だから「今日出すもの」を最初に大きく置き、押すボタンは指の太さで押せる大きさにしてある。
  */
 
+/*
+ * ⚠️ 色は「面に使うもの」と「その上に載せる文字」を必ず分けて持つ。
+ *    明るい色をそのまま面にして白文字を載せると、比が 4.5 に届かない。
+ *    実測では note の緑（#2cb696）に白で 2.55、「公開した」の緑で 3.46 だった。
+ *    どちらも夜だけの問題ではなく、昼でも読みにくい。
+ *
+ * ⚠️ 夜は accent が明るい水色になる。ここに白文字を載せると 2.56 になるので、
+ *    夜だけ「accent の上に載せる文字」を暗いほうへ入れかえる（--on-accent）。
+ *    面を暗くすると、夜の画面で選択中のタブが沈んで見えなくなる。
+ */
 :root {
   --bg: #f4f6f9;
   --card: #ffffff;
@@ -12,10 +22,18 @@
   --ink-weak: #5c6b82;
   --line: #dfe5ee;
   --accent: #1d3557;
+  /* accent の面に載せる文字。昼は白でよい（比 12.4） */
+  --on-accent: #ffffff;
   --x: #000000;
-  --note: #2cb696;
-  --ok: #2a9d5c;
+  /* 面用。note の緑をそのまま使うと白文字で 2.55 なので、色相は変えずに濃くする（比 5.05） */
+  --note: #157d66;
+  /* 面用。白文字で比 5.36 */
+  --ok: #1c7a45;
+  /* 文字用。面ではなく字に使うほう（昼は面用と同じで足りる） */
+  --ok-t: #1c7a45;
   --warn: #d9791f;
+  /* 面用。白文字を載せる帯・バッジに使う（#d9791f に白は 3.13 で足りない。こちらは 4.99） */
+  --warn-d: #a75d05;
   --radius: 16px;
   --shadow: 0 2px 10px rgba(20, 35, 60, .07);
 }
@@ -28,20 +46,93 @@
     --ink-weak: #97a4b8;
     --line: #2c3542;
     --accent: #7aa5d8;
+    /* 明るい accent の上は、白ではなく地の暗い色を載せる（比 7.1） */
+    --on-accent: #12161d;
     --x: #ffffff;
+    /* 暗い地の上に置く「済み」の字。面用の濃い緑のままだと 3.1 で読めない（比 9.9） */
+    --ok-t: #6ede9d;
     --shadow: 0 2px 10px rgba(0, 0, 0, .35);
   }
 }
 
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+/*
+ * 文字の大きさは画面幅で伸び縮みさせる（§2-4）。
+ * 固定 px だけにすると、320px のスマホでは詰まり、大きな画面では小さいままになる。
+ * メディアクエリを何段も書かずに済むよう clamp() でまとめる。
+ */
+:root {
+  --fs-body: clamp(14.5px, 1.1vw + 11px, 16.5px);
+  --fs-small: clamp(12.5px, .8vw + 9.8px, 14px);
+  --fs-lead: clamp(15px, 1.4vw + 10.6px, 17.5px);
+  --fs-title: clamp(19px, 2.4vw + 12px, 26px);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* 押したときの灰色の帯を消す。押した感じは :active の沈みで出す */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* ダブルタップ拡大の 300ms 待ちを消す。拡大そのものは止めない（§2-1） */
+body { touch-action: manipulation; }
+
+/* 引っぱり更新の暴発を止める。横に流す帯の中で縦に引くと画面ごと更新されてしまう */
+.picker__strip,
+.card__shots.is-multi,
+.make__apps { overscroll-behavior: contain; }
+
+/*
+ * ハイコントラストモード（Windows の設定）では、背景色も影も全部無効になる。
+ * 塗りで示していた「いま選んでいるもの」が消えてしまうので、枠で示しなおす。
+ */
+@media (forced-colors: active) {
+  .tab, .seg__btn, .jump__btn, .steps__dot, .btn, .rate button, .picker__cell, .make__app {
+    border: 2px solid ButtonText;
+  }
+  .tab.is-on, .seg__btn.is-on, .jump__btn.is-on, .steps__dot.is-on,
+  .rate button.is-on, .picker__cell.is-on, .btn--more.is-on {
+    border-color: Highlight;
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+  .card, .updatebar { border: 1px solid ButtonText; }
+}
+
+/*
+ * ⚠️ 当たり判定だけを広げる（§2-9）。
+ *    詰めて並べてあるものに min-height を当てると折り返しが起きて別の破綻を生む。
+ *    見た目は変えず、指の当たる範囲だけを 44px にする。
+ *    使う相手には、上下の隙間を 44px ぶん確保しておくこと（重なると押し違える）。
+ */
+.tap-44,
+.jump__btn,
+.steps__dot,
+.picker__reset,
+.foot a { position: relative; }
+
+.tap-44::after,
+.jump__btn::after,
+.steps__dot::after,
+.picker__reset::after,
+.foot a::after {
+  content: "";
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; height: 100%;
+  min-width: 44px; min-height: 44px;
+}
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif;
+  font-size: var(--fs-body);
   line-height: 1.7;
   /* ノッチのある端末で内容が隠れないようにする */
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
@@ -50,13 +141,13 @@ body {
 /* ── ヘッダ ───────────────────────────────── */
 .head { padding: 18px 16px 10px; }
 .head__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.head__title { margin: 0; font-size: 21px; font-weight: 800; letter-spacing: .01em; }
-.head__sub { margin: 4px 0 0; font-size: 13.5px; color: var(--ink-weak); }
+.head__title { margin: 0; font-size: var(--fs-title); font-weight: 800; letter-spacing: .01em; }
+.head__sub { margin: 4px 0 0; font-size: var(--fs-small); color: var(--ink-weak); }
 
 .ghost {
   border: 1.5px solid var(--line); background: transparent; color: var(--ink-weak);
   border-radius: 999px; padding: 7px 15px; font-size: 13px; font-weight: 700;
-  cursor: pointer; white-space: nowrap;
+  cursor: pointer; white-space: nowrap; min-height: 44px;
 }
 
 /* ── タブ ────────────────────────────────── */
@@ -71,20 +162,23 @@ body {
 .tab {
   flex: 1 1 0; min-width: 0;
   border: 1.5px solid var(--line); background: var(--card); color: var(--ink-weak);
-  border-radius: 999px; padding: 10px 6px; font-size: 14px; font-weight: 700;
+  border-radius: 999px; padding: 12px 6px; font-size: 14px; font-weight: 700;
   cursor: pointer; font-family: inherit; white-space: nowrap;
+  /* 実測 40px だった。1行しかないので、当たり判定ではなく背丈で 44px にする */
+  min-height: 44px;
 }
-.tab.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tab.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .tab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 /* タブを開かなくても分かるようにする（今日の残り・未送信の記録・待っている注文） */
 .tab[data-badge]:not([data-badge=""])::after {
   content: attr(data-badge);
   display: inline-block; margin-left: 5px; min-width: 18px; padding: 0 5px;
-  background: var(--warn); color: #fff; border-radius: 999px;
+  background: var(--warn-d); color: #fff; border-radius: 999px;
   font-size: 11px; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums;
 }
-.tab.is-on[data-badge]:not([data-badge=""])::after { background: rgba(255, 255, 255, .28); }
+/* 選択中のタブの上。夜は accent が明るいので、白のままだと白地に白文字になる */
+.tab.is-on[data-badge]:not([data-badge=""])::after { background: var(--on-accent); color: var(--accent); }
 
 /* ── タブの中の切りかえ ───────────────────────
  *
@@ -100,6 +194,8 @@ body {
   flex: 1 1 0; border: none; background: transparent; color: var(--ink-weak);
   border-radius: 10px; padding: 9px 4px; font-size: 13.5px; font-weight: 700;
   cursor: pointer; font-family: inherit; white-space: nowrap;
+  /* 実測 36px。3つ横に並ぶだけなので、こちらも背丈で足りる */
+  min-height: 44px;
 }
 .seg__btn.is-on { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
 .seg__btn:focus-visible { outline: 3px solid var(--accent); outline-offset: -2px; }
@@ -128,7 +224,7 @@ body {
   background: var(--bg); border: 1px solid var(--line);
   border-radius: 999px; padding: 3px 10px; font-size: 12px;
 }
-.chip--today { background: var(--accent); border-color: var(--accent); color: #fff; }
+.chip--today { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .chip--len { margin-left: auto; font-variant-numeric: tabular-nums; }
 .chip--len.is-over { background: #ffe8e8; border-color: #f3b6b6; color: #a52020; }
 .chip--edited { background: #fff3e0; border-color: #f0cf9c; color: #8a5a12; }
@@ -191,7 +287,7 @@ body {
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 999px; font-size: 12px; font-weight: 800; line-height: 1;
 }
-.picker__cell.is-on .picker__badge { background: var(--accent); color: #fff; }
+.picker__cell.is-on .picker__badge { background: var(--accent); color: var(--on-accent); }
 
 .picker__label {
   display: block; padding: 5px 6px 6px; font-size: 11.5px; line-height: 1.35;
@@ -227,25 +323,25 @@ body {
 
 .rate { display: flex; gap: 8px; padding: 0 14px 14px; }
 .rate button {
-  flex: 1; min-height: 40px; border-radius: 10px; border: 1.5px solid var(--line);
+  flex: 1; min-height: 44px; border-radius: 10px; border: 1.5px solid var(--line);
   background: transparent; color: var(--ink-weak); font-size: 13.5px; font-weight: 700;
   cursor: pointer; font-family: inherit;
 }
-.rate button.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.rate button.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
 /* ── 連投の手順 ───────────────────────────── */
 /*
  * ①本文 → ②つづき → ③リンクの返信 を1コマずつ出す。
  * 全部いっぺんに並べると、どれをいま貼るのかが分からなくなる。
  */
-.steps { display: flex; gap: 6px; padding: 10px 14px 0; flex-wrap: wrap; }
+.steps { display: flex; gap: 14px 6px; padding: 10px 14px 0; flex-wrap: wrap; }
 .steps__dot {
   border: 1.5px solid var(--line); background: var(--card); color: var(--ink-weak);
   border-radius: 999px; padding: 5px 12px; font-size: 12.5px; font-weight: 700;
   cursor: pointer; font-family: inherit;
 }
-.steps__dot.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
-.steps__dot.is-done { border-color: var(--ok); color: var(--ok); }
+.steps__dot.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.steps__dot.is-done { border-color: var(--ok-t); color: var(--ok-t); }
 .steps__guide { margin: 8px 14px 0; font-size: 13px; color: var(--ink-weak); line-height: 1.6; }
 .btn--next { border-color: var(--accent); color: var(--accent); }
 
@@ -280,7 +376,7 @@ body {
 .shot__head { margin: 0; font-size: 13px; font-weight: 700; word-break: break-word; }
 .shot__caption { margin: 0; font-size: 12.5px; color: var(--ink-weak); line-height: 1.6; word-break: break-word; }
 .shot__actions { display: flex; flex-wrap: wrap; gap: 6px; }
-.shot__actions .btn { min-height: 38px; font-size: 13px; padding: 0 12px; }
+.shot__actions .btn { min-height: 44px; font-size: 13px; padding: 0 12px; }
 
 /* ── 別の案 ──────────────────────────────── */
 .alts { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px; }
@@ -324,6 +420,8 @@ body {
 .make__label { margin: 14px 14px 6px; font-size: 12.5px; font-weight: 700; color: var(--ink-weak); }
 .make__search {
   display: block; width: calc(100% - 28px); margin: 0 14px;
+  /* 実測 42px。入力欄は指で当てる場所なので 44px を確保する */
+  min-height: 44px;
   padding: 11px 12px; font-size: 16px; /* 16px 未満だと iOS が勝手に拡大する */
   border: 1.5px solid var(--line); border-radius: 10px;
   background: var(--bg); color: var(--ink); font-family: inherit;
@@ -359,9 +457,14 @@ body {
  *
  * タブでも切りかえでもなく「いま出ている一覧をしぼる」もの。
  * 3段目に見えないよう、いちばん小さく・弱く出す。
+ *
+ * ⚠️ ここは 11 個が折り返して並ぶ。背を高くすると 4 段が 6 段になって
+ *    「小さく弱く出す」という狙いが崩れるので、当たり判定だけを広げる。
+ *    そのぶん行の間を 14px 空ける。空けないと上下の当たり判定が重なって、
+ *    隣の段のボタンが押される（見た目では何も分からない壊れ方をする）。
  */
 .jump {
-  display: flex; gap: 6px; flex-wrap: wrap; margin: 2px 2px 0;
+  display: flex; gap: 14px 6px; flex-wrap: wrap; margin: 2px 2px 0;
 }
 .jump__btn {
   border: 1.5px solid var(--line); background: var(--card); color: var(--ink-weak);
@@ -411,7 +514,7 @@ body {
 .toast {
   position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  background: var(--accent); color: #fff; padding: 12px 22px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent); padding: 12px 22px; border-radius: 999px;
   font-size: 14px; font-weight: 700; box-shadow: 0 6px 22px rgba(0, 0, 0, .25);
   z-index: 50; max-width: calc(100vw - 32px); text-align: center;
 }
@@ -420,14 +523,65 @@ body {
 .toast[data-show="on"] { visibility: visible; opacity: 1; }
 
 /* ── フッタ ───────────────────────────────── */
-.foot { padding: 8px 20px 34px; color: var(--ink-weak); font-size: 12.5px; line-height: 1.65; }
+.foot { padding: 8px 20px 34px; color: var(--ink-weak); font-size: var(--fs-small); line-height: 1.65; }
 .foot p { margin: 0 0 6px; }
 .foot__stamp { opacity: .7; }
+/*
+ * ⚠️ ここに色を当てていなかったため、夜はブラウザの既定色（#0000ee）が出ていた。
+ *    暗い地の上で比 1.93。フッタの1本だけ抜けていて、目では気づけなかった。
+ *    当たり判定も 114×14 しか無かったので、指では押しにくい。
+ */
+.foot a {
+  display: inline-block;
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+/* ── 新しい版が待っているときの帯 ─────────────────
+ *
+ * トーストにしない。3秒で消えると、押す機会そのものが無くなる。
+ * 押されるまで出したままにして、［あとで］で引っこめられるようにする。
+ * 勝手に入れかわらないのは docs/sw.js の install で skipWaiting しないためである
+ * （書きかけの本文が画面ごと消えるのを防ぐ）。
+ */
+.updatebar {
+  position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: calc(100% - 28px); max-width: 560px;
+  background: var(--card); border: 1.5px solid var(--accent); border-radius: var(--radius);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .25);
+  padding: 12px 14px; z-index: 60;
+}
+.updatebar__text { margin: 0 0 10px; font-size: var(--fs-small); font-weight: 700; color: var(--ink); }
+.updatebar__row { display: flex; gap: 8px; }
+.updatebar__row .btn { flex: 1 1 auto; }
+
+/* 書きかけを出しなおしたときの一言 */
+.editor__resumed {
+  margin: 0 0 8px; font-size: var(--fs-small); line-height: 1.6;
+  color: #8a5a12; background: #fff3e0; border: 1px solid #f0cf9c;
+  border-radius: 8px; padding: 7px 10px;
+}
+@media (prefers-color-scheme: dark) {
+  .editor__resumed { background: #3a2f1c; border-color: #6b5526; color: #f0cf9c; }
+}
 
 @media (min-width: 640px) {
   .list, .head, .tabs, .foot { max-width: 620px; margin-inline: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+  /*
+   * ⚠️ 0 ではなく .01ms にする（§2-10）。
+   *    0 にすると animation-fill-mode: forwards が効かなくなり、
+   *    fadeIn 系を1つでも足した日に「動きを止める」つもりが
+   *    「中身が opacity: 0 のまま消える」になる。
+   *    animation: none も同じ壊れ方をするので使わない。
+   */
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

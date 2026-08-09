@@ -19,6 +19,8 @@
   --ink-weak: #5c6b82;
   --line: #dfe5ee;
   --accent: #1d3557;
+  /* accent の面に載せる文字。夜は accent が明るくなるので、白のままだと 2.56 になる */
+  --on-accent: #ffffff;
   --radius: 16px;
   --shadow: 0 2px 10px rgba(20, 35, 60, .07);
 }
@@ -31,11 +33,38 @@
     --ink-weak: #97a4b8;
     --line: #2c3542;
     --accent: #7aa5d8;
+    --on-accent: #12161d;
     --shadow: 0 2px 10px rgba(0, 0, 0, .35);
   }
 }
 
 * { box-sizing: border-box; }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* 文字の大きさを画面幅で伸び縮みさせる（§2-4）。index.html 側と同じ値 */
+:root {
+  --fs-body: clamp(14.5px, 1.1vw + 11px, 16.5px);
+  --fs-small: clamp(12.5px, .8vw + 9.8px, 14px);
+  --fs-title: clamp(21px, 2.8vw + 13px, 30px);
+}
+
+/*
+ * 当たり判定だけを広げる（§2-9）。教科への飛び先は 8 個が折り返して並ぶので、
+ * 背を高くすると目次が本文を押し下げてしまう。行の間は 14px 空けて、
+ * 上下の当たり判定が重ならないようにする。
+ */
+.jump a, .foot a { position: relative; }
+.jump a::after, .foot a::after {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; height: 100%; min-width: 44px; min-height: 44px;
+}
+
+/* ハイコントラストモードで、塗りが消えても「ひらく」が押せると分かるようにする */
+@media (forced-colors: active) {
+  .app__links a { border: 2px solid ButtonText; }
+  .group__mark { forced-color-adjust: none; }
+}
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
@@ -43,24 +72,37 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif;
+  font-size: var(--fs-body);
   line-height: 1.75;
+  touch-action: manipulation;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { animation: none !important; transition: none !important; }
+  /*
+   * ⚠️ 0 ではなく .01ms にする（§2-10）。
+   *    0 にすると animation-fill-mode: forwards が効かなくなり、
+   *    fadeIn 系を1つでも足した日に「動きを止める」つもりが
+   *    「中身が opacity: 0 のまま消える」になる。
+   *    animation: none も同じ壊れ方をするので使わない。
+   */
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .wrap { max-width: 900px; margin-inline: auto; padding: 0 16px 40px; }
 
 /* ── 見出し ───────────────────────────────── */
 .head { padding: 28px 0 8px; }
-.head h1 { margin: 0; font-size: 25px; font-weight: 800; letter-spacing: .01em; }
-.head p { margin: 8px 0 0; color: var(--ink-weak); font-size: 14.5px; }
+.head h1 { margin: 0; font-size: var(--fs-title); font-weight: 800; letter-spacing: .01em; }
+.head p { margin: 8px 0 0; color: var(--ink-weak); font-size: var(--fs-small); }
 
 /* ── 教科への飛び先 ───────────────────────── */
-.jump { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0 8px; }
+.jump { display: flex; flex-wrap: wrap; gap: 14px 8px; padding: 16px 0 8px; }
 .jump a {
   display: inline-block; padding: 7px 14px; border-radius: 999px;
   border: 1.5px solid var(--line); background: var(--card);
@@ -135,14 +177,15 @@ body {
 .app__links a {
   flex: 1 1 auto; text-align: center; text-decoration: none;
   border-radius: 10px; padding: 9px 12px; font-size: 14px; font-weight: 800;
-  min-height: 42px; display: inline-flex; align-items: center; justify-content: center;
+  /* 実測 42px。ここは1行に2〜3個しか並ばないので、背丈で 44px にできる */
+  min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
 }
-.app__open { background: var(--accent); color: #fff; }
+.app__open { background: var(--accent); color: var(--on-accent); }
 .app__code { background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); }
 /* ランチャーの［つくる］へ、このアプリを選んだ状態で飛ぶ */
 .app__make { background: var(--bg); color: var(--accent); border: 1.5px solid var(--accent); }
 .app__nopages { font-size: 12.5px; color: var(--ink-weak); margin: 0; }
 
 /* ── 脚注 ────────────────────────────────── */
-.foot { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-weak); font-size: 12.5px; }
-.foot a { color: inherit; }
+.foot { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-weak); font-size: var(--fs-small); }
+.foot a { color: var(--ink); display: inline-block; text-underline-offset: 3px; }
