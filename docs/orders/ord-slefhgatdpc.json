@@ -1,0 +1,306 @@
+{
+  "schema": "promo-result-v1",
+  "orderId": "ord-slefhgatdpc",
+  "repo": "KANJI_Town",
+  "issue": 21,
+  "generatedAt": "2026-08-09T07:00:29.673Z",
+  "generatedAtJst": "2026-08-09 16:00 JST",
+  "model": "gemini-3.6-flash",
+  "dropped": 0,
+  "message": "",
+  "gallery": [
+    {
+      "id": "card:0",
+      "src": "media/KANJI_Town-card.png",
+      "kind": "card",
+      "label": "紹介カード"
+    },
+    {
+      "id": "repo:docs/note/images/01-home.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/01-home.png",
+      "kind": "repo",
+      "label": "トップページ（縦に全部）"
+    },
+    {
+      "id": "repo:docs/note/images/02-read-aloud.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/02-read-aloud.png",
+      "kind": "repo",
+      "label": "音読フェーズ"
+    },
+    {
+      "id": "repo:docs/note/images/03-reading-challenge.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/03-reading-challenge.png",
+      "kind": "repo",
+      "label": "音読チャレンジ中"
+    },
+    {
+      "id": "repo:docs/note/images/04-reading-cleared.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/04-reading-cleared.png",
+      "kind": "repo",
+      "label": "音読チャレンジのクリア"
+    },
+    {
+      "id": "repo:docs/note/images/05-stroke-order.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/05-stroke-order.png",
+      "kind": "repo",
+      "label": "書き順アニメーション"
+    },
+    {
+      "id": "repo:docs/note/images/06-trace-guided.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/06-trace-guided.png",
+      "kind": "repo",
+      "label": "なぞり書き1回目（吸いつく）"
+    },
+    {
+      "id": "repo:docs/note/images/08-test-blank.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/08-test-blank.png",
+      "kind": "repo",
+      "label": "テストの白いマス"
+    },
+    {
+      "id": "repo:docs/note/images/09-test-written.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/09-test-written.png",
+      "kind": "repo",
+      "label": "テストに書いたところ"
+    },
+    {
+      "id": "repo:docs/note/images/10-test-graded.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/10-test-graded.png",
+      "kind": "repo",
+      "label": "テストの採点とこたえ"
+    },
+    {
+      "id": "repo:docs/note/images/11-session-result.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/11-session-result.png",
+      "kind": "repo",
+      "label": "学習の結果画面"
+    },
+    {
+      "id": "repo:docs/note/images/12-home-after.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/12-home-after.png",
+      "kind": "repo",
+      "label": "学習後のトップページ（土地が広がった）"
+    },
+    {
+      "id": "repo:docs/note/images/14-residents.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/14-residents.png",
+      "kind": "repo",
+      "label": "住民のパネル"
+    },
+    {
+      "id": "repo:docs/note/images/15-dictionary.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/15-dictionary.png",
+      "kind": "repo",
+      "label": "漢字ずかん"
+    },
+    {
+      "id": "repo:docs/note/images/16-stats.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/16-stats.png",
+      "kind": "repo",
+      "label": "学習きろく（4つの力・復習予報）"
+    },
+    {
+      "id": "repo:docs/note/images/17-achievements.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/17-achievements.png",
+      "kind": "repo",
+      "label": "実績"
+    },
+    {
+      "id": "repo:docs/note/images/18-craft.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/18-craft.png",
+      "kind": "repo",
+      "label": "クラフト"
+    },
+    {
+      "id": "repo:docs/note/images/19-drill-editor.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/19-drill-editor.png",
+      "kind": "repo",
+      "label": "ドリルを作る"
+    },
+    {
+      "id": "repo:docs/note/images/20-drill-list.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/20-drill-list.png",
+      "kind": "repo",
+      "label": "マイドリル一覧"
+    },
+    {
+      "id": "repo:docs/note/images/21-drill-share-link.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/21-drill-share-link.png",
+      "kind": "repo",
+      "label": "リンクで配る（QRつき）"
+    },
+    {
+      "id": "repo:docs/note/images/22-drill-test-choose.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/22-drill-test-choose.png",
+      "kind": "repo",
+      "label": "出題数を選ぶ"
+    },
+    {
+      "id": "repo:docs/note/images/23-drill-test-question.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/23-drill-test-question.png",
+      "kind": "repo",
+      "label": "ドリルのテスト（例文の中に書く）"
+    },
+    {
+      "id": "repo:docs/note/images/24-drill-test-written.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/24-drill-test-written.png",
+      "kind": "repo",
+      "label": "書き終えたところ"
+    },
+    {
+      "id": "repo:docs/note/images/25-drill-test-result.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/25-drill-test-result.png",
+      "kind": "repo",
+      "label": "テスト結果の一覧"
+    },
+    {
+      "id": "repo:docs/note/images/26-drill-test-reason.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/KANJI_Town/f5bb5e5b1984ed28eff034dce9df8ce1a4e42823/docs/note/images/26-drill-test-reason.png",
+      "kind": "repo",
+      "label": "採点の内訳（なぜ69点か）"
+    }
+  ],
+  "posts": [
+    {
+      "id": "2026-08-09-promo-atdpc1",
+      "weekId": "",
+      "date": "2026-08-09",
+      "weekday": "日",
+      "slot": "promo",
+      "slotLabel": "つくった投稿",
+      "hour": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "KANJI_Town",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "形が合っていても、書き順が違うと上限69点。見た目が正しくても間違った筆順で覚えてしまうのを防ぐため、わたしの設計ではあえて満点を出さない仕様にしました。正しく書く習慣付けに役立つと考えています。\n\n#漢字学習 #小学校国語 #KANJI_Town",
+          "weightedLength": 229
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/KANJI_Town/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "形が合っていても、書き順が違うと上限69点。見た目が正しくても間違った筆順で覚えてしまうのを防ぐため、わたしの設計ではあえて満点を出さない仕様にしました。正しく書く習慣付けに役立つと考えています。\n\n#漢字学習 #小学校国語 #KANJI_Town",
+      "url": "https://gigayama.github.io/KANJI_Town/",
+      "media": "media/KANJI_Town-card.png",
+      "mediaList": [
+        "media/KANJI_Town-card.png"
+      ],
+      "weightedLength": 229,
+      "overLimit": false,
+      "alternatives": [
+        {
+          "body": "サーバーへの個人情報保存を一切やめました。ネットワーク制限が厳しい学校でも安心して使えるよう、わたしは端末内だけで記録が完結する作りにしました。アカウント登録も不要で、2学期の準備時間を減らせると思います。",
+          "thread": []
+        },
+        {
+          "body": "音声認識をクラウドに頼るのを諦めました。児童のマイク音声を外部送信しないよう、わたしは声の音量変化だけで音読判定する仕組みを作りました。個人情報保護の面でも現場で安心して使えると考えています。",
+          "thread": []
+        }
+      ],
+      "pickReason": "「上限69点」という具体的な仕様から筆順指導へのこだわりが伝わり、教室での指導場面が想像しやすいため。",
+      "hook": "contrast",
+      "reprise": null
+    },
+    {
+      "id": "2026-08-09-promo-atdpc2",
+      "weekId": "",
+      "date": "2026-08-09",
+      "weekday": "日",
+      "slot": "promo",
+      "slotLabel": "つくった投稿",
+      "hour": 0,
+      "theme": "howto",
+      "themeLabel": "教材づくりの小ネタ",
+      "repo": "KANJI_Town",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "2学期の漢字ドリル、事前準備に何時間使っていますか。アカウント登録ゼロで、学年を選んですぐ練習を始められる教材を準備しました。わたしも夏休みのうちにURLを1つ用意して、新学期の準備時間を削るつもりです。\n\n#漢字学習 #GIGAスクール #2学期準備",
+          "weightedLength": 235
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/KANJI_Town/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "2学期の漢字ドリル、事前準備に何時間使っていますか。アカウント登録ゼロで、学年を選んですぐ練習を始められる教材を準備しました。わたしも夏休みのうちにURLを1つ用意して、新学期の準備時間を削るつもりです。\n\n#漢字学習 #GIGAスクール #2学期準備",
+      "url": "https://gigayama.github.io/KANJI_Town/",
+      "media": "media/KANJI_Town-card.png",
+      "mediaList": [
+        "media/KANJI_Town-card.png"
+      ],
+      "weightedLength": 235,
+      "overLimit": false,
+      "alternatives": [
+        {
+          "body": "4桁の数字を画面に入力するだけで配れます。2学期の単元テスト前、わたしが作ったマイドリルをP2P通信で直接端末に共有できる仕組みにしました。サーバー登録不要で、2分で配布準備が整うと思います。",
+          "thread": []
+        },
+        {
+          "body": "朝の10分間、子どもごとに違う漢字が出題される。読み・意味・書字・筆順の4技能ごとに記録し、苦手な問題が自動で出る工夫を入れました。わたし自身、教材研究の時間を減らしつつ個別学習を支えたいと考えました。",
+          "thread": []
+        }
+      ],
+      "pickReason": "夏休み中の2学期準備という今の時期の困りごとに寄り添っており、URLを用意するだけという手軽さが伝わるため。",
+      "hook": "question",
+      "reprise": null
+    },
+    {
+      "id": "2026-08-09-promo-atdpc3",
+      "weekId": "",
+      "date": "2026-08-09",
+      "weekday": "日",
+      "slot": "promo",
+      "slotLabel": "つくった投稿",
+      "hour": 0,
+      "theme": "update",
+      "themeLabel": "アップデート報告",
+      "repo": "KANJI_Town",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "「読めるけれど書けない」子の対応に困っていました。読み・意味・書字・筆順を別々に記録して苦手な技能だけを出題するアプデを行いました。わたしと同じように悩む先生の、つまずきに合わせた指導を支えられると思います。\n\n#漢字学習 #小学校国語 #KANJI_Town",
+          "weightedLength": 243
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/KANJI_Town/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "「読めるけれど書けない」子の対応に困っていました。読み・意味・書字・筆順を別々に記録して苦手な技能だけを出題するアプデを行いました。わたしと同じように悩む先生の、つまずきに合わせた指導を支えられると思います。\n\n#漢字学習 #小学校国語 #KANJI_Town",
+      "url": "https://gigayama.github.io/KANJI_Town/",
+      "media": "media/KANJI_Town-card.png",
+      "mediaList": [
+        "media/KANJI_Town-card.png"
+      ],
+      "weightedLength": 243,
+      "overLimit": false,
+      "alternatives": [
+        {
+          "body": "以前は登録の手間がありましたが、完全不要に改修。端末の保存機能に対応させ、アカウント登録や通信エラーでの停滞を無くしました。わたしも2学期のスキマ時間に、2分でサッと配って復習に使う予定です。",
+          "thread": []
+        },
+        {
+          "body": "授業の残り5分、短時間で復習できる機能を追加。学習済みの漢字をすばやく振り返るボスバトル機能を追加しました。単元テスト前のちょっとしたスキマ時間で、楽しく定着を確認できる教材になればとわたしは考えています。",
+          "thread": []
+        }
+      ],
+      "pickReason": "「読めるけれど書けない」という現場で誰もが直面する実態から入っており、共感して手を止めやすいため。",
+      "hook": "confess",
+      "reprise": null
+    }
+  ]
+}
