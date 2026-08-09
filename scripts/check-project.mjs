@@ -27,6 +27,7 @@ import { TABS, VIEWS } from '../docs/lib/select.js';
 import { lintArticle } from './lib/note-lint.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
+import { runGigaChecks } from './lib/giga-v5-checks.mjs';
 
 const issues = [];
 
@@ -42,6 +43,8 @@ function warn(code, message, file) {
 const REQUIRED = [
     'README.md',
     'MANUAL.md',
+    // 実測値と、測っていないものの控え。無いと「測ったつもり」で先に進んでしまう
+    'AUDIT.md',
     'LICENSE',
     'CLAUDE.md',
     'package.json',
@@ -1097,6 +1100,16 @@ try {
 } catch (e) {
     error('CONFIG_UNREADABLE', e.message, 'package.json');
 }
+
+/* ── 20. GIGA Standard v5（Part I）の検査 ──────────────
+ * どのアプリでも同じ形で壊れるものは scripts/lib/giga-v5-checks.mjs に分けてある。
+ * 共通の検査が更新されたときに、ファイルごと差し替えて受けられるようにするため。
+ *
+ * ⚠️ ここで見られるのは静的に読めることだけである。
+ *    コントラスト・タップ領域・Service Worker が実際に登録されるか・
+ *    押したら切り替わるかは、tools/measure-ui.mjs と tools/measure-pwa.mjs で測る。 */
+
+issues.push(...runGigaChecks({ root: ROOT }));
 
 /* ── 出力 ─────────────────────────────────────── */
 
