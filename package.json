@@ -14,6 +14,7 @@
     "trends": "node scripts/research-trends.mjs",
     "generate": "node scripts/generate-week.mjs",
     "note": "node scripts/generate-note.mjs",
+    "note:repo": "node scripts/collect-note-articles.mjs",
     "lint:drafts": "node scripts/lint-drafts.mjs",
     "notify": "node scripts/notify-daily.mjs",
     "feedback": "node scripts/collect-feedback.mjs",

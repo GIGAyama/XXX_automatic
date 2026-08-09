@@ -161,6 +161,16 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npm run note
 
+      # ①'' アプリのリポジトリに用意ずみの note 記事を取り込む。
+      # 本人が書き上げた記事なので、生成した下書きより優先して出したいものである。
+      # ⚠️ ① 収集のあとであれば、どこに置いてもよい（data/repos.json だけを見る）。
+      #    取り込めなくても週の投稿と note の下書きは出せるので、ここで週次は止めない。
+      - name: ①'' 用意された note 記事を取り込む（失敗しても続行）
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run note:repo
+
       - name: 検査 — ガードレール
         run: npm run lint:drafts
 
