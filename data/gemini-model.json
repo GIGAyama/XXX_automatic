@@ -4,19 +4,15 @@
   "previous": null,
   "prefer": "flash",
   "allowPreview": false,
-  "resolvedAt": "2026-08-09T11:29:22.589Z",
-  "resolvedAtJst": "2026-08-09 20:29 JST",
+  "resolvedAt": "2026-08-12T11:11:51.225Z",
+  "resolvedAtJst": "2026-08-12 20:11 JST",
   "candidates": [
     "gemini-3.6-flash",
     "gemini-3.5-flash",
     "gemini-2.5-flash",
-    "gemini-2.0-flash",
-    "gemini-2.0-flash-001",
     "gemini-3.5-flash-lite",
     "gemini-3.1-flash-lite",
     "gemini-2.5-pro",
-    "gemini-2.5-flash-lite",
-    "gemini-2.0-flash-lite",
-    "gemini-2.0-flash-lite-001"
+    "gemini-2.5-flash-lite"
   ]
 }

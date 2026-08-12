@@ -1,0 +1,253 @@
+{
+  "schema": "promo-result-v1",
+  "orderId": "ord-spznkvogt52",
+  "repo": "SchoolPlan_Editor",
+  "issue": 30,
+  "generatedAt": "2026-08-12T11:12:13.369Z",
+  "generatedAtJst": "2026-08-12 20:12 JST",
+  "model": "gemini-3.6-flash",
+  "dropped": 0,
+  "message": "",
+  "gallery": [
+    {
+      "id": "card:0",
+      "src": "media/SchoolPlan_Editor-card.png",
+      "kind": "card",
+      "label": "紹介カード"
+    },
+    {
+      "id": "repo:docs/note/images/01-week-plan.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/01-week-plan.png",
+      "kind": "repo",
+      "label": "週案グリッド全体"
+    },
+    {
+      "id": "repo:docs/note/images/02-edit-mode.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/02-edit-mode.png",
+      "kind": "repo",
+      "label": "編集モード"
+    },
+    {
+      "id": "repo:docs/note/images/03-input-assist.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/03-input-assist.png",
+      "kind": "repo",
+      "label": "入力支援メニュー"
+    },
+    {
+      "id": "repo:docs/note/images/04-unit-picker.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/04-unit-picker.png",
+      "kind": "repo",
+      "label": "進捗つき単元ピッカー"
+    },
+    {
+      "id": "repo:docs/note/images/05-plan-search.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/05-plan-search.png",
+      "kind": "repo",
+      "label": "週をまたいだ全文検索"
+    },
+    {
+      "id": "repo:docs/note/images/06-next-week.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/06-next-week.png",
+      "kind": "repo",
+      "label": "教科名だけ入った先の週"
+    },
+    {
+      "id": "repo:docs/note/images/07-holiday-week.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/07-holiday-week.png",
+      "kind": "repo",
+      "label": "祝日（海の日）のある週"
+    },
+    {
+      "id": "repo:docs/note/images/08-print-options.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/08-print-options.png",
+      "kind": "repo",
+      "label": "印刷オプション"
+    },
+    {
+      "id": "repo:docs/note/images/09-print-page1.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/09-print-page1.png",
+      "kind": "repo",
+      "label": "印刷1ページ目"
+    },
+    {
+      "id": "repo:docs/note/images/10-print-page2.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/10-print-page2.png",
+      "kind": "repo",
+      "label": "印刷2ページ目（時数表・検印欄）"
+    },
+    {
+      "id": "repo:docs/note/images/11-reflection-hub.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/11-reflection-hub.png",
+      "kind": "repo",
+      "label": "振り返りの一覧"
+    },
+    {
+      "id": "repo:docs/note/images/12-reflection-wizard.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/12-reflection-wizard.png",
+      "kind": "repo",
+      "label": "振り返りの入力（音声入力つき）"
+    },
+    {
+      "id": "repo:docs/note/images/13-task-list.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/13-task-list.png",
+      "kind": "repo",
+      "label": "タスク画面全体"
+    },
+    {
+      "id": "repo:docs/note/images/14-hours-annual.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/14-hours-annual.png",
+      "kind": "repo",
+      "label": "年間・教科別の実施時数"
+    },
+    {
+      "id": "repo:docs/note/images/15-hours-simulation.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/15-hours-simulation.png",
+      "kind": "repo",
+      "label": "年度末シミュレーション"
+    },
+    {
+      "id": "repo:docs/note/images/16-unit-master.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/16-unit-master.png",
+      "kind": "repo",
+      "label": "単元マスタ一覧"
+    },
+    {
+      "id": "repo:docs/note/images/17-unit-check.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/17-unit-check.png",
+      "kind": "repo",
+      "label": "整合性チェックの結果"
+    },
+    {
+      "id": "repo:docs/note/images/18-newsletter.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/18-newsletter.png",
+      "kind": "repo",
+      "label": "学級通信エディタ"
+    },
+    {
+      "id": "repo:docs/note/images/19-events-pdf.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/19-events-pdf.png",
+      "kind": "repo",
+      "label": "行事予定PDFの閲覧"
+    },
+    {
+      "id": "repo:docs/note/images/20-pdf-import.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/20-pdf-import.png",
+      "kind": "repo",
+      "label": "PDF読み込み"
+    },
+    {
+      "id": "repo:docs/note/images/21-settings.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/21-settings.png",
+      "kind": "repo",
+      "label": "設定タブ"
+    },
+    {
+      "id": "repo:docs/note/images/22-timetable-editor.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/22-timetable-editor.png",
+      "kind": "repo",
+      "label": "固定時間割エディタ"
+    },
+    {
+      "id": "repo:docs/note/images/23-data-protection.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/SchoolPlan_Editor/503044d4d4e9fca78d8aa270b26d5c2e4f5ca25b/docs/note/images/23-data-protection.png",
+      "kind": "repo",
+      "label": "データ保全・復元"
+    }
+  ],
+  "posts": [
+    {
+      "id": "2026-08-12-promo-ogt521",
+      "weekId": "",
+      "date": "2026-08-12",
+      "weekday": "水",
+      "slot": "promo",
+      "slotLabel": "つくった投稿",
+      "hour": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "SchoolPlan_Editor",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "放課後の週案づくり、どの教科が何時間目まで進んだか探すのに毎回10分かかっていました。そこで作ったのが、単元進捗と時数計算を自動でまとめる週案アプリです。画面を開くだけで過不足がすぐ分かります。2学期の準備に役立てばと思います。\n\n#週案 #時数管理 #校務効率化",
+          "weightedLength": 254
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/SchoolPlan_Editor/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "放課後の週案づくり、どの教科が何時間目まで進んだか探すのに毎回10分かかっていました。そこで作ったのが、単元進捗と時数計算を自動でまとめる週案アプリです。画面を開くだけで過不足がすぐ分かります。2学期の準備に役立てばと思います。\n\n#週案 #時数管理 #校務効率化",
+      "url": "https://gigayama.github.io/SchoolPlan_Editor/",
+      "media": "media/SchoolPlan_Editor-card.png",
+      "mediaList": [
+        "media/SchoolPlan_Editor-card.png"
+      ],
+      "weightedLength": 254,
+      "overLimit": false,
+      "alternatives": [
+        {
+          "body": "15時過ぎの教室、片付けをしながらキーボードで振り返りを打つのが大変でした。そこで放課後になると音声入力モードに切り替わる週案アプリを作りました。喋るだけで日報が残せるので、明日の授業準備に集中できるはずです。夏休みの仕込みにおすすめです。",
+          "thread": []
+        },
+        {
+          "body": "学校のネット制限でWeb画面が崩れて動かない経験から、このアプリを作りました。外部の通信を極力排して学校の端末でも確実に動く週案・時数管理ツールです。年間計画PDFを取り込むだけで時間割の基礎が作れます。2学期前の教材研究に役立つと思います。",
+          "thread": []
+        }
+      ],
+      "pickReason": "毎回10分かかっていたという具体的でリアルな困りごとから始まっており、2学期前の準備を進める現場の共感を得やすいため。",
+      "hook": "confess",
+      "reprise": null
+    },
+    {
+      "id": "2026-08-12-promo-ogt522",
+      "weekId": "",
+      "date": "2026-08-12",
+      "weekday": "水",
+      "slot": "promo",
+      "slotLabel": "つくった投稿",
+      "hour": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "SchoolPlan_Editor",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "以前は電卓で1コマずつ出していた時数計算。いまはアプリを開くだけで完了します。教科ごとの過不足を自動で算出してくれる週案Webアプリを作りました。学期末の集計作業を激減させられると思います。夏休みのうちに2学期の時数計画を組むのにも便利です。\n\n#時数管理 #週案 #校務効率化",
+          "weightedLength": 266
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/SchoolPlan_Editor/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "以前は電卓で1コマずつ出していた時数計算。いまはアプリを開くだけで完了します。教科ごとの過不足を自動で算出してくれる週案Webアプリを作りました。学期末の集計作業を激減させられると思います。夏休みのうちに2学期の時数計画を組むのにも便利です。\n\n#時数管理 #週案 #校務効率化",
+      "url": "https://gigayama.github.io/SchoolPlan_Editor/",
+      "media": "media/SchoolPlan_Editor-card.png",
+      "mediaList": [
+        "media/SchoolPlan_Editor-card.png"
+      ],
+      "weightedLength": 266,
+      "overLimit": false,
+      "alternatives": [
+        {
+          "body": "2学期の週案を作るとき、1学期の単元がどこまで終わったかすぐ思い出せますか。過去の記録と進行状況をひと目で参照できる校務Webアプリを作りました。年間計画のPDFをAIで転記する機能もあります。新学期が始まる前のこの時期に、ぜひ試してみてください。",
+          "thread": []
+        },
+        {
+          "body": "週案作成の準備時間を5分に短縮したくて、Google連携のアプリを作りました。余計なファイルを作らず最小限の権限で動く安心設計です。時間割の計画から放課後の振り返りまで1つで完結します。2学期の放課後を少しでも楽にする道具になれば嬉しいです。",
+          "thread": []
+        }
+      ],
+      "pickReason": "電卓でコマ数を計算する情景がリアルに思い浮かび、夏休みの間に2学期の計画を立てたい教員のニーズに最も合致しているため。",
+      "hook": "contrast",
+      "reprise": null
+    }
+  ]
+}
