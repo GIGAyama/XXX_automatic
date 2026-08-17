@@ -18,6 +18,7 @@ import { shellFilesOf, versionOf } from './build-sw.mjs';
 import { describeModel, readPolicy } from './lib/gemini-models.mjs';
 import { ROOT, paths, readJson, readText, rel } from './lib/io.mjs';
 import { isoWeekId, jstDateString, nextWeekDates } from './lib/jst.mjs';
+import { pagesUrlFor } from './lib/urls.mjs';
 import { extractUrls } from './lib/x-text.mjs';
 import { KEEP_WEEKS } from './archive-history.mjs';
 import { KEEP_RESULTS } from './generate-promo.mjs';
@@ -90,31 +91,35 @@ for (const file of REQUIRED) {
     if (!fs.existsSync(path.join(ROOT, file))) error('MISSING_FILE', '必要なファイルがありません', file);
 }
 
-/* ── 2. basePath の一致 ──────────────────────────────
- * gigayama.github.io は多数のアプリが同一オリジンを共有している。
- * manifest の id / scope / start_url がリポジトリ名からずれると、
- * 別アプリと取り違えられて「開いたら違うアプリが立ち上がる」事故になる。
- * リポジトリ名を変えたときにここを直し忘れるのが、いちばんありそうな壊れ方である。 */
+/* ── 2. 公開先の一致 ──────────────────────────────
+ * 独自ドメインに移り、アプリは専用サブドメインの直下で配信される。
+ *   https://xxx-automatic.giga-school.com/
+ * manifest の id / scope / start_url を旧構成の "/XXX_automatic/" のままにすると、
+ * scope がページの URL を含まなくなり、manifest ごと無視されて
+ * PWA としてインストールできなくなる。相対パス "./" なら、旧サブディレクトリ配信でも
+ * 新サブドメイン配信でも自分のアプリを指す。
+ * launcherUrl は通知やランチャーのリンクに入る値なので、
+ * repoName から決まるサブドメインと食いちがっていないかを見る。 */
 
 try {
     const accounts = readJson(paths.config('accounts.json'));
     const manifest = readJson(paths.docs('manifest.webmanifest'));
-    const expected = `/${accounts.repoName}/`;
 
     for (const key of ['id', 'start_url', 'scope']) {
-        if (manifest[key] !== expected) {
+        if (manifest[key] !== './') {
             error(
                 'BASE_PATH_MISMATCH',
-                `manifest の ${key} が "${manifest[key]}" ですが、config/accounts.json の repoName からは "${expected}" になるはずです`,
+                `manifest の ${key} が "${manifest[key]}" です。サブドメイン直下で配信するので "./"（相対パス）にしてください`,
                 'docs/manifest.webmanifest'
             );
         }
     }
 
-    if (accounts.launcherUrl && !accounts.launcherUrl.endsWith(expected)) {
+    const expectedLauncher = pagesUrlFor(accounts.repoName, accounts);
+    if (accounts.launcherUrl && expectedLauncher && accounts.launcherUrl !== expectedLauncher) {
         error(
             'BASE_PATH_MISMATCH',
-            `launcherUrl が "${accounts.launcherUrl}" ですが、repoName からは "${expected}" で終わるはずです`,
+            `launcherUrl が "${accounts.launcherUrl}" ですが、repoName と appDomain からは "${expectedLauncher}" になるはずです`,
             'config/accounts.json'
         );
     }

@@ -3,14 +3,14 @@
 
   "githubOwner": "GIGAyama",
 
-  "_repoName": "このリポジトリ名。GitHub Pages の basePath がこれで決まる。gigayama.github.io は多数のアプリが同一オリジンを共有しているため、ここがずれると別アプリと取り違えられる。",
+  "_repoName": "このリポジトリ名。公開先のサブドメインがこれで決まる（小文字にして _ を - に置きかえたもの）。",
   "repoName": "XXX_automatic",
 
-  "_pagesBase": "各学習アプリの公開 URL の組み立て規則。GIGAyama の全リポジトリで「リポジトリ名 = basePath」が守られているので、リポジトリ名から機械的に決まる。",
-  "pagesBase": "https://gigayama.github.io/",
+  "_appDomain": "各学習アプリの公開先ドメイン。アプリごとに「小文字にして _ を - にしたリポジトリ名」のサブドメインを持つ（例: XXX_automatic → xxx-automatic.giga-school.com）。組み立て規則の実体は scripts/lib/urls.mjs にある。",
+  "appDomain": "giga-school.com",
 
   "_launcherUrl": "投稿ランチャー（このリポジトリの docs/）の公開 URL。通知の本文に入れる。",
-  "launcherUrl": "https://gigayama.github.io/XXX_automatic/",
+  "launcherUrl": "https://xxx-automatic.giga-school.com/",
 
   "xHandle": "",
 

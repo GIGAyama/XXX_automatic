@@ -30,7 +30,7 @@
         "漢字学習",
         "GIGAスクール"
       ],
-      "url": "https://gigayama.github.io/KANJI_Town/",
+      "url": "https://kanji-town.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -41,7 +41,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/KANJI_Town/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://kanji-town.giga-school.com/",
           "weightedLength": 74
         }
       ],
@@ -82,7 +82,7 @@
         "PWA",
         "お休み時間"
       ],
-      "url": "https://gigayama.github.io/Ice_slide-puzzle/",
+      "url": "https://ice-slide-puzzle.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -93,7 +93,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/Ice_slide-puzzle/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://ice-slide-puzzle.giga-school.com/",
           "weightedLength": 74
         }
       ],
@@ -134,7 +134,7 @@
         "国語",
         "語彙"
       ],
-      "url": "https://gigayama.github.io/word_basket/",
+      "url": "https://word-basket.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -145,7 +145,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/word_basket/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://word-basket.giga-school.com/",
           "weightedLength": 76
         }
       ],
@@ -186,7 +186,7 @@
         "Webアプリ",
         "国語"
       ],
-      "url": "https://gigayama.github.io/Shiritori_fighter/",
+      "url": "https://shiritori-fighter.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -197,7 +197,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/Shiritori_fighter/",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://shiritori-fighter.giga-school.com/",
           "weightedLength": 68
         }
       ],
@@ -238,7 +238,7 @@
         "計算カード",
         "算数"
       ],
-      "url": "https://gigayama.github.io/KAKE_Master/",
+      "url": "https://kake-master.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -249,7 +249,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/KAKE_Master/",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://kake-master.giga-school.com/",
           "weightedLength": 80
         }
       ],
@@ -290,7 +290,7 @@
         "GAS",
         "教育DX"
       ],
-      "url": "https://gigayama.github.io/MIRAI-Passport/",
+      "url": "https://mirai-passport.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -301,7 +301,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/MIRAI-Passport/",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://mirai-passport.giga-school.com/",
           "weightedLength": 80
         }
       ],
@@ -342,7 +342,7 @@
         "作文",
         "GAS"
       ],
-      "url": "https://gigayama.github.io/Online-Publisher-pro/",
+      "url": "https://online-publisher-pro.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -353,7 +353,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/Online-Publisher-pro/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://online-publisher-pro.giga-school.com/",
           "weightedLength": 76
         }
       ],
@@ -394,7 +394,7 @@
         "忘れ物記録",
         "ICT活用"
       ],
-      "url": "https://gigayama.github.io/Homework_barcordreader/",
+      "url": "https://homework-barcordreader.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -405,7 +405,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/Homework_barcordreader/",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://homework-barcordreader.giga-school.com/",
           "weightedLength": 68
         }
       ],
@@ -446,7 +446,7 @@
         "算数",
         "小学1年生"
       ],
-      "url": "https://gigayama.github.io/Keisan-Card/",
+      "url": "https://keisan-card.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -457,7 +457,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/Keisan-Card/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://keisan-card.giga-school.com/",
           "weightedLength": 74
         }
       ],
@@ -498,7 +498,7 @@
         "GIGAスクール",
         "Webアプリ"
       ],
-      "url": "https://gigayama.github.io/Video-editing_studio/",
+      "url": "https://video-editing-studio.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -509,7 +509,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/Video-editing_studio/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://video-editing-studio.giga-school.com/",
           "weightedLength": 74
         }
       ],
@@ -539,7 +539,7 @@
         "GIGAスクール",
         "AI所見"
       ],
-      "url": "https://gigayama.github.io/Gamification/",
+      "url": "https://gamification.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -550,7 +550,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/Gamification/",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://gamification.giga-school.com/",
           "weightedLength": 68
         }
       ],
@@ -580,7 +580,7 @@
         "GIGAスクール",
         "算数"
       ],
-      "url": "https://gigayama.github.io/online-100square-calculation/",
+      "url": "https://online-100square-calculation.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -591,7 +591,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/online-100square-calculation/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://online-100square-calculation.giga-school.com/",
           "weightedLength": 76
         }
       ],
@@ -621,7 +621,7 @@
         "GIGAスクール",
         "学級経営"
       ],
-      "url": "https://gigayama.github.io/Hagetaka-game/",
+      "url": "https://hagetaka-game.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -632,7 +632,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/Hagetaka-game/",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://hagetaka-game.giga-school.com/",
           "weightedLength": 80
         }
       ],
@@ -662,7 +662,7 @@
         "Chromebook",
         "Typa"
       ],
-      "url": "https://gigayama.github.io/Typa/",
+      "url": "https://typa.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -673,7 +673,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/Typa/",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://typa.giga-school.com/",
           "weightedLength": 80
         }
       ],

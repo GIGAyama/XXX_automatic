@@ -46,6 +46,7 @@ import { fail, failWith, info, loadConfig, loadPolicy, parseArgs, paths, readJso
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates } from './lib/jst.mjs';
 import { lintArticle, unsourcedNumbers } from './lib/note-lint.mjs';
 import { loadShots, shotBlock } from './lib/note-shots.mjs';
+import { pagesUrlFor } from './lib/urls.mjs';
 
 /** タイトルを何案書かせるか。X と同じく、書く人と選ぶ人を分ける。 */
 const TITLE_VARIANTS = 3;
@@ -546,7 +547,7 @@ function describeApps(featured, accounts) {
         .map((p) =>
             [
                 `### ${p.name}`,
-                `公開URL: ${p.pagesUrl ?? `${accounts.pagesBase}${p.name}/`}`,
+                `公開URL: ${p.pagesUrl ?? pagesUrlFor(p.name, accounts)}`,
                 `一言: ${p.oneLine}`,
                 `対象: ${p.targetGrade} / ${p.subject}`,
                 `引き受ける困りごと: ${(p.painPoints ?? []).join(' / ')}`,
@@ -604,7 +605,7 @@ function renderMarkdown(article, { style, main, featured, accounts, sections }) 
 
         // 導入の節の最後に URL を置く。実例がそうしている。
         if (spec.id === 'intro') {
-            parts.push(main.pagesUrl ?? `${accounts.pagesBase}${main.name}/`, '');
+            parts.push(main.pagesUrl ?? pagesUrlFor(main.name, accounts), '');
         }
     }
 
@@ -643,7 +644,7 @@ function renderPlainText(article, { style, main, featured, accounts, sections, m
             const image = /^!\[[^\]]*\]\(([^)]*)\)$/.exec(block);
             parts.push(image ? `［画像: ${image[1].split('/').pop()}］` : block, '');
         }
-        if (spec.id === 'intro') parts.push(main.pagesUrl ?? `${accounts.pagesBase}${main.name}/`, '');
+        if (spec.id === 'intro') parts.push(main.pagesUrl ?? pagesUrlFor(main.name, accounts), '');
     }
 
     const related = featured.slice(1).filter((p) => p.pagesUrl);

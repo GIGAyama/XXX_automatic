@@ -23,6 +23,7 @@ import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writ
 import { jstStamp } from './lib/jst.mjs';
 import { assetPathsFor, pickArticlePaths } from './lib/note-article.mjs';
 import {
+import { pagesUrlFor } from './lib/urls.mjs';
     DEFAULT_REPO_IMAGES,
     captionSourcePaths,
     labelFromPath,
@@ -215,7 +216,7 @@ async function main() {
 
                 // GIGAyama の全リポジトリで「リポジトリ名 = basePath」が守られているため、
                 // 公開 URL はリポジトリ名から機械的に決まる。
-                pagesUrl: repo.has_pages ? `${accounts.pagesBase}${repo.name}/` : null,
+                pagesUrl: pagesUrlFor(repo.name, accounts, repo.has_pages),
 
                 recentCommits: commits,
                 source,

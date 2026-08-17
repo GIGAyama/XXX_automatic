@@ -176,12 +176,12 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/SchoolPlan_Editor/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://schoolplan-editor.giga-school.com/",
           "weightedLength": 74
         }
       ],
       "text": "以前は電卓で各教科の時数を計算していましたが、今はタブを開くだけで過不足が分かります。2学期以降の授業時数シミュレーションができるアプリを作りました。夏休みの教材研究とあわせて時数管理を済ませるのに便利だと思います。\n\n#時数管理 #週案 #校務効率化",
-      "url": "https://gigayama.github.io/SchoolPlan_Editor/",
+      "url": "https://schoolplan-editor.giga-school.com/",
       "media": "media/SchoolPlan_Editor-card.png",
       "mediaList": [
         "media/SchoolPlan_Editor-card.png"
@@ -223,12 +223,12 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/SchoolPlan_Editor/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://schoolplan-editor.giga-school.com/",
           "weightedLength": 76
         }
       ],
       "text": "2学期の単元計画を立てるとき、時数の過不足計算に時間を取られていませんか。週案作成と同時に進捗を自動集計できるWebアプリを作りました。夏休みのまとまった時間に時数を調整しておくと、新学期がとても楽になると思います。\n\n#週案 #時数管理 #教員向け",
-      "url": "https://gigayama.github.io/SchoolPlan_Editor/",
+      "url": "https://schoolplan-editor.giga-school.com/",
       "media": "media/SchoolPlan_Editor-card.png",
       "mediaList": [
         "media/SchoolPlan_Editor-card.png"

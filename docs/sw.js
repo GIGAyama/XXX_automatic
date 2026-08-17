@@ -21,7 +21,9 @@
  *    端末のキャッシュも入れかわる。`npm run check` がずれを検出する。
  *
  * ⚠️ activate で自アプリ以外のキャッシュを消さない。
- *    gigayama.github.io は数十本のアプリが同一オリジンを共有している。
+ *    旧構成では gigayama.github.io に数十本のアプリが同居していた。
+ *    いまはアプリごとに専用サブドメインを持つが、移行前の端末には旧オリジンの
+ *    Service Worker が残っているため、接頭辞での絞り込みはそのまま残す。
  *    caches.keys() を「自分のもの以外」で消すと、このランチャーを1度開いただけで
  *    同じ端末に入れてある他のアプリのオフライン用キャッシュが全部消える。
  *    消えたことは誰にも見えず、次に圏外で開いたときに「壊れた」としか分からない。
@@ -30,7 +32,7 @@
  * Service Worker は localStorage を一切操作しない。
  */
 
-const VERSION = 'vbe44daf3';
+const VERSION = 'v1829e1e7';
 /** 自アプリの目印。ここで始まるキャッシュだけが掃除の対象になる。 */
 const CACHE_PREFIX = 'launcher-';
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${VERSION}`;

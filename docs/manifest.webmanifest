@@ -5,10 +5,10 @@
   "lang": "ja",
   "dir": "ltr",
 
-  "_comment": "gigayama.github.io は多数のアプリが同一オリジンを共有している。id / scope / start_url がリポジトリ名と食い違うと、別アプリと取り違えられて『開いたら違うアプリが立ち上がる』事故が起きる。リポジトリ名を変えたらここも必ず直すこと。",
-  "id": "/XXX_automatic/",
-  "start_url": "/XXX_automatic/",
-  "scope": "/XXX_automatic/",
+  "_comment": "独自ドメインに移行し、このアプリは xxx-automatic.giga-school.com の直下で配信される。id / scope / start_url は相対パス \"./\" にすること。リポジトリ名の絶対パス（旧 /XXX_automatic/）に戻すと scope がページの URL を含まなくなり、manifest ごと無視されて PWA としてインストールできなくなる。",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
 
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],

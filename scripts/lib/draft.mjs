@@ -16,6 +16,7 @@ import fs from 'node:fs';
 import { generateJson } from './gemini.mjs';
 import { info, paths, readJson } from './io.mjs';
 import { composeSteps, hookOf, seedFrom } from './x-text.mjs';
+import { pagesUrlFor } from './urls.mjs';
 
 /** 1枠あたり何案書かせるか。多いほど良いものが混ざるが、無料枠のトークンを使う。 */
 export const VARIANTS_PER_SLOT = 3;
@@ -364,7 +365,7 @@ export function assemble(plan, drafts, profileByName, accounts, guardrails) {
             if (!draft) return null;
 
             const profile = profileByName.get(slot.repo);
-            const url = profile?.pagesUrl ?? `${accounts.pagesBase}${slot.repo}/`;
+            const url = profile?.pagesUrl ?? pagesUrlFor(slot.repo, accounts);
             const hashtags = (draft.hashtags ?? []).slice(0, 3).map((t) => t.replace(/^#/, ''));
             const thread = (draft.thread ?? []).map((t) => String(t ?? '').trim()).filter(Boolean).slice(0, maxThread);
 

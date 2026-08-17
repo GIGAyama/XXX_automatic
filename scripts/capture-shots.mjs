@@ -38,6 +38,7 @@ import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writ
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates } from './lib/jst.mjs';
 import { shotsDir } from './lib/note-shots.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
+import { pagesUrlFor } from './lib/urls.mjs';
 
 /** スマートフォンで見たときの形。note の読者はほとんどスマホで読む。 */
 const VIEWPORT = { width: 390, height: 844 };
@@ -70,7 +71,7 @@ async function main() {
     if (!profile) fail(`data/profiles/${repo}.json がありません。先に \`npm run profiles\` を実行してください。`);
 
     // --url は、公開する前のアプリを手元で確かめるときのためのもの。
-    const url = typeof args.url === 'string' ? args.url : (profile.pagesUrl ?? `${accounts.pagesBase}${repo}/`);
+    const url = typeof args.url === 'string' ? args.url : (profile.pagesUrl ?? pagesUrlFor(repo, accounts));
     if (!profile.pagesUrl && typeof args.url !== 'string') {
         fail(`${repo} は GitHub Pages を持っていないので、画面を撮れません（記事は文字だけになります）。`);
     }

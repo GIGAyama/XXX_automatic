@@ -21,7 +21,7 @@
         "校務効率化",
         "時数管理"
       ],
-      "url": "https://gigayama.github.io/SchoolPlan_Editor/",
+      "url": "https://schoolplan-editor.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -32,7 +32,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/SchoolPlan_Editor/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://schoolplan-editor.giga-school.com/",
           "weightedLength": 76
         }
       ],
@@ -62,7 +62,7 @@
         "GIGAスクール",
         "Chromebook"
       ],
-      "url": "https://gigayama.github.io/MIRAI-Compass/",
+      "url": "https://mirai-compass.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -73,7 +73,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/MIRAI-Compass/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://mirai-compass.giga-school.com/",
           "weightedLength": 74
         }
       ],
@@ -103,7 +103,7 @@
         "AI添削",
         "国語"
       ],
-      "url": "https://gigayama.github.io/online-manuscript-paper-pro/",
+      "url": "https://online-manuscript-paper-pro.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -114,7 +114,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/online-manuscript-paper-pro/",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://online-manuscript-paper-pro.giga-school.com/",
           "weightedLength": 68
         }
       ],
@@ -144,7 +144,7 @@
         "国語",
         "PWA"
       ],
-      "url": "https://gigayama.github.io/Treasure_Words/",
+      "url": "https://treasure-words.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -155,7 +155,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/Treasure_Words/",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://treasure-words.giga-school.com/",
           "weightedLength": 80
         }
       ],
@@ -185,7 +185,7 @@
         "教材作成",
         "ペーパーレス"
       ],
-      "url": "https://gigayama.github.io/Digital_textbook/",
+      "url": "https://digital-textbook.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -196,7 +196,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/Digital_textbook/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://digital-textbook.giga-school.com/",
           "weightedLength": 76
         }
       ],
@@ -226,7 +226,7 @@
         "Chromebook",
         "GIGAスクール"
       ],
-      "url": "https://gigayama.github.io/Reversi/",
+      "url": "https://reversi.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -237,7 +237,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://gigayama.github.io/Reversi/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://reversi.giga-school.com/",
           "weightedLength": 74
         }
       ],
@@ -267,7 +267,7 @@
         "デジタルクローゼット",
         "校務"
       ],
-      "url": "https://gigayama.github.io/DigitalCloset/",
+      "url": "https://digitalcloset.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -278,7 +278,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://gigayama.github.io/DigitalCloset/",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://digitalcloset.giga-school.com/",
           "weightedLength": 68
         }
       ],
@@ -308,7 +308,7 @@
         "校務支援",
         "生成AI"
       ],
-      "url": "https://gigayama.github.io/School_plan_note/",
+      "url": "https://school-plan-note.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -319,7 +319,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://gigayama.github.io/School_plan_note/",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://school-plan-note.giga-school.com/",
           "weightedLength": 80
         }
       ],
@@ -349,7 +349,7 @@
         "図形学習",
         "GIGAスクール"
       ],
-      "url": "https://gigayama.github.io/Shapes_Canvas/",
+      "url": "https://shapes-canvas.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -360,7 +360,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/Shapes_Canvas/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://shapes-canvas.giga-school.com/",
           "weightedLength": 76
         }
       ],
@@ -390,7 +390,7 @@
         "1年生",
         "読み書き"
       ],
-      "url": "https://gigayama.github.io/yomikaki/",
+      "url": "https://yomikaki.giga-school.com/",
       "steps": [
         {
           "kind": "main",
@@ -401,7 +401,7 @@
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gigayama.github.io/yomikaki/",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://yomikaki.giga-school.com/",
           "weightedLength": 76
         }
       ],
