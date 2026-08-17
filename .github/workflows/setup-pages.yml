@@ -1,0 +1,146 @@
+# 全リポジトリの GitHub Pages とカスタムドメインをまとめて設定する
+#
+# ■ なぜ要るのか
+#   独自ドメイン移行で、DNS と各リポジトリの CNAME ファイルは揃えたが、
+#   「Settings → Pages」での有効化とカスタムドメインの登録だけは残っていた。
+#   GitHub 側にそのホスト名を担当するサイトが無いあいだ、ブラウザは
+#   別サイト用の証明書を受け取り
+#   「この接続ではプライバシーが保護されません」（ERR_CERT_COMMON_NAME_INVALID）
+#   を出す。45 リポジトリを画面から1つずつ設定するのは骨が折れるので、
+#   ここでまとめて片づける。
+#
+# ■ 使い方（最初の1回だけ手作業が要る）
+#   1. https://github.com/settings/personal-access-tokens/new で
+#      fine-grained の Personal Access Token を作る
+#        - Repository access: All repositories
+#        - Permissions: 「Pages」= Read and write、「Administration」= Read and write
+#          （Pages の有効化はリポジトリの管理権限を要するため、
+#            ワークフロー既定の GITHUB_TOKEN では実行できない。実測で確認済み）
+#   2. このリポジトリの Settings → Secrets and variables → Actions →
+#      New repository secret に `PAGES_ADMIN_TOKEN` という名前で貼る。
+#      （値はここには書かない。GitHub の外に出ないし、ログにも出ない）
+#   3. Actions タブ →「Pages とカスタムドメインをまとめて設定」→ Run workflow
+#
+#   トークンは 1 個・1 か所だけで済む。以後アプリを増やしたときも
+#   CNAME ファイルを置いてこれを流せば設定が済む。
+name: Pages とカスタムドメインをまとめて設定
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '実際には変更せず、何をするかだけ出す'
+        type: boolean
+        default: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 設定する
+        env:
+          GH_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::PAGES_ADMIN_TOKEN が設定されていません。このファイル冒頭の手順を見てください。"
+            exit 1
+          fi
+          node --input-type=module <<'JS'
+          const token = process.env.GH_TOKEN;
+          const owner = process.env.OWNER;
+          const dryRun = process.env.DRY_RUN === 'true';
+
+          const api = async (method, path, body) => {
+            const res = await fetch(`https://api.github.com${path}`, {
+              method,
+              headers: {
+                authorization: `Bearer ${token}`,
+                accept: 'application/vnd.github+json',
+                'x-github-api-version': '2022-11-28',
+                ...(body ? { 'content-type': 'application/json' } : {}),
+              },
+              ...(body ? { body: JSON.stringify(body) } : {}),
+            });
+            const text = await res.text();
+            let json = null;
+            try { json = text ? JSON.parse(text) : null; } catch { /* 本文が無いことがある */ }
+            return { status: res.status, json, text };
+          };
+
+          // 所有している公開リポジトリを全部ならべる
+          const repos = [];
+          for (let page = 1; ; page++) {
+            const r = await api('GET', `/users/${owner}/repos?per_page=100&type=owner&page=${page}`);
+            if (r.status !== 200) { console.log('リポジトリ一覧が取れません:', r.status, r.text.slice(0, 200)); process.exit(1); }
+            if (!r.json.length) break;
+            repos.push(...r.json.filter((x) => !x.fork && !x.archived));
+          }
+          console.log(`対象候補: ${repos.length} 件`);
+
+          // そのリポジトリの CNAME を探す。docs/ 配信と root 配信の両方を見る。
+          const findCname = async (repo) => {
+            for (const [path, dir] of [['docs/CNAME', '/docs'], ['CNAME', '/']]) {
+              const r = await api('GET', `/repos/${owner}/${repo}/contents/${path}`);
+              if (r.status !== 200 || !r.json?.content) continue;
+              const raw = Buffer.from(r.json.content, 'base64').toString('utf8');
+              // ⚠️ BOM が残っていると GitHub はドメイン名として読めない。ここで落として警告する。
+              const hadBom = raw.charCodeAt(0) === 0xFEFF;
+              const host = raw.replace(/^﻿/, '').trim();
+              if (hadBom) console.log(`  ⚠️ ${repo}: CNAME に BOM があります。リポジトリ側を直してください`);
+              if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(host)) continue;
+              return { host, dir };
+            }
+            return null;
+          };
+
+          const done = [], skipped = [], failed = [];
+
+          for (const r of repos) {
+            const repo = r.name;
+            const found = await findCname(repo);
+            if (!found) { skipped.push(`${repo}（CNAME なし）`); continue; }
+            const { host, dir } = found;
+
+            const cur = await api('GET', `/repos/${owner}/${repo}/pages`);
+
+            if (cur.status === 404) {
+              // Pages が無効。ブランチ配信として作る。
+              // （ビルドを伴うアプリは既に Actions 配信で有効化済みなので、ここには来ない）
+              console.log(`${repo}: Pages 未有効 → ${dir} を配信元にして有効化し、${host} を登録`);
+              if (dryRun) { done.push(`${repo}（作成予定）`); continue; }
+              const mk = await api('POST', `/repos/${owner}/${repo}/pages`, {
+                source: { branch: 'main', path: dir },
+              });
+              if (mk.status !== 201) { failed.push(`${repo}: 作成できません (${mk.status}) ${mk.text.slice(0, 120)}`); continue; }
+            } else if (cur.status !== 200) {
+              failed.push(`${repo}: 状態を取れません (${cur.status})`);
+              continue;
+            } else if (cur.json?.cname === host) {
+              // 既に同じドメインが入っている。証明書の発行待ちのことがあるので、
+              // https_enforced だけ後段で試す。
+              console.log(`${repo}: 既に ${host} が登録済み`);
+            } else {
+              console.log(`${repo}: カスタムドメインを ${cur.json?.cname ?? '(空)'} → ${host} に設定`);
+            }
+
+            if (dryRun) { done.push(`${repo}（${host} を設定予定）`); continue; }
+
+            // カスタムドメインを入れる。これが証明書の発行のきっかけになる。
+            const up = await api('PUT', `/repos/${owner}/${repo}/pages`, { cname: host });
+            if (up.status !== 204) { failed.push(`${repo}: ドメインを設定できません (${up.status}) ${up.text.slice(0, 120)}`); continue; }
+
+            // HTTPS の強制は、証明書が出るまで受け付けられない。失敗しても止めない。
+            const sec = await api('PUT', `/repos/${owner}/${repo}/pages`, { https_enforced: true });
+            done.push(`${repo} → https://${host}/${sec.status === 204 ? '（HTTPS 強制も設定）' : '（HTTPS 強制は証明書の発行待ち）'}`);
+          }
+
+          console.log('\n===== 結果 =====');
+          console.log(`設定した: ${done.length} 件`);
+          done.forEach((x) => console.log('  ✅ ' + x));
+          if (failed.length) { console.log(`\n失敗: ${failed.length} 件`); failed.forEach((x) => console.log('  ❌ ' + x)); }
+          console.log(`\n対象外: ${skipped.length} 件（CNAME を置いていないリポジトリ）`);
+          if (dryRun) console.log('\n※ dry run です。実際に反映するには Run workflow で dry_run のチェックを外してください。');
+          if (failed.length) process.exit(1);
+          JS
