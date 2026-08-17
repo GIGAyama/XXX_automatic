@@ -23,13 +23,13 @@ import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writ
 import { jstStamp } from './lib/jst.mjs';
 import { assetPathsFor, pickArticlePaths } from './lib/note-article.mjs';
 import {
-import { pagesUrlFor } from './lib/urls.mjs';
     DEFAULT_REPO_IMAGES,
     captionSourcePaths,
     labelFromPath,
     parseCaptions,
     pickRepoImages,
 } from './lib/repo-images.mjs';
+import { pagesUrlFor } from './lib/urls.mjs';
 
 /** 読みにいくファイル。上から順に「そのアプリが何者か」を語る密度が高い。 */
 const SOURCE_FILES = [
