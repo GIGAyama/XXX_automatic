@@ -208,7 +208,7 @@ note に公式 API はありません。非公式 API は存在しますが、�
 
 ### 4. スマホのホーム画面に追加する
 
-<https://gigayama.github.io/XXX_automatic/> を開き、「ホーム画面に追加」します。
+<https://xxx-automatic.giga-school.com/> を開き、「ホーム画面に追加」します。
 
 ### 5. GitHub モバイルアプリの通知をオンにする
 
@@ -359,7 +359,7 @@ CHROMIUM_PATH=... NO_PROXY=localhost,127.0.0.1 node tools/measure-pwa.mjs  # 登
   長期間ワークフローが失敗し続けたときは Actions のページで再有効化してください。
 - **リポジトリ名を変えるとき**は `config/accounts.json` の `repoName` と
   `docs/manifest.webmanifest` の `id` / `start_url` / `scope` を必ず揃えてください。
-  `gigayama.github.io` は多数のアプリが同一オリジンを共有しているため、
+  旧配信元の `gigayama.github.io` は多数のアプリが同一オリジンを共有していた。同居する配置に戻したときのため、
   ここがずれると別アプリと取り違えられます。`npm run check` が検出します。
 
 詳しい操作は [MANUAL.md](MANUAL.md) に書いてあります。
