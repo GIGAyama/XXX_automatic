@@ -43,7 +43,7 @@ X は、**本文に外部リンクがある投稿をほとんど表示しませ�
 
 **iPhone / iPad（Safari）**
 
-1. Safari で <https://gigayama.github.io/XXX_automatic/> を開く
+1. Safari で <https://xxx-automatic.giga-school.com/> を開く
 2. 画面の下（横向きのときは右上）の **共有ボタン**（□に↑が乗った印）を押す
 3. メニューを下にたどって **［ホーム画面に追加］** を押す
 4. 右上の **［追加］** を押す
