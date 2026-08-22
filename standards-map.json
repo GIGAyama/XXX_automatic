@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "unmanaged": [
+    {
+      "local": "scripts/lib/giga-v5-checks.mjs",
+      "reason": "311行のフォーク。このリポジトリはアプリではなく道具箱で、docs/ の Pages だけに検査を当てている。検査IDの体系も quality.config.json の書式も正本と違うため、コピーし直しでは移行できない。いちばん効く「配信物を変えたのに SW の版が据え置き」の検出は、フォークではなく scripts/check-project.mjs の SW_VERSION_STALE が担っていて現に働く（2026-08-22 に docs/style.css を1行足して発火を確認）。ゲート本体の移行は急がない（standards/docs/gate-forks.md）"
+    }
+  ]
+}
