@@ -60,3 +60,16 @@ jobs:
 
       - name: 生成ずみの投稿がガードレールを通るか
         run: npm run lint:drafts
+
+  # 正本（GIGAyama.github.io/standards/）からコピーしたファイルが、
+  # 正本の更新に取り残されていないかを見る。standards-map.json が対応表。
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
+        with:
+          repository: GIGAyama/GIGAyama.github.io
+          path: .standards-src
+      - name: 正本とのずれ検知
+        run: node .standards-src/standards/check-drift.mjs --standards .standards-src/standards
