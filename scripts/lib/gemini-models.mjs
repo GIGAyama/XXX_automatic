@@ -25,7 +25,7 @@
 import fs from 'node:fs';
 import { paths, readJson, writeJson } from './io.mjs';
 import { jstStamp } from './jst.mjs';
-import { requireApiKey } from './gemini.mjs';
+import { requireApiKey, setFallbackModels } from './gemini.mjs';
 
 const ENDPOINT = process.env.GEMINI_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta/models';
 
@@ -48,6 +48,15 @@ const NOT_FOR_TEXT = [
 
 /** 安定版ではない印。既定ではこれらを避ける。 */
 const UNSTABLE = ['preview', 'exp', 'experimental', 'thinking'];
+
+/**
+ * 本命が使えなかったときに、いくつまで乗りかえるか。
+ *
+ * 増やせば粘れるが、1件あたりの最悪の待ち時間もそのぶん伸びる。
+ * 週次はプロフィールだけで 38 件投げるので、ここが伸びると 45 分の枠に収まらなくなる。
+ * 3 は「同じ系統の1つ前・2つ前の版」がおおむね入る本数である。
+ */
+const MAX_FALLBACKS = 3;
 
 /** 系統の判定順（flash-lite を flash より先に見ないと、flash に吸われる）。 */
 const FAMILIES = ['flash-lite', 'flash', 'pro'];
@@ -187,18 +196,23 @@ function cacheAgeHours(cache) {
  * @param {object} [options]
  * @param {boolean} [options.refresh]  キャッシュを無視して聞きなおす
  * @param {boolean} [options.quiet]    選んだ結果を出力しない
- * @returns {Promise<{model:string, source:string, candidates:string[]}>}
+ * @returns {Promise<{model:string, source:string, candidates:string[], fallbacks:string[]}>}
  */
 export async function resolveGeminiModel(accounts, { refresh = false, quiet = false } = {}) {
     const policy = readPolicy(accounts);
 
     if (!policy.auto) {
-        return { model: policy.pinned, source: 'config（固定）', candidates: [] };
+        // 版を名指しで固定している人の意図を、混雑を理由に勝手に覆さない。
+        return remember({ model: policy.pinned, source: 'config（固定）', candidates: [] });
     }
 
     const cache = readJson(CACHE_PATH(), null);
     if (!refresh && cache?.model && cacheAgeHours(cache) < policy.maxAgeHours) {
-        return { model: cache.model, source: `キャッシュ（${cache.resolvedAtJst ?? '時刻不明'}）`, candidates: cache.candidates ?? [] };
+        return remember({
+            model: cache.model,
+            source: `キャッシュ（${cache.resolvedAtJst ?? '時刻不明'}）`,
+            candidates: cache.candidates ?? [],
+        });
     }
 
     let candidates;
@@ -213,7 +227,8 @@ export async function resolveGeminiModel(accounts, { refresh = false, quiet = fa
                 `   理由: ${error.message}\n` +
                 '   （このまま生成に失敗する場合は、config/accounts.json の geminiModelFallback を見なおしてください）'
         );
-        return { model: fallback, source: '控え（一覧を取れず）', candidates: [] };
+        // 一覧は引けなくても、前回の候補は手元にある。混雑したときの乗りかえ先として使う。
+        return remember({ model: fallback, source: '控え（一覧を取れず）', candidates: cache?.candidates ?? [] });
     }
 
     if (candidates.length === 0) {
@@ -223,7 +238,7 @@ export async function resolveGeminiModel(accounts, { refresh = false, quiet = fa
                 `   条件: 系統=${policy.prefer} / preview を使う=${policy.allowPreview}\n` +
                 '   （config/accounts.json の geminiModelPrefer を見なおしてください）'
         );
-        return { model: fallback, source: '控え（候補なし）', candidates: [] };
+        return remember({ model: fallback, source: '控え（候補なし）', candidates: cache?.candidates ?? [] });
     }
 
     const model = candidates[0];
@@ -246,7 +261,21 @@ export async function resolveGeminiModel(accounts, { refresh = false, quiet = fa
         console.log(`   モデルが切り替わりました: ${previous} → ${model}`);
     }
 
-    return { model, source: '自動選択', candidates };
+    return remember({ model, source: '自動選択', candidates });
+}
+
+/**
+ * 決まったモデルと、混雑したときの乗りかえ先を1か所で確定させる。
+ *
+ * ⚠️ resolveGeminiModel の出口は5つある（固定・キャッシュ・一覧を取れず・候補なし・自動選択）。
+ *    控えの登録を出口ごとに書くと、1つ書き忘れたときに
+ *    「その経路のときだけ混雑で落ちる」という、再現しにくい壊れ方になる。
+ *    出口を全部ここに通す。
+ */
+function remember({ model, source, candidates }) {
+    const fallbacks = (candidates ?? []).filter((id) => id && id !== model).slice(0, MAX_FALLBACKS);
+    setFallbackModels(fallbacks);
+    return { model, source, candidates: candidates ?? [], fallbacks };
 }
 
 /** キャッシュが無くても落ちないように、素の読み出しも公開しておく（検査用）。 */

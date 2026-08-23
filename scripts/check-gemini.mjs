@@ -24,12 +24,13 @@ async function main() {
     // ここで決めて data/gemini-model.json に書く。
     // 以降の工程（②理解・④生成・④'note）は、その結果を読むだけになる。
     // 週次のいちばん最初に走るステップなので、ここが「今週どのモデルを使うか」を決める場所である。
-    const { model, source, candidates } = await resolveGeminiModel(accounts, { refresh: true });
+    const { model, source, candidates, fallbacks } = await resolveGeminiModel(accounts, { refresh: true });
 
     info(`Gemini API を確かめます（モデル: ${model} — ${source}）`);
-    if (candidates.length > 1) {
-        info(`   ほかの候補: ${candidates.slice(1, 5).join(', ')}`);
-    }
+    // ⚠️ 控えは必ず出す。出したばかりの版は混みやすく、503 が返りつづける週がある。
+    //    そのとき何に乗りかえるのかがログに残っていないと、
+    //    あとから「控えが働いたのか、そもそも空だったのか」を見分けられない。
+    info(fallbacks.length > 0 ? `   混んでいたら、この順で切り替えます: ${fallbacks.join(' → ')}` : '   控えはありません（本命が混んでいると、そこで止まります）');
 
     if (args['models']) {
         // 何が選べる状態なのかを見たいときのための出口。

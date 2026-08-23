@@ -95,7 +95,16 @@ jobs:
             return null;
           };
 
-          const done = [], skipped = [], failed = [];
+          // ⚠️ pending は「緑なのに終わっていない」を数えるための箱である。
+          //
+          //   カスタムドメインを入れた直後は、GitHub 側の証明書がまだ発行されていない。
+          //   HTTPS 強制はそのあいだ受け付けられないので、1回目の実行では入らない。
+          //   2026-08-17 の実行では 46 件中 44 件がこの状態で終わり、
+          //   結果は「✅ …（HTTPS 強制は証明書の発行待ち）」と1行ずつ流れただけだった。
+          //   全部緑で、失敗も 0 件。誰も戻ってこないまま、http:// が
+          //   https:// に飛ばないリポジトリが 44 件残った。
+          //   数えて最後にまとめて出す。件数になっていないと、人は戻ってこない。
+          const done = [], skipped = [], failed = [], pending = [];
 
           for (const r of repos) {
             const repo = r.name;
@@ -120,7 +129,14 @@ jobs:
             } else if (cur.json?.cname === host) {
               // 既に同じドメインが入っている。証明書の発行待ちのことがあるので、
               // https_enforced だけ後段で試す。
-              console.log(`${repo}: 既に ${host} が登録済み`);
+              //
+              // ⚠️ ここで「いまどうなっているか」まで出す。ドメインが入っているかだけを見ていると、
+              //    「登録済み」と表示されている 44 件が実は http のままだ、という状態を
+              //    dry run では一度も見つけられない。確かめるための実行なのに確かめられない。
+              const cert = cur.json?.https_certificate?.state ?? '不明';
+              const enforced = cur.json?.https_enforced === true;
+              console.log(`${repo}: 既に ${host} が登録済み（証明書: ${cert} / HTTPS 強制: ${enforced ? '入' : '未'}）`);
+              if (!enforced) pending.push(`${repo}（証明書: ${cert}）`);
             } else {
               console.log(`${repo}: カスタムドメインを ${cur.json?.cname ?? '(空)'} → ${host} に設定`);
             }
@@ -133,7 +149,11 @@ jobs:
 
             // HTTPS の強制は、証明書が出るまで受け付けられない。失敗しても止めない。
             const sec = await api('PUT', `/repos/${owner}/${repo}/pages`, { https_enforced: true });
-            done.push(`${repo} → https://${host}/${sec.status === 204 ? '（HTTPS 強制も設定）' : '（HTTPS 強制は証明書の発行待ち）'}`);
+            const enforced = sec.status === 204;
+            // 上の分岐で積んでいることがあるので、入ったぶんは取り下げる。
+            if (enforced) { const i = pending.findIndex((x) => x.startsWith(`${repo}（`)); if (i >= 0) pending.splice(i, 1); }
+            else if (!pending.some((x) => x.startsWith(`${repo}（`))) pending.push(`${repo}（証明書の発行待ち）`);
+            done.push(`${repo} → https://${host}/${enforced ? '（HTTPS 強制も設定）' : '（HTTPS 強制は証明書の発行待ち）'}`);
           }
 
           console.log('\n===== 結果 =====');
@@ -141,6 +161,18 @@ jobs:
           done.forEach((x) => console.log('  ✅ ' + x));
           if (failed.length) { console.log(`\n失敗: ${failed.length} 件`); failed.forEach((x) => console.log('  ❌ ' + x)); }
           console.log(`\n対象外: ${skipped.length} 件（CNAME を置いていないリポジトリ）`);
+
+          // ここが「まだ終わっていない」の置き場。0 件になって初めて移行が済んだと言える。
+          if (pending.length) {
+            console.log(`\n⚠️ HTTPS 強制がまだ入っていない: ${pending.length} 件`);
+            pending.forEach((x) => console.log('  ⏳ ' + x));
+            console.log('   証明書は登録から数十分〜24時間ほどで出ます。');
+            console.log('   証明書が approved になってから、このワークフローをもう一度（dry run を外して）流すと入ります。');
+            console.log('   入るまでは http:// で開いた人が https:// に飛ばされません。');
+          } else {
+            console.log('\n✅ HTTPS 強制は全件に入っています。');
+          }
+
           if (dryRun) console.log('\n※ dry run です。実際に反映するには Run workflow で dry_run のチェックを外してください。');
           if (failed.length) process.exit(1);
           JS

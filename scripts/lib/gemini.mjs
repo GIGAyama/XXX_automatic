@@ -19,6 +19,86 @@
 const ENDPOINT = process.env.GEMINI_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta/models';
 
 /**
+ * 待ち時間の基準（ミリ秒）。2倍・8倍・30倍して使う。
+ *
+ * 差し替えられるようにしてあるのは ENDPOINT と同じ理由。
+ *   ・待ちを挟まずに、切り替えの筋道そのものを試せるようにするため
+ *   ・混雑が長引くときに、待ちを伸ばして粘らせるため
+ * 通常は設定しない。
+ */
+function retryUnitMs() {
+    return Number(process.env.GEMINI_RETRY_WAIT_MS) || 1000;
+}
+
+/**
+ * 本命が混んでいたときに、代わりに投げるモデルの並び（良い順）。
+ * scripts/lib/gemini-models.mjs が、モデルを決めたときに入れる。
+ *
+ * ⚠️ なぜ要るのか（2026-08-16 と 08-23 に週次が2週続けて落ちた）
+ *
+ *   自動選択は「いま使えるいちばん新しい安定版」を選ぶ。ところが出たばかりの版は
+ *   いちばん混んでいる版でもあり、503 UNAVAILABLE（high demand）が返りつづける。
+ *   同じモデルに3回やり直すだけでは、待っても相手が空かないので抜けられない。
+ *   一方で、1つ前の版はたいてい空いている。候補の並びは既に持っているのだから、
+ *   使えないと分かった時点で次へ移る。
+ *
+ *   「新しい版が止まった日に週次が丸ごと落ちる」を避けるために自動選択を入れたのに、
+ *   その自動選択が新しい版を掴んで落ちていた。控えを持たせて初めて筋が通る。
+ */
+let fallbackModels = [];
+
+/**
+ * この実行のなかで、実際に応答が返ってきたモデル。
+ *
+ * 1回の実行で 38 件のプロフィールを作るような使い方をするので、
+ * 本命が混んでいると分かったあとも毎回そこから試すと、
+ * 「混雑を確かめるだけの待ち時間」を件数ぶん払うことになる。
+ * 一度通ったモデルがあれば、次の呼び出しはそこから始める。
+ */
+let workingModel = null;
+
+/** 控えの並びを入れる。scripts/lib/gemini-models.mjs から呼ばれる。 */
+export function setFallbackModels(models) {
+    fallbackModels = (models ?? []).map(String).filter(Boolean);
+    workingModel = null;
+}
+
+/** テストのために、控えと「通ったモデル」を初期化する。 */
+export function resetModelState() {
+    fallbackModels = [];
+    workingModel = null;
+}
+
+/**
+ * 実際に試す順を組む。
+ *
+ * @param {string} model    本命（config か自動選択で決まったもの）
+ * @param {object} [options]
+ * @param {boolean} [options.search]  検索を使う呼び出しか
+ */
+export function modelChain(model, { search = false } = {}) {
+    const wanted = [];
+    // 前の呼び出しで通ったモデルを先頭に。控えに載っているものだけを昇格させる
+    // （呼び出し側が別のモデルを名指ししているときに、勝手に差し替えないため）。
+    if (workingModel && (workingModel === model || fallbackModels.includes(workingModel))) wanted.push(workingModel);
+    wanted.push(model, ...fallbackModels);
+
+    const seen = new Set();
+    const chain = wanted.filter((id) => {
+        if (!id || seen.has(id)) return false;
+        seen.add(id);
+        // ⚠️ 検索と構造化出力を同時に使えるのは3系から。2系に落とすと 400 になるだけなので、
+        //    切り替え先としてはじめから外す。ここを忘れると、混雑を避けたつもりで
+        //    「毎回 400 で落ちる」という別の壊れ方に置きかわる。
+        if (search && !supportsSearch(id)) return false;
+        return true;
+    });
+
+    // 全部落ちることは無いはずだが、空を返すと呼び出し側が理由の無い失敗になる。
+    return chain.length > 0 ? chain : [model];
+}
+
+/**
  * 構造化された JSON を生成させる。
  *
  * @param {object} options
@@ -120,14 +200,63 @@ export function requireApiKey() {
     return apiKey;
 }
 
+/**
+ * 本命 → 控え の順に投げる。
+ *
+ * 1つのモデルのなかでのやり直し（待って投げなおす）と、
+ * モデルを乗りかえる判断を、ここで分けて扱う。
+ * 待って開くのは自分側の上限（429）で、相手が混んでいる（503）のは待っても開かない。
+ */
 async function callGemini(model, body) {
     const apiKey = requireApiKey();
-
-    const url = `${ENDPOINT}/${encodeURIComponent(model)}:generateContent`;
-    const maxAttempts = 4;
+    const chain = modelChain(model, { search: Boolean(body.tools) });
     let lastError;
 
-    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    for (const [index, candidate] of chain.entries()) {
+        const isLast = index === chain.length - 1;
+        const outcome = await callOneModel(apiKey, candidate, body, isLast);
+
+        if (outcome.ok) {
+            // 次の呼び出しはここから始める。38 件ぶん「混雑を確かめるだけの待ち時間」を
+            // 払わないようにするためで、この実行のあいだだけ覚えておけばよい。
+            workingModel = candidate;
+            if (index > 0) console.warn(`  ↪ ${candidate} で書けました`);
+            return outcome.value;
+        }
+
+        lastError = outcome.error;
+
+        // キーや権限の間違いは、どのモデルに投げても同じことが起きる。
+        // 乗りかえると同じエラーが並ぶだけで、本当の理由が埋もれる。
+        if (outcome.fatal) throw outcome.error;
+
+        if (!isLast) {
+            console.warn(`  ↪ ${candidate} は使えません（${outcome.reason}）。${chain[index + 1]} に切り替えます`);
+        }
+    }
+
+    // ⚠️ 何を試したかを必ず添える。控えを持たせた以上、
+    //    「503 でした」だけでは、控えが働いたのか、そもそも並んでいなかったのかが分からない。
+    const tried = chain.join(' → ');
+    const error = lastError ?? new Error('Gemini API の呼び出しに失敗しました');
+    error.message = `${error.message}\n\n  → 試したモデル: ${tried}（すべて使えませんでした）`;
+    throw error;
+}
+
+/**
+ * 1つのモデルに投げる。待ってやり直すのはここまで。
+ *
+ * @param {boolean} isLast  これが最後の候補か（次が無いときだけ、長い待ちまで粘る）
+ * @returns {Promise<{ok:true, value:object}|{ok:false, fatal:boolean, reason:string, error:Error}>}
+ */
+async function callOneModel(apiKey, model, body, isLast) {
+    const url = `${ENDPOINT}/${encodeURIComponent(model)}:generateContent`;
+    // 次に行き先があるなら、30秒の待ちは省く。混んでいる相手を待つより、空いている相手に投げるほうが早い。
+    const waits = (isLast ? [2, 8, 30] : [2, 8]).map((sec) => sec * retryUnitMs());
+    let lastError;
+    let reason = '不明';
+
+    for (let attempt = 1; attempt <= waits.length + 1; attempt += 1) {
         let response;
         try {
             response = await fetch(url, {
@@ -138,8 +267,12 @@ async function callGemini(model, body) {
         } catch (error) {
             // ネットワーク断。待ってやり直す価値がある。
             lastError = error;
-            await sleep(backoffMs(attempt));
-            continue;
+            reason = '通信できません';
+            if (attempt <= waits.length) {
+                await sleep(waits[attempt - 1]);
+                continue;
+            }
+            break;
         }
 
         if (response.ok) {
@@ -148,30 +281,45 @@ async function callGemini(model, body) {
             const finishReason = json?.candidates?.[0]?.finishReason ?? null;
             if (!text.trim()) {
                 // 安全フィルタで止められた場合はここに来る。理由を出さないと直しようがない。
-                const reason = finishReason ?? json?.promptFeedback?.blockReason ?? '不明';
-                throw new Error(`Gemini が空の応答を返しました（finishReason: ${reason}）`);
+                // モデルを変えても同じ文章は同じように止められるので、乗りかえない。
+                const blocked = finishReason ?? json?.promptFeedback?.blockReason ?? '不明';
+                return {
+                    ok: false,
+                    fatal: true,
+                    reason: `空の応答（${blocked}）`,
+                    error: new Error(`Gemini が空の応答を返しました（finishReason: ${blocked}）`),
+                };
             }
-            return { text, finishReason };
+            return { ok: true, value: { text, finishReason } };
         }
 
         const detail = await response.text().catch(() => '');
+        lastError = new Error(describeApiError(response.status, detail));
+        reason = `${response.status}`;
+
+        // 404 は「その版がもう無い」。何度投げても同じなので、待たずに次の候補へ渡す。
+        // 自動選択が古い版を掴んだまま止まる、という壊れ方をここで受け止める。
+        // 候補が全部 404 だったときは設定を見なおす話なので、
+        // スタックトレースではなく案内が出るように印をつけておく。
+        if (response.status === 404) {
+            lastError.userFacing = true;
+            break;
+        }
 
         // 429（レート上限）と 5xx（一時的な障害）だけやり直す。
-        // 400 や 403 は何度投げても同じなので、すぐ止めて原因を出す。
-        if (response.status === 429 || response.status >= 500) {
-            lastError = new Error(describeApiError(response.status, detail));
-            if (attempt < maxAttempts) {
-                const wait = backoffMs(attempt);
-                console.warn(`  ⏳ Gemini ${response.status}。${wait / 1000}秒待ってやり直します（${attempt}/${maxAttempts - 1}）`);
-                await sleep(wait);
-                continue;
-            }
-        } else {
-            throw Object.assign(new Error(describeApiError(response.status, detail)), { userFacing: true });
+        // 400 や 403 は何度投げても同じで、モデルを変えても同じなので、すぐ止めて原因を出す。
+        if (response.status !== 429 && response.status < 500) {
+            return { ok: false, fatal: true, reason, error: Object.assign(lastError, { userFacing: true }) };
+        }
+
+        if (attempt <= waits.length) {
+            const wait = waits[attempt - 1];
+            console.warn(`  ⏳ Gemini ${response.status}。${wait / 1000}秒待ってやり直します（${attempt}/${waits.length}）`);
+            await sleep(wait);
         }
     }
 
-    throw lastError ?? new Error('Gemini API の呼び出しに失敗しました');
+    return { ok: false, fatal: false, reason, error: lastError ?? new Error('Gemini API の呼び出しに失敗しました') };
 }
 
 /**
@@ -242,6 +390,15 @@ function hintFor(status, apiStatus, message) {
         ].join('\n');
     }
 
+    if (status === 503 || text.includes('unavailable') || text.includes('high demand')) {
+        return [
+            '  → そのモデルが混みあっています（キーや設定の問題ではありません）。',
+            '     出たばかりの版はいちばん混んでいる版でもあるので、控えの版へ自動で切り替えます。',
+            '     控えが1つも無い状態でここに来た場合は、config/accounts.json の geminiModel を',
+            "     'auto' にして、node scripts/check-gemini.mjs --models で候補を確かめてください。",
+        ].join('\n');
+    }
+
     if (status === 400) {
         return [
             '  → リクエストが受け付けられませんでした。',
@@ -250,11 +407,6 @@ function hintFor(status, apiStatus, message) {
     }
 
     return '';
-}
-
-/** 2秒 → 8秒 → 30秒。無料枠の1分あたり上限は1分待てば必ず開くので、最後は長めに待つ。 */
-function backoffMs(attempt) {
-    return [2000, 8000, 30000][attempt - 1] ?? 30000;
 }
 
 export function sleep(ms) {
