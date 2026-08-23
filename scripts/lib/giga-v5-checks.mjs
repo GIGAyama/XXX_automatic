@@ -547,8 +547,18 @@ export const CHECKS = [
         for (const m of css.matchAll(/(^|[},])\s*rt\s*\{([^}]*)\}/g)) {
           const body = m[2];
           if (/color\s*:/.test(body) && !/color\s*:\s*inherit/.test(body)) {
-            // 色のついた面で継がせる手当てがあればよい
-            if (!/\[class\*?=["']?bg-|button\s+rt|\brt\s*\{\s*color\s*:\s*inherit/.test(css)) {
+            // 色のついた面で継がせる手当てがあればよい。
+            //
+            // ⚠️ 手当ては「rt を指す規則」でなければならない。
+            //    かつては [class*="bg-" や button\s+rt を CSS のどこかから
+            //    探すだけだったので、ふりがなと関係のない
+            //      [class*="bg-primary"] .text-primary { … }
+            //    が身代わりになり、**手当てを丸ごと消して rt に色を決め打ちしても
+            //    通っていた**（2026-08-23 に mirai-compass で実測）。
+            //    Bootstrap 風の bg- ユーティリティを使う CSS では、この検査が
+            //    まるごと効かなくなる。セレクタが rt を含むことまで見る。
+            const remedy = /(^|[},])[^{}]*\brt\s*\{[^}]*color\s*:\s*inherit/.test(css);
+            if (!remedy) {
               bad.push(`${rel}: rt に色を決め打ちしています（色のついた面で読めなくなります）`);
             }
           }
