@@ -21,7 +21,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fail, info, paths, readText, rel } from './lib/io.mjs';
 
-const VERSION_LINE = /^const VERSION = '([^']*)';$/m;
+// ⚠️ 行末の /* __APP_VERSION__ */ は艦隊共通の目印である。
+//    「この値は手で上げるものではない」を、読み手にも検査にも同じ形で伝える。
+//    正本の E_SW_VERSION_GENERATED がこの目印を見て、手書きに戻っていないかを確かめる。
+const VERSION_LINE = /^const VERSION = '([^']*)'; \/\* __APP_VERSION__ \*\/$/m;
 const SHELL_LINE = /^const SHELL = \[([^\]]*)\];$/m;
 
 /** sw.js の SHELL 配列を読み、実ファイルのパスに直す。 */
@@ -79,7 +82,12 @@ function main() {
 
     const version = versionOf(files);
     const current = VERSION_LINE.exec(source);
-    if (!current) fail("docs/sw.js の `const VERSION = '...';` の行を読めませんでした");
+    if (!current) {
+        fail(
+            "docs/sw.js の `const VERSION = '...'; /* __APP_VERSION__ */` の行を読めませんでした。\n" +
+                '行末の目印を消すと、ここも正本のゲートも版を追えなくなります。'
+        );
+    }
 
     if (current[1] === version) {
         info(`SW の版は最新です（${version} / シェル ${files.length} ファイル）`);
@@ -94,7 +102,7 @@ function main() {
         );
     }
 
-    fs.writeFileSync(swPath, source.replace(VERSION_LINE, `const VERSION = '${version}';`), 'utf8');
+    fs.writeFileSync(swPath, source.replace(VERSION_LINE, `const VERSION = '${version}'; /* __APP_VERSION__ */`), 'utf8');
     info(`SW の版を更新しました: ${current[1]} → ${version}（シェル ${files.length} ファイル）`);
 }
 

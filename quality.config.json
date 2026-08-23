@@ -1,0 +1,19 @@
+{
+  "//": "正本 GIGAyama.github.io/standards/lib/giga-v5-checks.mjs に渡す設定。",
+  "standard": {
+    "repoName": "xxx_automatic",
+    "sw": "static",
+    "swSource": "docs/sw.js",
+    "swVersionConst": "VERSION",
+    "//swBuilder": "このリポジトリは道具を scripts/ にまとめている。既定（tools/build-sw.mjs）のままだと、版を正しく自動生成しているのに「自動生成が外れています」と落ちる",
+    "swBuilder": "scripts/build-sw.mjs",
+    "manifest": "docs/manifest.webmanifest",
+    "//entryHtml": "GitHub Pages を docs/ から配るので、入口は docs/index.html",
+    "entryHtml": "docs/index.html",
+    "siteRoot": "docs",
+    "jsDirs": ["docs"],
+    "cssDirs": ["docs"],
+    "htmlFiles": ["docs/index.html", "docs/apps.html", "docs/offline.html"],
+    "imageDirs": ["docs/icons"]
+  }
+}
