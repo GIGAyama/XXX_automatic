@@ -28,7 +28,18 @@ import { TABS, VIEWS } from '../docs/lib/select.js';
 import { lintArticle } from './lib/note-lint.mjs';
 import { inspectCard, readHeader } from './lib/png.mjs';
 import { CARD_SIZE } from './lib/card-template.mjs';
-import { runGigaChecks } from './lib/giga-v5-checks.mjs';
+import { gigaIssuesOf, standardConfigOf } from './lib/giga-part1.mjs';
+
+/* ── 検査そのものを確かめる（--self-test）───────────────
+ *
+ * 「0件でした」は、合格しているのか何も見ていないのかを区別できない。
+ * 木ごと写して1か所ずつ壊し、狙った検査が落ちることを確かめる。
+ * ⚠️ ほかの検査より先に置いて、ここで終わる。下は本物の木を見る検査である。 */
+
+if (process.argv.includes('--self-test')) {
+    const { selfTest } = await import('./lib/self-test.mjs');
+    process.exit(selfTest(ROOT, (root) => gigaIssuesOf(root)) ? 0 : 1);
+}
 
 const issues = [];
 
@@ -1114,7 +1125,7 @@ try {
  *    コントラスト・タップ領域・Service Worker が実際に登録されるか・
  *    押したら切り替わるかは、tools/measure-ui.mjs と tools/measure-pwa.mjs で測る。 */
 
-issues.push(...runGigaChecks({ root: ROOT }));
+issues.push(...gigaIssuesOf(ROOT));
 
 /* ── 出力 ─────────────────────────────────────── */
 

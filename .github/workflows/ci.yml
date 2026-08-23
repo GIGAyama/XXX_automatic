@@ -27,6 +27,11 @@ jobs:
       - name: 品質ゲート
         run: npm run check
 
+      # 検査そのものが壊れていないか（写しを1か所ずつ壊して、落ちることを見る）。
+      # 「0件でした」が「守るものが無い」を意味していないことを毎回確かめる。
+      - name: 検査そのものを確かめる
+        run: npm run check:self
+
       - name: テスト
         run: npm test
 
