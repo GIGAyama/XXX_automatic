@@ -56,6 +56,15 @@ const DEFAULT_STYLE = {
     /* 「最適」と「活用」は入れない。「個別最適な学び」「ICTを活用する」は
        学習指導要領の言葉として現場で使われていて、実例の記事にも入っている。 */
     abstract: ['重要', '効率的', '革新的', '画期的', 'シームレス', 'ソリューション', 'エビデンス'],
+    /* A10 数量は算用数字。counters は公開ずみ 32 本に出てきた助数詞を数えて並べた。
+       keep は誤検知を実測して足したもの。「じゅうぶん」と読む十分、百分率、四分の一。
+       この 3 つを外すと、32 本で 9 件の嘘の警告が出る。 */
+    kanjiNumerals: {
+      counters: ['時間', '週間', 'か月', '段階', '種類', 'メガバイト', 'キロバイト', 'ページ',
+        '文字', '秒', '分', '日', '年', '桁', '枚', '回', '度', '人', '冊', '件', '問', '色',
+        '個', '行', '列', '本', '台', '点', '手', '票', '階'],
+      keep: ['十分(?=[でだにな])', '百分(?=率)', '[一二三四五六七八九十百千万]+分(?=の[一二三四五六七八九十百千万])'],
+    },
   },
   naming: { children: '子どもたち', avoidForChildren: ['児童', '生徒'] },
 };
@@ -231,6 +240,22 @@ if (F.listOutsideGuide) {
     if (!allowed.has(sec)) add('error', ln, '記号', `「${sec || '見出しの前'}」で箇条書き。手順の節以外は文章で書く`);
   });
 }
+/* A10 数量は算用数字で書く。横書きで読まれるので、数字のほうが目に入る。
+ * ⚠️ 一・二で始まる単独の数は見ない。「一度」「一人」「一つ」「一覧」「一歩」「二人」と、
+ *    数を数えていない言葉がそこに集まっていて、拾うと嘘の警告のほうが多くなる。
+ *    そのぶん「二手先」のような本物も素通りする。公開ずみ 32 本で測って決めた。
+ *    「二十五種類」のように 2 文字以上つながるものは拾う。
+ * ⚠️ ✗ にしない。嘘の警告が出つづけると、本物の警告が読み飛ばされる。 */
+if (F.kanjiNumerals) {
+  const KN = '[一二三四五六七八九十百千万]';
+  const { counters = [], keep = [] } = F.kanjiNumerals;
+  const keepRe = keep.length ? new RegExp(`^(?:${keep.join('|')})`) : null;
+  const numRe = new RegExp(`(?<![一二三四五六七八九十百千万何])(?:[一二]${KN}+|[三四五六七八九十百千万]${KN}*)(?:${counters.join('|')})`, 'g');
+  scanBody(numRe, (m, ln, l) => {
+    if (keepRe && keepRe.test(l.slice(m.index))) return;
+    add('warn', ln, '表記', `数量は算用数字で書く  ${m[0]}`);
+  });
+}
 {
   const per1000 = (n) => (charCount ? (n * 1000) / charCount : 0);
   const k = (bodyText.match(/「/g) || []).length;
@@ -255,7 +280,7 @@ const sentences = bodyText.replace(/\n/g, '').split(/(?<=[。！？])/).map((s) 
 const endings = sentences.filter((s) => s.endsWith('。')).map((s) => s.slice(-4, -1));
 let run = 1;
 for (let i = 1; i < endings.length; i++) {
-  if (endings[i] === endings[i - 1]) { run++; if (run === 3) add('warn', 0, 'リズム', `同じ文末が3つ続く  …${endings[i]}。`); } else run = 1;
+  if (endings[i] === endings[i - 1]) { run++; if (run === 3) add('warn', 0, 'リズム', `同じ文末が三つ続く  …${endings[i]}。`); } else run = 1;
 }
 const lens = sentences.map((s) => s.length);
 const avg = lens.length ? lens.reduce((a, b) => a + b, 0) / lens.length : 0;
