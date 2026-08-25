@@ -44,7 +44,7 @@ import { generateJson, requireApiKey } from './lib/gemini.mjs';
 import { resolveGeminiModel } from './lib/gemini-models.mjs';
 import { fail, failWith, info, loadConfig, loadPolicy, parseArgs, paths, readJson, rel, writeJson, writeText } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, nextWeekDates } from './lib/jst.mjs';
-import { lintArticle, unsourcedNumbers } from './lib/note-lint.mjs';
+import { lintArticle, unsourcedNumbers, kanjiQuantities } from './lib/note-lint.mjs';
 import { loadShots, shotBlock } from './lib/note-shots.mjs';
 import { pagesUrlFor } from './lib/urls.mjs';
 
@@ -263,6 +263,10 @@ async function main() {
     // 落とさずに、確かめてほしいものとして出す。
     const unsourced = unsourcedNumbers(markdown, sourceText);
 
+    // 数量が漢数字のまま（A10）。これも落とさない。書きなおさせる理由に混ぜると、
+    // 「十秒」1 つのために節ごと書きかえさせることになる。
+    const kanjiNums = kanjiQuantities(markdown, style);
+
     if (problems.length > 0) {
         info(`\n   ✖ ${problems.length} 件が残りました。下書きは出しますが、出す前に直してください`);
         for (const p of problems) info(`     - ${p}`);
@@ -271,6 +275,9 @@ async function main() {
     }
     if (unsourced.length > 0) {
         info(`   ※ 資料に無い数字があります。裏を取ってください: ${unsourced.join(', ')}`);
+    }
+    if (kanjiNums.length > 0) {
+        info(`   ※ 数量が漢数字で書かれています。横書きなので算用数字にしてください: ${kanjiNums.join(', ')}`);
     }
 
     const plain = renderPlainText(article, { style, main, featured, accounts, sections, monetization });
@@ -300,6 +307,7 @@ async function main() {
         images: shotsUsedIn(article),
         problems,
         unsourcedNumbers: unsourced,
+        kanjiQuantities: kanjiNums,
     });
     writeText(mdPath, markdown);
 

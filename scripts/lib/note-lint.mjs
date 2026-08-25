@@ -273,6 +273,51 @@ function escapeRe(value) {
  * @param {string} sourceText  プロフィールなど、渡した資料をつないだもの
  * @returns {string[]} 資料に見つからなかった数字
  */
+/**
+ * 数量が漢数字で書かれていないか（A10）。
+ *
+ * 連載は note でも giga-school.com でも横書きで読まれる。数えた値は算用数字の
+ * ほうが目に入る。公開ずみ 32 本を数えたところ「四桁」12 件と「3桁」6 件、
+ * 「十秒」6 件と「10秒」44 件が混ざっていた。決まりが無かったためである。
+ *
+ * ⚠️ lintArticle には入れない。あそこの返り値は generate-note.mjs が
+ *    「書きなおさせる理由」に使うので、表記の指摘で節ごと書きかえさせてしまう。
+ *    unsourcedNumbers と同じで、落とさずに知らせるだけにする。
+ *
+ * ⚠️ 一・二で始まる単独の数は見ない。「一度」「一人」「一つ」「一覧」「一歩」
+ *    「二人」と、数を数えていない言葉がそこに集まっていて、拾うと嘘の警告の
+ *    ほうが多くなる。そのぶん「二手先」のような本物も素通りする。
+ *    「二十五種類」のように 2 文字以上つながるものは拾う。
+ *
+ * @param {string} markdown
+ * @param {object} style  config/note-style.json
+ * @returns {string[]} 算用数字にしたほうがよい語（重複は 1 つにまとめる）
+ */
+export function kanjiQuantities(markdown, style) {
+    const rule = style?.forbidden?.kanjiNumerals;
+    const counters = rule?.counters ?? [];
+    if (counters.length === 0) return [];
+
+    const KN = '[一二三四五六七八九十百千万]';
+    const keep = rule?.keep ?? [];
+    const keepRe = keep.length ? new RegExp(`^(?:${keep.join('|')})`) : null;
+    const re = new RegExp(
+        `(?<![一二三四五六七八九十百千万何])(?:[一二]${KN}+|[三四五六七八九十百千万]${KN}*)(?:${counters.join('|')})`,
+        'g'
+    );
+
+    const text = String(markdown ?? '').replace(IMAGE_RE, '');
+    const seen = new Set();
+    const out = [];
+    for (const hit of text.matchAll(re)) {
+        if (keepRe && keepRe.test(text.slice(hit.index))) continue;
+        if (seen.has(hit[0])) continue;
+        seen.add(hit[0]);
+        out.push(hit[0]);
+    }
+    return out;
+}
+
 export function unsourcedNumbers(markdown, sourceText) {
     const source = String(sourceText ?? '').replace(/[,，]/g, '');
     const seen = new Set();

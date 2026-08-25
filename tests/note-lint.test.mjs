@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 
-import { lintArticle, unsourcedNumbers } from '../scripts/lib/note-lint.mjs';
+import { lintArticle, unsourcedNumbers, kanjiQuantities } from '../scripts/lib/note-lint.mjs';
 
 const style = JSON.parse(fs.readFileSync(new URL('../config/note-style.json', import.meta.url), 'utf8'));
 const guardrails = JSON.parse(fs.readFileSync(new URL('../config/guardrails.json', import.meta.url), 'utf8'));
@@ -331,4 +331,67 @@ test('1桁の数字は見ない（「三つ」「一つ目」に紛れるため�
 
 test('画像のキャプションに出る数字は見ない', () => {
     assert.deepEqual(unsourcedNumbers('![1年生の画面](images/01-home.png)', ''), []);
+});
+
+/* ── 数量の表記（A10）───────────────────────── */
+
+const kanji = (md) => kanjiQuantities(md, style);
+
+test('漢数字で書かれた数量を挙げる', () => {
+    assert.deepEqual(
+        kanji('四桁の数を十文字ならべます。十秒で終わります。二十五種類の図を三十人で見ます。'),
+        ['四桁', '十文字', '十秒', '二十五種類', '三十人']
+    );
+});
+
+test('和語の数詞は挙げない。「3つ目」は「さんつめ」に見える', () => {
+    assert.deepEqual(kanji('一つ目は速いこと。二つ目は軽いこと。三つ目は安いことです。'), []);
+});
+
+test('数を数えていない言葉は挙げない', () => {
+    assert.deepEqual(kanji('一度も開いていないので一覧に出ません。一人ひとりに一枚ずつ、一斉に配ります。'), []);
+});
+
+test('算用数字で書けているものは挙げない', () => {
+    assert.deepEqual(kanji('4桁の数を10文字まで、10秒で終えられます。1回押すだけです。'), []);
+});
+
+/* keep（誤検知の除外）。外すと嘘の警告が出ることを確かめる。 */
+
+test('「じゅうぶん」と読む十分は挙げない', () => {
+    assert.deepEqual(kanji('それだけで十分です。十分に伝わります。二つ目だけで十分だと思います。'), []);
+});
+
+test('百分率と四分の一は挙げない', () => {
+    assert.deepEqual(kanji('五年生の百分率なら、四分の一で当たってしまいます。'), ['五年']);
+});
+
+test('概数の「何十」は挙げない', () => {
+    assert.deepEqual(kanji('何十点もの画面が入ります。何十ページもある教科書です。'), []);
+});
+
+test('同じ十分でも、10 分のほうは挙げる', () => {
+    assert.deepEqual(kanji('朝の十分間、名簿を見ます。'), ['十分']);
+});
+
+test('同じ語は 1 つにまとめる', () => {
+    assert.deepEqual(kanji('十秒で終わります。次も十秒です。'), ['十秒']);
+});
+
+test('画像のキャプションに出る数量は見ない', () => {
+    assert.deepEqual(kanji('![四桁の画面](images/01-home.png)'), []);
+});
+
+/* ⚠️ ここが崩れると、書き手が 2 つの検査から違うことを言われる（style.md:5-8）。 */
+
+test('ポータルの正本と、助数詞と除外がそろっている', () => {
+    const canonical = fs.readFileSync(
+        new URL('../.claude/skills/note-article/scripts/lint-article.mjs', import.meta.url), 'utf8'
+    );
+    const at = canonical.indexOf('kanjiNumerals:');
+    if (at < 0) return;   // 配布がまだ届いていないリポジトリでは見ない
+    const block = canonical.slice(at, canonical.indexOf('},', canonical.indexOf('keep:', at)));
+    const rule = style.forbidden.kanjiNumerals;
+    for (const c of rule.counters) assert.ok(block.includes(`'${c}'`), `助数詞 ${c} が正本にない`);
+    for (const k of rule.keep) assert.ok(block.includes(k), `除外 ${k} が正本にない`);
 });
