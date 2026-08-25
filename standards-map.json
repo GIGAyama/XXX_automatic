@@ -4,5 +4,15 @@
       "canonical": "lib/giga-v5-checks.mjs",
       "local": "scripts/lib/giga-v5-checks.mjs"
     }
+  ],
+  "dirs": [
+    {
+      "canonical": "skills/devlog-article",
+      "local": ".claude/skills/devlog-article"
+    },
+    {
+      "canonical": "skills/note-article",
+      "local": ".claude/skills/note-article"
+    }
   ]
 }
