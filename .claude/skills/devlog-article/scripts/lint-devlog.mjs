@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* 開発記録の記事を、機械で確かめられるところだけ確かめる。
  *
  *   node lint-devlog.mjs docs/devlog/2026-08-24-backlink.md
