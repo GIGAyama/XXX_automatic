@@ -13,6 +13,14 @@
     {
       "canonical": "skills/note-article",
       "local": ".claude/skills/note-article"
+    },
+    {
+      "canonical": "skills/giga-scaffold",
+      "local": ".claude/skills/giga-scaffold"
+    },
+    {
+      "canonical": "skills/giga-reviewer",
+      "local": ".claude/skills/giga-reviewer"
     }
   ]
 }
