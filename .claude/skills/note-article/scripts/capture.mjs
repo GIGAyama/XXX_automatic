@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* 実ブラウザでアプリを操作してスクリーンショットを撮るための土台。
  *
  *   node capture.mjs <シナリオファイル> [--base URL] [--out ディレクトリ] [--strict]
