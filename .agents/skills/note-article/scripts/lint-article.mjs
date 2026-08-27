@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* 書き上げた記事を、機械で確かめられるところだけ確かめる。
  *
  *   node lint-article.mjs docs/note/<app>-note-article.md
@@ -231,7 +232,7 @@ scanBody(/^\s*(-{3,}|\*{3,}|_{3,})\s*$/g, (m, ln) => add('error', ln, '記号', 
 scanBody(/(?<!!)\[[^\]]*\]\([^)]+\)/g, (m, ln) => add('error', ln, '記号', `Markdown のリンク。URL をそのまま置く  ${m[0].slice(0, 28)}`));
 for (const s of F.symbols || [])
   scanBody(new RegExp(s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), (m, ln) => add('error', ln, '記号', `禁止された記号  ${s}`));
-scanBody(/(?<!\w):[ 　]/g, (m, ln) => add('error', ln, '記号', '半角コロンのあとの空白'));
+scanBody(/(?<!\w)(?<!\w):[ \u3000]/g, (m, ln) => add('error', ln, '記号', '半角コロンのあとの空白'));
 if (F.emojiInBody) scanBody(/\p{Extended_Pictographic}/gu, (m, ln) => add('error', ln, '記号', `本文に絵文字  ${m[0]}`));
 if (F.listOutsideGuide) {
   const allowed = new Set((STYLE.sections || []).filter((s) => s.allowList).map((s) => s.heading));

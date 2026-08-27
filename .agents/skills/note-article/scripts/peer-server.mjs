@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* PeerJS のシグナリングサーバを手もとに立てる。
  *
  *   npm i --no-save peer

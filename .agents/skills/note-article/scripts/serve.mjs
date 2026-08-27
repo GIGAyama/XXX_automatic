@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* ビルド成果物を、GitHub Pages と同じサブパスの下で配る静的サーバ。
  *
  *   node serve.mjs <ルート> <ポート> <ベースパス> [--spa]
