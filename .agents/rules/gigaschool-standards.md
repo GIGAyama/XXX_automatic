@@ -3,7 +3,13 @@
 本ワークスペース（`GIGAyama.github.io`）および傘下の全GIGAスクールWebアプリ群における開発・保守ルールです。
 Antigravity（Gemini）および Claude Code の双方が共通して遵守すべき最高位の行動原則を定めます。
 
-※ システム全体の詳細設計・障害教訓・データフローについては、必ず [SYSTEM_MASTER.md](file:///c:/Users/basst/gigayama/GIGAyama.github.io/docs/architecture/SYSTEM_MASTER.md) を参照してください。
+※ システム全体の詳細設計・障害教訓・データフローについては、必ず
+`GIGAyama.github.io/docs/architecture/SYSTEM_MASTER.md` を参照してください。
+
+⚠️ この文書の正本は `GIGAyama.github.io/standards/agents/rules/gigaschool-standards.md`
+です。各リポジトリの `.agents/rules/` にあるものは配布された写しなので、
+**直接編集しても他のリポジトリには届きません。** 直すときは正本を直し、
+`node tools/distribute.mjs` で配ってください。
 
 ---
 
@@ -21,7 +27,13 @@ Antigravity（Gemini）および Claude Code の双方が共通して遵守す�
 
 ## 2. 児童目線UI/UX & 教育的配慮 (Child-Centric UI/UX)
 - **直感性と誤操作防止**:
-  - タッチ操作に配慮したボタンサイズ（タップ領域 48px × 48px 以上必須）。
+  - タッチ操作に配慮したボタンサイズ（タップ領域は **48px × 48px 以上**を既定とする）。
+  - ⚠️ ただし **リポジトリ側の品質ゲートが明示している数値が優先**する。
+    たとえば Werewolf は GIGA Standard v4 世代で 44px を採用し、CI がその値で
+    検査している。ここの数値に合わせて 44px の側を書き替えると、そのリポジトリの
+    ゲートと文書の両方と食い違う。新規に作るものは 48px、既存のものは
+    そのリポジトリのゲートに従うこと。
+  - rem 指定のタップ領域は狭い端末で下限を割る。下限は **px の絶対値**で置くこと。
   - 直感的でコントラストの高いカラー設計（WCAG AA基準準拠）。
 - **言語・可読性**:
   - 対象学年に応じた漢字選定およびルビ（`<ruby>` タグ）の適切な付与。
@@ -39,7 +51,34 @@ Antigravity（Gemini）および Claude Code の双方が共通して遵守す�
 ---
 
 ## 4. AI開発エージェント共通コマンド・チェック手順
-コミット・PR作成前には以下のチェックを必ずパスさせること：
-- `npm test` または `node --test`（単体テスト）
-- `node tools/build-sw.mjs --check`（SW版数整合性検査）
-- `node standards/check-drift.mjs`（正本整合性検査）
+
+コミット・PR作成前に、**そのリポジトリに在るものだけ**を必ずパスさせること。
+無いものを走らせて ENOENT で止まるのは「検査に通っていない」であって
+「検査が無い」ではない。まず `package.json` の `scripts` を見て、在るものを走らせる。
+
+| 何を見るか | コマンド | 在る場所 |
+| --- | --- | --- |
+| 単体テスト | `npm test`（無ければ `node --test`） | `scripts.test` のあるリポジトリ |
+| 品質ゲート | `npm run check` | `scripts.check` のあるリポジトリ |
+| SW版数整合性 | `node tools/build-sw.mjs --check` | `tools/build-sw.mjs` のあるリポジトリのみ |
+| 正本整合性 | 下記 | 全リポジトリ |
+
+### 正本整合性検査（check-drift）の走らせ方
+
+⚠️ **配布先のリポジトリに `standards/` は無い。** 正本はポータル
+（`GIGAyama.github.io`）だけが持つ。`node standards/check-drift.mjs` と打っても
+配布先では必ず ENOENT で落ちる。
+
+- **配布先（アプリのリポジトリ）**: ポータルを隣に置いてから、その正本を指して走らせる。
+
+  ```bash
+  node ../GIGAyama.github.io/standards/check-drift.mjs \
+       --standards ../GIGAyama.github.io/standards
+  ```
+
+  CI は同じことを `.standards-src` へチェックアウトして行っている
+  （`.github/workflows/*.yml` の drift ジョブ）。
+
+- **ポータル自身**: `node standards/check-drift.mjs --standards standards`
+
+`--standards` は必須。省くと使い方を出して exit 2 で終わる。
