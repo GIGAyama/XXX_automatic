@@ -89,8 +89,71 @@ const FIXTURE_PATH_PATTERN =
 
 /* コメント行。書いてあるだけで読み込んではいない。
    古い構成の説明（KANA_Master/tools/build.mjs は、以前 CDN から読んでいた
-   ものを一覧にして残してある）や、コメントアウトした断片が引っかかっていた。 */
+   ものを一覧にして残してある）や、コメントアウトした断片が引っかかっていた。
+
+   ⚠️ これはコメントの**始まる行**しか見ていない。
+      /* … *\/ や <!-- … --> の途中の行（先頭が空白で始まる本文）は
+      素通りして違反として数えられる。実測で 4 件がこれだった（2026-08-28）:
+      KANA_Master/tools/build.mjs には「もとはこの 4 本を読ませていた」という
+      一覧がブロックコメントで残っていて、その 4 行が毎回赤くなっていた。
+      途中の行まで見るのは下の commentMask() の仕事。 */
 const COMMENT_LINE = /^\s*(?:\/\/|\/\*|\*|#|<!--)/;
+
+/* 引用符の中を落とす。'https://…' のような文字列に紛れた /* を
+   コメントの開きと読まないため。正確な字句解析ではないが、
+   「コメントかどうか」を決めるにはこれで足りる。 */
+function stripStrings(line) {
+  return line
+    .replace(/'(?:\\.|[^'\\])*'/g, "''")
+    .replace(/"(?:\\.|[^"\\])*"/g, '""')
+    .replace(/`(?:\\.|[^`\\])*`/g, '``');
+}
+
+/**
+ * 行ごとに「コメントの中か」を返す。
+ *
+ * ブロックコメントは開いた行から閉じた行までを覆う。開いた行・閉じた行も
+ * コメント扱いにする（その行に本物の読み込みが同居することは、この艦隊では無い）。
+ * 拡張子で言語を切りかえる: .html は <!-- -->、それ以外は /* *\/。
+ */
+export function commentMask(lines, filePath = '') {
+  const html = /\.(?:html?|vue|svelte)$/i.test(filePath);
+  const open = html ? '<!--' : '/*';
+  const close = html ? '-->' : '*/';
+  const mask = new Array(lines.length).fill(false);
+  let inside = false;
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = html ? lines[i] : stripStrings(lines[i]);
+    if (inside) {
+      mask[i] = true;
+      if (line.includes(close)) inside = false;
+      continue;
+    }
+    const o = line.indexOf(open);
+    if (o !== -1 && line.indexOf(close, o + open.length) === -1) {
+      inside = true;
+      mask[i] = true;
+    } else if (COMMENT_LINE.test(lines[i])) {
+      mask[i] = true;
+    }
+  }
+  return mask;
+}
+
+/* ビルド時にしか動かない Node のプログラム。ブラウザへは配られない。
+   置き場の一覧ではなく、ファイル自身の宣言で見分ける（shebang か node: の取りこみ）。
+   この艦隊では .mjs をブラウザへ配っているリポジトリは 1 本も無い（実測）。
+
+   ここを違反として数えると、CSP が効くことを**わざと**確かめている自己検査
+   （DigitalCloset/tools/measure-csp.mjs）や、記事用の写しから font link を
+   **外す**前処理（Digital-Newspaper/docs/note/capture/prepare.mjs）まで赤くなる。
+
+   ただし黙って見なくするのは違う。生成物に外部を書き出すビルドスクリプトは
+   ありうるので、エラーではなく警告として残す。 */
+export function isNodeProgram(content) {
+  if (/^#!.*\bnode\b/.test(content)) return true;
+  return /(?:from|require\()\s*['"]node:/.test(content);
+}
 
 /* どうしても違反を書き残す必要がある行のための逃げ道。
    黙って外すのではなく、コードに理由つきで宣言させる。 */
@@ -160,10 +223,27 @@ export function lintContent(filePath, content, options = {}) {
   // 直前の行で取り消されているか
   const muted = (idx) => idx > 0 && IGNORE_LINE.test(lines[idx - 1]);
 
+  // コメントの中か（ブロックコメントの途中の行も含む）
+  const inComment = commentMask(lines, filePath);
+  /* ビルド時にしか動かない Node のプログラムは、配信物ではない。
+     赤くはしないが、生成物に書き出していないか目で見てほしいので警告に回す。 */
+  const tooling = isNodeProgram(content);
+  const cdnFinding = (idx, line, message) => {
+    (tooling ? warnings : errors).push({
+      file: filePath,
+      line: idx + 1,
+      rule: tooling ? 'external-in-tooling' : 'zero-cdn',
+      message: tooling
+        ? `ビルド時のコードに外部CDNが書かれています。配信物には出ませんが、` +
+          `生成物へ書き出していないか確かめてください: "${line.trim()}"`
+        : message,
+    });
+  };
+
   // 1. Zero External CDN Check
   if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.mjs') || filePath.endsWith('.ts') || filePath.endsWith('.css')) {
     lines.forEach((line, idx) => {
-      if (muted(idx) || declared(line) || COMMENT_LINE.test(line)) return;
+      if (muted(idx) || declared(line) || inComment[idx]) return;
       if (CSP_DIRECTIVE.test(line)) {
         // 制限の宣言であって読み込みではない。外部を許していることだけ知らせる
         if (FORBIDDEN_CDN_PATTERNS.some((p) => p.test(line))) {
@@ -180,12 +260,11 @@ export function lintContent(filePath, content, options = {}) {
       for (const pattern of FORBIDDEN_CDN_PATTERNS) {
         if (pattern.test(line)) {
           hit = true;
-          errors.push({
-            file: filePath,
-            line: idx + 1,
-            rule: 'zero-cdn',
-            message: `外部CDNからの読み込みが検出されました (Zero External CDN違反): "${line.trim()}"`
-          });
+          cdnFinding(
+            idx,
+            line,
+            `外部CDNからの読み込みが検出されました (Zero External CDN違反): "${line.trim()}"`,
+          );
         }
       }
       /* 既知の CDN でなくても、外から実行時に読んでいれば校内ネットワークで
@@ -205,7 +284,7 @@ export function lintContent(filePath, content, options = {}) {
   // 2. Zero PII Check
   if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.vue') || filePath.endsWith('.svelte')) {
     lines.forEach((line, idx) => {
-      if (muted(idx)) return;
+      if (muted(idx) || inComment[idx]) return;
       // 検索欄・人名でない「名前」は、集めているわけではないので数えない
       if (SEARCH_FIELD.test(line) || NOT_PERSON_NAME.test(line)) return;
       for (const pattern of FORBIDDEN_PII_PATTERNS) {
@@ -224,14 +303,13 @@ export function lintContent(filePath, content, options = {}) {
   // 3. Child UI / Touch Area Advisory Check
   if (filePath.endsWith('.css')) {
     lines.forEach((line, idx) => {
-      if (muted(idx) || declared(line)) return;
+      if (muted(idx) || declared(line) || inComment[idx]) return;
       if (/@import\s+url\(['"]?https?:\/\//i.test(line)) {
-        errors.push({
-          file: filePath,
-          line: idx + 1,
-          rule: 'zero-cdn',
-          message: `外部フォント・外部スタイルのインポートが検出されました: "${line.trim()}"`
-        });
+        cdnFinding(
+          idx,
+          line,
+          `外部フォント・外部スタイルのインポートが検出されました: "${line.trim()}"`,
+        );
       }
     });
   }
