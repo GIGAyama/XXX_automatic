@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
-import { allowedHosts, lintContent, shouldLint } from './lint-giga.mjs';
+import { allowedHosts, commentMask, isNodeProgram, lintContent, shouldLint } from './lint-giga.mjs';
 
 /* ⚠️ このファイルにも `https://<既知のCDN>` という完成した形を書かない。
       テストは全リポジトリの .claude/ と .agents/ へ配られるので、
@@ -217,4 +217,86 @@ test('品質ゲート自身とコメント行は読み込みではない', () =>
   // 本物の読み込みは赤いまま
   assert.equal(
     lintContent('index.html', '<script src="' + U('unpkg.com') + '/vue"></script>').errors.length, 1);
+});
+
+// ==========================================================================
+// ブロックコメントの途中の行（2026-08-28 に直したもの）
+//
+// COMMENT_LINE はコメントの「始まる行」しか見ていなかった。
+// /* … */ の途中の行は素通りして違反として数えられ、実測で 4 件が
+// これだった（KANA_Master/tools/build.mjs の「もとはこう読んでいた」一覧）。
+// ==========================================================================
+
+test('commentMask: ブロックコメントの途中の行も覆う', () => {
+  const lines = [
+    'const a = 1;',
+    '/*',
+    `  ${U('cdn.jsdelivr.net')}/npm/x.js  ← 昔こう読んでいた`,
+    '*/',
+    'const b = 2;',
+  ];
+  assert.deepEqual(commentMask(lines, 'tools/build.mjs'), [false, true, true, true, false]);
+});
+
+test('commentMask: HTML のコメントも覆う', () => {
+  const lines = ['<p>a</p>', '<!--', `  <script src="${U('unpkg.com')}/x.js"></script>`, '-->', '<p>b</p>'];
+  assert.deepEqual(commentMask(lines, 'index.html'), [false, true, true, true, false]);
+});
+
+test('commentMask: 1 行で閉じるコメントは次の行へ持ち越さない', () => {
+  const lines = ['/* めも */', `<script src="${U('unpkg.com')}/x.js"></script>`];
+  assert.deepEqual(commentMask(lines, 'a.js'), [true, false]);
+});
+
+test('commentMask: 文字列の中の /* をコメントの開きと読まない', () => {
+  const lines = [`const glob = "src/*.js";`, `import x from "${U('unpkg.com')}/x.js";`];
+  assert.deepEqual(commentMask(lines, 'a.js'), [false, false]);
+});
+
+test('ブロックコメントに書かれた CDN は違反にしない', () => {
+  const src = [
+    '// もとは これを 読ませていた:',
+    '/*',
+    `     ${U('cdn.tailwindcss.com')}`,
+    `     ${U('unpkg.com')}/react@18/…`,
+    '*/',
+    'console.log(1);',
+  ].join('\n');
+  const { errors } = lintContent('src/note.js', src);
+  assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 0);
+});
+
+test('⚠️ コメントの外に出したら、ちゃんと違反になる（検査が空回りしていない）', () => {
+  const src = `const s = document.createElement('script');\ns.src = '${U('cdn.jsdelivr.net')}/npm/x.js';`;
+  const { errors } = lintContent('src/app.js', src);
+  assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 1);
+});
+
+// ==========================================================================
+// ビルド時にしか動かない Node のプログラム
+// ==========================================================================
+
+test('isNodeProgram: shebang と node: の取りこみで見分ける', () => {
+  assert.ok(isNodeProgram('#!/usr/bin/env node\nconsole.log(1)'));
+  assert.ok(isNodeProgram("import fs from 'node:fs';"));
+  assert.ok(isNodeProgram("const fs = require('node:fs');"));
+  assert.ok(!isNodeProgram("import React from 'react';"));
+  assert.ok(!isNodeProgram('<script>alert(1)</script>'));
+});
+
+test('ビルド時のコードの CDN は、赤ではなく警告になる', () => {
+  const src = [
+    '#!/usr/bin/env node',
+    '// CSP が効いていることを、わざと読ませて確かめる',
+    `const url = '${U('cdn.jsdelivr.net')}/npm/chart.js';`,
+  ].join('\n');
+  const { errors, warnings } = lintContent('tools/measure-csp.mjs', src);
+  assert.equal(errors.length, 0, 'ビルド時のコードで赤くなっている');
+  assert.equal(warnings.filter((w) => w.rule === 'external-in-tooling').length, 1);
+});
+
+test('⚠️ 同じ中身でも、配信するファイルなら赤くなる', () => {
+  const src = `const url = '${U('cdn.jsdelivr.net')}/npm/chart.js';`;
+  const { errors } = lintContent('src/app.js', src);
+  assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 1);
 });
