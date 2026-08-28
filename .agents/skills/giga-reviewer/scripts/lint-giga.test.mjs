@@ -300,3 +300,46 @@ test('⚠️ 同じ中身でも、配信するファイルなら赤くなる', (
   const { errors } = lintContent('src/app.js', src);
   assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 1);
 });
+
+// --- スキームを省いた URL（プロトコル相対）--------------------------------
+
+test('スキームを省いた //cdn… も Zero-CDN 違反として拾う', () => {
+  // ブラウザはページと同じスキームを補って外へ取りにいくので、https:// と動きは同じ。
+  // ここを見ていなかったせいで、Shared-Folder-Sync の js.html が「合格」のまま
+  // SweetAlert2 を外から読んでいた（2026-08-28、実ブラウザの通信記録で発覚）。
+  const { errors } = lintContent('js.html', '<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>');
+  assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 1);
+});
+
+test('スキーム付きの書き方も、これまでどおり拾う', () => {
+  const { errors } = lintContent('a.html', '<script src="https://unpkg.com/x"></script>');
+  assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 1);
+});
+
+test('自分のところの相対パスは拾わない（/ 1 つはホスト名ではない）', () => {
+  const { errors, warnings } = lintContent('a.html', '<script src="/js/app.js"></script>');
+  assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 0);
+  assert.equal(warnings.filter((w) => w.rule === 'external-origin').length, 0);
+});
+
+test('既知の CDN でなくても、スキームを省いた外部読み込みは警告する', () => {
+  const { warnings } = lintContent('a.html', '<script src="//example.com/x.js"></script>');
+  assert.equal(warnings.filter((w) => w.rule === 'external-origin').length, 1);
+});
+
+test('絵を外から取っていれば警告する（塞がれると壊れた印が出る）', () => {
+  const { warnings } = lintContent('a.html', '<img src="https://cdn-icons-png.flaticon.com/512/x.png" width="150">');
+  assert.equal(warnings.filter((w) => w.rule === 'external-origin').length, 1);
+});
+
+test('動画・音も同じように見る', () => {
+  for (const tag of ['<video src="https://x.example/a.mp4">', '<source src="//x.example/a.webm">']) {
+    const { warnings } = lintContent('a.html', tag);
+    assert.equal(warnings.filter((w) => w.rule === 'external-origin').length, 1, tag);
+  }
+});
+
+test('自分のところの絵は拾わない', () => {
+  const { warnings } = lintContent('a.html', '<img src="./icons/logo.png">');
+  assert.equal(warnings.filter((w) => w.rule === 'external-origin').length, 0);
+});

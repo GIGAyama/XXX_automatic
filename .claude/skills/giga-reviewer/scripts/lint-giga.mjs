@@ -43,7 +43,13 @@ export const FORBIDDEN_CDN_HOSTS = [
   'cdn.tailwindcss.com',
 ];
 
-const SCHEME = 'https?:\\/\\/';
+/* ⚠️ スキームを省いた `//cdn.jsdelivr.net/…`（プロトコル相対 URL）も同じ違反である。
+   ブラウザはページと同じスキームを補って外へ取りにいくので、動きは https:// と変わらない。
+   `https?://` だけで見ていたころは**検査を素通りしていた**。
+   Shared-Folder-Sync の js.html が実際にこの形で、Zero-CDN 合格のまま
+   SweetAlert2 を外から読んでいた（2026-08-28、実ブラウザの通信記録で見つけた）。
+   静的検査が「0 件」と言っても、実際に開いて通信を見るまでは信じないこと。 */
+const SCHEME = '(?:https?:)?\\/\\/';
 const FORBIDDEN_CDN_PATTERNS = FORBIDDEN_CDN_HOSTS.map(
   (host) => new RegExp(SCHEME + host.replace(/\./g, '\\.'), 'i'),
 );
@@ -52,8 +58,13 @@ const FORBIDDEN_CDN_PATTERNS = FORBIDDEN_CDN_HOSTS.map(
    スキーム付きで直に書かれた別ホストがすり抜ける。ただし
    raw.githubusercontent.com から画像を読むリポジトリ（XXX_automatic）のように
    意図して外を読む例があるので、こちらは warnings にとどめて止めない。 */
+/* ⚠️ 絵や動画も外から取れば同じことが起きる。
+   Moral_note の「先生の合図を待ってね」の画面は、待っているあいだの絵を
+   外部の CDN から取っていた。塞がれると児童には「画像が壊れた印」だけが出る。
+   script/link/iframe しか見ていなかったので、検査は通っていた
+   （2026-08-28、実ブラウザの通信記録で見つけた）。 */
 const EXTERNAL_LOAD_PATTERN =
-  /<(?:script|link|iframe)\b[^>]*\b(?:src|href)\s*=\s*["']https?:\/\/[^"']+["']/i;
+  /<(?:script|link|iframe|img|source|video|audio|embed|object)\b[^>]*\b(?:src|href|data|poster)\s*=\s*["'](?:https?:)?\/\/[^"']+["']/i;
 
 /* <link> のうち、実行時に何かを取りに行くもの。
    canonical / alternate / me などは「その URL を指す」だけで読み込みではない。
