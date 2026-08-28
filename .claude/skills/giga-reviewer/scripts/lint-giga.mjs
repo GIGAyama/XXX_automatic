@@ -88,6 +88,27 @@ const NON_LOADING_LINK_REL =
    ⚠️ .claude と .agents を外さないと、配られた giga-reviewer 自身の
       テスト資料（わざと CDN を書いてある）を検出して、どのリポジトリでも
       赤くなる。2026-08-28 に 44 本すべてで再現した。 */
+/* 検査する拡張子。
+   ⚠️ ここに書き忘れた拡張子は、1 行も見られないまま「合格」になる。
+      2026-08-28 まで ['.html','.js','.mjs','.ts','.css','.json'] だったので、
+      **`.gs` と `.jsx` が丸ごと素通り**していた。GAS のアプリは中身がほぼ `.gs`
+      なので、艦隊の半分は Zero-CDN も Zero-PII も一度も見られていなかった。
+      React のアプリも同じで、Music-production_studio の App.jsx が
+      実行時に `@import url('https://fonts.googleapis.com/…')` を差しこんでいるのを
+      見落としていた（検査そのものは 318 行目にあり、届いていなかっただけ）。
+   拡張子を足すときは、必ず「その拡張子でわざと違反を書いて落ちること」を確かめること。 */
+export const SCANNED_EXT = new Set([
+  '.html', '.htm', '.js', '.mjs', '.cjs', '.jsx', '.ts', '.tsx', '.gs',
+  '.vue', '.svelte', '.css', '.json',
+]);
+
+/* 外部からの読み込みは、どの書き方のファイルからでも起こりうる。
+   .json はデータであって読み込みではないので外す。 */
+export const CDN_EXT = new Set([...SCANNED_EXT].filter((e) => e !== '.json'));
+
+/* 入力欄は画面を組み立てるファイルにある。CSS と JSON には無い。 */
+export const PII_EXT = new Set([...CDN_EXT].filter((e) => e !== '.css'));
+
 const SKIP_DIRS = new Set([
   'node_modules', '.git', '.github', 'vendor', 'dist', 'build', 'out',
   'coverage', '.standards-src', '.claude', '.agents', '.next', '.cache',
@@ -252,7 +273,7 @@ export function lintContent(filePath, content, options = {}) {
   };
 
   // 1. Zero External CDN Check
-  if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.mjs') || filePath.endsWith('.ts') || filePath.endsWith('.css')) {
+  if (CDN_EXT.has(path.extname(filePath).toLowerCase())) {
     lines.forEach((line, idx) => {
       if (muted(idx) || declared(line) || inComment[idx]) return;
       if (CSP_DIRECTIVE.test(line)) {
@@ -293,7 +314,7 @@ export function lintContent(filePath, content, options = {}) {
   }
 
   // 2. Zero PII Check
-  if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.vue') || filePath.endsWith('.svelte')) {
+  if (PII_EXT.has(path.extname(filePath).toLowerCase())) {
     lines.forEach((line, idx) => {
       if (muted(idx) || inComment[idx]) return;
       // 検索欄・人名でない「名前」は、集めているわけではないので数えない
@@ -342,7 +363,7 @@ export function lintDirectory(targetDir) {
         walk(fullPath);
       } else if (entry.isFile()) {
         const ext = path.extname(entry.name).toLowerCase();
-        if (['.html', '.js', '.mjs', '.ts', '.css', '.json'].includes(ext)) {
+        if (SCANNED_EXT.has(ext)) {
           const content = fs.readFileSync(fullPath, 'utf-8');
           const { errors, warnings } = lintContent(fullPath, content, opts);
           allErrors.push(...errors);

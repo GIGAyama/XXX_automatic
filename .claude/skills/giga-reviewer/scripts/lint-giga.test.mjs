@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
-import { allowedHosts, commentMask, isNodeProgram, lintContent, shouldLint } from './lint-giga.mjs';
+import { CDN_EXT, PII_EXT, SCANNED_EXT, allowedHosts, commentMask, isNodeProgram, lintContent, shouldLint } from './lint-giga.mjs';
 
 /* ⚠️ このファイルにも `https://<既知のCDN>` という完成した形を書かない。
       テストは全リポジトリの .claude/ と .agents/ へ配られるので、
@@ -342,4 +342,44 @@ test('動画・音も同じように見る', () => {
 test('自分のところの絵は拾わない', () => {
   const { warnings } = lintContent('a.html', '<img src="./icons/logo.png">');
   assert.equal(warnings.filter((w) => w.rule === 'external-origin').length, 0);
+});
+
+// --- 検査する拡張子 -------------------------------------------------------
+//
+// 2026-08-28 まで、拡張子の一覧が 3 か所に決め打ちされていた（走査・Zero-CDN・
+// Zero-PII）。`.gs` と `.jsx` はどこにも無かったので、GAS のアプリ（中身がほぼ
+// `.gs`）と React のアプリの原本は、1 行も見られないまま「合格」になっていた。
+
+test('⚠️ .gs も .jsx も .tsx も Zero-CDN の対象になる（素通りしていた）', () => {
+  const line = 'const s = \'<script src="https://cdn.jsdelivr.net/npm/x"></script>\';';
+  for (const f of ['a.gs', 'b.jsx', 'c.tsx', 'd.cjs', 'e.js', 'f.html']) {
+    const { errors } = lintContent(f, line);
+    assert.equal(
+      errors.filter((e) => e.rule === 'zero-cdn').length,
+      1,
+      `${f} が Zero-CDN の対象から外れている`,
+    );
+  }
+});
+
+test('⚠️ .gs も .jsx も Zero-PII の対象になる', () => {
+  const line = '<input type="text" placeholder="児童名">';
+  for (const f of ['a.gs', 'b.jsx', 'c.tsx', 'd.html']) {
+    const { errors } = lintContent(f, line);
+    assert.ok(
+      errors.some((e) => e.rule === 'zero-pii'),
+      `${f} が Zero-PII の対象から外れている`,
+    );
+  }
+});
+
+test('データの .json は読み込みではないので Zero-CDN に数えない', () => {
+  const { errors } = lintContent('data/repos.json', '{"cdn":"https://cdn.jsdelivr.net/npm/x"}');
+  assert.equal(errors.filter((e) => e.rule === 'zero-cdn').length, 0);
+});
+
+test('検査ごとの拡張子は 1 つの表から作る（決め打ちを増やさない）', () => {
+  assert.ok(CDN_EXT.size > 0 && PII_EXT.size > 0);
+  for (const e of CDN_EXT) assert.ok(SCANNED_EXT.has(e), `${e} が走査対象に無い`);
+  for (const e of PII_EXT) assert.ok(CDN_EXT.has(e), `${e} が CDN 検査の表に無い`);
 });
