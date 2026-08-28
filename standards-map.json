@@ -11,16 +11,32 @@
       "local": ".claude/skills/devlog-article"
     },
     {
+      "canonical": "skills/devlog-article",
+      "local": ".agents/skills/devlog-article"
+    },
+    {
       "canonical": "skills/note-article",
       "local": ".claude/skills/note-article"
+    },
+    {
+      "canonical": "skills/note-article",
+      "local": ".agents/skills/note-article"
     },
     {
       "canonical": "skills/giga-scaffold",
       "local": ".claude/skills/giga-scaffold"
     },
     {
+      "canonical": "skills/giga-scaffold",
+      "local": ".agents/skills/giga-scaffold"
+    },
+    {
       "canonical": "skills/giga-reviewer",
       "local": ".claude/skills/giga-reviewer"
+    },
+    {
+      "canonical": "skills/giga-reviewer",
+      "local": ".agents/skills/giga-reviewer"
     }
   ]
 }
