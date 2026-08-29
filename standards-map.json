@@ -54,5 +54,11 @@
       "canonical": "skills/giga-reviewer",
       "local": ".agents/skills/giga-reviewer"
     }
+  ],
+  "unmanaged": [
+    {
+      "local": "CLAUDE.md",
+      "reason": "このリポジトリ固有の手引きを持つ（2026-08-29）。艦隊共通のルールは冒頭の @.agents/rules/gigaschool-standards.md で取りこむ。その 1 行が在ることは tools/check-distribution.mjs が見ている"
+    }
   ]
 }
