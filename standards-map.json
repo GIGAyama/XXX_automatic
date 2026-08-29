@@ -69,6 +69,14 @@
     {
       "canonical": "skills/giga-fleet",
       "local": ".agents/skills/giga-fleet"
+    },
+    {
+      "canonical": "skills/giga-manual",
+      "local": ".claude/skills/giga-manual"
+    },
+    {
+      "canonical": "skills/giga-manual",
+      "local": ".agents/skills/giga-manual"
     }
   ],
   "unmanaged": [
