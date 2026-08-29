@@ -19,6 +19,14 @@
     {
       "canonical": "agents/hooks/announce-checks.mjs",
       "local": ".claude/hooks/announce-checks.mjs"
+    },
+    {
+      "canonical": "agents/subagents/giga-auditor.md",
+      "local": ".claude/agents/giga-auditor.md"
+    },
+    {
+      "canonical": "agents/subagents/giga-migrator.md",
+      "local": ".claude/agents/giga-migrator.md"
     }
   ],
   "dirs": [
@@ -53,6 +61,14 @@
     {
       "canonical": "skills/giga-reviewer",
       "local": ".agents/skills/giga-reviewer"
+    },
+    {
+      "canonical": "skills/giga-fleet",
+      "local": ".claude/skills/giga-fleet"
+    },
+    {
+      "canonical": "skills/giga-fleet",
+      "local": ".agents/skills/giga-fleet"
     }
   ],
   "unmanaged": [
