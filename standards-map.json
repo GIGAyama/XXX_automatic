@@ -3,6 +3,22 @@
     {
       "canonical": "lib/giga-v5-checks.mjs",
       "local": "scripts/lib/giga-v5-checks.mjs"
+    },
+    {
+      "canonical": "agents/rules/gigaschool-standards.md",
+      "local": ".agents/rules/gigaschool-standards.md"
+    },
+    {
+      "canonical": "agents/settings.json",
+      "local": ".claude/settings.json"
+    },
+    {
+      "canonical": "agents/hooks/guard-canonical.mjs",
+      "local": ".claude/hooks/guard-canonical.mjs"
+    },
+    {
+      "canonical": "agents/hooks/announce-checks.mjs",
+      "local": ".claude/hooks/announce-checks.mjs"
     }
   ],
   "dirs": [
