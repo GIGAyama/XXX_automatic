@@ -1,0 +1,28 @@
+{
+  "_note": "【正本】standards/agents/settings.json。配布先へは .claude/settings.json としてコピーする。ここを配布先で直しても他へは届かない（standards-map.json の files に載っているので check-drift が赤くなる）。",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "_why": "正本のコピーを直接書き替えるのを止める。文書のお願いだけでは止まらなかった型（直す→次の配布で消える→他の41本には最初から届いていない）を機械で止める。判定表は standards-map.json から読むので、正本を足しても直し忘れが起きない。",
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/guard-canonical.mjs"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "_why": "そのリポジトリに実在する検査コマンドだけを最初に出す。v5ゲートは18本、build-sw.mjs は25本、npm run check は33本にしかなく、毎回 package.json を確かめる手順は続かない。",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/announce-checks.mjs"
+          }
+        ]
+      }
+    ]
+  }
+}
