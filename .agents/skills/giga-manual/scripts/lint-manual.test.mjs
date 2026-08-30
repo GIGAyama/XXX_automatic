@@ -289,3 +289,28 @@ test('画像の直後のラベル行・箱の見出しを拾う（短いので�
   /* ふつうの短い説明文では鳴らさない（それは本当に写真の説明） */
   assert.ok(!warnsOf(OK).some((w) => /本文から外れる/.test(w)));
 });
+
+/* 見出しの中のルビ（2026-08-30 に足したところ）。
+   本文のルビは組み立てが通すようになったが、見出しに振ると目次が
+   「学がく年ねん」になる。書いた本人の画面では正しく見えるので機械で見る。 */
+test('見出しの中のルビは警告する', () => {
+  const found = lintManual([
+    '# つかいかた',
+    '## <ruby>学<rt>がく</rt></ruby>年で しぼりこむ',
+    '本文。',
+    '![あ](images/01-a.png)',
+  ].join('\n'));
+  const hit = found.filter((f) => /ルビ/.test(f.message));
+  assert.equal(hit.length, 1);
+  assert.equal(hit[0].level, 'warn');
+});
+
+test('本文の中のルビは何も言わない', () => {
+  const found = lintManual([
+    '# つかいかた',
+    '## 学年で しぼりこむ',
+    '<ruby>学<rt>がく</rt></ruby>年の タブを おします。',
+    '![あ](images/01-a.png)',
+  ].join('\n'));
+  assert.equal(found.filter((f) => /ルビ/.test(f.message)).length, 0);
+});
