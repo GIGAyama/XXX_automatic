@@ -82,3 +82,46 @@ test('note 版と開発記録版で、助数詞と除外の一覧がそろって
   assert.equal(pick(a, 'counters:'), pick(d, 'const COUNTERS ='));
   assert.equal(pick(a, 'keep:'), pick(d, 'const NUM_KEEP ='));
 });
+
+/* ── ふりがな ──────────────────────────────────────────────
+ * ルビは語の途中に markup を挟むので、素の行に検査を当てると外れる。
+ * 記事そのものは先生向けでふりがなを振らないが、開発記録は
+ * ふりがなの話を書くことがあり、そこには <ruby> が入る。
+ */
+
+/** 見本を検査にかけて、出た行を全部返す */
+function lintOf(body) {
+  const dir = join(mkdtempSync(join(tmpdir(), 'lint-ruby-')), 'docs', 'note');
+  mkdirSync(dir, { recursive: true });
+  const file = join(dir, 'sample-note-article.md');
+  writeFileSync(file, `# 教室で使えるかもしれないもの作り #1 「困りごと」に効くアプリ「見本」\n\n${body}\n`);
+  return spawnSync(process.execPath, [LINT_ARTICLE, file], { encoding: 'utf8' }).stdout || '';
+}
+
+test('ふりがなを振っても、言い回しの検査は当たる', () => {
+  const plain = lintOf('結論から言うと、計算の練習は続きます。');
+  const ruby = lintOf('<ruby>結論<rt>けつろん</rt></ruby>から言うと、'
+    + '<ruby>計算<rt>けいさん</rt></ruby>の<ruby>練習<rt>れんしゅう</rt></ruby>は続きます。');
+  assert.ok(plain.includes('[前置き] 結論から言うと'), 'この試験の前提が崩れている');
+  assert.ok(ruby.includes('[前置き] 結論から言うと'),
+    'ふりがなが語の途中に入ると、言い回しを見のがす');
+});
+
+test('ふりがなを振っても、実体験としての書き方を見のがさない', () => {
+  const ruby = lintOf('子どもたちが<ruby>計算<rt>けいさん</rt></ruby>を'
+    + '<ruby>練習<rt>れんしゅう</rt></ruby>していました。');
+  assert.ok(ruby.includes('[事実]'), 'ふりがなで窓が埋まって、検査が外れている');
+});
+
+test('字数にふりがなを数えない', () => {
+  const n = (out) => Number((out.match(/本文が ([\d,]+)字/) || [])[1]?.replace(/,/g, '') || 0);
+  const plain = n(lintOf('計算の練習をします。'));
+  const ruby = n(lintOf('<ruby>計算<rt>けいさん</rt></ruby>の<ruby>練習<rt>れんしゅう</rt></ruby>をします。'));
+  assert.ok(plain > 0, 'この試験の前提が崩れている');
+  assert.equal(ruby, plain, 'ふりがなの markup が字数に入っている');
+});
+
+test('コード枠の中のふりがなは、そのまま数える（書き方を見せる枠がある）', () => {
+  const out = lintOf('```\n<ruby>設定<rt>せってい</rt></ruby>\n```\n\n本文。');
+  assert.ok(!out.includes('内部エラー'), '枠の中で落ちている');
+});

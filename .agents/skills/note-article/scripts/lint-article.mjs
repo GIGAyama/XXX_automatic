@@ -111,15 +111,31 @@ const STYLE = (() => {
 const MIN = Number(opt('min') || STYLE.charRange[0]);
 const MAX = Number(opt('max') || STYLE.charRange[1]);
 
-const src = readFileSync(path, 'utf8');
-const lines = src.split('\n');
+/* ── ふりがなを外してから見る ────────────────────────────────
+ * ルビは語の途中に markup を挟むので、素の行に検査を当てると
+ * ことごとく外れる。「<ruby>結論<rt>けつろん</rt></ruby>から言うと」の中に
+ * 「結論から言うと」という連続した並びは無く、includes() は false になる。
+ * 字数も 3 倍にふくらみ、説明文の切り出しはタグの途中で切れる。
+ *
+ * 記事そのものは先生向けなのでふりがなを振らないが、開発記録は
+ * ふりがなの話を書くことがあり、そこには <ruby> が入る。
+ *
+ * ⚠️ コード枠の中は外さない。「ルビはこう書く」を見せる枠があるため。
+ * ⚠️ 行を消さない。行番号がずれると、どの検査も別の行を指すようになる。 */
+const stripRuby = (t) => String(t)
+  .replace(/<(rt|rp)\b[^>]*>(?:(?!<\/?(?:rt|rp|ruby)\b)[\s\S])*(?:<\/\1\s*>)?/gi, '')
+  .replace(/<\/?ruby\b[^>]*>/gi, '');
+
+const rawLines = readFileSync(path, 'utf8').split('\n');
 const dir = dirname(path);
 
 // ---------------------------------------------------------------- 下ごしらえ
 const IMG_ANY = /!\[([^\]]*)\]\(([^)]+)\)/g;
 const IMG_LINE = /^!\[([^\]]*)\]\(\s*([^)\s]+)[^)]*\)\s*$/;   // 組み立て側が拾える形はこれだけ
 const fenced = new Set();
-{ let f = false; lines.forEach((l, i) => { if (/^\s*```/.test(l)) { f = !f; fenced.add(i); return; } if (f) fenced.add(i); }); }
+{ let f = false; rawLines.forEach((l, i) => { if (/^\s*```/.test(l)) { f = !f; fenced.add(i); return; } if (f) fenced.add(i); }); }
+const lines = rawLines.map((l, i) => (fenced.has(i) ? l : stripRuby(l)));
+const src = lines.join('\n');
 const isHeading = (l) => /^#{1,6}\s/.test(l);
 const isTagLine = (l) => /^\s*#[^\s#]/.test(String(l).trim()) && !isHeading(String(l).trim());
 const isImageLine = (l) => IMG_LINE.test(String(l).trim());
