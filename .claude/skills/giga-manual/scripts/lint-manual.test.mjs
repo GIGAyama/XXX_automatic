@@ -314,3 +314,126 @@ test('本文の中のルビは何も言わない', () => {
   ].join('\n'));
   assert.equal(found.filter((f) => /ルビ/.test(f.message)).length, 0);
 });
+
+/* ── ふりがなと、長さで見ている検査 ────────────────────────
+ * 子ども向けマニュアルの本文には <ruby>計算<rt>けいさん</rt></ruby> が入る。
+ * 素の字は 2 字だが、文字列は 30 字ちかい。長さを素のまま見ると、
+ * 書き手がふりがなを足しただけで検査の結論が変わる。
+ */
+
+test('ふりがなで水増しされた見出しでも、短ければ短いと言う', () => {
+  // 「<ruby>色<rt>いろ</rt></ruby>」は 26 字あるが、読む長さは 1 字
+  const found = lintManual([
+    '# つかいかた',
+    '## <ruby>色<rt>いろ</rt></ruby>',
+    '本文。',
+    '![あ](images/01-a.png)',
+    '## つぎの しょう',
+    '本文。',
+    '## みっつめの しょう',
+    '本文。',
+  ].join('\n'));
+  assert.ok(found.some((f) => /字と短い/.test(f.message)),
+    'ふりがなの分だけ長く数えて、短い見出しを見のがしている');
+});
+
+test('ふりがなを振った説明文を「長すぎる」と言わない', () => {
+  // 読む長さは 30 字ほど。ふりがな込みでは 120 字を超える
+  const cap = 'ここを 見て ください。おすと <ruby>制限時間<rt>せいげんじかん</rt></ruby>の '
+    + '<ruby>設定<rt>せってい</rt></ruby>が ひらき、<ruby>出題<rt>しゅつだい</rt></ruby>の '
+    + '<ruby>順番<rt>じゅんばん</rt></ruby>を えらべます。';
+  assert.ok(cap.length > 120, 'この試験の前提が崩れている');
+  const found = lintManual([
+    '# つかいかた',
+    '## さいしょの しょう',
+    '本文。',
+    '![あ](images/01-a.png)',
+    '',
+    cap,
+    '',
+    '## つぎの しょう',
+    '本文。',
+    '## みっつめの しょう',
+    '本文。',
+  ].join('\n'));
+  assert.equal(found.filter((f) => /画像の直後の 1 段落が/.test(f.message)).length, 0,
+    'ふりがなの分だけ長く数えて、説明文を本文あつかいしている');
+});
+
+test('目印にふりがなが振ってあっても、【重要】の多さを数え落とさない', () => {
+  // 子ども向けでは【<ruby>重要<rt>じゅうよう</rt></ruby>】と書くのが決まりどおり。
+  // 素のまま探すと 0 本に見えて、この警告が永久に出なくなる
+  const head = (n) => `## 【<ruby>重要<rt>じゅうよう</rt></ruby>】${n}つめの しょう\n本文。\n`;
+  const found = lintManual('# つかいかた\n' + [1, 2, 3, 4, 5, 6].map(head).join(''));
+  assert.ok(found.some((f) => /【重要】【！！】の付いた見出しが/.test(f.message)),
+    'ふりがなの分で数え落としている');
+});
+
+/* ── 中身を見る検査は、ふりがなを外してから ────────────────────
+ * ルビは語の途中に markup を挟むので、素の文字列には探している並びが残らない。
+ * 直す前は「ふりがなを振った書き手だけが検査をすり抜ける」形になっていた。
+ */
+
+const R = (w, r) => `<ruby>${w}<rt>${r}</rt></ruby>`;
+const CH = (n) => `## ${n}つめの しょう\n本文。\n`;
+
+test('機械が足す節は、ふりがなを振っても見つける', () => {
+  const found = lintManual(['# つかいかた',
+    `## ${R('学校', 'がっこう')}で${R('使', 'つか')}うときは`, '本文。',
+    CH(2), CH(3)].join('\n'));
+  assert.ok(found.some((f) => /機械が足す/.test(f.message)),
+    'ふりがなを振ると、手書きの「学校で使うときは」を見のがす');
+});
+
+test('中身の無い見出しは、ふりがなを振っても落とす', () => {
+  const found = lintManual(['# つかいかた', `## ${R('機能', 'きのう')}`, '本文。',
+    CH(2), CH(3)].join('\n'));
+  assert.ok(found.some((f) => f.level === 'error' && /何の説明か分からない/.test(f.message)),
+    'ふりがなを振ると、中身の無い見出しが素通りする');
+});
+
+test('用意するものの言葉は、ふりがなを振っても見つける', () => {
+  const found = lintManual(['# つかいかた', '## さいしょの しょう',
+    `${R('用意', 'ようい')}する ものは タブレットです。`, CH(2), CH(3)].join('\n'));
+  assert.equal(found.filter((f) => /用意する ものが/.test(f.message)).length, 0);
+});
+
+test('<rp> の半角かっこを、見出しの括弧の乱れと言わない', () => {
+  // format.md が通すと書いている書き方。対応ブラウザには出ない札である
+  const found = lintManual(['# つかいかた',
+    '## <ruby>設定<rp>(</rp><rt>せってい</rt><rp>)</rp></ruby>を かえる',
+    '本文。', CH(2), CH(3)].join('\n'));
+  assert.equal(found.filter((f) => /括弧を全角/.test(f.message)).length, 0);
+});
+
+/* ── 組み立てが通さない書き方は、公開ページで丸ごと字になる ──────── */
+
+for (const [name, bad] of [
+  ['属性つきの <ruby>', '<ruby lang="ja">学<rt>がく</rt></ruby>'],
+  ['属性つきの <rt>', '<ruby>学<rt lang="ja">がく</rt></ruby>'],
+  ['大文字', '<RUBY>学<RT>がく</RT></RUBY>'],
+  ['閉じ括弧の前の空白', '<ruby >学<rt>がく</rt></ruby>'],
+  ['<rb> つきの完全形', '<ruby><rb>学</rb><rt>がく</rt></ruby>'],
+]) {
+  test(`${name} は落とす（そのままだと字になって出る）`, () => {
+    const found = lintManual(['# つかいかた', '## さいしょの しょう',
+      `${bad}年で しぼりこむ。`, CH(2), CH(3)].join('\n'));
+    assert.ok(found.some((f) => f.level === 'error' && /ふりがなの書き方が通りません/.test(f.message)),
+      `${bad} を見のがしている`);
+  });
+}
+
+test('閉じ忘れた <ruby> を落とす', () => {
+  const found = lintManual(['# つかいかた', '## さいしょの しょう',
+    '<ruby>学年<rt>がくねん</rt>で しぼりこむ。', CH(2), CH(3)].join('\n'));
+  assert.ok(found.some((f) => f.level === 'error' && /数が合いません/.test(f.message)));
+});
+
+test('正しいふりがなには何も言わない（閉じタグの省略も含めて）', () => {
+  const found = lintManual(['# つかいかた', '## さいしょの しょう',
+    `${R('学年', 'がくねん')}で しぼりこむ。`,
+    '<ruby>計算<rp>(</rp><rt>けいさん</rt><rp>)</rp></ruby>の れんしゅう。',
+    '<ruby>時間<rt>じかん</ruby>を きめる。',
+    CH(2), CH(3)].join('\n'));
+  assert.equal(found.filter((f) => /ふりがなの書き方|数が合いません/.test(f.message)).length, 0);
+});
