@@ -1,6 +1,10 @@
 {
   "files": [
     {
+      "canonical": "web/giga-app-links.js",
+      "local": "docs/giga-app-links.js"
+    },
+    {
       "canonical": "lib/giga-v5-checks.mjs",
       "local": "scripts/lib/giga-v5-checks.mjs"
     },

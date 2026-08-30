@@ -32,14 +32,14 @@
  * Service Worker は localStorage を一切操作しない。
  */
 
-const VERSION = 'vd479fc19'; /* __APP_VERSION__ */
+const VERSION = 'vc34285d5'; /* __APP_VERSION__ */
 /** 自アプリの目印。ここで始まるキャッシュだけが掃除の対象になる。 */
 const CACHE_PREFIX = 'launcher-';
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${VERSION}`;
 const MEDIA_CACHE = `${CACHE_PREFIX}media-${VERSION}`;
 
 /** 画面を出すのに要る最小限。ここが揃っていれば圏外でも真っ白にならない。 */
-const SHELL = ['./', './index.html', './style.css', './app.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js', './lib/media-pick.js', './lib/order.js', './lib/mine.js', './lib/note-doc.js'];
+const SHELL = ['./', './index.html', './style.css', './app.js', './giga-app-links.js', './install-hook.js', './manifest.webmanifest', './offline.html', './apps.css', './lib/jst-client.js', './lib/select.js', './lib/state.js', './lib/format.js', './lib/x-length.js', './lib/feedback-payload.js', './lib/media-pick.js', './lib/order.js', './lib/mine.js', './lib/note-doc.js'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
