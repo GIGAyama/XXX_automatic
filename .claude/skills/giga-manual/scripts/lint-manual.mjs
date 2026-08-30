@@ -36,6 +36,35 @@ const EMPTY_NAMES = [
   'はじめに以外', '各種機能', 'その他の設定', 'まとめ',
 ];
 
+/**
+ * ふりがなを外して数える。
+ *
+ * ⚠️ 子ども向けマニュアルの本文には `<ruby>計算<rt>けいさん</rt></ruby>` が入る。
+ *    素の字は 2 字だが、文字列は 30 字ちかい。長さで見ている検査を素のまま
+ *    当てると、短すぎる見出しの警告が消え、写真の説明文が「長すぎる」と
+ *    誤って鳴る。読む長さで見たいのだから、markup は外してから数える。
+ *
+ *    ⚠️ ここに正本の tools/lib/plain-text.mjs を import しない。この検査は
+ *       42 本の配布先で単体で走るので、向こうには そのファイルが無い。
+ */
+const stripRuby = (t) => String(t)
+  .replace(/<(rt|rp)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
+  .replace(/<\/?ruby\b[^>]*>/gi, '');
+
+/** 読む長さ。ふりがなは数に入れない。 */
+const readLen = (t) => stripRuby(t).length;
+
+/**
+ * 読み手に見える字。ふりがなを外したもの。
+ *
+ * ⚠️ **中身を見る検査は、すべてこれを通す。** ルビは語の途中に markup を挟むので、
+ *    素の文字列には探している並びが残らない。
+ *    「## <ruby>学校<rt>がっこう</rt></ruby>で<ruby>使<rt>つか</rt></ruby>うときは」の
+ *    中に「学校で使うときは」という連続した並びは無く、includes() は false になる。
+ *    ふりがなを振った書き手だけが検査をすり抜ける、という形になっていた。
+ */
+const plain = (t) => stripRuby(t).trim();
+
 /** 見出しの短さの下限。参照マニュアルの見出しは平均 14.8 字ある。 */
 const HEADING_MIN = 5;
 
@@ -94,7 +123,7 @@ export function lintManual(md) {
   const names = h2.map((h) => h.text);
 
   for (const bad of MACHINE_SECTIONS) {
-    const hit = h2.find((h) => h.text.includes(bad));
+    const hit = h2.find((h) => plain(h.text).includes(bad));
     if (hit) {
       say('error', hit.line,
         `「${bad}」は書かない。data/apps.json と docs/CHANGELOG.md から機械が足す。`
@@ -112,16 +141,19 @@ export function lintManual(md) {
   /* 見出しの名前の質。「見出しだけを並べて、何の説明か分かる」が唯一の基準 */
   for (const h of heads) {
     if (h.level < 2) continue;
-    const name = h.text.replace(/^[【（(]?[!！重要①-⑳\s]*[】）)]?\s*/, '').trim();
+    /* ⚠️ ふりがなを外してから前置きを落とす。目印の中の「重要」にルビを振ると
+       （重は 3 年・要は 4 年配当なので低学年では振る）、`【` の次が `<` になって
+       この正規表現が何も食えず、name に「重要】」が残る。 */
+    const name = plain(h.text).replace(/^[【（(]?[!！重要①-⑳\s]*[】）)]?\s*/, '').trim();
     if (EMPTY_NAMES.includes(name)) {
       say('error', h.line,
-        `「${h.text}」だけでは何の説明か分からない。`
+        `「${plain(h.text)}」だけでは何の説明か分からない。`
         + '何を・どうするのかが分かる名前にする（例「週案のセルから単元を選ぶ」）');
       continue;
     }
-    if (name.length < HEADING_MIN && !CONVENTIONAL.includes(name)) {
+    if (readLen(name) < HEADING_MIN && !CONVENTIONAL.includes(name)) {
       say('warn', h.line,
-        `見出し「${h.text}」が ${name.length} 字と短い。`
+        `見出し「${plain(h.text)}」が ${readLen(name)} 字と短い。`
         + '目次に並べたときに中身が分かるか確かめる');
     }
   }
@@ -130,16 +162,22 @@ export function lintManual(md) {
      本文の中の揺れより目につく。基準にした実物のマニュアルは、目次の
      1 ページの中で「（週案の表示）」と「(メニュー操作)」が混ざっていた。 */
   for (const h of heads) {
-    if (h.level >= 2 && /[()]/.test(h.text)) {
+    /* ⚠️ ふりがなを外してから見る。format.md が通すと書いている <rp> は、
+       ルビ非対応の環境へ半角の丸括弧を出すための札（<rp>(</rp>）で、
+       対応ブラウザには出ない。素のまま見ると、それを書いた見出しが
+       毎回この警告に当たる。 */
+    if (h.level >= 2 && /[()]/.test(plain(h.text))) {
       say('warn', h.line,
-        `見出しの括弧を全角（）にする（「${h.text}」）。`
+        `見出しの括弧を全角（）にする（「${plain(h.text)}」）。`
         + '見出しは目次と検索結果に並ぶので、半角と混ざると目につく');
     }
   }
 
   /* 目印を乱発しない。全部に付けると、どれも目に入らなくなる。
      基準にした実物のマニュアルは 35 見出しのうち【重要】2 本・【！！】1 本だけ。 */
-  const marked = heads.filter((h) => h.level >= 2 && /【(?:重要|！！)】/.test(h.text));
+  /* ふりがなを落としてから見る。子ども向けでは【<ruby>重要<rt>じゅうよう</rt></ruby>】
+     と書くのが決まりどおりなので、素のままだと数え落とす */
+  const marked = heads.filter((h) => h.level >= 2 && /【(?:重要|！！)】/.test(stripRuby(h.text)));
   if (marked.length > Math.max(3, Math.round(heads.length * 0.15))) {
     say('warn', marked[0].line,
       `【重要】【！！】の付いた見出しが ${marked.length} 本ある（見出しは全 ${heads.length} 本）。`
@@ -167,7 +205,7 @@ export function lintManual(md) {
 
   /* 読む前に用意するものが書かれているか。ここが抜けていると、
      読み手は最初の 1 行で止まる（参照マニュアル 1.3 にあたる） */
-  const body = lines.filter((l, i) => !fenced.has(i)).join('\n');
+  const body = plain(lines.filter((l, i) => !fenced.has(i)).join('\n'));
   if (!/用意|準備|お手元|必要なもの|そろえ/.test(body)) {
     say('warn', 1,
       '読む前に用意するもの（端末・アカウント・URL・権限）が見あたらない。'
@@ -233,6 +271,36 @@ export function lintManual(md) {
       + '隣の章に畳むか、足りていないもの（前提・つまずき・押した結果）を書く');
   }
 
+  /* --- ふりがな --------------------------------------------------
+     組み立て（tools/lib/article-md.mjs）が ふりがなとして通すのは、
+     属性の付かない小文字の <ruby> <rt> <rp> だけ。それ以外の書き方をすると
+     **その <ruby> は丸ごと字として公開ページに出る。**
+     手元の Markdown 表示では正しく見えるので、公開ページを見るまで気づけない。
+     読み手（1年生）が見るのは「<ruby>学<rt>がく</rt></ruby>」という記号の列になる。 */
+  const RUBY_TAG = /<\/?(?:ruby|rt|rp|rb|rtc|rbc)\b[^>]*>/gi;
+  const RUBY_OK = /^<\/?(?:ruby|rt|rp)>$/;
+  lines.forEach((line, i) => {
+    if (fenced.has(i)) return;
+    for (const m of line.replace(/`[^`]*`/g, '').matchAll(RUBY_TAG)) {
+      if (RUBY_OK.test(m[0])) continue;
+      say('error', i + 1,
+        `ふりがなの書き方が通りません（${m[0]}）。`
+        + '使えるのは <ruby> <rt> <rp> と その閉じタグだけで、属性も大文字も余分な空白も'
+        + '通りません。このままだと、この <ruby> が丸ごと字として公開ページに出ます');
+    }
+  });
+  /* 閉じ忘れ。<ruby> が閉じていないと、そこも丸ごと字になる */
+  {
+    const body = lines.filter((l, i) => !fenced.has(i)).join('\n').replace(/`[^`]*`/g, '');
+    const open = (body.match(/<ruby>/gi) || []).length;
+    const close = (body.match(/<\/ruby>/gi) || []).length;
+    if (open !== close) {
+      say('error', 1,
+        `<ruby> が ${open} 個、</ruby> が ${close} 個で 数が合いません。`
+        + '閉じていない <ruby> は、丸ごと字として公開ページに出ます');
+    }
+  }
+
   /* --- 画像 ----------------------------------------------------- */
   let images = 0;
   lines.forEach((l, i) => {
@@ -284,12 +352,12 @@ export function lintManual(md) {
       const nextAt2 = rest.findIndex((x) => x.trim() !== '');
       const next2 = nextAt2 === -1 ? '' : rest[nextAt2].trim();
       const isCaption = next2 && !HEADING.test(next2) && !IMAGE_LINE.test(next2)
-        && !ORDERED.test(next2) && next2.length <= CAPTION_MAX;
+        && !ORDERED.test(next2) && readLen(next2) <= CAPTION_MAX;
       const after2 = isCaption
         ? rest.slice(nextAt2 + 1).find((x) => x.trim() !== '') ?? ''
         : next2;
       const breaks = after2 && !ORDERED.test(after2) && !HEADING.test(after2)
-        && !IMAGE_LINE.test(after2) && after2.trim().length > CAPTION_MAX;
+        && !IMAGE_LINE.test(after2) && readLen(after2.trim()) > CAPTION_MAX;
       /* ⚠️ 手順がそこで終わっているなら、何も壊れていない。
          この先に続きの手順があるときだけ言う。終わった手順のあとに
          ふつうの段落を書くのは当たり前のことなので、そこで鳴らすと
@@ -313,8 +381,8 @@ export function lintManual(md) {
     const alone = nextAt !== -1 && (lines[nextAt + 1] ?? '').trim() === '';
     const plain = next && !HEADING.test(next) && !IMAGE_LINE.test(next)
       && !ORDERED.test(next) && !/^\s*[-*]\s/.test(next) && !/^\s*```/.test(next);
-    if (plain && alone && next.length > CAPTION_MAX && next.length <= CAPTION_MAX * 2) {
-      say('warn', nextAt + 1, `画像の直後の 1 段落が ${next.length} 字。`
+    if (plain && alone && readLen(next) > CAPTION_MAX && readLen(next) <= CAPTION_MAX * 2) {
+      say('warn', nextAt + 1, `画像の直後の 1 段落が ${readLen(next)} 字。`
         + `${CAPTION_MAX} 字までならキャプションとして画像に添うが、超えると`
         + 'ふつうの本文になる（写真から離れて出る）');
     }
@@ -339,8 +407,8 @@ export function lintManual(md) {
         + 'ラベル行や箱の見出しなら、画像より前に移すか、あいだに写真を見るための一言を置く');
     }
     if (plain && alone && !LABEL.test(next)
-      && next.length > CAPTION_SHORT && next.length <= CAPTION_MAX) {
-      say('warn', nextAt + 1, `画像の直後の 1 段落が ${next.length} 字。`
+      && readLen(next) > CAPTION_SHORT && readLen(next) <= CAPTION_MAX) {
+      say('warn', nextAt + 1, `画像の直後の 1 段落が ${readLen(next)} 字。`
         + 'ここに書いたものは写真の説明とみなされ、本文から外れて添え字になる。'
         + '節の中身なら、画像より前に移すこと');
     }
