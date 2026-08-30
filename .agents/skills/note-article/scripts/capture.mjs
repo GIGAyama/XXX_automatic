@@ -138,6 +138,27 @@ const IN_PAGE = `(() => {
     return true;
   };
   const clickables = () => [...document.querySelectorAll('button, a[href], [role="button"], [role="tab"], summary, label, input[type=checkbox], input[type=radio], select')].filter(shown);
+  /* 指で触ったのと同じ順に出す。el.click() は click しか出さないので、
+     onPointerDown だけを見ているボタンは「押せたのに何も起きない」になる。
+     反応を速くしたいアプリ（子ども向けのキーパッドなど）はこの作りが多い。
+     本物のタップでも click は続けて出るので、両方出すほうが実機に近い。
+
+     ⚠️ pointerdown を preventDefault したら、そこで止める。本物のブラウザも
+        そうしていて、「pointerdown で処理して click は止める」作りのアプリを
+        二重に動かさないための分かれ道になっている。 */
+  const tap = (el) => {
+    const r = el.getBoundingClientRect();
+    const at = { clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 };
+    const opts = { bubbles: true, cancelable: true, composed: true, pointerId: 1, isPrimary: true, button: 0, ...at };
+    const P = window.PointerEvent || window.MouseEvent;
+    const live = el.dispatchEvent(new P('pointerdown', { ...opts, buttons: 1, pointerType: 'touch' }));
+    if (live) el.dispatchEvent(new MouseEvent('mousedown', { ...opts, buttons: 1 }));
+    el.dispatchEvent(new P('pointerup', { ...opts, buttons: 0, pointerType: 'touch' }));
+    if (live) {
+      el.dispatchEvent(new MouseEvent('mouseup', { ...opts, buttons: 0 }));
+      el.click();
+    }
+  };
   const findAll = (label, exact) => {
     const t = String(label).replace(/\\s+/g, '');
     const c = clickables();
@@ -149,11 +170,23 @@ const IN_PAGE = `(() => {
     const inc = c.filter((e) => norm(e).includes(t));
     return { tier: inc.length ? 'includes' : null, els: inc };
   };
+  /* click() と同じで、ふりがなを落としてから返す。
+     落とさないと、押せる文字（click）と待てる文字（waitFor / expect）が
+     食い違う。DOM は「へやに入はいる」なので、シナリオに書いた
+     「へやに入る」で押せるのに待てない、という形になる。
+     innerText は行の切れ目を保つので、clone ではなく CSS で消す。 */
   const visibleText = () => {
-    const t = document.body.innerText || '';
-    return t.replace(/\\n{2,}/g, '\\n').trim();
+    const st = document.createElement('style');
+    st.textContent = 'rt,rp{display:none!important}';
+    (document.head || document.documentElement).appendChild(st);
+    try {
+      const t = document.body.innerText || '';
+      return t.replace(/\\n{2,}/g, '\\n').trim();
+    } finally {
+      st.remove();
+    }
   };
-  return { norm, shown, clickables, findAll, visibleText };
+  return { norm, shown, clickables, findAll, visibleText, tap };
 })()`;
 
 // ---------------------------------------------------------------- 記録
@@ -188,19 +221,22 @@ const wrap = (page, label) => {
     /** 文字でボタンを押す。押せなければ例外で止まる。ふりがなは無視して比べる */
     async click(text, { nth = 0, exact = false, optional = false, scroll = true } = {}) {
       const res = await page.evaluate(([src, t, n, ex, doScroll]) => {
-        const { findAll, norm, clickables } = eval(src);
+        const { findAll, norm, clickables, tap } = eval(src);
         const { tier, els } = findAll(t, ex);
         if (!els.length) return { ok: false, candidates: clickables().map(norm).filter(Boolean).slice(0, 24) };
         const el = els[Math.min(n, els.length - 1)];
         if (doScroll) el.scrollIntoView({ block: 'center' });
-        el.click();
+        tap(el);
         return { ok: true, tier, count: els.length, label: norm(el) };
       }, [IN_PAGE, text, nth, exact, scroll]);
 
       if (!res.ok) {
         if (optional) return false;
         throw new Error(
-          `[${label}] 押せなかった: ${text}\n  いま押せるもの: ${res.candidates.join(' / ') || '（なし）'}`
+          `[${label}] 押せなかった: ${text}\n  いま押せるもの: ${res.candidates.join(' / ') || '（なし）'}\n`
+          + '  一覧に出ていないなら、次のどちらか。\n'
+          + '    ・画面の外にある（内側にスクロール容器がある画面。p.scrollTo で寄せてから押す）\n'
+          + '    ・role="button" の無い <div onClick>（候補にならない。p.eval で直に押す）'
         );
       }
       if (res.tier === 'includes') note('あいまい一致', label, `「${text}」を部分一致で押した。実際は「${res.label}」`);
