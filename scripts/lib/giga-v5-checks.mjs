@@ -80,6 +80,24 @@ export function stripComments(src) {
   return out;
 }
 
+/**
+ * HTML の中身から、判定の前にコメントを落とす（HTML コメントも JS コメントも）。
+ *
+ * ⚠️ 順番を入れ替えて `stripComments(s).replace(/<!--…-->/g, ' ')` にしないこと。
+ *    stripComments() は JavaScript の規則で読むので、HTML コメントの中に
+ *    `assets/*.css` のような字面があると `/*` をブロックコメントの開始と
+ *    取りちがえ、そのコメント自身の `-->` まで食べてしまう。
+ *    残された `<!--` は、ずっと後ろにある別の `-->` と対になり、
+ *    あいだの <script src="…"> がまるごと消える。
+ *    2026-08-30、Quarto の index.html がまさにこの形だった。
+ *    B_NO_CDN_CODE に CDN の <script> をわざと注ぎこんでも落ちず、
+ *    `npm run check:self` だけがそれを見つけた（`npm run check` は緑のまま）。
+ *    HTML コメントを先に落とせば、その中の字面は JS の目に触れない。
+ */
+export function stripHtmlComments(src) {
+  return stripComments(String(src == null ? '' : src).replace(/<!--[\s\S]*?-->/g, ' '));
+}
+
 const DEFAULTS = {
   repoName: null,
   sw: 'static',
@@ -331,7 +349,7 @@ export const CHECKS = [
       for (const rel of [...cfg.htmlFiles, ...jsFiles(root, cfg)]) {
         const s = read(root, rel);
         if (!s) continue;
-        const code = stripComments(s).replace(/<!--[\s\S]*?-->/g, ' ');
+        const code = stripHtmlComments(s);
         // 見るのは「読み込む」要素だけ。<a href> は行き先のリンクであって
         // 資産の取得ではない（フッターの giga-school.com へのリンクを
         // 誤検知した）。preconnect も取得ではないが、宛先の申告なので
@@ -698,7 +716,7 @@ export const CHECKS = [
         // ⚠️ 判定の前にコメントを落とすこと。
         //    落とさないと、この決まりを説明したコメント自身
         //    （「旧 '/Qalc/sw.js' で書かない」）に反応して落ちる。
-        const code = stripComments(s).replace(/<!--[\s\S]*?-->/g, ' ');
+        const code = stripHtmlComments(s);
         if (code.includes(`'${stale}`) || code.includes(`"${stale}`)) bad.push(`${rel}: ${stale} がのこっています`);
       }
       return { ok: bad.length === 0, detail: bad };
