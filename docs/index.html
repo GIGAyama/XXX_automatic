@@ -81,10 +81,20 @@
   <p>共有シートに X が出ないときは、［コピーして X を開く］を使ってください。<br>
      本文は共有ボタンを押した時点でクリップボードにも入っています。</p>
   <p><a href="apps.html">アプリの一覧を見る</a>（一覧からアプリを選んで投稿を作れます）</p>
-  <p><a href="https://giga-school.com/apps/xxx-automatic/" target="_blank" rel="noopener">使い方を読む</a>（giga-school.com の紹介記事）</p>
+  <!-- 利用規約・プライバシーへの行き先。中身は正本の部品が下で出す（1 行）。
+       「使い方を読む」（紹介記事）はここから外した。紹介記事は「なぜ作ったか」を
+       まだ使っていない人に向けて書いたもので、いまこの画面の前で困っている人が
+       求めるものではない。 -->
+  <p><span data-giga-links data-links="terms,privacy"></span></p>
   <p id="stamp" class="foot__stamp"></p>
 </footer>
 
 <script type="module" src="app.js"></script>
+
+<!-- 利用規約・プライバシーへの行き先。中身は正本の部品
+     standards/web/giga-app-links.js（配布物 docs/giga-app-links.js）が、
+     上のフッターに置いた <span data-giga-links> の中に出す。
+     data-links は置き場所の側に書いてある。 -->
+<script src="./giga-app-links.js" defer></script>
 </body>
 </html>

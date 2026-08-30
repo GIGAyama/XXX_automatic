@@ -18,6 +18,12 @@
  *
  * ⚠️ index.html と同じ CSP を持たせる。style は docs/apps.css（外部ファイル）に置くこと。
  *    style-src 'self' なのでインラインの <style> は動かない。
+ *
+ * ⚠️ このページの CSP は script-src 'none'。JS を 1 バイトも動かさないと決めてある。
+ *    だから利用規約とプライバシーへの行き先は、共通部品（docs/giga-app-links.js）
+ *    ではなく素の <a> で書く。部品を置くために 'none' をゆるめないこと。
+ *    ゆるめると、このページを静的な HTML にした理由（検索と OGP）まで薄まる。
+ *    ランチャー（docs/index.html）のほうは JS が動くので、そちらは部品を使う。
  */
 import fs from 'node:fs';
 import { escapeHtml, subjectKeyOf } from './lib/card-template.mjs';
@@ -156,7 +162,9 @@ ${sections}
   <footer class="foot">
     <p>この一覧は毎週自動で作りなおしています（最終更新: ${escapeHtml(stamp)}）。</p>
     <p><a href="${escapeHtml(launcherUrlOf(accounts))}">投稿ランチャー</a> ・
-       <a href="https://github.com/${escapeHtml(accounts.githubOwner)}">GitHub</a></p>
+       <a href="https://github.com/${escapeHtml(accounts.githubOwner)}">GitHub</a> ・
+       <a href="terms.html">利用規約</a> ・
+       <a href="privacy.html">プライバシーポリシー</a></p>
   </footer>
 
 </div>
