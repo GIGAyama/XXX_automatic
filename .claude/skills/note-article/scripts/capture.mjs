@@ -45,7 +45,8 @@
  *   buttons() / text(n) / has(文字)                いま何が押せるか、何が書いてあるか
  *   setInput(index か selector, 値) / setRange(値, nth)
  *   type(文字列) / press(キー)
- *   scrollTo(文字) / resize(w, h) / sleep(ms)
+ *   scrollTo(文字, {optional})                    寄せる。寄せられなければ落ちる
+ *   resize(w, h) / sleep(ms)
  *   freeze() / unfreeze()                          アニメーションを止める、戻す
  *   shot(名前, {expect, fullPage, note})           撮る
  *   eval(fn, arg)                                  抜け道
@@ -328,17 +329,46 @@ const wrap = (page, label) => {
     type: (s, delay = 60) => page.keyboard.type(String(s), { delay }),
     press: (k) => page.keyboard.press(k),
 
-    /** 目当ての文字が画面に入るまでスクロールする */
-    scrollTo(text) {
-      return page.evaluate(([src, t]) => {
+    /** 目当ての文字が画面に入るまでスクロールする。寄せられなければ落ちる */
+    async scrollTo(text, { optional = false } = {}) {
+      const res = await page.evaluate(([src, t]) => {
         const { findAll, norm } = eval(src);
+        const want = String(t).replace(/\s+/g, '');
+        /* 子の数でふるいにかけるのは、中身の多い入れ物（画面まるごとの <div>）を
+           掴んで見当ちがいのところへ寄せないため。
+           ⚠️ **ルビは数に入れない。** ふりがなは字の飾りであって入れ物の構造では
+              ないのに、<ruby> は 1 語に 1 つ増える。数に入れると、ふりがなを
+              振った見出しほど先にはじかれる ── いちばん寄せたいものが、
+              いちばん当たらない。マイ漢字タウンの「今日のミッション」は
+              children が 7 で、7 つとも <ruby> だった（2026-08-30 に実測）。 */
+        const boxiness = (e) => [...e.children].filter((c) => c.tagName !== 'RUBY').length;
         const hit = findAll(t, false).els[0];
         const el = hit || [...document.querySelectorAll('h1,h2,h3,h4,p,div,span')]
-          .find((e) => norm(e).includes(String(t).replace(/\s+/g, '')) && e.children.length < 6);
-        if (!el) return false;
+          .find((e) => norm(e).includes(want) && boxiness(e) < 6);
+        if (!el) {
+          return { ok: false, near: [...document.querySelectorAll('h1,h2,h3,h4,p,span')]
+            .map(norm).filter(Boolean).slice(0, 24) };
+        }
         el.scrollIntoView({ block: 'center', behavior: 'instant' });
-        return true;
+        return { ok: true, label: norm(el) };
       }, [IN_PAGE, text]);
+
+      /* ⚠️ 当たらなかったときに false を返して黙って先へ進まないこと。
+         2026-08-30 に、寄せたつもりの画面が動かないまま次の shot() が撮られ、
+         設定画面の同じ絵が 4 枚並んだ。撮り手は本文を書くまで気づけない。
+         「同じ絵」の警告は出るが、それが出るのは 3 手あとで、しかも
+         「押せていない可能性がある」と、押した側のせいに読める。
+         当たらなかったその行で、その名前を出して落とすほうが早い。 */
+      if (!res.ok) {
+        if (optional) return false;
+        throw new Error(
+          `[${label}] 寄せられなかった: ${text}\n  いま画面にある字: ${res.near.join(' / ') || '（なし）'}\n`
+          + '  当たらないときは、まず ルビを外した字で書いているか確かめる\n'
+          + '  （references/screenshots.md の 1 節）。\n'
+          + '  寄せられなくても続けてよいときだけ scrollTo(text, { optional: true })。'
+        );
+      }
+      return true;
     },
 
     /** 画面の大きさを変える。縦長にすると1枚に収まる画面がある */

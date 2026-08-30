@@ -196,6 +196,38 @@ node .claude/skills/giga-manual/scripts/lint-manual.mjs docs/manual/manual.md
 無いものを走らせて ENOENT で止まるのは「検査に通っていない」であって
 「検査が無い」ではない）。
 
+### 6. 納品したあと、画面写真がどこから出るかを見る
+
+納品して終わりではない。ポータルは翌朝の流れ
+（`.github/workflows/sync-updates.yml`）でページを組み、**画面写真は
+リポジトリに置いたまま、次の順で読む**（`tools/build-manuals.mjs`）。
+
+1. そのアプリのサブドメイン（`https://<slug>.giga-school.com/docs/manual/images/…`）
+2. ポータル自身の控え（`/assets/manual/<slug>/…` の WebP）
+3. `raw.githubusercontent.com`
+
+⚠️ **Pages が `dist/` だけを配っているアプリでは、1 が必ず外れる。**
+`docs/` は配信されないので、サブドメインからは読めない。控え（2）が無ければ
+3 に落ち、**GitHub を塞いでいる学校では画面写真が 1 枚も出ない。**
+マニュアルは印刷して配られるものなので、これは効く。
+
+控えは、ポータルの側で作る。
+
+```bash
+python3 tools/build-article-images.py --kind manual
+```
+
+朝の流れは、足りていないことを言うところまではやる（`--kind manual --check`）が、
+**作りはしない**（作るには Pillow が要る）。つまり、誰かが上を走らせるまで
+main は赤いままになる。納品したら、ポータルの側でここまでやること。
+
+`data/manuals.json` の `imageHost` が `mirror` になっていれば、控えから出ている。
+`raw` のままなら、まだ 3 の状態。
+
+⚠️ 2026-08-30 のマイ漢字タウンで、40 枚が丸 1 日 `raw` のまま公開されていた。
+**このスキルが「納品したあと」を書いていなかったから**で、書いた本人は
+「ページが出た」時点で終わったつもりでいた。
+
 ## 参照
 
 - `references/format.md` — 見出しの並び、読み手の決め方、文体
