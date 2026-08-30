@@ -37,6 +37,7 @@ export function availableChecks(root, deps = {}) {
   const { exists = fs.existsSync, read = fs.readFileSync } = deps;
   const out = [];
   const has = (p) => exists(path.join(root, p));
+  const readSafe = (p, r) => { try { return String(r(p, 'utf8')); } catch { return ''; } };
 
   let scripts = {};
   if (has('package.json')) {
@@ -55,7 +56,15 @@ export function availableChecks(root, deps = {}) {
       ? 'npm run check    ★ build のあとに走らせること（dist/ を読む検査があるため）'
       : 'npm run check');
   }
-  if (has('tools/build-sw.mjs')) out.push('node tools/build-sw.mjs --check');
+  /* ⚠️ 中身を見てから出す。`--check` を受けつけない build-sw.mjs が在る
+        （手書きのもの、正本が古いまま配られたもの）。受けつけない版に
+        `--check` を渡すと、黙って無視して **dist/sw.js を書き換える**。
+        検査のつもりで走らせた人の作業ツリーが変わるうえ、レビューでは
+        「検査は通った」と読まれる。この hook 自身が「無いものを走らせる」
+        原因にならないよう、実在を字で確かめる。 */
+  if (has('tools/build-sw.mjs') && readSafe(path.join(root, 'tools/build-sw.mjs'), read).includes('--check')) {
+    out.push('node tools/build-sw.mjs --check');
+  }
 
   /* 正本整合性。配布先に standards/ は無いので、ポータルを隣に置いて指す。
      ⚠️ `node standards/check-drift.mjs` と打つと配布先では必ず ENOENT。
@@ -81,6 +90,10 @@ export function announcement(root, deps = {}) {
     '',
     'ここに無いものは、このリポジトリには在りません。走らせて ENOENT で',
     '止まるのは「検査に通っていない」であって「検査が無い」ではありません。',
+    '',
+    '検査は**直し終わってから**走らせます。途中で通しても、そのあとの 1 行で',
+    '崩れます。とくに SW の版は配信物の中身から作るので、最後に 1 文字',
+    '直しただけで合わなくなり、CI で初めて赤くなります。',
   ].join('\n');
 }
 

@@ -60,8 +60,18 @@ Antigravity（Gemini）および Claude Code の双方が共通して遵守す�
 | --- | --- | --- |
 | 単体テスト | `npm test`（無ければ `node --test`） | `scripts.test` のあるリポジトリ |
 | 品質ゲート | `npm run check` | `scripts.check` のあるリポジトリ |
-| SW版数整合性 | `node tools/build-sw.mjs --check` | `tools/build-sw.mjs` のあるリポジトリのみ |
+| SW版数整合性 | `node tools/build-sw.mjs --check` | `tools/build-sw.mjs` が `--check` を持つリポジトリのみ |
 | 正本整合性 | 下記 | 全リポジトリ |
+
+⚠️ **`--check` を持たない `build-sw.mjs` がある。** 手書きのものや、正本が古いまま
+配られたものがそれで、渡しても黙って無視して **`dist/sw.js` を書き換える**。
+検査のつもりが作業ツリーを変え、しかもレビューでは「検査は通った」と読まれる。
+SessionStart のフック（`announce-checks.mjs`）は中身を見て、受けつけるものだけを
+案内する。案内に出ていなければ、そのリポジトリでは走らせない。
+
+⚠️ **検査は、直し終わってから走らせる。** SW の版は配信物の中身から作るので、
+検査を通したあとに 1 文字直すだけで合わなくなる。手元では緑のまま、CI で初めて
+赤くなる形になる。
 
 ### 正本整合性検査（check-drift）の走らせ方
 

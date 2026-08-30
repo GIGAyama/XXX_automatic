@@ -30,7 +30,7 @@ Antigravity（Gemini）および Claude Code の両環境で動作する、GIGA�
 | 項目 | 実際に見ているもの |
 | :--- | :--- |
 | タッチ領域・ルビ・`100dvh`・`prefers-reduced-motion` 等 | 各リポジトリの品質ゲート（`npm run check`／`scripts/check-project.mjs` 等） |
-| SW版数整合性 | `node tools/build-sw.mjs --check`（`tools/build-sw.mjs` のあるリポジトリ） |
+| SW版数整合性 | `node tools/build-sw.mjs --check`（`--check` を持つ `tools/build-sw.mjs` のあるリポジトリ） |
 | 正本とのずれ | `node …/standards/check-drift.mjs --standards …/standards` |
 
 ### 宣言済みの例外は赤くしない
@@ -57,9 +57,15 @@ node .agents/skills/giga-reviewer/scripts/lint-giga.mjs .
 # ポータル（正本を持つ側）から:
 node standards/skills/giga-reviewer/scripts/lint-giga.mjs .
 
-# Service Worker の版数一致検査（tools/build-sw.mjs のあるリポジトリのみ）
+# Service Worker の版数一致検査
+# （tools/build-sw.mjs が --check を持つリポジトリのみ。持たない版に渡すと
+#   黙って無視して dist/sw.js を書き換える。まず grep で在ることを確かめる）
 node tools/build-sw.mjs --check
 ```
+
+⚠️ **この検査は、ほかの直しを全部終えてから走らせる。** 版は配信物の中身から
+作るので、通したあとに 1 文字直すだけで合わなくなる。手元では緑のまま、
+CI で初めて赤くなる。
 
 ⚠️ 出力が 1 行も出ずに終わったら、それは「合格」ではなく「走っていない」。
 2026-08-28 まで、入口の判定に `file://` を文字列で組み立てていたせいで、

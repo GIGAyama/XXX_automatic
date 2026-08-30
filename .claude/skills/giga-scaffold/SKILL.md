@@ -100,6 +100,11 @@ jobs:
         run: node .standards-src/standards/check-drift.mjs --standards .standards-src/standards
 ```
 
+⚠️ この雛形は**配信物をコミットするアプリ**（`sw/build-sw-static.mjs`）の形。
+Vite 系（`sw/build-sw-vite.mjs`）にするなら、`--check` は `dist/` を読むので、
+その前に `npm ci` と `npm run build` を足すこと。足さないと `dist/` が無くて
+ENOENT で落ちる。
+
 ### ③ `sw-build.config.json`
 ```json
 {

@@ -14,6 +14,8 @@
  *    検査が無いことより危ない。見るようになったらここに足すこと。
  *    ・タップ領域 … 各リポジトリの品質ゲート（scripts/check-project.mjs 等）
  *    ・SW 版数    … node tools/build-sw.mjs --check
+ *                    （--check を持つ build-sw.mjs のあるリポジトリだけ。
+ *                      持たない版に渡すと黙って dist/sw.js を書き換える）
  *
  * 使用法:
  *   node scripts/lint-giga.mjs [targetDir]
