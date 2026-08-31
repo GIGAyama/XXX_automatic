@@ -25,10 +25,23 @@ description: GIGAスクールの絶対原則（Zero-CDN・Zero-PII・決定論�
 │   └── workflows/
 │       └── ci.yml              # 正本ドリフト検査 & SW版数一致検査
 └── docs/
+    ├── CHANGELOG.md            # 更新ログ（giga-changelog スキル）
     ├── note/
     │   └── note-article.md     # note紹介記事用ひな形
     └── devlog/                 # 開発記録置き場
 ```
+
+⚠️ **`docs/CHANGELOG.md` は最初から置く。** giga-school.com のトップ・紹介ページ・
+使い方マニュアルの 3 か所が、ここを読んで「何が変わったか」を出す。あとから作る形に
+していたところ、**42 本すべてで 1 本も書かれないまま半年たった**（書き方の正本を
+配っていなかったため）。中身は最初の 1 行だけでよい。
+
+```md
+## <公開日 YYYY-MM-DD>
+- はじめて公開しました
+```
+
+書き足し方は giga-changelog スキルにある。
 
 ---
 

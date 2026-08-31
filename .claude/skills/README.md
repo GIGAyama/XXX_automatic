@@ -6,9 +6,16 @@
 standards/skills/
 ├── devlog-article/    開発記録（giga-school.com/devlog/）を書く
 ├── note-article/      note の紹介記事「教室で使えるかもしれないもの作り」を書く
+├── giga-changelog/    更新ログ（docs/CHANGELOG.md）を書く。使う人から見て何が変わったか
+├── giga-manual/       使い方マニュアル（docs/manual/manual.md）を書く
 ├── giga-scaffold/     GIGAスクールWebアプリの新規立ち上げ・スキャフォールディング
-└── giga-reviewer/     Zero-CDN、Zero-PII、児童UI/UX、SW版数の一括品質検査
+├── giga-reviewer/     Zero-CDN、Zero-PII、児童UI/UX、SW版数の一括品質検査
+└── giga-fleet/        艦隊 42 本の状態をまとめて調べ、次に直すものを出す
 ```
+
+⚠️ この一覧は 2026-08-31 まで 4 本のまま止まっていた（`giga-fleet` と `giga-manual` が
+漏れていた）。**スキルを足したらここも直す。** 配る先は `tools/distribution.json` の
+`skills.required` が正で、この図は人が読むためのもの。
 
 ## なぜ配るのか
 
