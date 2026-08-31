@@ -19,7 +19,7 @@
  *    書き手はこの検査を通さなくなる（lint-manual.mjs と同じ考え方）。
  *    言い回しは warn で言うだけで、止めない。
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 /**
@@ -153,8 +153,26 @@ export function lintChangelog(md, today = new Date().toISOString().slice(0, 10))
   return out;
 }
 
-const invokedDirectly = process.argv[1]
-  && pathToFileURL(process.argv[1]).href === import.meta.url;
+/* ⚠️ `process.argv[1]` を そのまま URL に しない。**シンボリックリンク越しに
+ *    走らせると、この節がまるごと動かない。** 検査は何も出力せず exit 0 で
+ *    終わるので、**通ったように見える**。
+ *
+ *    `import.meta.url` は Node が実体まで辿った道（realpath）を指すのに、
+ *    `argv[1]` は打ったとおりの道のままである。旗艦リポジトリの
+ *    `.claude/skills/<名前>/` は正本 `standards/skills/<名前>/` への
+ *    シンボリックリンクなので、SKILL.md が案内しているとおりの道で打つと
+ *    2 つは必ず食い違う。2026-08-31 に実測した。
+ *    `realpathSync` を通してから `pathToFileURL` で組むと、Windows と
+ *    空白入りの道（2026-08-28 に実測）も まとめて 消える。
+ */
+const invokedDirectly = (() => {
+  if (!process.argv[1]) return false;
+  try {
+    return pathToFileURL(realpathSync(process.argv[1])).href === import.meta.url;
+  } catch (e) {
+    return false;
+  }
+})();
 
 if (invokedDirectly) {
   const path = process.argv.find((a) => a.endsWith('.md'));
