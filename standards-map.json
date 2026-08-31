@@ -81,6 +81,14 @@
     {
       "canonical": "skills/giga-manual",
       "local": ".agents/skills/giga-manual"
+    },
+    {
+      "canonical": "skills/giga-changelog",
+      "local": ".claude/skills/giga-changelog"
+    },
+    {
+      "canonical": "skills/giga-changelog",
+      "local": ".agents/skills/giga-changelog"
     }
   ],
   "unmanaged": [

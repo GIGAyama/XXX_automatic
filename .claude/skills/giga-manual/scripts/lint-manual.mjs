@@ -127,7 +127,8 @@ export function lintManual(md) {
     if (hit) {
       say('error', hit.line,
         `「${bad}」は書かない。data/apps.json と docs/CHANGELOG.md から機械が足す。`
-        + '手で書くと giga-school.com/filtering/ と食い違う');
+        + '手で書くと giga-school.com/filtering/ と食い違う。'
+        + '更新履歴は docs/CHANGELOG.md に書く（giga-changelog スキル）');
     }
   }
 
