@@ -31,6 +31,10 @@
     {
       "canonical": "agents/subagents/giga-migrator.md",
       "local": ".claude/agents/giga-migrator.md"
+    },
+    {
+      "canonical": "agents/hooks/remind-changelog.mjs",
+      "local": ".claude/hooks/remind-changelog.mjs"
     }
   ],
   "dirs": [

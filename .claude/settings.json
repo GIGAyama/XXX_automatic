@@ -11,6 +11,16 @@
             "command": "node .claude/hooks/guard-canonical.mjs"
           }
         ]
+      },
+      {
+        "_why": "使う人から見て何かが変わる直しを、更新ログ（docs/CHANGELOG.md）を書かずにコミットしようとしたら 1 回だけ止める。giga-changelog スキルは 42 本すべてに配ってあり、集める仕組みも出す先も揃っているのに、2026-08-31 に数えたら data/changelog.json は {\"apps\":{}} だった（42 本中 0 本）。スキルは「書いて」と言われたときしか動かないので、言われなければ永遠に動かない。1 回しか止めないのは、使う人から見て何も変わらない直し（CI・検査・道具）で止めつづけると、書き手が嘘の更新ログを足すようになるため。",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/remind-changelog.mjs"
+          }
+        ]
       }
     ],
     "SessionStart": [
