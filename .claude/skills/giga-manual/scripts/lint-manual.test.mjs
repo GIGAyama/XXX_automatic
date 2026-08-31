@@ -1,5 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { mkdtempSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import { lintManual } from './lint-manual.mjs';
 
 /**
@@ -436,4 +441,25 @@ test('正しいふりがなには何も言わない（閉じタグの省略も�
     '<ruby>時間<rt>じかん</ruby>を きめる。',
     CH(2), CH(3)].join('\n'));
   assert.equal(found.filter((f) => /ふりがなの書き方|数が合いません/.test(f.message)).length, 0);
+});
+
+/**
+ * ⚠️ シンボリックリンク越しに 走らせても、CLI が ちゃんと 動くか。
+ *
+ * 旗艦リポジトリの `.claude/skills/giga-manual/` は正本 `standards/skills/…` への
+ * シンボリックリンクで、SKILL.md はその道を案内している。main の判定に
+ * `process.argv[1]` を そのまま つかっていると、`import.meta.url`（実体の道）と
+ * 食い違って **CLI がまるごと動かない**。何も出さず exit 0 で終わるので、
+ * 書き手からは「検査に通った」と見える。2026-08-31 に実測して直した。
+ */
+test('シンボリックリンク越しでも CLI が動く（無言で exit 0 にならない）', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'lint-manual-'));
+  const link = join(dir, 'lint-manual.mjs');
+  const md = join(dir, 'bad.md');
+  symlinkSync(fileURLToPath(new URL('./lint-manual.mjs', import.meta.url)), link);
+  writeFileSync(md, '章も 画面写真も 無い、題だけの マニュアル。\n');
+
+  const run = spawnSync(process.execPath, [link, md], { encoding: 'utf8' });
+  assert.equal(run.status, 1, `落ちるはずが status=${run.status}／出力「${run.stdout}」`);
+  assert.match(run.stdout, /NG/);
 });

@@ -17,7 +17,8 @@
  * ⚠️ 落とすのは「機械が拾えなくなるもの」だけにする。書き方の好みで
  *    落とすと、書き手はこの検査を通さなくなる。
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 
 /**
  * 中身の無い見出し。これだけでは何の説明か分からないので落とす。
@@ -431,8 +432,35 @@ export function lintManual(md) {
   return out;
 }
 
-/* --- ここから下は道具として呼ばれたときだけ ---------------------- */
-const isMain = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+/** シンボリックリンク・Windows・空白入りの道でも 食い違わない main 判定 */
+function invokedDirectly() {
+  if (!process.argv[1]) return false;
+  try {
+    return pathToFileURL(realpathSync(process.argv[1])).href === import.meta.url;
+  } catch (e) {
+    return false;
+  }
+}
+
+/* --- ここから下は道具として呼ばれたときだけ ----------------------
+ *
+ * ⚠️ `process.argv[1]` を そのまま URL に しない。**シンボリックリンク越しに
+ *    走らせると、この節がまるごと動かない。** 検査は何も出力せず exit 0 で
+ *    終わるので、**通ったように見える**。
+ *
+ *    `import.meta.url` は Node が実体まで辿った道（realpath）を指すのに、
+ *    `argv[1]` は打ったとおりの道のままである。旗艦リポジトリの
+ *    `.claude/skills/<名前>/` は正本 `standards/skills/<名前>/` への
+ *    シンボリックリンクなので、SKILL.md が案内しているとおりに
+ *    `node .claude/skills/giga-manual/scripts/lint-manual.mjs …` と打つと、
+ *    2 つは必ず食い違う。2026-08-31 に実測した（壊したマニュアルを渡しても
+ *    無言で成功した）。
+ *
+ *    同じ食い違いは Windows（file:///C:/…）と、空白や日本語を含む道でも起きる
+ *    （2026-08-28、lint-giga.mjs で実測）。`realpathSync` を通してから
+ *    `pathToFileURL` で組むと、3 つとも まとめて 消える。
+ */
+const isMain = invokedDirectly();
 if (isMain) {
   const args = process.argv.slice(2);
   const asJson = args.includes('--json');

@@ -391,8 +391,14 @@ export function lintDirectory(targetDir) {
  *    終わるので、**通ったように見える**。2026-08-28 に、空白を含むパスから
  *    走らせて実測した（違反のある資料を渡しても無言で成功した）。
  *    作者の作業機は Windows なので、そこでは一度も動いていなかった。
+ *
+ *    ⚠️ realpath も通すこと。`import.meta.url` は Node が実体まで辿った道を
+ *       指すのに、argv[1] は打ったとおりの道のままである。旗艦リポジトリの
+ *       `.claude/skills/<名前>/` は正本へのシンボリックリンクなので、
+ *       SKILL.md が案内しているとおりの道で打つと必ず食い違う
+ *       （2026-08-31 に実測。壊した資料を渡しても無言で成功した）。
  */
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(fs.realpathSync(process.argv[1])).href) {
   const targetDir = process.argv[2] || process.cwd();
   console.log(`[giga-reviewer] GIGAスクール標準品質検査を開始: ${targetDir}`);
   
