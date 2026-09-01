@@ -59,7 +59,7 @@ jobs:
       - name: Pages を有効にする（まだなら作る）
         id: enable
         continue-on-error: true
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         with:
           enablement: true
 
