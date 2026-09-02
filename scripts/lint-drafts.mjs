@@ -27,6 +27,7 @@
  * ⚠️ 人が文章を書き足すことはしない。差し替えるのは機械が書いた案だけである。
  *    「AI が書いた文」と「人が直した文」の境界を混ぜない（CLAUDE.md §6）。
  */
+import { pathToFileURL } from 'node:url';
 import fs from 'node:fs';
 import { fail, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
 import { isoWeekId, jstDateString, nextWeekDates } from './lib/jst.mjs';
@@ -169,6 +170,8 @@ export function swapToPassingAlternative(post, guardrails, monetization) {
 }
 
 // テストから import されたときは実行しない。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     main();
 }

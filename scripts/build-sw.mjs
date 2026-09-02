@@ -16,6 +16,7 @@
  * cache.addAll は1つでも 404 があると全部失敗する（sw.js 自身がそう警告している）。
  * 綴りを1文字まちがえただけでオフライン対応が丸ごと死ぬので、ここで捕まえる。
  */
+import { pathToFileURL } from 'node:url';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -107,7 +108,9 @@ function main() {
 }
 
 // テストから import されたときは実行しない。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     try {
         main();
     } catch (error) {

@@ -33,6 +33,7 @@
  * ⚠️ 外から来る入力である。Issue は誰でも立てられる。
  *    投稿者を確かめ、注文の形（とくに注文ID＝ファイル名になる文字列）を照合してから使う。
  */
+import { pathToFileURL } from 'node:url';
 import fs from 'node:fs';
 import {
     DONE_LABEL,
@@ -438,6 +439,8 @@ async function main() {
 }
 
 // テストから import されたときは実行しない。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     main().catch(failWith);
 }

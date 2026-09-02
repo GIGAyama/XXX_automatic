@@ -29,6 +29,7 @@
  * ⚠️ 本文は書きかえない。体裁の指摘（lib/note-lint.mjs）は結果に添えて画面に出し、
  *    直すかどうかは本人が決める。機械が黙って直すと、直した理由が誰にも伝わらない。
  */
+import { pathToFileURL } from 'node:url';
 import fs from 'node:fs';
 import { getFile } from './lib/github.mjs';
 import { fail, failWith, info, loadConfig, parseArgs, paths, readJson, rel, writeJson } from './lib/io.mjs';
@@ -262,6 +263,8 @@ function reportFailures(failures) {
 }
 
 // テストから import されたときは実行しない。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     main().catch(failWith);
 }

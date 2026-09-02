@@ -15,6 +15,7 @@
  *    投稿者を確かめずに取り込むと、第三者が翌週の生成の重み付けを動かせてしまう。
  *    許可した人以外の Issue は取り込まない。
  */
+import { pathToFileURL } from 'node:url';
 import {
     ISSUE_LABEL,
     MERGED_LABEL,
@@ -171,6 +172,8 @@ function ensureFile() {
 }
 
 // テストから import されたときは実行しない（isAllowedAuthor だけを借りに来ることがある）。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     main().catch(failWith);
 }
