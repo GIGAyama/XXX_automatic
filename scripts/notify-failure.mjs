@@ -18,6 +18,7 @@
  *    毎週落ちるたびに同じ Issue が増えると、通知そのものが読み飛ばされるようになる。
  *    直したかどうかは人が Issue を閉じることで示す。
  */
+import { pathToFileURL } from 'node:url';
 import { createIssue, listIssues } from './lib/github.mjs';
 import { failWith, info, loadConfig, parseArgs } from './lib/io.mjs';
 import { jstStamp } from './lib/jst.mjs';
@@ -93,6 +94,8 @@ async function main() {
 }
 
 // テストから import されたときは実行しない。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     main().catch(failWith);
 }

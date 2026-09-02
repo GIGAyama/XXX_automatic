@@ -39,6 +39,7 @@
  * 「## 見出し」を貼ると「## 見出し」という文字列がそのまま残ってしまう。
  * 記事として読む用（.md）と、貼り付ける用（plain）の両方を出す。
  */
+import { pathToFileURL } from 'node:url';
 import fs from 'node:fs';
 import { generateJson, requireApiKey } from './lib/gemini.mjs';
 import { resolveGeminiModel } from './lib/gemini-models.mjs';
@@ -680,6 +681,8 @@ function loadProfiles() {
 export { paragraphsWithImages, renderMarkdown, renderPlainText, sectionsWithExtras };
 
 // テストから import されたときは実行しない。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     main().catch(failWith);
 }

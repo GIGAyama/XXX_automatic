@@ -25,6 +25,7 @@
  *    ゆるめると、このページを静的な HTML にした理由（検索と OGP）まで薄まる。
  *    ランチャー（docs/index.html）のほうは JS が動くので、そちらは部品を使う。
  */
+import { pathToFileURL } from 'node:url';
 import fs from 'node:fs';
 import { escapeHtml, subjectKeyOf } from './lib/card-template.mjs';
 import { fail, info, loadConfig, paths, readJson, rel, writeText } from './lib/io.mjs';
@@ -212,7 +213,9 @@ function main() {
 }
 
 // テストから import されたときは実行しない。
-if (import.meta.url === `file://${process.argv[1]}`) {
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
     try {
         main();
     } catch (error) {
