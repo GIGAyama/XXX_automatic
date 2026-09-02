@@ -175,16 +175,24 @@ const IN_PAGE = `(() => {
      落とさないと、押せる文字（click）と待てる文字（waitFor / expect）が
      食い違う。DOM は「へやに入はいる」なので、シナリオに書いた
      「へやに入る」で押せるのに待てない、という形になる。
-     innerText は行の切れ目を保つので、clone ではなく CSS で消す。 */
+     innerText は行の切れ目を保つので、clone ではなく表示のほうを消す。
+
+     ⚠️ ここで <style> を差しこまないこと。艦隊のアプリは Zero-CDN のために
+        style-src 'self' を張っているので、差しこんだ 1 枚がそのつど
+        「Refused to apply inline style」になる。撮影そのものは通るが、
+        --strict は画面のエラーで落ちるので、**CSP を張っているアプリほど
+        --strict が使えなくなる**。要素の .style へ代入するぶんは CSP に
+        止められないので、rt / rp を 1 つずつ隠して、読み終わったら戻す。
+        （2026-09-02、さんすうブロックのマニュアル撮影で判明） */
   const visibleText = () => {
-    const st = document.createElement('style');
-    st.textContent = 'rt,rp{display:none!important}';
-    (document.head || document.documentElement).appendChild(st);
+    const ruby = [...document.querySelectorAll('rt, rp')];
+    const prev = ruby.map((r) => r.style.display);
+    ruby.forEach((r) => { r.style.display = 'none'; });
     try {
       const t = document.body.innerText || '';
       return t.replace(/\\n{2,}/g, '\\n').trim();
     } finally {
-      st.remove();
+      ruby.forEach((r, i) => { r.style.display = prev[i]; });
     }
   };
   return { norm, shown, clickables, findAll, visibleText, tap };
