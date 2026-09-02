@@ -342,35 +342,95 @@ export const CHECKS = [
 
   {
     id: 'B_NO_CDN_CODE',
-    title: 'CDN から取る実行コードが 0 バイト',
+    title: '外のホストから読む資産が 0 件（CDN のコード・書体・画像・CSS）',
     run: (root, cfg) => {
+      /* ⚠️ `https?://` だけを見ていた時期がある。2026-08-28、この検査が「0 件」と
+       *    言うのに実ブラウザは外を読んでいた（①スキームを省いた //cdn… ②<img src>
+       *    ③印刷ウィンドウの中の @import）。エージェント用の lint-giga は直したのに、
+       *    **CI が走らせるこちら**は 2026-09-02 まで同じ穴のままだった。
+       *    見るのは「読みこむ」もの。<a href> は行き先のリンクであって資産の取得では
+       *    ない（フッターの giga-school.com へのリンクを誤検知した）。preconnect も
+       *    取得ではないが、宛先の申告なので stylesheet 等と同じ扱いで許可リストに
+       *    載せてもらう。 */
       const allowed = cfg.allowedRemoteScripts.map((re) => new RegExp(re));
-      const bad = [];
-      for (const rel of [...cfg.htmlFiles, ...jsFiles(root, cfg)]) {
+      const ATTR = String.raw`((?:https?:)?\/\/[^"']+)`;       // 引用符つきの属性値・JS の文字列
+      const CSSU = String.raw`((?:https?:)?\/\/[^"')\s;]+)`;   // url( ) の中。引用符が無いことが多い
+      const quoted = (prefix, flags = 'g') => new RegExp(prefix + '["\']' + ATTR + '["\']', flags);
+      const HTML_LOADERS = [
+        quoted(String.raw`<(?:script|iframe|img|source|video|audio|track|embed)\b[^>]*\ssrc\s*=\s*`, 'gi'),
+        quoted(String.raw`<link\b[^>]*\shref\s*=\s*`, 'gi'),
+        quoted(String.raw`<object\b[^>]*\sdata\s*=\s*`, 'gi'),
+        quoted(String.raw`<video\b[^>]*\sposter\s*=\s*`, 'gi'),
+        quoted(String.raw`<(?:use|image)\b[^>]*\s(?:xlink:)?href\s*=\s*`, 'gi'),
+      ];
+      // JS からの動的な読み込み。ESM の import と Worker、SW の importScripts も
+      const JS_LOADERS = [
+        quoted(String.raw`importScripts\(\s*`),
+        quoted(String.raw`\.src\s*=\s*`),
+        quoted(String.raw`\.setAttribute\(\s*["']src["']\s*,\s*`),
+        quoted(String.raw`\bimport\s*\(\s*`),
+        quoted(String.raw`\bfrom\s+`),
+        quoted(String.raw`new\s+Worker\(\s*`),
+      ];
+      // CSS。書体（@import / @font-face の url）と画像（background の url）
+      const CSS_LOADERS = [
+        new RegExp(String.raw`@import\s+(?:url\(\s*)?["']?` + CSSU, 'g'),
+        new RegExp(String.raw`\burl\(\s*["']?` + CSSU, 'g'),
+      ];
+      const SRCSET = /\ssrcset\s*=\s*["']([^"']*)["']/gi;
+      const REMOTE = /^(?:https?:)?\/\//;
+      const ALL = [...HTML_LOADERS, ...JS_LOADERS, ...CSS_LOADERS];
+
+      const bad = new Set();   // @import url(…) は 2 つの形に当たるので、同じ指摘は 1 つにまとめる
+      const report = (rel, url) => {
+        if (allowed.some((a) => a.test(url))) return;
+        bad.add(`${rel}: ${url} を読んでいます`);
+      };
+      const scan = (rel, code, patterns) => {
+        for (const re of patterns) for (const m of code.matchAll(re)) report(rel, m[1]);
+        // srcset は「URL 幅, URL 幅」の並び。候補ごとに見る
+        for (const m of code.matchAll(SRCSET)) {
+          for (const cand of m[1].split(',')) {
+            const url = cand.trim().split(/\s+/)[0];
+            if (REMOTE.test(url)) report(rel, url);
+          }
+        }
+      };
+
+      /* CSS のコメントは /* … *\/ だけ。stripComments() は JS の規則で `//` を行末まで
+         落とすので、引用符の無い url(https://…) がコメント扱いで消える。CSS には使わない。 */
+      const stripCssComments = (css) => css.replace(/\/\*[\s\S]*?\*\//g, ' ');
+
+      for (const rel of cfg.htmlFiles) {
         const s = read(root, rel);
         if (!s) continue;
         const code = stripHtmlComments(s);
-        // 見るのは「読み込む」要素だけ。<a href> は行き先のリンクであって
-        // 資産の取得ではない（フッターの giga-school.com へのリンクを
-        // 誤検知した）。preconnect も取得ではないが、宛先の申告なので
-        // stylesheet 等と同じ扱いで許可リストに載せてもらう。
-        const loaders = [
-          /<script[^>]*\ssrc\s*=\s*["'](https?:\/\/[^"']+)["']/gi,
-          /<link[^>]*\shref\s*=\s*["'](https?:\/\/[^"']+)["'][^>]*>/gi,
-          /<iframe[^>]*\ssrc\s*=\s*["'](https?:\/\/[^"']+)["']/gi,
-          // JS からの動的な読み込み
-          /importScripts\(\s*["'](https?:\/\/[^"']+)["']/g,
-          /\.src\s*=\s*["'](https?:\/\/[^"']+)["']/g,
-        ];
-        for (const re of loaders) {
-          for (const m of code.matchAll(re)) {
-            if (allowed.some((a) => a.test(m[1]))) continue;
-            bad.push(`${rel}: ${m[1]} を読んでいます`);
-          }
+        scan(rel, code, ALL);
+        /* <style> の中は CSS として別に見る。上の code は JS の規則でコメントを落として
+           あるので、<style>@import url(https://…)</style> の `//` から行末までが消えている。
+           単一 HTML 型のアプリはスタイルを <style> に書くので、ここを見ないと書体の
+           取り寄せが素通りする。 */
+        const noHtmlComments = s.replace(/<!--[\s\S]*?-->/g, ' ');
+        for (const m of noHtmlComments.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)) {
+          scan(`${rel} の <style>`, stripCssComments(m[1]), CSS_LOADERS);
         }
-        if (/babel\/standalone|cdn\.tailwindcss\.com/.test(code)) bad.push(`${rel}: ブラウザの中でコンパイルしています`);
+        if (/babel\/standalone|cdn\.tailwindcss\.com/.test(code)) bad.add(`${rel}: ブラウザの中でコンパイルしています`);
       }
-      return { ok: bad.length === 0, detail: bad };
+      /* JS は HTML も CSS も文字列で組み立てる（印刷ウィンドウの <link> や @import）ので、
+         3 種すべてを当てる。Service Worker も見る。jsFiles() は SW を外すが、
+         importScripts で CDN の workbox を読むのは SW の中でしか起きない。 */
+      const sw = swSourceOf(cfg);
+      for (const rel of [...jsFiles(root, cfg), ...(read(root, sw) ? [sw] : [])]) {
+        const s = read(root, rel);
+        if (!s) continue;
+        scan(rel, stripComments(s), ALL);
+      }
+      for (const rel of cssFiles(root, cfg)) {
+        const s = read(root, rel);
+        if (!s) continue;
+        scan(rel, stripCssComments(s), CSS_LOADERS);
+      }
+      return { ok: bad.size === 0, detail: [...bad] };
     },
   },
   {
