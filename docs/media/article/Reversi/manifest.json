@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "repo": "Reversi",
+  "url": "https://reversi.giga-school.com/",
+  "sourceSha": "64f551c7c2da4646d40c54c0186c9447b07c80d9",
+  "capturedAtJst": "2026-09-06 23:10 JST",
+  "by": "auto",
+  "shots": [
+    {
+      "file": "01-home.png",
+      "label": "home",
+      "what": "ひらいた直後の画面",
+      "seen": "⚪️⚫️ リバーシ 🔊 ON ？ 手番てばん スコア & 優勢ゆうせいメーター ⚫️ くろ 2 ⚪️ しろ 2 盤面ばんめん: 開始かいし/リセット ↩️ 待まった！ © 2026 リバーシ GIGA山"
+    },
+    {
+      "file": "02-start.png",
+      "label": "start",
+      "what": "「開始」を押したあと",
+      "seen": "⚪️⚫️ リバーシ 🔊 ON ？ 手番てばん スコア & 優勢ゆうせいメーター ⚫️ くろ 2 ⚪️ しろ 2 盤面ばんめん: 開始かいし/リセット ↩️ 待まった！ © 2026 リバーシ GIGA山"
+    },
+    {
+      "file": "03-bottom.png",
+      "label": "bottom",
+      "what": "ページのいちばん下",
+      "seen": "⚪️⚫️ リバーシ 🔊 ON ？ 手番てばん スコア & 優勢ゆうせいメーター ⚫️ くろ 2 ⚪️ しろ 2 盤面ばんめん: 開始かいし/リセット ↩️ 待まった！ © 2026 リバーシ GIGA山"
+    }
+  ]
+}

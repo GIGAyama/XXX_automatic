@@ -1,18 +1,22 @@
 {
   "_comment": "scripts/lib/gemini-models.mjs が書く。使っている Gemini のモデルと、そのとき選べた候補。手で直す必要はない。版が切り替わったことを git の履歴で追えるようにコミットしている。",
-  "model": "gemini-3.6-flash",
-  "previous": null,
+  "model": "gemini-3.8-flash",
+  "previous": "gemini-3.6-flash",
   "prefer": "flash",
   "allowPreview": false,
-  "resolvedAt": "2026-08-12T11:11:51.225Z",
-  "resolvedAtJst": "2026-08-12 20:11 JST",
+  "resolvedAt": "2026-09-06T13:58:20.502Z",
+  "resolvedAtJst": "2026-09-06 22:58 JST",
   "candidates": [
+    "gemini-3.8-flash",
+    "gemini-3.7-flash",
     "gemini-3.6-flash",
     "gemini-3.5-flash",
     "gemini-2.5-flash",
+    "gemini-omni-1.1-flash",
     "gemini-3.5-flash-lite",
     "gemini-3.1-flash-lite",
     "gemini-2.5-pro",
-    "gemini-2.5-flash-lite"
+    "gemini-2.5-flash-lite",
+    "gemini-3.5-transcribe"
   ]
 }
