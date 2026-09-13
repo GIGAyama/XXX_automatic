@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cardTemplateSha": "08d5ce0b1e2d866c",
-  "updatedAtJst": "2026-09-06 23:09 JST",
+  "updatedAtJst": "2026-09-13 23:50 JST",
   "apps": {
     "KEISAN-BLOCK": {
       "shot": {
@@ -132,8 +132,8 @@
     "Qalc": {
       "shot": {
         "ok": true,
-        "fingerprint": "fc24332c35ea1390",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "2589d7064c7835db",
+        "atJst": "2026-09-13 23:50 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -141,8 +141,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "6454e840b7e99ff2",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "55b4e117cfcdf828",
+        "atJst": "2026-09-13 23:50 JST",
         "frames": 1,
         "blank": false
       }
