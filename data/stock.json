@@ -1,92 +1,10 @@
 {
-  "generatedAt": "2026-09-20T14:34:52.177Z",
-  "generatedAtJst": "2026-09-20 23:34 JST",
-  "weekId": "2026-W39",
+  "generatedAt": "2026-09-27T15:34:46.702Z",
+  "generatedAtJst": "2026-09-28 00:34 JST",
+  "weekId": "2026-W41",
   "posts": [
     {
-      "id": "stock-2026-W39-1",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "update",
-      "themeLabel": "アップデート報告",
-      "repo": "Digital_textbook",
-      "body": "端末を開いた瞬間、画面に意図しない線が引かれてしまうことがありました。教材を開いた直後はペンではなく選択モードから始まるように修正しました。自作プリントの表示崩れを防ぎ、45分の授業開始1分を落ち着いて迎える助けになればと思います。",
-      "hook": "confess",
-      "hashtags": [
-        "教材プリントメーカー",
-        "PDF書き込み",
-        "GIGAスクール"
-      ],
-      "url": "https://digital-textbook.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "端末を開いた瞬間、画面に意図しない線が引かれてしまうことがありました。教材を開いた直後はペンではなく選択モードから始まるように修正しました。自作プリントの表示崩れを防ぎ、45分の授業開始1分を落ち着いて迎える助けになればと思います。\n\n#教材プリントメーカー #PDF書き込み #GIGAスクール",
-          "weightedLength": 279
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://digital-textbook.giga-school.com/",
-          "weightedLength": 68
-        }
-      ],
-      "text": "端末を開いた瞬間、画面に意図しない線が引かれてしまうことがありました。教材を開いた直後はペンではなく選択モードから始まるように修正しました。自作プリントの表示崩れを防ぎ、45分の授業開始1分を落ち着いて迎える助けになればと思います。\n\n#教材プリントメーカー #PDF書き込み #GIGAスクール",
-      "media": "media/Digital_textbook-card.png",
-      "weightedLength": 279,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W39-2",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "making",
-      "themeLabel": "開発の裏側",
-      "repo": "Quarto",
-      "body": "体育館や特別教室に行くと、校内Wi-Fiが途切れて活動が止まります。そのため外部通信や音源読み込みを一切なくし、ブラウザの合成音だけで動くように作りました。電波の届かない場所でも、2人で1台を囲んでじっくり思考できると思います。",
-      "hook": "scene",
-      "hashtags": [
-        "ボードゲーム",
-        "オフライン対応",
-        "GIGAスクール"
-      ],
-      "url": "https://quarto.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "体育館や特別教室に行くと、校内Wi-Fiが途切れて活動が止まります。そのため外部通信や音源読み込みを一切なくし、ブラウザの合成音だけで動くように作りました。電波の届かない場所でも、2人で1台を囲んでじっくり思考できると思います。\n\n#ボードゲーム #オフライン対応 #GIGAスクール",
-          "weightedLength": 266
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://quarto.giga-school.com/",
-          "weightedLength": 80
-        }
-      ],
-      "text": "体育館や特別教室に行くと、校内Wi-Fiが途切れて活動が止まります。そのため外部通信や音源読み込みを一切なくし、ブラウザの合成音だけで動くように作りました。電波の届かない場所でも、2人で1台を囲んでじっくり思考できると思います。\n\n#ボードゲーム #オフライン対応 #GIGAスクール",
-      "media": "media/Quarto-card.png",
-      "weightedLength": 266,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W39-3",
+      "id": "stock-2026-W41-1",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -95,39 +13,39 @@
       "minute": 0,
       "theme": "pain",
       "themeLabel": "困りごと→解決",
-      "repo": "School_plan_note",
-      "body": "行事予定の変更を手作業で週案に転記するだけで、放課後の30分が消える。運動会前など特別日課が重なると時数の計算だけで手一杯になります。AIに授業計画の割り当てや準備物の整理を任せれば、放課後の事務負担を少しでも減らせると思います。",
-      "hook": "number",
+      "repo": "Typa",
+      "body": "朝の会前や給食待ちの数十秒、ドリルを開いても打ち切れず諦めてしまう。そんな姿を見かけます。そこで開いた瞬間0タップで練習が始まり、数問でやめても記録が残る作りにしました。隙間時間でも無理なく続けられると思います。",
+      "hook": "scene",
       "hashtags": [
-        "週案",
-        "校務効率化",
-        "小学校教員"
+        "Typa",
+        "タイピング",
+        "Chromebook"
       ],
-      "url": "https://school-plan-note.giga-school.com/",
+      "url": "https://typa.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "行事予定の変更を手作業で週案に転記するだけで、放課後の30分が消える。運動会前など特別日課が重なると時数の計算だけで手一杯になります。AIに授業計画の割り当てや準備物の整理を任せれば、放課後の事務負担を少しでも減らせると思います。\n\n#週案 #校務効率化 #小学校教員",
-          "weightedLength": 257
+          "text": "朝の会前や給食待ちの数十秒、ドリルを開いても打ち切れず諦めてしまう。そんな姿を見かけます。そこで開いた瞬間0タップで練習が始まり、数問でやめても記録が残る作りにしました。隙間時間でも無理なく続けられると思います。\n\n#Typa #タイピング #Chromebook",
+          "weightedLength": 242
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://school-plan-note.giga-school.com/",
-          "weightedLength": 76
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://typa.giga-school.com/",
+          "weightedLength": 74
         }
       ],
-      "text": "行事予定の変更を手作業で週案に転記するだけで、放課後の30分が消える。運動会前など特別日課が重なると時数の計算だけで手一杯になります。AIに授業計画の割り当てや準備物の整理を任せれば、放課後の事務負担を少しでも減らせると思います。\n\n#週案 #校務効率化 #小学校教員",
-      "media": "media/School_plan_note-card.png",
-      "weightedLength": 257,
+      "text": "朝の会前や給食待ちの数十秒、ドリルを開いても打ち切れず諦めてしまう。そんな姿を見かけます。そこで開いた瞬間0タップで練習が始まり、数問でやめても記録が残る作りにしました。隙間時間でも無理なく続けられると思います。\n\n#Typa #タイピング #Chromebook",
+      "media": "media/Typa-card.png",
+      "weightedLength": 242,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W39-4",
+      "id": "stock-2026-W41-2",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -136,39 +54,39 @@
       "minute": 0,
       "theme": "intro",
       "themeLabel": "アプリ紹介",
-      "repo": "Hagetaka-game",
-      "body": "45分の授業の終わり、残り5分でできる知育ゲームを探すことがあります。そこで作ったのが、4桁の合言葉だけで対戦できるカードゲームです。ログイン不要でURLの打ち間違いもなく、余った時間で友達やAIと手軽に心理戦が楽しめると思います。",
-      "hook": "scene",
+      "repo": "KANJI_Town",
+      "body": "朝学習の10分間、漢字の筆順まで全員ぶん目を通せていますか。行事準備で忙しい時期に作ったのが、書き順まで自動判定する町育て漢字アプリです。アカウント不要で、4桁の番号を黒板に書くだけですぐ練習に入れます。",
+      "hook": "question",
       "hashtags": [
-        "カードゲーム",
-        "学級経営",
-        "PWA"
+        "漢字学習",
+        "小学校国語",
+        "GIGAスクール"
       ],
-      "url": "https://hagetaka-game.giga-school.com/",
+      "url": "https://kanji-town.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "45分の授業の終わり、残り5分でできる知育ゲームを探すことがあります。そこで作ったのが、4桁の合言葉だけで対戦できるカードゲームです。ログイン不要でURLの打ち間違いもなく、余った時間で友達やAIと手軽に心理戦が楽しめると思います。\n\n#カードゲーム #学級経営 #PWA",
-          "weightedLength": 253
+          "text": "朝学習の10分間、漢字の筆順まで全員ぶん目を通せていますか。行事準備で忙しい時期に作ったのが、書き順まで自動判定する町育て漢字アプリです。アカウント不要で、4桁の番号を黒板に書くだけですぐ練習に入れます。\n\n#漢字学習 #小学校国語 #GIGAスクール",
+          "weightedLength": 238
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://hagetaka-game.giga-school.com/",
-          "weightedLength": 74
+          "text": "実物はこちらです。インストールは要りません。\nhttps://kanji-town.giga-school.com/",
+          "weightedLength": 68
         }
       ],
-      "text": "45分の授業の終わり、残り5分でできる知育ゲームを探すことがあります。そこで作ったのが、4桁の合言葉だけで対戦できるカードゲームです。ログイン不要でURLの打ち間違いもなく、余った時間で友達やAIと手軽に心理戦が楽しめると思います。\n\n#カードゲーム #学級経営 #PWA",
-      "media": "media/Hagetaka-game-card.png",
-      "weightedLength": 253,
+      "text": "朝学習の10分間、漢字の筆順まで全員ぶん目を通せていますか。行事準備で忙しい時期に作ったのが、書き順まで自動判定する町育て漢字アプリです。アカウント不要で、4桁の番号を黒板に書くだけですぐ練習に入れます。\n\n#漢字学習 #小学校国語 #GIGAスクール",
+      "media": "media/KANJI_Town-card.png",
+      "weightedLength": 238,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W39-5",
+      "id": "stock-2026-W41-3",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -177,203 +95,80 @@
       "minute": 0,
       "theme": "making",
       "themeLabel": "開発の裏側",
-      "repo": "word_basket",
-      "body": "共用端末を使うたびに、前の子の履歴を消す作業をなくしたかったのです。そのため名前入力や成績の保存機能を一切つけず、開いてすぐ遊べる設計にしました。班で机を寄せて端末を囲むだけで、休み時間の5分でも気軽にしりとりができると思います。",
-      "hook": "reason",
-      "hashtags": [
-        "しりとり",
-        "国語",
-        "GIGAスクール"
-      ],
-      "url": "https://word-basket.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "共用端末を使うたびに、前の子の履歴を消す作業をなくしたかったのです。そのため名前入力や成績の保存機能を一切つけず、開いてすぐ遊べる設計にしました。班で机を寄せて端末を囲むだけで、休み時間の5分でも気軽にしりとりができると思います。\n\n#しりとり #国語 #GIGAスクール",
-          "weightedLength": 260
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://word-basket.giga-school.com/",
-          "weightedLength": 68
-        }
-      ],
-      "text": "共用端末を使うたびに、前の子の履歴を消す作業をなくしたかったのです。そのため名前入力や成績の保存機能を一切つけず、開いてすぐ遊べる設計にしました。班で机を寄せて端末を囲むだけで、休み時間の5分でも気軽にしりとりができると思います。\n\n#しりとり #国語 #GIGAスクール",
-      "media": "media/word_basket-card.png",
-      "weightedLength": 260,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W39-6",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "insight",
-      "themeLabel": "教育×AIの気づき",
-      "repo": "Homework_barcordreader",
-      "body": "毎朝の全員の提出確認よりも、出せなかった日の理由に目を向けたい。AIや自動化に求めるべきは全員の監視ではなく、提出率20％未満のような変化の検知だと気づきました。機械に仕分けを任せることで、子どもと話す朝の2分が生まれると思います。",
-      "hook": "contrast",
-      "hashtags": [
-        "宿題管理",
-        "学級経営",
-        "校務効率化"
-      ],
-      "url": "https://homework-barcordreader.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "毎朝の全員の提出確認よりも、出せなかった日の理由に目を向けたい。AIや自動化に求めるべきは全員の監視ではなく、提出率20％未満のような変化の検知だと気づきました。機械に仕分けを任せることで、子どもと話す朝の2分が生まれると思います。\n\n#宿題管理 #学級経営 #校務効率化",
-          "weightedLength": 260
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://homework-barcordreader.giga-school.com/",
-          "weightedLength": 80
-        }
-      ],
-      "text": "毎朝の全員の提出確認よりも、出せなかった日の理由に目を向けたい。AIや自動化に求めるべきは全員の監視ではなく、提出率20％未満のような変化の検知だと気づきました。機械に仕分けを任せることで、子どもと話す朝の2分が生まれると思います。\n\n#宿題管理 #学級経営 #校務効率化",
-      "media": "media/Homework_barcordreader-card.png",
-      "weightedLength": 260,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W39-7",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "howto",
-      "themeLabel": "教材づくりの小ネタ",
-      "repo": "MIRAI-Compass",
-      "body": "自由進度学習の添削、全員分のコメントを書く時間足りていますか。GASとAIを連携させると、児童の解答に応じた添削コメントの下書きを一括で用意できます。たたき台があるだけで推敲が2分で終わり、放課後の個別支援の質がぐっと高まると思います。",
-      "hook": "question",
-      "hashtags": [
-        "自由進度学習",
-        "GoogleAppsScript",
-        "小学校教育"
-      ],
-      "url": "https://mirai-compass.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "自由進度学習の添削、全員分のコメントを書く時間足りていますか。GASとAIを連携させると、児童の解答に応じた添削コメントの下書きを一括で用意できます。たたき台があるだけで推敲が2分で終わり、放課後の個別支援の質がぐっと高まると思います。\n\n#自由進度学習 #GoogleAppsScript #小学校教育",
-          "weightedLength": 275
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://mirai-compass.giga-school.com/",
-          "weightedLength": 76
-        }
-      ],
-      "text": "自由進度学習の添削、全員分のコメントを書く時間足りていますか。GASとAIを連携させると、児童の解答に応じた添削コメントの下書きを一括で用意できます。たたき台があるだけで推敲が2分で終わり、放課後の個別支援の質がぐっと高まると思います。\n\n#自由進度学習 #GoogleAppsScript #小学校教育",
-      "media": "media/MIRAI-Compass-card.png",
-      "weightedLength": 275,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W39-8",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "pain",
-      "themeLabel": "困りごと→解決",
       "repo": "PhysicalEducation_note",
-      "body": "体育の後の紙のカードは、集めて机に置いたまま放課後になっていました。運動会前の忙しい時期は振り返りを読む余裕すらありません。端末上で「見る・支える」などの観点を選んで記録できるようにしたら、授業の最後の3分で集計まで終えられると思います。",
-      "hook": "contrast",
+      "body": "体育の振り返りを紙で集めると、集計だけで放課後が潰れてしまう。運動会練習で忙しい時期だからこそ、4観点を選ぶだけで児童の偏りを自動検知する作りにしました。前回の続きから自動で開き、一覧で未入力もすぐ分かります。",
+      "hook": "reason",
       "hashtags": [
         "体育",
         "振り返り",
-        "GIGAスクール"
+        "GoogleWorkspace"
       ],
       "url": "https://physicaleducation-note.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "体育の後の紙のカードは、集めて机に置いたまま放課後になっていました。運動会前の忙しい時期は振り返りを読む余裕すらありません。端末上で「見る・支える」などの観点を選んで記録できるようにしたら、授業の最後の3分で集計まで終えられると思います。\n\n#体育 #振り返り #GIGAスクール",
-          "weightedLength": 268
+          "text": "体育の振り返りを紙で集めると、集計だけで放課後が潰れてしまう。運動会練習で忙しい時期だからこそ、4観点を選ぶだけで児童の偏りを自動検知する作りにしました。前回の続きから自動で開き、一覧で未入力もすぐ分かります。\n\n#体育 #振り返り #GoogleWorkspace",
+          "weightedLength": 243
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://physicaleducation-note.giga-school.com/",
-          "weightedLength": 74
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://physicaleducation-note.giga-school.com/",
+          "weightedLength": 80
         }
       ],
-      "text": "体育の後の紙のカードは、集めて机に置いたまま放課後になっていました。運動会前の忙しい時期は振り返りを読む余裕すらありません。端末上で「見る・支える」などの観点を選んで記録できるようにしたら、授業の最後の3分で集計まで終えられると思います。\n\n#体育 #振り返り #GIGAスクール",
+      "text": "体育の振り返りを紙で集めると、集計だけで放課後が潰れてしまう。運動会練習で忙しい時期だからこそ、4観点を選ぶだけで児童の偏りを自動検知する作りにしました。前回の続きから自動で開き、一覧で未入力もすぐ分かります。\n\n#体育 #振り返り #GoogleWorkspace",
       "media": "media/PhysicalEducation_note-card.png",
-      "weightedLength": 268,
+      "weightedLength": 243,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W39-9",
+      "id": "stock-2026-W41-4",
       "date": "",
       "weekday": "",
       "slot": "stock",
       "slotLabel": "予備",
       "hour": 0,
       "minute": 0,
-      "theme": "insight",
-      "themeLabel": "教育×AIの気づき",
-      "repo": "MIRAI-Passport",
-      "body": "AIで作ったワークシートを、印刷して配る手間ばかりかけていました。紙に直すとレイアウト調整に10分取られて本末転倒だと気づきました。作成からClassroom配布、AI添削までブラウザ内で一貫させると、教材準備の迷いが消えると思います。",
-      "hook": "confess",
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "Gamification",
+      "body": "放課後のわずか3分、ダッシュボードの「声かけリスト」を開きます。無記録や「むずかしい」が続く子を一覧で確認し、翌朝の支援に生かしています。各アプリの学習ログが自動集約されるので、ノート回収の手間もなくなりました。",
+      "hook": "number",
       "hashtags": [
-        "小学校",
-        "ワークシート",
-        "教育DX"
+        "ゲーミフィケーション",
+        "学習ログ",
+        "GIGAスクール"
       ],
-      "url": "https://mirai-passport.giga-school.com/",
+      "url": "https://gamification.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "AIで作ったワークシートを、印刷して配る手間ばかりかけていました。紙に直すとレイアウト調整に10分取られて本末転倒だと気づきました。作成からClassroom配布、AI添削までブラウザ内で一貫させると、教材準備の迷いが消えると思います。\n\n#小学校 #ワークシート #教育DX",
-          "weightedLength": 252
+          "text": "放課後のわずか3分、ダッシュボードの「声かけリスト」を開きます。無記録や「むずかしい」が続く子を一覧で確認し、翌朝の支援に生かしています。各アプリの学習ログが自動集約されるので、ノート回収の手間もなくなりました。\n\n#ゲーミフィケーション #学習ログ #GIGAスクール",
+          "weightedLength": 258
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://mirai-passport.giga-school.com/",
-          "weightedLength": 68
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://gamification.giga-school.com/",
+          "weightedLength": 76
         }
       ],
-      "text": "AIで作ったワークシートを、印刷して配る手間ばかりかけていました。紙に直すとレイアウト調整に10分取られて本末転倒だと気づきました。作成からClassroom配布、AI添削までブラウザ内で一貫させると、教材準備の迷いが消えると思います。\n\n#小学校 #ワークシート #教育DX",
-      "media": "media/MIRAI-Passport-card.png",
-      "weightedLength": 252,
+      "text": "放課後のわずか3分、ダッシュボードの「声かけリスト」を開きます。無記録や「むずかしい」が続く子を一覧で確認し、翌朝の支援に生かしています。各アプリの学習ログが自動集約されるので、ノート回収の手間もなくなりました。\n\n#ゲーミフィケーション #学習ログ #GIGAスクール",
+      "media": "media/Gamification-card.png",
+      "weightedLength": 258,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W39-10",
+      "id": "stock-2026-W41-5",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -382,32 +177,237 @@
       "minute": 0,
       "theme": "intro",
       "themeLabel": "アプリ紹介",
-      "repo": "DigitalCloset",
-      "body": "運動会前の外練習と教室の冷房、何を着て出勤するか迷う朝はありませんか。そこで作ったのが手持ち服だけでコーデを組むアプリです。手元の服を写真で登録しておけば、AIが持ち服の中から組み合わせを提案してくれ、忙しい朝の1分を救えると思います。",
-      "hook": "scene",
+      "repo": "online-100square-calculation",
+      "body": "紙だと丸つけで放課後が消え、普通のアプリだと画面が隠れる。そこでキーボードを立ち上げず手書きできる100マス計算を作りました。外部通信ゼロで動き、直近10回の初回正答率から弱点だけを振り返ることができます。",
+      "hook": "contrast",
       "hashtags": [
-        "ワードローブ",
-        "コーデ提案",
-        "PWA"
+        "100マス計算",
+        "算数",
+        "オフライン対応"
       ],
-      "url": "https://digitalcloset.giga-school.com/",
+      "url": "https://online-100square-calculation.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "運動会前の外練習と教室の冷房、何を着て出勤するか迷う朝はありませんか。そこで作ったのが手持ち服だけでコーデを組むアプリです。手元の服を写真で登録しておけば、AIが持ち服の中から組み合わせを提案してくれ、忙しい朝の1分を救えると思います。\n\n#ワードローブ #コーデ提案 #PWA",
-          "weightedLength": 265
+          "text": "紙だと丸つけで放課後が消え、普通のアプリだと画面が隠れる。そこでキーボードを立ち上げず手書きできる100マス計算を作りました。外部通信ゼロで動き、直近10回の初回正答率から弱点だけを振り返ることができます。\n\n#100マス計算 #算数 #オフライン対応",
+          "weightedLength": 237
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://digitalcloset.giga-school.com/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://online-100square-calculation.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "紙だと丸つけで放課後が消え、普通のアプリだと画面が隠れる。そこでキーボードを立ち上げず手書きできる100マス計算を作りました。外部通信ゼロで動き、直近10回の初回正答率から弱点だけを振り返ることができます。\n\n#100マス計算 #算数 #オフライン対応",
+      "media": "media/online-100square-calculation-card.png",
+      "weightedLength": 237,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W41-6",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "pain",
+      "themeLabel": "困りごと→解決",
+      "repo": "KAKE_Master",
+      "body": "2人組で九九を出し合うと、答えの正誤判定で揉めていました。そこで、端末1台を挟んで交代で解き合えるモードを作りました。選んだカードが「できた!」になるまで山の下に戻る仕組みなので、苦手な段も自然と反復できると思います。",
+      "hook": "confess",
+      "hashtags": [
+        "九九",
+        "計算カード",
+        "小2算数"
+      ],
+      "url": "https://kake-master.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "2人組で九九を出し合うと、答えの正誤判定で揉めていました。そこで、端末1台を挟んで交代で解き合えるモードを作りました。選んだカードが「できた!」になるまで山の下に戻る仕組みなので、苦手な段も自然と反復できると思います。\n\n#九九 #計算カード #小2算数",
+          "weightedLength": 243
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://kake-master.giga-school.com/",
           "weightedLength": 68
         }
       ],
-      "text": "運動会前の外練習と教室の冷房、何を着て出勤するか迷う朝はありませんか。そこで作ったのが手持ち服だけでコーデを組むアプリです。手元の服を写真で登録しておけば、AIが持ち服の中から組み合わせを提案してくれ、忙しい朝の1分を救えると思います。\n\n#ワードローブ #コーデ提案 #PWA",
-      "media": "media/DigitalCloset-card.png",
-      "weightedLength": 265,
+      "text": "2人組で九九を出し合うと、答えの正誤判定で揉めていました。そこで、端末1台を挟んで交代で解き合えるモードを作りました。選んだカードが「できた!」になるまで山の下に戻る仕組みなので、苦手な段も自然と反復できると思います。\n\n#九九 #計算カード #小2算数",
+      "media": "media/KAKE_Master-card.png",
+      "weightedLength": 243,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W41-7",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "Keisan-Card",
+      "body": "カードをめくる前に適当に押してしまう操作を防ぎたかった。だから答えを表示した後にしか判定ボタンを押せない作りにしました。外部通信ゼロの約206KBで軽く、間違えたカードだけが最後に再出題される仕組みにしています。",
+      "hook": "reason",
+      "hashtags": [
+        "けいさんカード",
+        "小1算数",
+        "オフライン対応"
+      ],
+      "url": "https://keisan-card.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "カードをめくる前に適当に押してしまう操作を防ぎたかった。だから答えを表示した後にしか判定ボタンを押せない作りにしました。外部通信ゼロの約206KBで軽く、間違えたカードだけが最後に再出題される仕組みにしています。\n\n#けいさんカード #小1算数 #オフライン対応",
+          "weightedLength": 249
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://keisan-card.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "カードをめくる前に適当に押してしまう操作を防ぎたかった。だから答えを表示した後にしか判定ボタンを押せない作りにしました。外部通信ゼロの約206KBで軽く、間違えたカードだけが最後に再出題される仕組みにしています。\n\n#けいさんカード #小1算数 #オフライン対応",
+      "media": "media/Keisan-Card-card.png",
+      "weightedLength": 249,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W41-8",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "Moral_note",
+      "body": "授業前の意見は名前を隠し、授業後は散布図で変化を見せる。こうすると友達の目を気にせず本音を書きやすくなります。先生のGoogleドライブ内だけで動くので、外部サーバーに児童の記述データを預ける心配もありません。",
+      "hook": "contrast",
+      "hashtags": [
+        "道徳",
+        "散布図",
+        "スプレッドシート"
+      ],
+      "url": "https://moral-note.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "授業前の意見は名前を隠し、授業後は散布図で変化を見せる。こうすると友達の目を気にせず本音を書きやすくなります。先生のGoogleドライブ内だけで動くので、外部サーバーに児童の記述データを預ける心配もありません。\n\n#道徳 #散布図 #スプレッドシート",
+          "weightedLength": 237
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://moral-note.giga-school.com/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "授業前の意見は名前を隠し、授業後は散布図で変化を見せる。こうすると友達の目を気にせず本音を書きやすくなります。先生のGoogleドライブ内だけで動くので、外部サーバーに児童の記述データを預ける心配もありません。\n\n#道徳 #散布図 #スプレッドシート",
+      "media": "media/Moral_note-card.png",
+      "weightedLength": 237,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W41-9",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "pain",
+      "themeLabel": "困りごと→解決",
+      "repo": "Ice_slide-puzzle",
+      "body": "雨の日の休み時間、盤ゲームの箱を出すだけで準備が終わっていました。机の上に端末を1台置くだけで2人対戦できるスライドパズルを作りました。壁やコマに当たるまで止まれない単純ルールで、準備も片付けも0秒で済むと思います。",
+      "hook": "confess",
+      "hashtags": [
+        "南極スライダー",
+        "ボードゲーム",
+        "GIGAスクール"
+      ],
+      "url": "https://ice-slide-puzzle.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "雨の日の休み時間、盤ゲームの箱を出すだけで準備が終わっていました。机の上に端末を1台置くだけで2人対戦できるスライドパズルを作りました。壁やコマに当たるまで止まれない単純ルールで、準備も片付けも0秒で済むと思います。\n\n#南極スライダー #ボードゲーム #GIGAスクール",
+          "weightedLength": 258
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://ice-slide-puzzle.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "雨の日の休み時間、盤ゲームの箱を出すだけで準備が終わっていました。机の上に端末を1台置くだけで2人対戦できるスライドパズルを作りました。壁やコマに当たるまで止まれない単純ルールで、準備も片付けも0秒で済むと思います。\n\n#南極スライダー #ボードゲーム #GIGAスクール",
+      "media": "media/Ice_slide-puzzle-card.png",
+      "weightedLength": 258,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W41-10",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "Werewolf",
+      "body": "雨の日の休み時間、司会役の子だけがゲームに参加できず困っていませんか。端末を順番に回すだけで自動進行する人狼アプリを作りました。全学年対応のルビ付きで、名前入力も通信も不要なので、4人集まればすぐ始められます。",
+      "hook": "question",
+      "hashtags": [
+        "人狼ゲーム",
+        "学級活動",
+        "オフライン対応"
+      ],
+      "url": "https://werewolf.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "雨の日の休み時間、司会役の子だけがゲームに参加できず困っていませんか。端末を順番に回すだけで自動進行する人狼アプリを作りました。全学年対応のルビ付きで、名前入力も通信も不要なので、4人集まればすぐ始められます。\n\n#人狼ゲーム #学級活動 #オフライン対応",
+          "weightedLength": 248
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://werewolf.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "雨の日の休み時間、司会役の子だけがゲームに参加できず困っていませんか。端末を順番に回すだけで自動進行する人狼アプリを作りました。全学年対応のルビ付きで、名前入力も通信も不要なので、4人集まればすぐ始められます。\n\n#人狼ゲーム #学級活動 #オフライン対応",
+      "media": "media/Werewolf-card.png",
+      "weightedLength": 248,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
