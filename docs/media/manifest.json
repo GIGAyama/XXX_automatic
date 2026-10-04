@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cardTemplateSha": "08d5ce0b1e2d866c",
-  "updatedAtJst": "2026-09-28 00:33 JST",
+  "updatedAtJst": "2026-10-05 00:42 JST",
   "apps": {
     "KEISAN-BLOCK": {
       "shot": {
@@ -42,8 +42,8 @@
     "KAKE_Master": {
       "shot": {
         "ok": true,
-        "fingerprint": "9bbb1e81112597a3",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "260e9bde362895f2",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -51,8 +51,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "2a4bb5ff6b4edc0a",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "b824ccbb9565934d",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -60,8 +60,8 @@
     "KANJI_Town": {
       "shot": {
         "ok": true,
-        "fingerprint": "c5f0a222a8af16ce",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "e7a232501dd50258",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -69,8 +69,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "fd90fc08f364dafe",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "584526bbc618e689",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -78,8 +78,8 @@
     "Keisan-Card": {
       "shot": {
         "ok": true,
-        "fingerprint": "8ddaf8e468bcb758",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "4222f7904bbb1620",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "はじめる",
@@ -87,8 +87,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "ea8fe870622d2a6a",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "376061cc5e89ee0a",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -96,8 +96,8 @@
     "online-100square-calculation": {
       "shot": {
         "ok": true,
-        "fingerprint": "43df02287ba7243d",
-        "atJst": "2026-09-06 23:06 JST",
+        "fingerprint": "9fcab115163fb7af",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "スタート",
@@ -105,8 +105,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "2ba4dd85fd2c1960",
-        "atJst": "2026-09-06 23:06 JST",
+        "fingerprint": "bc33bd8fa25f40b9",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -114,8 +114,8 @@
     "SchoolPlan_Editor": {
       "shot": {
         "ok": true,
-        "fingerprint": "0c4c9574b2a9c360",
-        "atJst": "2026-09-06 23:07 JST",
+        "fingerprint": "187b5559df9fc88e",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -123,8 +123,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "0479f5645e651ce7",
-        "atJst": "2026-09-06 23:07 JST",
+        "fingerprint": "460535cb58355c74",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -276,14 +276,14 @@
     "app_launcher": {
       "shot": {
         "ok": false,
-        "fingerprint": "0843a451dd4ea748",
-        "atJst": "2026-09-06 23:06 JST",
+        "fingerprint": "df39e06fc49e1fa7",
+        "atJst": "2026-10-05 00:42 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "4711816a1b4b2574",
-        "atJst": "2026-09-06 23:06 JST",
+        "fingerprint": "d4329e10b2e03a81",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -291,8 +291,8 @@
     "Reversi": {
       "shot": {
         "ok": true,
-        "fingerprint": "d5870beb477f16e7",
-        "atJst": "2026-09-06 23:07 JST",
+        "fingerprint": "272798b9cdc8b352",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "開始",
@@ -300,8 +300,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "91a31ce2b826f449",
-        "atJst": "2026-09-06 23:07 JST",
+        "fingerprint": "957e3f0e8ad50652",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -381,8 +381,8 @@
     "Ice_slide-puzzle": {
       "shot": {
         "ok": true,
-        "fingerprint": "9e7ca24b8428c764",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "224a4e56b6820f8b",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -390,8 +390,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "e64533dbb7f8fc76",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "f08d790cec000787",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -543,8 +543,8 @@
     "Werewolf": {
       "shot": {
         "ok": true,
-        "fingerprint": "f22531a2f01a504c",
-        "atJst": "2026-09-06 23:09 JST",
+        "fingerprint": "83ed902512a325f6",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": "開始",
@@ -552,8 +552,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "03c6893f51f8c268",
-        "atJst": "2026-09-06 23:09 JST",
+        "fingerprint": "a618b12139114235",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
@@ -561,8 +561,8 @@
     "Gobblet": {
       "shot": {
         "ok": true,
-        "fingerprint": "4bb01eb0673d326b",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "0a7eaecc82be6e54",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -570,8 +570,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "2fcd5013503d5875",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "3e74e81b4b9a8c3e",
+        "atJst": "2026-10-05 00:42 JST",
         "frames": 1,
         "blank": false
       }
