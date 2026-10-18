@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "repo": "Quarto",
+  "url": "https://quarto.giga-school.com/",
+  "sourceSha": "f6001d0b889b2fec45c2f790482ee023176db322",
+  "capturedAtJst": "2026-10-18 23:23 JST",
+  "by": "auto",
+  "shots": [
+    {
+      "file": "01-home.png",
+      "label": "home",
+      "what": "ひらいた直後の画面",
+      "seen": "GIGAクアルト！ 🔊 ON ？ ● プレイヤー1 のばん 相手あいてに渡わたすコマをえらんでね！ 最初さいしょから © 2026 GIGAクアルト！ GIGA山"
+    },
+    {
+      "file": "02-bottom.png",
+      "label": "bottom",
+      "what": "ページのいちばん下",
+      "seen": "GIGAクアルト！ 🔊 ON ？ ● プレイヤー1 のばん 相手あいてに渡わたすコマをえらんでね！ 最初さいしょから © 2026 GIGAクアルト！ GIGA山"
+    }
+  ]
+}

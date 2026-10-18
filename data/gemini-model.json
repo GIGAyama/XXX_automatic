@@ -4,8 +4,8 @@
   "previous": "gemini-3.6-flash",
   "prefer": "flash",
   "allowPreview": false,
-  "resolvedAt": "2026-10-11T16:34:19.612Z",
-  "resolvedAtJst": "2026-10-12 01:34 JST",
+  "resolvedAt": "2026-10-18T14:19:43.181Z",
+  "resolvedAtJst": "2026-10-18 23:19 JST",
   "candidates": [
     "gemini-3.8-flash",
     "gemini-3.7-flash",
@@ -17,7 +17,7 @@
     "gemini-3.1-flash-lite",
     "gemini-2.5-pro",
     "gemini-2.5-flash-lite",
-    "gemini-3.5-transcribe",
-    "gemini-nano-banana-2.1"
+    "gemini-4-argon",
+    "gemini-3.5-transcribe"
   ]
 }
