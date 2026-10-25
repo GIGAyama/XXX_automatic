@@ -1,174 +1,10 @@
 {
-  "generatedAt": "2026-10-18T14:23:06.687Z",
-  "generatedAtJst": "2026-10-18 23:23 JST",
-  "weekId": "2026-W43",
+  "generatedAt": "2026-10-25T14:56:09.073Z",
+  "generatedAtJst": "2026-10-25 23:56 JST",
+  "weekId": "2026-W44",
   "posts": [
     {
-      "id": "stock-2026-W43-1",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "tips",
-      "themeLabel": "使い方Tips",
-      "repo": "Qalc",
-      "body": "算数の残り5分、早く解き終わった子の手持ち無沙汰に悩んでいませんか。端末内で自動で集まる『にがて克服ボックス』を開かせる使い方をしています。ログインなしで直前の誤答だけを復習できるので、追加プリントを配る手間なく静かに過ごせると思います。",
-      "hook": "question",
-      "hashtags": [
-        "算数",
-        "計算ドリル",
-        "GIGAスクール"
-      ],
-      "url": "https://qalc.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "算数の残り5分、早く解き終わった子の手持ち無沙汰に悩んでいませんか。端末内で自動で集まる『にがて克服ボックス』を開かせる使い方をしています。ログインなしで直前の誤答だけを復習できるので、追加プリントを配る手間なく静かに過ごせると思います。\n\n#算数 #計算ドリル #GIGAスクール",
-          "weightedLength": 270
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://qalc.giga-school.com/",
-          "weightedLength": 80
-        }
-      ],
-      "text": "算数の残り5分、早く解き終わった子の手持ち無沙汰に悩んでいませんか。端末内で自動で集まる『にがて克服ボックス』を開かせる使い方をしています。ログインなしで直前の誤答だけを復習できるので、追加プリントを配る手間なく静かに過ごせると思います。\n\n#算数 #計算ドリル #GIGAスクール",
-      "media": "media/Qalc-card.png",
-      "weightedLength": 270,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W43-2",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "update",
-      "themeLabel": "アップデート報告",
-      "repo": "Typa",
-      "body": "タイピング練習の『ほんとうにやめますか？』確認をなくしました。給食前のわずか1分でも、数問打ってそのまま閉じれば記録が残るようにしたかったからです。開いた瞬間0タップで始まり途中で終われるほうが、スキマ時間に続けやすいと思います。",
-      "hook": "reason",
-      "hashtags": [
-        "タイピング",
-        "Chromebook",
-        "小学校"
-      ],
-      "url": "https://typa.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "タイピング練習の『ほんとうにやめますか？』確認をなくしました。給食前のわずか1分でも、数問打ってそのまま閉じれば記録が残るようにしたかったからです。開いた瞬間0タップで始まり途中で終われるほうが、スキマ時間に続けやすいと思います。\n\n#タイピング #Chromebook #小学校",
-          "weightedLength": 261
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://typa.giga-school.com/",
-          "weightedLength": 76
-        }
-      ],
-      "text": "タイピング練習の『ほんとうにやめますか？』確認をなくしました。給食前のわずか1分でも、数問打ってそのまま閉じれば記録が残るようにしたかったからです。開いた瞬間0タップで始まり途中で終われるほうが、スキマ時間に続けやすいと思います。\n\n#タイピング #Chromebook #小学校",
-      "media": "media/Typa-card.png",
-      "weightedLength": 261,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W43-3",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "intro",
-      "themeLabel": "アプリ紹介",
-      "repo": "Treasure_Words",
-      "body": "国語で言葉の意味を調べても、ノートに書いて終わりになりがちです。そこで見つけた語句を保存して作文までつなげるWebアプリを作りました。集めた言葉を使ってその場で一文を書けるので、45分の授業内で語彙を使う練習まで届くと思います。",
-      "hook": "scene",
-      "hashtags": [
-        "国語",
-        "語彙学習",
-        "作文"
-      ],
-      "url": "https://treasure-words.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "国語で言葉の意味を調べても、ノートに書いて終わりになりがちです。そこで見つけた語句を保存して作文までつなげるWebアプリを作りました。集めた言葉を使ってその場で一文を書けるので、45分の授業内で語彙を使う練習まで届くと思います。\n\n#国語 #語彙学習 #作文",
-          "weightedLength": 246
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://treasure-words.giga-school.com/",
-          "weightedLength": 74
-        }
-      ],
-      "text": "国語で言葉の意味を調べても、ノートに書いて終わりになりがちです。そこで見つけた語句を保存して作文までつなげるWebアプリを作りました。集めた言葉を使ってその場で一文を書けるので、45分の授業内で語彙を使う練習まで届くと思います。\n\n#国語 #語彙学習 #作文",
-      "media": "media/Treasure_Words-card.png",
-      "weightedLength": 246,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W43-4",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "insight",
-      "themeLabel": "教育×AIの気づき",
-      "repo": "School_plan_note",
-      "body": "週案のAI支援で、行事の全自動入力にこだわって遠回りしました。学校ごとに違う予定表を完璧に読ませるより、準備物の洗い出しをサジェストさせるほうが実用的でした。AIには枠組み全部を任せるより、うっかり忘れの確認を頼むのがよいと感じます。",
-      "hook": "confess",
-      "hashtags": [
-        "週案",
-        "校務支援",
-        "小学校教員"
-      ],
-      "url": "https://school-plan-note.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "週案のAI支援で、行事の全自動入力にこだわって遠回りしました。学校ごとに違う予定表を完璧に読ませるより、準備物の洗い出しをサジェストさせるほうが実用的でした。AIには枠組み全部を任せるより、うっかり忘れの確認を頼むのがよいと感じます。\n\n#週案 #校務支援 #小学校教員",
-          "weightedLength": 259
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://school-plan-note.giga-school.com/",
-          "weightedLength": 68
-        }
-      ],
-      "text": "週案のAI支援で、行事の全自動入力にこだわって遠回りしました。学校ごとに違う予定表を完璧に読ませるより、準備物の洗い出しをサジェストさせるほうが実用的でした。AIには枠組み全部を任せるより、うっかり忘れの確認を頼むのがよいと感じます。\n\n#週案 #校務支援 #小学校教員",
-      "media": "media/School_plan_note-card.png",
-      "weightedLength": 259,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W43-5",
+      "id": "stock-2026-W44-1",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -177,80 +13,80 @@
       "minute": 0,
       "theme": "making",
       "themeLabel": "開発の裏側",
-      "repo": "Haiku-meeting",
-      "body": "短冊の掲示と集計で20分消えていた句会が、数秒で終わります。外部CDNを遮断する学校フィルタに対応し、必要なコードを全て内包して作りました。名前を伏せたまま各自の端末で投票できるので、友達関係に左右されずに鑑賞し合えると思います。",
-      "hook": "contrast",
+      "repo": "Qalc",
+      "body": "電子黒板に集計を映す際、廊下から児童の氏名が見えてしまうのが一番の懸念でした。そこで提示画面では児童名を最初から隠す仕様にしました。通信もP2Pで外部送信をゼロに抑えています。算数の冒頭5分で安全に計算バトルを開けると思います。",
+      "hook": "reason",
       "hashtags": [
-        "句会",
-        "国語",
-        "GIGAスクール"
+        "算数",
+        "GIGAスクール",
+        "小学校"
       ],
-      "url": "https://haiku-meeting.giga-school.com/",
+      "url": "https://qalc.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "短冊の掲示と集計で20分消えていた句会が、数秒で終わります。外部CDNを遮断する学校フィルタに対応し、必要なコードを全て内包して作りました。名前を伏せたまま各自の端末で投票できるので、友達関係に左右されずに鑑賞し合えると思います。\n\n#句会 #国語 #GIGAスクール",
-          "weightedLength": 252
+          "text": "電子黒板に集計を映す際、廊下から児童の氏名が見えてしまうのが一番の懸念でした。そこで提示画面では児童名を最初から隠す仕様にしました。通信もP2Pで外部送信をゼロに抑えています。算数の冒頭5分で安全に計算バトルを開けると思います。\n\n#算数 #GIGAスクール #小学校",
+          "weightedLength": 253
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://haiku-meeting.giga-school.com/",
-          "weightedLength": 80
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://qalc.giga-school.com/",
+          "weightedLength": 76
         }
       ],
-      "text": "短冊の掲示と集計で20分消えていた句会が、数秒で終わります。外部CDNを遮断する学校フィルタに対応し、必要なコードを全て内包して作りました。名前を伏せたまま各自の端末で投票できるので、友達関係に左右されずに鑑賞し合えると思います。\n\n#句会 #国語 #GIGAスクール",
-      "media": "media/Haiku-meeting-card.png",
-      "weightedLength": 252,
+      "text": "電子黒板に集計を映す際、廊下から児童の氏名が見えてしまうのが一番の懸念でした。そこで提示画面では児童名を最初から隠す仕様にしました。通信もP2Pで外部送信をゼロに抑えています。算数の冒頭5分で安全に計算バトルを開けると思います。\n\n#算数 #GIGAスクール #小学校",
+      "media": "media/Qalc-card.png",
+      "weightedLength": 253,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W43-6",
+      "id": "stock-2026-W44-2",
       "date": "",
       "weekday": "",
       "slot": "stock",
       "slotLabel": "予備",
       "hour": 0,
       "minute": 0,
-      "theme": "howto",
-      "themeLabel": "教材づくりの小ネタ",
-      "repo": "JIDOSHA_ZUKAN",
-      "body": "1年生の『とい・しごと・つくり』を、3段階の順押しで揃えました。説明文の順序を崩さないよう、ボタンを順番通りにしか開かない作りにしています。60台の3D観察と合わせて、答えを予想してから仕組みを確かめる教材づくりに役立つと思います。",
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "Typa",
+      "body": "給食の配膳を待つわずか2分、途中でやめると記録が消えるドリルには手が出せません。開いた瞬間0タップで練習が始まり、数文字打って閉じても履歴が残る形にしています。すきま時間でも指のホームポジションを確認できると思います。",
       "hook": "number",
       "hashtags": [
-        "じどう車くらべ",
-        "小1国語",
-        "GIGAスクール"
+        "Typa",
+        "タイピング",
+        "Chromebook"
       ],
-      "url": "https://jidosha-zukan.giga-school.com/",
+      "url": "https://typa.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "1年生の『とい・しごと・つくり』を、3段階の順押しで揃えました。説明文の順序を崩さないよう、ボタンを順番通りにしか開かない作りにしています。60台の3D観察と合わせて、答えを予想してから仕組みを確かめる教材づくりに役立つと思います。\n\n#じどう車くらべ #小1国語 #GIGAスクール",
-          "weightedLength": 266
+          "text": "給食の配膳を待つわずか2分、途中でやめると記録が消えるドリルには手が出せません。開いた瞬間0タップで練習が始まり、数文字打って閉じても履歴が残る形にしています。すきま時間でも指のホームポジションを確認できると思います。\n\n#Typa #タイピング #Chromebook",
+          "weightedLength": 247
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://jidosha-zukan.giga-school.com/",
-          "weightedLength": 76
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://typa.giga-school.com/",
+          "weightedLength": 74
         }
       ],
-      "text": "1年生の『とい・しごと・つくり』を、3段階の順押しで揃えました。説明文の順序を崩さないよう、ボタンを順番通りにしか開かない作りにしています。60台の3D観察と合わせて、答えを予想してから仕組みを確かめる教材づくりに役立つと思います。\n\n#じどう車くらべ #小1国語 #GIGAスクール",
-      "media": "media/JIDOSHA_ZUKAN-card.png",
-      "weightedLength": 266,
+      "text": "給食の配膳を待つわずか2分、途中でやめると記録が消えるドリルには手が出せません。開いた瞬間0タップで練習が始まり、数文字打って閉じても履歴が残る形にしています。すきま時間でも指のホームポジションを確認できると思います。\n\n#Typa #タイピング #Chromebook",
+      "media": "media/Typa-card.png",
+      "weightedLength": 247,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W43-7",
+      "id": "stock-2026-W44-3",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -259,39 +95,39 @@
       "minute": 0,
       "theme": "pain",
       "themeLabel": "困りごと→解決",
-      "repo": "tsubomi-learning",
-      "body": "1年生の『つぼみ』で、実物を用意できず写真カードに頼っていました。ただ、自力読みにつまずく子も多く確認に時間がかかります。いまは0.75倍速の音声付きWebカードでめくって確かめています。ログイン不要ですぐ開けるのが助かっています。",
-      "hook": "confess",
+      "repo": "Hagetaka-game",
+      "body": "紙のカードゲームは準備に5分。端末で開こうにも長いURLの共有で手こずります。そこで4桁のあいことばを入れるだけで友達とつながる形にしました。奇数人になってもロボが参加できるので、休み時間の10分でサッと楽しめると思います。",
+      "hook": "contrast",
       "hashtags": [
-        "国語",
-        "つぼみ",
-        "小学1年生"
+        "カードゲーム",
+        "学級経営",
+        "PWA"
       ],
-      "url": "https://tsubomi-learning.giga-school.com/",
+      "url": "https://hagetaka-game.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "1年生の『つぼみ』で、実物を用意できず写真カードに頼っていました。ただ、自力読みにつまずく子も多く確認に時間がかかります。いまは0.75倍速の音声付きWebカードでめくって確かめています。ログイン不要ですぐ開けるのが助かっています。\n\n#国語 #つぼみ #小学1年生",
-          "weightedLength": 250
+          "text": "紙のカードゲームは準備に5分。端末で開こうにも長いURLの共有で手こずります。そこで4桁のあいことばを入れるだけで友達とつながる形にしました。奇数人になってもロボが参加できるので、休み時間の10分でサッと楽しめると思います。\n\n#カードゲーム #学級経営 #PWA",
+          "weightedLength": 247
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://tsubomi-learning.giga-school.com/",
-          "weightedLength": 74
+          "text": "実物はこちらです。インストールは要りません。\nhttps://hagetaka-game.giga-school.com/",
+          "weightedLength": 68
         }
       ],
-      "text": "1年生の『つぼみ』で、実物を用意できず写真カードに頼っていました。ただ、自力読みにつまずく子も多く確認に時間がかかります。いまは0.75倍速の音声付きWebカードでめくって確かめています。ログイン不要ですぐ開けるのが助かっています。\n\n#国語 #つぼみ #小学1年生",
-      "media": "media/tsubomi-learning-card.png",
-      "weightedLength": 250,
+      "text": "紙のカードゲームは準備に5分。端末で開こうにも長いURLの共有で手こずります。そこで4桁のあいことばを入れるだけで友達とつながる形にしました。奇数人になってもロボが参加できるので、休み時間の10分でサッと楽しめると思います。\n\n#カードゲーム #学級経営 #PWA",
+      "media": "media/Hagetaka-game-card.png",
+      "weightedLength": 247,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W43-8",
+      "id": "stock-2026-W44-4",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -300,39 +136,39 @@
       "minute": 0,
       "theme": "intro",
       "themeLabel": "アプリ紹介",
-      "repo": "KAKE_Master",
-      "body": "かけ算の練習で、苦手な段のカードが机の下に落ちていませんか。そこで全問正解するまで山の下に戻り続ける九九アプリを作りました。授業冒頭の5分間で、間違えた式だけを何度でもめくって練習できるので、行事続きの時期でも定着を図れると思います。",
-      "hook": "question",
+      "repo": "Ice_slide-puzzle",
+      "body": "雨の日の20分休み、教室の机を寄せてボードゲームを広げると片付けが間に合いません。そこで端末1台を2人で囲んで遊べるスライドパズルにしました。机の上に置くだけで即座に対戦でき、片付けもゼロ秒で終わると思います。",
+      "hook": "scene",
       "hashtags": [
-        "九九",
-        "かけ算",
-        "小2算数"
+        "ボードゲーム",
+        "GIGAスクール",
+        "PWA"
       ],
-      "url": "https://kake-master.giga-school.com/",
+      "url": "https://ice-slide-puzzle.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "かけ算の練習で、苦手な段のカードが机の下に落ちていませんか。そこで全問正解するまで山の下に戻り続ける九九アプリを作りました。授業冒頭の5分間で、間違えた式だけを何度でもめくって練習できるので、行事続きの時期でも定着を図れると思います。\n\n#九九 #かけ算 #小2算数",
-          "weightedLength": 257
+          "text": "雨の日の20分休み、教室の机を寄せてボードゲームを広げると片付けが間に合いません。そこで端末1台を2人で囲んで遊べるスライドパズルにしました。机の上に置くだけで即座に対戦でき、片付けもゼロ秒で終わると思います。\n\n#ボードゲーム #GIGAスクール #PWA",
+          "weightedLength": 240
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://kake-master.giga-school.com/",
-          "weightedLength": 68
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://ice-slide-puzzle.giga-school.com/",
+          "weightedLength": 80
         }
       ],
-      "text": "かけ算の練習で、苦手な段のカードが机の下に落ちていませんか。そこで全問正解するまで山の下に戻り続ける九九アプリを作りました。授業冒頭の5分間で、間違えた式だけを何度でもめくって練習できるので、行事続きの時期でも定着を図れると思います。\n\n#九九 #かけ算 #小2算数",
-      "media": "media/KAKE_Master-card.png",
-      "weightedLength": 257,
+      "text": "雨の日の20分休み、教室の机を寄せてボードゲームを広げると片付けが間に合いません。そこで端末1台を2人で囲んで遊べるスライドパズルにしました。机の上に置くだけで即座に対戦でき、片付けもゼロ秒で終わると思います。\n\n#ボードゲーム #GIGAスクール #PWA",
+      "media": "media/Ice_slide-puzzle-card.png",
+      "weightedLength": 240,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W43-9",
+      "id": "stock-2026-W44-5",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -341,39 +177,80 @@
       "minute": 0,
       "theme": "howto",
       "themeLabel": "教材づくりの小ネタ",
-      "repo": "Keisan-Card",
-      "body": "カードをめくって答えを見るまで、左右のスワイプを塞いでいます。適当に連打して終わらせるのを防ぐための工夫です。外部通信なしの206KBで作ったので、算数の始めの3分間にパッと開いて、1回目の正解数でテンポよく振り返るのに向いています。",
-      "hook": "reason",
+      "repo": "Reversi",
+      "body": "休み時間残り3分の盤面対戦。8×8だと終わらないので4×4に設定を落とします。マスが少ないぶん2分ほどで勝敗が決まり、チャイムに遅れません。Tabキーの移動先も置けるマスだけに絞ってあるので、操作に迷わず遊べると思います。",
+      "hook": "number",
       "hashtags": [
-        "けいさんカード",
-        "小1算数",
-        "GIGAスクール"
+        "リバーシ",
+        "Chromebook",
+        "休み時間"
       ],
-      "url": "https://keisan-card.giga-school.com/",
+      "url": "https://reversi.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "カードをめくって答えを見るまで、左右のスワイプを塞いでいます。適当に連打して終わらせるのを防ぐための工夫です。外部通信なしの206KBで作ったので、算数の始めの3分間にパッと開いて、1回目の正解数でテンポよく振り返るのに向いています。\n\n#けいさんカード #小1算数 #GIGAスクール",
-          "weightedLength": 267
+          "text": "休み時間残り3分の盤面対戦。8×8だと終わらないので4×4に設定を落とします。マスが少ないぶん2分ほどで勝敗が決まり、チャイムに遅れません。Tabキーの移動先も置けるマスだけに絞ってあるので、操作に迷わず遊べると思います。\n\n#リバーシ #Chromebook #休み時間",
+          "weightedLength": 244
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://keisan-card.giga-school.com/",
-          "weightedLength": 80
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://reversi.giga-school.com/",
+          "weightedLength": 76
         }
       ],
-      "text": "カードをめくって答えを見るまで、左右のスワイプを塞いでいます。適当に連打して終わらせるのを防ぐための工夫です。外部通信なしの206KBで作ったので、算数の始めの3分間にパッと開いて、1回目の正解数でテンポよく振り返るのに向いています。\n\n#けいさんカード #小1算数 #GIGAスクール",
-      "media": "media/Keisan-Card-card.png",
-      "weightedLength": 267,
+      "text": "休み時間残り3分の盤面対戦。8×8だと終わらないので4×4に設定を落とします。マスが少ないぶん2分ほどで勝敗が決まり、チャイムに遅れません。Tabキーの移動先も置けるマスだけに絞ってあるので、操作に迷わず遊べると思います。\n\n#リバーシ #Chromebook #休み時間",
+      "media": "media/Reversi-card.png",
+      "weightedLength": 244,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W43-10",
+      "id": "stock-2026-W44-6",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "KAKE_Master",
+      "body": "紙の九九カードをめくらせると、間違えた問題をそのまま飛ばす場面がよくありました。そこで全部「できた」に仕分けるまで何度も山の下に戻る作りにしました。算数の冒頭5分に開くだけで、苦手な段を自力で潰せるようになると思います。",
+      "hook": "confess",
+      "hashtags": [
+        "九九",
+        "算数",
+        "小2"
+      ],
+      "url": "https://kake-master.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "紙の九九カードをめくらせると、間違えた問題をそのまま飛ばす場面がよくありました。そこで全部「できた」に仕分けるまで何度も山の下に戻る作りにしました。算数の冒頭5分に開くだけで、苦手な段を自力で潰せるようになると思います。\n\n#九九 #算数 #小2",
+          "weightedLength": 237
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://kake-master.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "紙の九九カードをめくらせると、間違えた問題をそのまま飛ばす場面がよくありました。そこで全部「できた」に仕分けるまで何度も山の下に戻る作りにしました。算数の冒頭5分に開くだけで、苦手な段を自力で潰せるようになると思います。\n\n#九九 #算数 #小2",
+      "media": "media/KAKE_Master-card.png",
+      "weightedLength": 237,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W44-7",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -382,32 +259,155 @@
       "minute": 0,
       "theme": "insight",
       "themeLabel": "教育×AIの気づき",
-      "repo": "KANJI_Town",
-      "body": "朝の10分間、漢字テストの丸つけだけで手一杯になる日があります。AIやアプリに筆順や字形の判定を任せると、即座に振り返りができます。機械に正誤判定を任せることで、教員は間違えやすい子の筆圧やつまずきを見取る対話に時間を使えると思います。",
-      "hook": "scene",
+      "repo": "online-manuscript-paper-pro",
+      "body": "作文添削にAIを使うとき、すべての赤字を一括で反映させてよいものでしょうか。機械の助言は【AI】マーク付きで下書きに置き、直すかどうかは子ども自身に選ばせる形にしました。考える手前で答えを与えすぎない支援になればと思います。",
+      "hook": "question",
       "hashtags": [
-        "漢字学習",
-        "小学校国語",
-        "GIGAスクール"
+        "オンライン原稿用紙",
+        "国語",
+        "作文添削"
       ],
-      "url": "https://kanji-town.giga-school.com/",
+      "url": "https://online-manuscript-paper-pro.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "朝の10分間、漢字テストの丸つけだけで手一杯になる日があります。AIやアプリに筆順や字形の判定を任せると、即座に振り返りができます。機械に正誤判定を任せることで、教員は間違えやすい子の筆圧やつまずきを見取る対話に時間を使えると思います。\n\n#漢字学習 #小学校国語 #GIGAスクール",
-          "weightedLength": 269
+          "text": "作文添削にAIを使うとき、すべての赤字を一括で反映させてよいものでしょうか。機械の助言は【AI】マーク付きで下書きに置き、直すかどうかは子ども自身に選ばせる形にしました。考える手前で答えを与えすぎない支援になればと思います。\n\n#オンライン原稿用紙 #国語 #作文添削",
+          "weightedLength": 257
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://kanji-town.giga-school.com/",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://online-manuscript-paper-pro.giga-school.com/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "作文添削にAIを使うとき、すべての赤字を一括で反映させてよいものでしょうか。機械の助言は【AI】マーク付きで下書きに置き、直すかどうかは子ども自身に選ばせる形にしました。考える手前で答えを与えすぎない支援になればと思います。\n\n#オンライン原稿用紙 #国語 #作文添削",
+      "media": "media/online-manuscript-paper-pro-card.png",
+      "weightedLength": 257,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W44-8",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "pain",
+      "themeLabel": "困りごと→解決",
+      "repo": "Music-production_studio",
+      "body": "45分の授業の終わり際、「保存ボタンを押し忘れて曲が消えた」と困る子がいます。以前はデータの復旧に放課後まで追われていました。いまはマス目を塗るたびに自動保存される作りにしたので、安心して創作に集中できると思います。",
+      "hook": "scene",
+      "hashtags": [
+        "音楽教育",
+        "小学校音楽",
+        "DAW"
+      ],
+      "url": "https://music-production-studio.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "45分の授業の終わり際、「保存ボタンを押し忘れて曲が消えた」と困る子がいます。以前はデータの復旧に放課後まで追われていました。いまはマス目を塗るたびに自動保存される作りにしたので、安心して創作に集中できると思います。\n\n#音楽教育 #小学校音楽 #DAW",
+          "weightedLength": 242
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://music-production-studio.giga-school.com/",
           "weightedLength": 80
         }
       ],
-      "text": "朝の10分間、漢字テストの丸つけだけで手一杯になる日があります。AIやアプリに筆順や字形の判定を任せると、即座に振り返りができます。機械に正誤判定を任せることで、教員は間違えやすい子の筆圧やつまずきを見取る対話に時間を使えると思います。\n\n#漢字学習 #小学校国語 #GIGAスクール",
-      "media": "media/KANJI_Town-card.png",
-      "weightedLength": 269,
+      "text": "45分の授業の終わり際、「保存ボタンを押し忘れて曲が消えた」と困る子がいます。以前はデータの復旧に放課後まで追われていました。いまはマス目を塗るたびに自動保存される作りにしたので、安心して創作に集中できると思います。\n\n#音楽教育 #小学校音楽 #DAW",
+      "media": "media/Music-production_studio-card.png",
+      "weightedLength": 242,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W44-9",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "DigitalCloset",
+      "body": "去年までは似たような服を買い足し、忙しい朝に出勤前の服選びで10分迷っていました。いまは手持ちの服だけを登録し、AIに組み合わせを出してもらっています。新規購入前のストッパーにもなるので、朝の身支度が2分で済むと思います。",
+      "hook": "contrast",
+      "hashtags": [
+        "デジタルクローゼット",
+        "ワードローブ",
+        "PWA"
+      ],
+      "url": "https://digitalcloset.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "去年までは似たような服を買い足し、忙しい朝に出勤前の服選びで10分迷っていました。いまは手持ちの服だけを登録し、AIに組み合わせを出してもらっています。新規購入前のストッパーにもなるので、朝の身支度が2分で済むと思います。\n\n#デジタルクローゼット #ワードローブ #PWA",
+          "weightedLength": 259
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://digitalcloset.giga-school.com/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "去年までは似たような服を買い足し、忙しい朝に出勤前の服選びで10分迷っていました。いまは手持ちの服だけを登録し、AIに組み合わせを出してもらっています。新規購入前のストッパーにもなるので、朝の身支度が2分で済むと思います。\n\n#デジタルクローゼット #ワードローブ #PWA",
+      "media": "media/DigitalCloset-card.png",
+      "weightedLength": 259,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W44-10",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "Quarto",
+      "body": "体育館や特別教室のすきま時間、Wi-Fiの電波が届かずアプリが止まってしまいます。そのため音声や外部ファイルを一切読み込まず、端末内だけで動くようにしました。1台を机に置いて2人で挟めば、オフラインでもすぐに対局できると思います。",
+      "hook": "reason",
+      "hashtags": [
+        "クアルト",
+        "ボードゲーム",
+        "GIGAスクール"
+      ],
+      "url": "https://quarto.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "体育館や特別教室のすきま時間、Wi-Fiの電波が届かずアプリが止まってしまいます。そのため音声や外部ファイルを一切読み込まず、端末内だけで動くようにしました。1台を机に置いて2人で挟めば、オフラインでもすぐに対局できると思います。\n\n#クアルト #ボードゲーム #GIGAスクール",
+          "weightedLength": 262
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://quarto.giga-school.com/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "体育館や特別教室のすきま時間、Wi-Fiの電波が届かずアプリが止まってしまいます。そのため音声や外部ファイルを一切読み込まず、端末内だけで動くようにしました。1台を机に置いて2人で挟めば、オフラインでもすぐに対局できると思います。\n\n#クアルト #ボードゲーム #GIGAスクール",
+      "media": "media/Quarto-card.png",
+      "weightedLength": 262,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cardTemplateSha": "08d5ce0b1e2d866c",
-  "updatedAtJst": "2026-10-18 23:20 JST",
+  "updatedAtJst": "2026-10-25 23:53 JST",
   "apps": {
     "KEISAN-BLOCK": {
       "shot": {
@@ -114,8 +114,8 @@
     "SchoolPlan_Editor": {
       "shot": {
         "ok": true,
-        "fingerprint": "187b5559df9fc88e",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "bd96f2eb0b99b2cf",
+        "atJst": "2026-10-25 23:53 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -123,8 +123,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "460535cb58355c74",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "047bfc7a45949699",
+        "atJst": "2026-10-25 23:53 JST",
         "frames": 1,
         "blank": false
       }
@@ -132,8 +132,8 @@
     "Qalc": {
       "shot": {
         "ok": true,
-        "fingerprint": "192d53f0c2e48a39",
-        "atJst": "2026-09-20 23:34 JST",
+        "fingerprint": "969ee18aaa6da4a2",
+        "atJst": "2026-10-25 23:53 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -141,8 +141,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "e5f3b67e0ed41736",
-        "atJst": "2026-09-20 23:34 JST",
+        "fingerprint": "ee8d7e13cb1faf0c",
+        "atJst": "2026-10-25 23:53 JST",
         "frames": 1,
         "blank": false
       }
