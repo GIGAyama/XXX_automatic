@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cardTemplateSha": "08d5ce0b1e2d866c",
-  "updatedAtJst": "2026-10-25 23:53 JST",
+  "updatedAtJst": "2026-11-02 02:01 JST",
   "apps": {
     "KEISAN-BLOCK": {
       "shot": {
@@ -42,8 +42,8 @@
     "KAKE_Master": {
       "shot": {
         "ok": true,
-        "fingerprint": "260e9bde362895f2",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "99ce7e56ade81142",
+        "atJst": "2026-11-02 02:01 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -51,8 +51,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "b824ccbb9565934d",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "2eaf969652e047a9",
+        "atJst": "2026-11-02 02:01 JST",
         "frames": 1,
         "blank": false
       }
@@ -78,8 +78,8 @@
     "Keisan-Card": {
       "shot": {
         "ok": true,
-        "fingerprint": "4222f7904bbb1620",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "dd05784357a4226c",
+        "atJst": "2026-11-02 02:01 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "はじめる",
@@ -87,8 +87,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "376061cc5e89ee0a",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "48a377fd94ca89bc",
+        "atJst": "2026-11-02 02:01 JST",
         "frames": 1,
         "blank": false
       }
@@ -114,8 +114,8 @@
     "SchoolPlan_Editor": {
       "shot": {
         "ok": true,
-        "fingerprint": "bd96f2eb0b99b2cf",
-        "atJst": "2026-10-25 23:53 JST",
+        "fingerprint": "4d55bd356829215f",
+        "atJst": "2026-11-02 02:01 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -123,8 +123,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "047bfc7a45949699",
-        "atJst": "2026-10-25 23:53 JST",
+        "fingerprint": "5af7db03b53cb4fb",
+        "atJst": "2026-11-02 02:01 JST",
         "frames": 1,
         "blank": false
       }
@@ -276,14 +276,14 @@
     "app_launcher": {
       "shot": {
         "ok": false,
-        "fingerprint": "df39e06fc49e1fa7",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "a53d6d93f7c9cce6",
+        "atJst": "2026-11-02 02:01 JST",
         "reason": "GitHub Pages がありません"
       },
       "card": {
         "ok": true,
-        "fingerprint": "d4329e10b2e03a81",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "ecdaf21e3ce83d4a",
+        "atJst": "2026-11-02 02:01 JST",
         "frames": 1,
         "blank": false
       }
