@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-01T17:04:32.734Z",
-  "generatedAtJst": "2026-11-02 02:04 JST",
-  "weekId": "2026-W46",
+  "generatedAt": "2026-11-08T17:00:51.901Z",
+  "generatedAtJst": "2026-11-09 02:00 JST",
+  "weekId": "2026-W47",
   "posts": [
     {
-      "id": "stock-2026-W46-1",
+      "id": "stock-2026-W47-1",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -14,325 +14,38 @@
       "theme": "tips",
       "themeLabel": "使い方Tips",
       "repo": "Qalc",
-      "body": "算数の授業の冒頭5分、電子黒板にスコアアタックの画面をそのまま映して使っています。提示モードは最初から名前が隠れる設定なので、廊下から見られても安心です。登録不要ですぐ開け、行事続きで時間がない日の復習にもぴったりだと思います。",
-      "hook": "scene",
+      "body": "算数の冒頭5分、計算練習で電子黒板に映すときは提示モードの名前非表示を使っています。廊下や参観者から児童の名前が見える心配をなくすためです。ログインなしですぐ開けるので、準備に手間取らず反復練習に入れると思います。",
+      "hook": "number",
       "hashtags": [
         "算数",
-        "GIGAスクール",
-        "計算ドリル"
+        "計算ドリル",
+        "GIGAスクール"
       ],
       "url": "https://qalc.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "算数の授業の冒頭5分、電子黒板にスコアアタックの画面をそのまま映して使っています。提示モードは最初から名前が隠れる設定なので、廊下から見られても安心です。登録不要ですぐ開け、行事続きで時間がない日の復習にもぴったりだと思います。\n\n#算数 #GIGAスクール #計算ドリル",
-          "weightedLength": 260
+          "text": "算数の冒頭5分、計算練習で電子黒板に映すときは提示モードの名前非表示を使っています。廊下や参観者から児童の名前が見える心配をなくすためです。ログインなしですぐ開けるので、準備に手間取らず反復練習に入れると思います。\n\n#算数 #計算ドリル #GIGAスクール",
+          "weightedLength": 246
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://qalc.giga-school.com/",
-          "weightedLength": 68
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://qalc.giga-school.com/",
+          "weightedLength": 80
         }
       ],
-      "text": "算数の授業の冒頭5分、電子黒板にスコアアタックの画面をそのまま映して使っています。提示モードは最初から名前が隠れる設定なので、廊下から見られても安心です。登録不要ですぐ開け、行事続きで時間がない日の復習にもぴったりだと思います。\n\n#算数 #GIGAスクール #計算ドリル",
+      "text": "算数の冒頭5分、計算練習で電子黒板に映すときは提示モードの名前非表示を使っています。廊下や参観者から児童の名前が見える心配をなくすためです。ログインなしですぐ開けるので、準備に手間取らず反復練習に入れると思います。\n\n#算数 #計算ドリル #GIGAスクール",
       "media": "media/Qalc-card.png",
-      "weightedLength": 260,
+      "weightedLength": 246,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W46-2",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "insight",
-      "themeLabel": "教育×AIの気づき",
-      "repo": "Typa",
-      "body": "画面の見栄えを整えるより、開くまでの手数を減らす方が大事だと感じました。給食前の数十秒で使おうとすると、メニュー画面があるだけで時間切れになります。AIと画面を作る際も、開いた瞬間すぐ打てる構造を優先して指示を出そうと考えています。",
-      "hook": "confess",
-      "hashtags": [
-        "タイピング",
-        "GIGAスクール",
-        "Chromebook"
-      ],
-      "url": "https://typa.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "画面の見栄えを整えるより、開くまでの手数を減らす方が大事だと感じました。給食前の数十秒で使おうとすると、メニュー画面があるだけで時間切れになります。AIと画面を作る際も、開いた瞬間すぐ打てる構造を優先して指示を出そうと考えています。\n\n#タイピング #GIGAスクール #Chromebook",
-          "weightedLength": 269
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://typa.giga-school.com/",
-          "weightedLength": 80
-        }
-      ],
-      "text": "画面の見栄えを整えるより、開くまでの手数を減らす方が大事だと感じました。給食前の数十秒で使おうとすると、メニュー画面があるだけで時間切れになります。AIと画面を作る際も、開いた瞬間すぐ打てる構造を優先して指示を出そうと考えています。\n\n#タイピング #GIGAスクール #Chromebook",
-      "media": "media/Typa-card.png",
-      "weightedLength": 269,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W46-3",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "update",
-      "themeLabel": "アップデート報告",
-      "repo": "word_basket",
-      "body": "机を寄せて1台を囲むと、向かいの席から文字が逆さまに見える悩みがありました。そこで座る位置に合わせて手札が自動回転するよう画面を直しました。画面を回し直す手間が消え、行事の合間のちょっとした言葉遊びでもスムーズに遊べると思います。",
-      "hook": "contrast",
-      "hashtags": [
-        "国語",
-        "言葉遊び",
-        "GIGAスクール"
-      ],
-      "url": "https://word-basket.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "机を寄せて1台を囲むと、向かいの席から文字が逆さまに見える悩みがありました。そこで座る位置に合わせて手札が自動回転するよう画面を直しました。画面を回し直す手間が消え、行事の合間のちょっとした言葉遊びでもスムーズに遊べると思います。\n\n#国語 #言葉遊び #GIGAスクール",
-          "weightedLength": 260
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://word-basket.giga-school.com/",
-          "weightedLength": 76
-        }
-      ],
-      "text": "机を寄せて1台を囲むと、向かいの席から文字が逆さまに見える悩みがありました。そこで座る位置に合わせて手札が自動回転するよう画面を直しました。画面を回し直す手間が消え、行事の合間のちょっとした言葉遊びでもスムーズに遊べると思います。\n\n#国語 #言葉遊び #GIGAスクール",
-      "media": "media/word_basket-card.png",
-      "weightedLength": 260,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W46-4",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "making",
-      "themeLabel": "開発の裏側",
-      "repo": "Moral_note",
-      "body": "児童の考えを外部サーバーに預けたくなくて、先生のドライブ内だけで完結する作りにしました。共通サーバーを通さずスプレッドシート1枚で動くため、セキュリティの手続きに追われません。前後の考えの変化も散布図で安全に見取れると思います。",
-      "hook": "reason",
-      "hashtags": [
-        "道徳",
-        "GoogleAppsScript",
-        "GIGAスクール"
-      ],
-      "url": "https://moral-note.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "児童の考えを外部サーバーに預けたくなくて、先生のドライブ内だけで完結する作りにしました。共通サーバーを通さずスプレッドシート1枚で動くため、セキュリティの手続きに追われません。前後の考えの変化も散布図で安全に見取れると思います。\n\n#道徳 #GoogleAppsScript #GIGAスクール",
-          "weightedLength": 266
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://moral-note.giga-school.com/",
-          "weightedLength": 74
-        }
-      ],
-      "text": "児童の考えを外部サーバーに預けたくなくて、先生のドライブ内だけで完結する作りにしました。共通サーバーを通さずスプレッドシート1枚で動くため、セキュリティの手続きに追われません。前後の考えの変化も散布図で安全に見取れると思います。\n\n#道徳 #GoogleAppsScript #GIGAスクール",
-      "media": "media/Moral_note-card.png",
-      "weightedLength": 266,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W46-5",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "pain",
-      "themeLabel": "困りごと→解決",
-      "repo": "Reflection_Journal",
-      "body": "帰りの会の残り5分、振り返りカードを前に手が止まる子がいます。紙のころは放課後の点検だけで一苦労でした。いまは書き出しの型を選んで端末から提出させています。スタンプで素早く返せるため、多忙な時期の見取りもスムーズになると思います。",
-      "hook": "scene",
-      "hashtags": [
-        "学級経営",
-        "ふりかえりジャーナル",
-        "GIGAスクール"
-      ],
-      "url": "https://reflection-journal.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "帰りの会の残り5分、振り返りカードを前に手が止まる子がいます。紙のころは放課後の点検だけで一苦労でした。いまは書き出しの型を選んで端末から提出させています。スタンプで素早く返せるため、多忙な時期の見取りもスムーズになると思います。\n\n#学級経営 #ふりかえりジャーナル #GIGAスクール",
-          "weightedLength": 276
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://reflection-journal.giga-school.com/",
-          "weightedLength": 68
-        }
-      ],
-      "text": "帰りの会の残り5分、振り返りカードを前に手が止まる子がいます。紙のころは放課後の点検だけで一苦労でした。いまは書き出しの型を選んで端末から提出させています。スタンプで素早く返せるため、多忙な時期の見取りもスムーズになると思います。\n\n#学級経営 #ふりかえりジャーナル #GIGAスクール",
-      "media": "media/Reflection_Journal-card.png",
-      "weightedLength": 276,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W46-6",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "howto",
-      "themeLabel": "教材づくりの小ネタ",
-      "repo": "online-manuscript-paper-pro",
-      "body": "手直しされた作文を受け取っても、どこを直したか探すのに毎回2分。そこで前回からの変更箇所だけを青と赤で自動ハイライトする作りにしました。差分が一目で突き合わせられるため、推敲のやり取りが1回の授業時間内で完結しやすくなると思います。",
-      "hook": "number",
-      "hashtags": [
-        "国語",
-        "作文添削",
-        "GIGAスクール"
-      ],
-      "url": "https://online-manuscript-paper-pro.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "手直しされた作文を受け取っても、どこを直したか探すのに毎回2分。そこで前回からの変更箇所だけを青と赤で自動ハイライトする作りにしました。差分が一目で突き合わせられるため、推敲のやり取りが1回の授業時間内で完結しやすくなると思います。\n\n#国語 #作文添削 #GIGAスクール",
-          "weightedLength": 261
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://online-manuscript-paper-pro.giga-school.com/",
-          "weightedLength": 80
-        }
-      ],
-      "text": "手直しされた作文を受け取っても、どこを直したか探すのに毎回2分。そこで前回からの変更箇所だけを青と赤で自動ハイライトする作りにしました。差分が一目で突き合わせられるため、推敲のやり取りが1回の授業時間内で完結しやすくなると思います。\n\n#国語 #作文添削 #GIGAスクール",
-      "media": "media/online-manuscript-paper-pro-card.png",
-      "weightedLength": 261,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W46-7",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "insight",
-      "themeLabel": "教育×AIの気づき",
-      "repo": "Werewolf",
-      "body": "便利だからと何でも端末に保存させようとして、失敗したことがあります。休み時間に交代で遊ぶゲームでは、履歴が残ると次の子が役職を見知ってしまうからです。あえてタブを閉じたら白紙に戻る作りにする方が、教室では親切だと気づきました。",
-      "hook": "confess",
-      "hashtags": [
-        "学級活動",
-        "GIGAスクール",
-        "PWA"
-      ],
-      "url": "https://werewolf.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "便利だからと何でも端末に保存させようとして、失敗したことがあります。休み時間に交代で遊ぶゲームでは、履歴が残ると次の子が役職を見知ってしまうからです。あえてタブを閉じたら白紙に戻る作りにする方が、教室では親切だと気づきました。\n\n#学級活動 #GIGAスクール #PWA",
-          "weightedLength": 256
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://werewolf.giga-school.com/",
-          "weightedLength": 76
-        }
-      ],
-      "text": "便利だからと何でも端末に保存させようとして、失敗したことがあります。休み時間に交代で遊ぶゲームでは、履歴が残ると次の子が役職を見知ってしまうからです。あえてタブを閉じたら白紙に戻る作りにする方が、教室では親切だと気づきました。\n\n#学級活動 #GIGAスクール #PWA",
-      "media": "media/Werewolf-card.png",
-      "weightedLength": 256,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W46-8",
-      "date": "",
-      "weekday": "",
-      "slot": "stock",
-      "slotLabel": "予備",
-      "hour": 0,
-      "minute": 0,
-      "theme": "tips",
-      "themeLabel": "使い方Tips",
-      "repo": "Shiritori_fighter",
-      "body": "タイピングがまだおぼつかない低学年と、どう言葉遊びをしていますか。わたしはマイク入力をONにして、声で言葉を打ち込ませています。キーを探す速さで勝敗が決まらないため、純粋に語彙の豊かさを競い合って楽しむ時間にできると思います。",
-      "hook": "question",
-      "hashtags": [
-        "国語",
-        "しりとり",
-        "低学年"
-      ],
-      "url": "https://shiritori-fighter.giga-school.com/",
-      "steps": [
-        {
-          "kind": "main",
-          "label": "本文",
-          "text": "タイピングがまだおぼつかない低学年と、どう言葉遊びをしていますか。わたしはマイク入力をONにして、声で言葉を打ち込ませています。キーを探す速さで勝敗が決まらないため、純粋に語彙の豊かさを競い合って楽しむ時間にできると思います。\n\n#国語 #しりとり #低学年",
-          "weightedLength": 249
-        },
-        {
-          "kind": "link",
-          "label": "リンクの返信",
-          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://shiritori-fighter.giga-school.com/",
-          "weightedLength": 74
-        }
-      ],
-      "text": "タイピングがまだおぼつかない低学年と、どう言葉遊びをしていますか。わたしはマイク入力をONにして、声で言葉を打ち込ませています。キーを探す速さで勝敗が決まらないため、純粋に語彙の豊かさを競い合って楽しむ時間にできると思います。\n\n#国語 #しりとり #低学年",
-      "media": "media/Shiritori_fighter-card.png",
-      "weightedLength": 249,
-      "alternatives": [],
-      "pickedBy": null,
-      "pickReason": null,
-      "reprise": null
-    },
-    {
-      "id": "stock-2026-W46-9",
+      "id": "stock-2026-W47-2",
       "date": "",
       "weekday": "",
       "slot": "stock",
@@ -341,73 +54,360 @@
       "minute": 0,
       "theme": "intro",
       "themeLabel": "アプリ紹介",
-      "repo": "DigitalCloset",
-      "body": "研究授業や行事の朝、何を着ていくか迷って10分経ってしまう場面。そこで手持ちの服を写真で一覧できるアプリを作りました。手元にある服だけを使ってAIが組み合わせを考えてくれます。出勤前の慌ただしい時間に悩まずに済むようになると思います。",
+      "repo": "Typa",
+      "body": "給食前の残り2分、ドリルを開いても途中で終わると記録が消えて諦めてしまう場面。そこでホーム画面なしで即練習が始まるタイピングを作りました。1文字打って中断しても記録が残るため、短いすきま時間を無駄なく使えると思います。",
       "hook": "scene",
       "hashtags": [
-        "校務",
-        "身だしなみ",
-        "GeminiAPI"
+        "Typa",
+        "タイピング",
+        "Chromebook"
       ],
-      "url": "https://digitalcloset.giga-school.com/",
+      "url": "https://typa.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "研究授業や行事の朝、何を着ていくか迷って10分経ってしまう場面。そこで手持ちの服を写真で一覧できるアプリを作りました。手元にある服だけを使ってAIが組み合わせを考えてくれます。出勤前の慌ただしい時間に悩まずに済むようになると思います。\n\n#校務 #身だしなみ #GeminiAPI",
-          "weightedLength": 260
+          "text": "給食前の残り2分、ドリルを開いても途中で終わると記録が消えて諦めてしまう場面。そこでホーム画面なしで即練習が始まるタイピングを作りました。1文字打って中断しても記録が残るため、短いすきま時間を無駄なく使えると思います。\n\n#Typa #タイピング #Chromebook",
+          "weightedLength": 247
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://digitalcloset.giga-school.com/",
-          "weightedLength": 68
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://typa.giga-school.com/",
+          "weightedLength": 76
         }
       ],
-      "text": "研究授業や行事の朝、何を着ていくか迷って10分経ってしまう場面。そこで手持ちの服を写真で一覧できるアプリを作りました。手元にある服だけを使ってAIが組み合わせを考えてくれます。出勤前の慌ただしい時間に悩まずに済むようになると思います。\n\n#校務 #身だしなみ #GeminiAPI",
-      "media": "media/DigitalCloset-card.png",
-      "weightedLength": 260,
+      "text": "給食前の残り2分、ドリルを開いても途中で終わると記録が消えて諦めてしまう場面。そこでホーム画面なしで即練習が始まるタイピングを作りました。1文字打って中断しても記録が残るため、短いすきま時間を無駄なく使えると思います。\n\n#Typa #タイピング #Chromebook",
+      "media": "media/Typa-card.png",
+      "weightedLength": 247,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,
       "reprise": null
     },
     {
-      "id": "stock-2026-W46-10",
+      "id": "stock-2026-W47-3",
       "date": "",
       "weekday": "",
       "slot": "stock",
       "slotLabel": "予備",
       "hour": 0,
       "minute": 0,
-      "theme": "pain",
-      "themeLabel": "困りごと→解決",
-      "repo": "Online-Publisher-pro",
-      "body": "原稿用紙の空きマスや禁則処理の指導だけで、1コマの半分が消えていました。以前は紙のマス目を何度も直させて本題が進みませんでした。いまは縦書きで自動組版されるエディタを使っています。体裁の修正に追われず、文章推敲に集中できると思います。",
+      "theme": "insight",
+      "themeLabel": "教育×AIの気づき",
+      "repo": "Linker-Clipper",
+      "body": "教材研究の効率化をAIに頼もうとして、学校ごとの共有権限の壁に何度も突き当たりました。外部DBに頼るより、各校のGoogleドライブ内で完結させたほうが現場で安心して使えます。安全な土台のうえでAIを活用する形を目指したいです。",
       "hook": "confess",
       "hashtags": [
-        "作文",
-        "原稿用紙",
-        "国語"
+        "教材研究",
+        "校務効率化",
+        "GoogleAppsScript"
       ],
-      "url": "https://online-publisher-pro.giga-school.com/",
+      "url": "https://linker-clipper.giga-school.com/",
       "steps": [
         {
           "kind": "main",
           "label": "本文",
-          "text": "原稿用紙の空きマスや禁則処理の指導だけで、1コマの半分が消えていました。以前は紙のマス目を何度も直させて本題が進みませんでした。いまは縦書きで自動組版されるエディタを使っています。体裁の修正に追われず、文章推敲に集中できると思います。\n\n#作文 #原稿用紙 #国語",
-          "weightedLength": 256
+          "text": "教材研究の効率化をAIに頼もうとして、学校ごとの共有権限の壁に何度も突き当たりました。外部DBに頼るより、各校のGoogleドライブ内で完結させたほうが現場で安心して使えます。安全な土台のうえでAIを活用する形を目指したいです。\n\n#教材研究 #校務効率化 #GoogleAppsScript",
+          "weightedLength": 257
         },
         {
           "kind": "link",
           "label": "リンクの返信",
-          "text": "実物はこちらです。インストールは要りません。\nhttps://online-publisher-pro.giga-school.com/",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://linker-clipper.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "教材研究の効率化をAIに頼もうとして、学校ごとの共有権限の壁に何度も突き当たりました。外部DBに頼るより、各校のGoogleドライブ内で完結させたほうが現場で安心して使えます。安全な土台のうえでAIを活用する形を目指したいです。\n\n#教材研究 #校務効率化 #GoogleAppsScript",
+      "media": "media/Linker-Clipper-card.png",
+      "weightedLength": 257,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W47-4",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "update",
+      "themeLabel": "アップデート報告",
+      "repo": "online-manuscript-paper-pro",
+      "body": "接続の合言葉から小文字やハイフンの区別を不要に直しました。ローマ字入力に不慣れな低学年が作文画面に入る前につまずくのを防ぐためです。画面上で直した場所が赤青で一目でわかるので、書き直しの確認も短時間で済むと思います。",
+      "hook": "reason",
+      "hashtags": [
+        "オンライン原稿用紙",
+        "作文添削",
+        "国語"
+      ],
+      "url": "https://online-manuscript-paper-pro.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "接続の合言葉から小文字やハイフンの区別を不要に直しました。ローマ字入力に不慣れな低学年が作文画面に入る前につまずくのを防ぐためです。画面上で直した場所が赤青で一目でわかるので、書き直しの確認も短時間で済むと思います。\n\n#オンライン原稿用紙 #作文添削 #国語",
+          "weightedLength": 253
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://online-manuscript-paper-pro.giga-school.com/",
           "weightedLength": 68
         }
       ],
-      "text": "原稿用紙の空きマスや禁則処理の指導だけで、1コマの半分が消えていました。以前は紙のマス目を何度も直させて本題が進みませんでした。いまは縦書きで自動組版されるエディタを使っています。体裁の修正に追われず、文章推敲に集中できると思います。\n\n#作文 #原稿用紙 #国語",
-      "media": "media/Online-Publisher-pro-card.png",
-      "weightedLength": 256,
+      "text": "接続の合言葉から小文字やハイフンの区別を不要に直しました。ローマ字入力に不慣れな低学年が作文画面に入る前につまずくのを防ぐためです。画面上で直した場所が赤青で一目でわかるので、書き直しの確認も短時間で済むと思います。\n\n#オンライン原稿用紙 #作文添削 #国語",
+      "media": "media/online-manuscript-paper-pro-card.png",
+      "weightedLength": 253,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W47-5",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "word_basket",
+      "body": "1台の端末を班で囲むとき、反対側の子から文字が逆さまに見えていませんか。そこで向かいの席の手札が180度自動回転するしりとりを作りました。ログイン不要で名前も残らないので、次のクラスへすぐ手渡して言葉遊びができると思います。",
+      "hook": "question",
+      "hashtags": [
+        "しりとり",
+        "ワードゲーム",
+        "国語"
+      ],
+      "url": "https://word-basket.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "1台の端末を班で囲むとき、反対側の子から文字が逆さまに見えていませんか。そこで向かいの席の手札が180度自動回転するしりとりを作りました。ログイン不要で名前も残らないので、次のクラスへすぐ手渡して言葉遊びができると思います。\n\n#しりとり #ワードゲーム #国語",
+          "weightedLength": 251
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://word-basket.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "1台の端末を班で囲むとき、反対側の子から文字が逆さまに見えていませんか。そこで向かいの席の手札が180度自動回転するしりとりを作りました。ログイン不要で名前も残らないので、次のクラスへすぐ手渡して言葉遊びができると思います。\n\n#しりとり #ワードゲーム #国語",
+      "media": "media/word_basket-card.png",
+      "weightedLength": 251,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W47-6",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "Ice_slide-puzzle",
+      "body": "雨の日の休み時間にネットが切れてゲームが止まるのを防ぐため、オフラインで動くPWA設計にしました。通信が切れても手元のタブレット1台で2人対戦ができます。片付けの時間もゼロで、チャイム直前まで落ち着いて遊べると思います。",
+      "hook": "reason",
+      "hashtags": [
+        "ボードゲーム",
+        "2人対戦",
+        "GIGAスクール"
+      ],
+      "url": "https://ice-slide-puzzle.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "雨の日の休み時間にネットが切れてゲームが止まるのを防ぐため、オフラインで動くPWA設計にしました。通信が切れても手元のタブレット1台で2人対戦ができます。片付けの時間もゼロで、チャイム直前まで落ち着いて遊べると思います。\n\n#ボードゲーム #2人対戦 #GIGAスクール",
+          "weightedLength": 253
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://ice-slide-puzzle.giga-school.com/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "雨の日の休み時間にネットが切れてゲームが止まるのを防ぐため、オフラインで動くPWA設計にしました。通信が切れても手元のタブレット1台で2人対戦ができます。片付けの時間もゼロで、チャイム直前まで落ち着いて遊べると思います。\n\n#ボードゲーム #2人対戦 #GIGAスクール",
+      "media": "media/Ice_slide-puzzle-card.png",
+      "weightedLength": 253,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W47-7",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "Shapes_Canvas",
+      "body": "図形の授業では配るボタンで出たURLをそのままロイロ等に貼って児童に渡しています。アカウント登録やサーバー設定なしで、作った問題画面を全員に一斉配信できるからです。低学年でも指でつまみやすい大きさなので操作に迷わないと思います。",
+      "hook": "number",
+      "hashtags": [
+        "算数",
+        "図形学習",
+        "ICT教育"
+      ],
+      "url": "https://shapes-canvas.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "図形の授業では配るボタンで出たURLをそのままロイロ等に貼って児童に渡しています。アカウント登録やサーバー設定なしで、作った問題画面を全員に一斉配信できるからです。低学年でも指でつまみやすい大きさなので操作に迷わないと思います。\n\n#算数 #図形学習 #ICT教育",
+          "weightedLength": 251
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://shapes-canvas.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "図形の授業では配るボタンで出たURLをそのままロイロ等に貼って児童に渡しています。アカウント登録やサーバー設定なしで、作った問題画面を全員に一斉配信できるからです。低学年でも指でつまみやすい大きさなので操作に迷わないと思います。\n\n#算数 #図形学習 #ICT教育",
+      "media": "media/Shapes_Canvas-card.png",
+      "weightedLength": 251,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W47-8",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "insight",
+      "themeLabel": "教育×AIの気づき",
+      "repo": "Townmap_Mikke",
+      "body": "探検の写真共有でAIにコードを書かせた際、共有権限を開けすぎてデータ破壊が起きる失敗をしました。学校現場のツールでは、機能の派手さより他人のピンを消せない権限分離こそ最優先だと痛感しています。堅牢な仕組み作りを大切にしたいです。",
+      "hook": "scene",
+      "hashtags": [
+        "探究学習",
+        "協働学習",
+        "GAS"
+      ],
+      "url": "https://townmap-mikke.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "探検の写真共有でAIにコードを書かせた際、共有権限を開けすぎてデータ破壊が起きる失敗をしました。学校現場のツールでは、機能の派手さより他人のピンを消せない権限分離こそ最優先だと痛感しています。堅牢な仕組み作りを大切にしたいです。\n\n#探究学習 #協働学習 #GAS",
+          "weightedLength": 252
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://townmap-mikke.giga-school.com/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "探検の写真共有でAIにコードを書かせた際、共有権限を開けすぎてデータ破壊が起きる失敗をしました。学校現場のツールでは、機能の派手さより他人のピンを消せない権限分離こそ最優先だと痛感しています。堅牢な仕組み作りを大切にしたいです。\n\n#探究学習 #協働学習 #GAS",
+      "media": "media/Townmap_Mikke-card.png",
+      "weightedLength": 252,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W47-9",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "Shared-Folder-Sync",
+      "body": "学年資料の修正を各フォルダへ手作業で上書きしていたころは、古い版が混ざる不安がありました。そこで親フォルダの変更や削除を丸ごと同期するGASを作りました。更新作業が数クリックで終わり、放課後の確認の手間が大きく減ると思います。",
+      "hook": "contrast",
+      "hashtags": [
+        "GoogleDrive",
+        "フォルダ同期",
+        "校務効率化"
+      ],
+      "url": "https://shared-folder-sync.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "学年資料の修正を各フォルダへ手作業で上書きしていたころは、古い版が混ざる不安がありました。そこで親フォルダの変更や削除を丸ごと同期するGASを作りました。更新作業が数クリックで終わり、放課後の確認の手間が大きく減ると思います。\n\n#GoogleDrive #フォルダ同期 #校務効率化",
+          "weightedLength": 263
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://shared-folder-sync.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "学年資料の修正を各フォルダへ手作業で上書きしていたころは、古い版が混ざる不安がありました。そこで親フォルダの変更や削除を丸ごと同期するGASを作りました。更新作業が数クリックで終わり、放課後の確認の手間が大きく減ると思います。\n\n#GoogleDrive #フォルダ同期 #校務効率化",
+      "media": "media/Shared-Folder-Sync-card.png",
+      "weightedLength": 263,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "stock-2026-W47-10",
+      "date": "",
+      "weekday": "",
+      "slot": "stock",
+      "slotLabel": "予備",
+      "hour": 0,
+      "minute": 0,
+      "theme": "update",
+      "themeLabel": "アップデート報告",
+      "repo": "Music-production_studio",
+      "body": "音楽の授業で子どもが保存を押し忘れて曲が消える失敗があったため、操作ごとに自動保存する仕組みに改修しました。マス目を塗るだけで音が出るので楽譜が読めなくても安心です。45分の授業の残り10分でリズム作りに集中できると思います。",
+      "hook": "confess",
+      "hashtags": [
+        "音楽教育",
+        "小学校音楽",
+        "プログラミング教育"
+      ],
+      "url": "https://music-production-studio.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "音楽の授業で子どもが保存を押し忘れて曲が消える失敗があったため、操作ごとに自動保存する仕組みに改修しました。マス目を塗るだけで音が出るので楽譜が読めなくても安心です。45分の授業の残り10分でリズム作りに集中できると思います。\n\n#音楽教育 #小学校音楽 #プログラミング教育",
+          "weightedLength": 265
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://music-production-studio.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "音楽の授業で子どもが保存を押し忘れて曲が消える失敗があったため、操作ごとに自動保存する仕組みに改修しました。マス目を塗るだけで音が出るので楽譜が読めなくても安心です。45分の授業の残り10分でリズム作りに集中できると思います。\n\n#音楽教育 #小学校音楽 #プログラミング教育",
+      "media": "media/Music-production_studio-card.png",
+      "weightedLength": 265,
       "alternatives": [],
       "pickedBy": null,
       "pickReason": null,

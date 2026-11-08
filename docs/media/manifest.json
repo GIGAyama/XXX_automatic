@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cardTemplateSha": "08d5ce0b1e2d866c",
-  "updatedAtJst": "2026-11-02 02:01 JST",
+  "updatedAtJst": "2026-11-09 01:58 JST",
   "apps": {
     "KEISAN-BLOCK": {
       "shot": {
@@ -96,8 +96,8 @@
     "online-100square-calculation": {
       "shot": {
         "ok": true,
-        "fingerprint": "9fcab115163fb7af",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "3141faba88c4d9c3",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "スタート",
@@ -105,8 +105,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "bc33bd8fa25f40b9",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "11d4a31099f45562",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "blank": false
       }
@@ -114,8 +114,8 @@
     "SchoolPlan_Editor": {
       "shot": {
         "ok": true,
-        "fingerprint": "4d55bd356829215f",
-        "atJst": "2026-11-02 02:01 JST",
+        "fingerprint": "e58017bdd3d0c79e",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": null,
@@ -123,8 +123,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "5af7db03b53cb4fb",
-        "atJst": "2026-11-02 02:01 JST",
+        "fingerprint": "49360b3005936013",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "blank": false
       }
@@ -186,8 +186,8 @@
     "MIRAI-Compass": {
       "shot": {
         "ok": true,
-        "fingerprint": "4c165cdd926eba33",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "bb03be8c9e63e758",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "はじめる",
@@ -195,8 +195,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "73837d87afd03455",
-        "atJst": "2026-09-06 23:08 JST",
+        "fingerprint": "1707dc629c2445c4",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "blank": false
       }
@@ -291,8 +291,8 @@
     "Reversi": {
       "shot": {
         "ok": true,
-        "fingerprint": "272798b9cdc8b352",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "9304971134907e48",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": "開始",
@@ -300,8 +300,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "957e3f0e8ad50652",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "9e13f3cf38aaeeea",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "blank": false
       }
@@ -543,8 +543,8 @@
     "Werewolf": {
       "shot": {
         "ok": true,
-        "fingerprint": "83ed902512a325f6",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "c7758f515fa907b0",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "stabilized": false,
         "dismissed": "開始",
@@ -552,8 +552,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "a618b12139114235",
-        "atJst": "2026-10-05 00:42 JST",
+        "fingerprint": "6d84bf9a443e8fd8",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "blank": false
       }
@@ -927,8 +927,8 @@
     "JIDOSHA_ZUKAN": {
       "shot": {
         "ok": true,
-        "fingerprint": "19d1650de1c10909",
-        "atJst": "2026-09-06 23:09 JST",
+        "fingerprint": "473eed59c067c6ba",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "stabilized": true,
         "dismissed": null,
@@ -936,8 +936,8 @@
       },
       "card": {
         "ok": true,
-        "fingerprint": "557a2fe7e4812aa8",
-        "atJst": "2026-09-06 23:09 JST",
+        "fingerprint": "db2a4d8da8f04c53",
+        "atJst": "2026-11-09 01:58 JST",
         "frames": 1,
         "blank": false
       }
