@@ -78,4 +78,5 @@ node tools/verify-runtime.mjs --slug typa  # 1 本だけ
 | 実際に出ていく通信 | `tools/verify-runtime.mjs` / `standards/web/verify-no-external.mjs` |
 | 1 本の Zero-CDN・Zero-PII | `giga-reviewer` スキル |
 | 配布の抜け | `tools/check-distribution.mjs` |
+| 配布先の main で赤い CI | `tools/fleet-ci.mjs`（ポータルが毎朝集めて、赤ければ Issue にする） |
 | そのリポジトリのずれ | `standards/check-drift.mjs` |
