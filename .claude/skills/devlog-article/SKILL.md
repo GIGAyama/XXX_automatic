@@ -42,7 +42,7 @@ note の紹介記事（`note-article` スキル）は先生に向けて書く。
 ## 書いた記事がどこへ行くか
 
 `docs/devlog/` に置いた記事は、旗艦リポジトリ `GIGAyama/GIGAyama.github.io` の
-GitHub Actions が毎朝 6:17 に GitHub API で取ってきて、
+GitHub Actions が毎朝（日本時間の 7 時半ごろまでに）GitHub API で取ってきて、
 `giga-school.com/devlog/<アプリ>/<記事>/` に組み直す（`tools/build-devlog.mjs`）。
 
 `docs/note/*-note-article.md` が `/apps/<slug>/` になるのと同じ仕組み。
