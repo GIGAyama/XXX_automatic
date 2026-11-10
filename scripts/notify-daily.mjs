@@ -25,6 +25,8 @@
  *
  * LINE Notify は 2025年3月で終了したので使っていない。
  */
+import { pathToFileURL } from 'node:url';
+
 import { createIssue, listIssues, updateIssue } from './lib/github.mjs';
 import { fail, failWith, info, loadConfig, parseArgs, paths, readJson } from './lib/io.mjs';
 import { isoWeekId, jstDateString, jstStamp, weekdayLabelOf } from './lib/jst.mjs';
@@ -362,4 +364,18 @@ function formatDate(iso) {
     return `${Number(m)}/${Number(d)}`;
 }
 
-main().catch(failWith);
+// テストから import されたときは実行しない。
+//
+// ⚠️ ここを素の `main().catch(failWith)` に戻さないこと。2026-11-10 まで、そう書いてあった。
+//    tests/notify.test.mjs はこのファイルから shouldClose を import するので、
+//    **テストを走らせるたびに、本物の通知が 1 回走っていた**。
+//      ・トークンが無い場所（CI）… Issue を立てられずに exit 1。テストが 1 件だけ落ちる
+//      ・トークンが在る場所（手元）… 本物の Issue が立ち、古い知らせが閉じられる
+//    しかも落ちるのは「その日に出す投稿が在る日」だけで、無い日は緑になる。
+//    2026-10-01 は緑、11-01 と 11-10 は赤だった。日によって変わる赤は、
+//    誰も原因を追わないまま「ときどき落ちるもの」として慣れられる。
+// ⚠️ `file://${process.argv[1]}` を文字列で組み立てて比べないこと。Windows や、空白・日本語を
+//    含むパスでは一致せず、何も走らせないまま exit 0 になる（2026-08-28 / 2026-09-02）。
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
+    main().catch(failWith);
+}

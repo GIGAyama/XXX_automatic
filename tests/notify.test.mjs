@@ -52,3 +52,36 @@ test('年をまたいでも正しく比べる', () => {
     assert.equal(shouldClose(STAMP('2026-12-31'), '2027-01-01'), true);
     assert.equal(shouldClose(STAMP('2027-01-01'), '2026-12-31'), false);
 });
+
+/* ── テストが、本物の通知を走らせない ─────────────────────────────
+ *
+ * 2026-11-10 まで、scripts/notify-daily.mjs は末尾で main() をそのまま呼んでいた。
+ * このファイルが shouldClose を import するだけで main() が走り、**テストのたびに
+ * 本物の Issue を立てにいっていた**（トークンが無い CI では exit 1 で落ちる）。
+ * 落ちるのは「その日に出す投稿が在る日」だけなので、原因が日付に隠れていた。
+ *
+ * 同じ形を、ほかのスクリプトに作らせない。export を持つ（＝ import される）のに
+ * 入口を守っていないものがあれば、ここで落とす。
+ */
+test('import されるスクリプトは、import されただけでは走らない', async () => {
+    const { readdirSync, readFileSync } = await import('node:fs');
+    const { fileURLToPath } = await import('node:url');
+    const dir = fileURLToPath(new URL('../scripts/', import.meta.url));
+    const files = readdirSync(dir).filter((name) => name.endsWith('.mjs'));
+    // 「0 件でした」を信じない。見るものが無ければ、合格ではなく何も見ていない
+    assert.ok(files.length >= 10, `scripts/ に ${files.length} 本しか見つかりません`);
+
+    const GUARD = 'pathToFileURL(process.argv[1]).href === import.meta.url';
+    const offenders = [];
+    let exporting = 0;
+    for (const name of files) {
+        const source = readFileSync(dir + name, 'utf8');
+        // import されないものは、走ってよい。`export {};` は何も出していないので数えない
+        if (!/^export (?!\{\s*\})/m.test(source)) continue;
+        exporting += 1;
+        // 行頭で main() を呼んでいる ＝ 読みこんだだけで走る
+        if (/^(await )?main\(\)/m.test(source) || !source.includes(GUARD)) offenders.push(name);
+    }
+    assert.ok(exporting >= 4, `export を持つスクリプトが ${exporting} 本しか見つかりません`);
+    assert.deepEqual(offenders, [], `入口を守っていない: ${offenders.join(', ')}`);
+});
