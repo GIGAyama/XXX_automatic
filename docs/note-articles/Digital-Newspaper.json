@@ -3,8 +3,8 @@
   "id": "Digital-Newspaper",
   "repo": "Digital-Newspaper",
   "path": "docs/note/digital-newspaper-note-article.md",
-  "sha": "3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4",
-  "sourceUrl": "https://github.com/GIGAyama/Digital-Newspaper/blob/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/digital-newspaper-note-article.md",
+  "sha": "f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a",
+  "sourceUrl": "https://github.com/GIGAyama/Digital-Newspaper/blob/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/digital-newspaper-note-article.md",
   "pagesUrl": "https://digital-newspaper.giga-school.com/",
   "title": "教室で使えるかもしれないもの作り #◯ 「学級新聞、いつ作るんですか」ハサミもノリもいらない学級新聞アプリ「デジタル・クラス新聞社」",
   "plain": "教室で使えるかもしれないもの作り #◯ 「学級新聞、いつ作るんですか」ハサミもノリもいらない学級新聞アプリ「デジタル・クラス新聞社」\n\n🏫 はじめに\n\n学級新聞を作ろう、と決めたところまではよかった。そのあとが大変だった。そんな覚えはありませんか。\n\n原稿用紙を配って、集めて、薄い字を読み直して、画用紙に割り付けて、ハサミで切って、ノリで貼る。写真はプリンタで刷って、大きすぎたらもう一度刷り直す。子どもが書いた文章そのものは、とっくにできあがっているのです。それを一枚の紙にする作業だけで、放課後がいくつも消えていきます。しかも貼り終えたあとで「先生、ぼくのも載せてください」と言われると、もう戻れません。\n\nこのアプリが引き受けるのは、その「割り付けて、貼る」ところだけです。子どもはタブレットで記事を書き、あいことばひとつでとなりの端末に送ります。受け取った端末でチェックを入れて、順番を決めて、印刷を押します。それでA4一枚の学級新聞になります。\n\n作ったものはこちらに置いてあります。\n\nhttps://github.com/GIGAyama/Digital-Newspaper\n\n以前の版は、先生のGoogleアカウントの中にスプレッドシートを置いて動かす形でした。今は作りを変えて、ブラウザを開くだけで使えるようにしてあります。アカウントも、コピーするファイルも、公開の設定もありません。書いたものはその端末の中にだけ残り、開発者のところにも、どこかのサーバーにも届きません。\n\nもうひとつ変えたところがあります。以前は「子どもが送る画面」と「先生が組む画面」が分かれていて、組むほうには先生しか入れませんでした。今はその区別をなくしました。ひとつの画面の上のタブで、記事を書く側と新聞を組む側を行き来します。新聞係の子どもが、はじめから終わりまで自分で作れます。\n\n案内ページは [digital-newspaper.giga-school.com](https://digital-newspaper.giga-school.com/) です。ここを開けばもう使えます。\n\n📱 このアプリでできること\n\n画面はふたつだけです。上のタブで行き来します。\n\n「記事を かく」を押すと、書く側の画面になります。上から順に、タイトル、本文、記者の名前、タグ、写真の五つです。漢字にはふりがながふってあるので、低学年でも読めます。\n\n［画像1: まっさらな記事の入力画面］\n\nタブレットの縦画面でも、五つの欄がそのまま縦に並びます。横スクロールは出ません。\n\n本文の右上には字数が出ます。改行を除いた数なので、「四百字書こう」といった目標とそのまま比べられます。\n\n［画像2: 記入して写真を入れたところ］\n\nタグを選ぶと色が変わるので、押せたかどうかが目で分かります。写真は選んだ時点で端末の中で小さくなり、その大きさが下に出ます。\n\n写真のことだけ、少し書いておきます。以前の版はGoogleドライブに置いていましたが、今はどこにも送りません。その代わり、選んだ瞬間に端末の中で長辺千二百ピクセルまで縮めます。教室でふつうに撮った写真なら、百五十キロバイトから三百キロバイトほどです。縮めるのはブラウザの中だけで完結する処理なので、外に出ていく通信は起きません。\n\n置き場所も分けてあります。記事の文字はブラウザのローカルストレージに、写真はIndexedDBという別の入れものに入れています。ローカルストレージは五メガバイトしかなく、写真をそこに入れると四十本ほどで一杯になります。IndexedDBは端末の空きに応じた大きさまで入るので、試した端末では九百二十五メガバイトありました。写真つきの記事を学級全員ぶん集めても、ふつうは足りなくなりません。\n\nでは、なぜ全部をIndexedDBにしないのか。IndexedDBへの書き込みは非同期で、端末がメモリ不足でタブを捨てるときに、最後まで書き終わる保証がありません。記事の文字はローカルストレージに同期で書いて、確実に残します。写真は撮り直せますが、書いた文章は撮り直せないからです。\n\n書いた記事は右側にたまっていきます。\n\n［画像3: わたしの記事の一覧］\n\n一本ごとに「したがき」「おくった」「のせてもらった」のどれかが付きます。自分の記事がいまどこにいるのかが、聞かなくても分かります。\n\n一覧からは、開いて直す、複製する、消す、送る、ができます。複製は「同じ書き出しでもう一本書きたい」ときに使います。元の記事はそのまま残ります。\n\nいちばん下には、その端末にどれだけたまっているかと、使える量が出ます。八割を超えると赤くなります。黙って上限に当たると「送ったのに保存されていない」が起きるので、先に見えるようにしてあります。\n\n🔗 あいことばだけで、記事が集まる\n\n学級のみんなの記事を一台に集めるところが、このアプリのいちばん変わったところだと思います。\n\n名簿を作る必要がありません。アカウントも要りません。ログインもありません。集める側が「へやを ひらく」を押すと、十文字のあいことばが出ます。\n\n［画像4: へやを開いてあいことばが出たところ］\n\nこの十文字を板書するか、読み上げるだけです。つながっている台数もここに出ます。\n\n見まちがえやすい 0 と O、1 と I と L は使っていません。板書を写しまちがえて入れない、という事故がいちばん多いと思ったからです。\n\n送る側は、そのあいことばを入れて「はいる」を押します。\n\n［画像5: あいことばを入れるところ］\n\n小文字で打っても、区切りの記号を入れなくても通ります。子どもの入力を、大人の書き方に合わせさせないためです。\n\nつながったら、記事の「おくる」を押します。\n\n［画像6: 送ったあと、ふだが変わったところ］\n\n届いた合図が返ってきてはじめて「おくった」に変わります。押した瞬間に変わるのではありません。届いていないのに届いた顔をされるのがいちばん困るからです。\n\n集める側には、こう並びます。\n\n［画像7: 届いた記事が一覧に並んだところ］\n\n届いた記事は左のふちが青くなります。そして、チェックは入っていません。載せるものは集めた人が選びます。\n\n自分で書いた記事は、はじめからチェックが入っています。ひとりで作るときに、書いてタブを切りかえたら紙面に出ている、という流れにしたかったからです。\n\nチェックを入れると、書いた子の画面が変わります。\n\n［画像8: のせてもらった、に変わったところ］\n\n「のせてもらった」に変わります。掲示するまで待たなくても、自分の記事が採られたことがその場で分かります。\n\nつながっていないあいだに書いた記事は、次につないだ瞬間にまとめて送られます。教室のネットワークが不安定でも、書いたものが宙に浮きません。\n\nひとつ、正直に書いておかなければならないことがあります。あいことばは宛先であって、合いかぎではありません。板書を写真に撮られれば、その十文字を知っている人はだれでもそのへやに入れて、記事を送りこめます。八十二兆通りあるので総当たりで当てられることはありませんが、それとこれとは別の話です。授業が終わったら「へやを とじる」を押してください。次に開いたときは別のあいことばになります。\n\n学校のネットワークがこの種の通信を塞いでいることもあります。その場合は、記事をファイルに書き出して渡す道が用意してあります。通信をまったく使わずに、同じことができます。\n\n🗞️ 縦書きの紙面が、その場で組み上がる\n\n「新聞を つくる」に切りかえると、こうなります。\n\n［画像9: 新聞をつくる画面の操作パネル］\n\n左からレイアウト、デザイン、記事を選ぶところ、と並びます。押したものはすぐ下の紙面に出ます。\n\n下がその紙面です。\n\n［画像10: 縦書き三段に組み上がった紙面］\n\nチェックを入れた記事が、そのまま縦書きの新聞になっています。段の中で行が折り返し、次の記事が続きます。この割り付けを手でやっていた、と思うと不思議な気持ちになります。\n\n新聞名と発行日は、紙面の上でそのまま打ちかえられます。見出しも、記者名も、本文も同じです。子どもの書いた文章に手を入れたいときは、ここで直します。元の記事は変わらないので、直したのがどちらだったか分からなくなることはありません。\n\n写真は記事ごとに置き方を変えられます。\n\n［画像11: 写真を右に回りこませた紙面］\n\n同じ記事でも、写真を右に回りこませるだけで紙面の印象が変わります。\n\n紙に載せきれなかったものは、QRコードにできます。\n\n［画像12: QRコードの入った紙面］\n\n記事のリンクの欄に動画のURLを貼ると、紙面に刷り込まれます。持ち帰った新聞から、おうちの方が動画を見られます。\n\nこのQRには少しだけこだわりがあります。画面で見えているのは五十ピクセル四方ですが、実際には倍の画素で描いています。先生のパソコンが高精細でなくても、刷ったときに読み取れる濃さになるようにするためです。以前の版では、学校のネットワークがQRを作る部品を塞いだために、読み取れない白い四角がそのまま刷られたことがありました。今は部品をアプリの中に持っているので、塞がれても同じように出ます。\n\nテーマは七つあります。\n\n［画像13: 黒板のテーマに手書き風のフォントを合わせた紙面］\n\n黒板のテーマに手書き風のフォントを合わせたところです。教室に貼る一枚ならこれもありだと思います。\n\n［画像14: 春のテーマで横書き二段にした紙面］\n\n春のテーマで、横書きの二段にしたところ。低学年の学級だよりならこちらのほうが読みやすいと思います。\n\n投稿によらない欄も足せます。\n\n［画像15: 自由記述らんを足すところ］\n\n見出しと書いた人と本文を打って追加すると、一覧の先頭に入ります。\n\n［画像16: 編集後記の入った紙面］\n\n右上に編集後記が入りました。子どもの記事と同じように、位置も文字も直せます。\n\n段は一段から四段、文字の大きさは八から二十四まで動きます。用紙は縦と横、文字は縦書きと横書き、フォントは五種類、見出しの飾りは六種類です。決めた体裁はテンプレートとして名前を付けて残せるので、二号目からは選んで当てはめるだけになります。\n\n紙面はA4一枚ぶんです。はみ出した記事は画面にも印刷にも出ません。ここは割り切りました。二枚目に続くようにすると、どこで切れるかを気にしながら文章を書くことになり、子どもの書く手が止まると思ったからです。\n\n✨ 導入のメリット\n\n放課後が返ってきます。切って貼っていた時間が、そのまま消えます。\n\n書いた子が、自分の記事の行方を知ることができます。「したがき」から「おくった」へ、そして「のせてもらった」へ。掲示板の前で自分の名前をさがす前に、手もとで分かります。\n\n先生が持ち帰るものが減ります。記事も写真も子どもの端末の中にあり、集めた端末の中にあります。USBメモリも、印刷した原稿の束もありません。\n\nそして、子どもだけで作れます。画面に区別がないので、新聞係が自分であいことばを出して、自分で集めて、自分で組んで、印刷まで持っていけます。先生は印刷の前に一度見る、でよくなります。\n\nネットワークが落ちていても書けます。一度開いておけば、次からは通信がなくても起動して、書いて、組んで、印刷までできます。通信が要るのは、記事を送りあうときだけです。\n\n🛠️ 【管理者向け】導入手順\n\n手順はありません。ブラウザで開くだけです。\n\n[digital-newspaper.giga-school.com](https://digital-newspaper.giga-school.com/)\n\n配布用のファイルも、アカウントの用意も、公開の設定も要りません。それでも、学級で使う前に確かめておくとよいことが三つあります。\n\n1. 一度みんなで開いておきます。二回目からは通信がなくても起動しますが、一回目だけは要ります\n2. 端末どうしがつながるかを、二台で試します。一台で「へやを ひらく」、もう一台であいことばを入れる、それだけです。学校のネットワークがこの種の通信を塞いでいると、ここでつながりません\n3. つながらなかった場合にそなえて、ファイルの受けわたしを試しておきます。「ファイルに 書き出す」で保存したものを、別の端末の「ファイルから 読みこむ」で開きます\n\n三つめまで通れば、通信が使えない日でも同じことができます。\n\nタグは五つ用意してあります。ニュース、行事、学習、遊び、その他です。図工や係活動を足したいときは「タグ設定」で変えられます。集めている側で保存すると、つながっている端末にも同じタグが届くので、学級でそろえるのがひと手間で済みます。\n\n端末に入れておくこともできます。画面右上の「追加」を押すと、ホーム画面のアイコンから開けるようになります。iPadのSafariだけは「インストールできます」の合図を出さない仕様なので、「追加」を押すと共有ボタンからの手順が画面に出ます。\n\n📖 【利用者向け】使い方のガイド\n\n記事を書く\n\n1. 「記事を かく」を押します\n2. タイトル、本文、名前を入れ、タグをひとつ選びます\n3. 写真があれば選びます。なくてもかまいません\n4. 「保存する」を押します\n\n名前は次に書くときも引き継がれます。毎回打ち直す必要はありません。\n\n記事を集める\n\n1. 紙面を組む端末で「つながる」を押し、「へやを ひらく」を押します\n2. 出てきた十文字を伝えます\n3. ほかの端末は「つながる」からその十文字を入れて「はいる」を押します\n4. 記事の「おくる」を押します\n\n使い終わったら「へやを とじる」を押してください。\n\n新聞を組んで印刷する\n\n1. 「新聞を つくる」を押します\n2. 載せる記事にチェックを入れます\n3. 用紙の向き、段組み、テーマを決めます\n4. 紙面の上で新聞名と発行日を打ちかえます\n5. 「印刷 / PDF保存」を押します\n\n印刷の画面では、余白を「なし」に、背景のグラフィックにチェックを入れてください。テーマの色はここで出ます。\n\n途中でやめるとき\n\n紙面の状態は自動で保存されますが、名前を付けて残すこともできます。「一時保存」で名前を付け、次に開いたときに「呼び出し」から戻します。選んだ記事も、直した文章も、並べた順番も、新聞名も戻ります。\n\n［画像17: 携帯の幅で新聞を組んでいるところ］\n\n三百九十ピクセル幅でも、操作パネルは縦に積まれて全部に手が届きます。組む作業も、その気になれば手もとの端末でできます。\n\n気をつけること\n\n記事はその端末のブラウザの中にだけあります。別の端末で開いても出てきません。ブラウザの履歴やサイトデータを消すと、いっしょに消えます。残しておきたいものは、印刷するか、ファイルに書き出してください。\n\n消した記事は戻せません。ここは確認を出すだけにしてあります。\n\n📝 まとめ\n\nこのアプリは、学級新聞づくりのうち「割り付けて、貼る」ところだけを引き受けます。書くことも、何を載せるか決めることも、子どもと先生の仕事のまま残ります。そこは減らすところではないと思っています。\n\n以前の版から変えたのは、サーバーをなくしたことと、先生と子どもの区別をなくしたことの二つです。どちらも「先生が先に準備しないと始まらない」を消すための変更でした。準備が要るものは、忙しい週には使われません。開いたらもう使える、というところまで持っていきたかったのです。\n\n教室で使ってみて、こうだったらもっといい、というところがあれば教えてください。作った本人が気づけるのは、たいてい半分くらいです。",
@@ -14,119 +14,119 @@
     {
       "n": 1,
       "path": "docs/note/images/01-write-empty.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/01-write-empty.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/01-write-empty.png",
       "label": "まっさらな記事の入力画面",
       "caption": "タブレットの縦画面でも、五つの欄がそのまま縦に並びます。横スクロールは出ません。"
     },
     {
       "n": 2,
       "path": "docs/note/images/02-write-filled.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/02-write-filled.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/02-write-filled.png",
       "label": "記入して写真を入れたところ",
       "caption": "タグを選ぶと色が変わるので、押せたかどうかが目で分かります。写真は選んだ時点で端末の中で小さくなり、その大きさが下に出ます。"
     },
     {
       "n": 3,
       "path": "docs/note/images/03-mine-list.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/03-mine-list.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/03-mine-list.png",
       "label": "わたしの記事の一覧",
       "caption": "一本ごとに「したがき」「おくった」「のせてもらった」のどれかが付きます。自分の記事がいまどこにいるのかが、聞かなくても分かります。"
     },
     {
       "n": 4,
       "path": "docs/note/images/04-room-open.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/04-room-open.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/04-room-open.png",
       "label": "へやを開いてあいことばが出たところ",
       "caption": "この十文字を板書するか、読み上げるだけです。つながっている台数もここに出ます。"
     },
     {
       "n": 5,
       "path": "docs/note/images/05-join.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/05-join.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/05-join.png",
       "label": "あいことばを入れるところ",
       "caption": "小文字で打っても、区切りの記号を入れなくても通ります。子どもの入力を、大人の書き方に合わせさせないためです。"
     },
     {
       "n": 6,
       "path": "docs/note/images/06-sent.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/06-sent.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/06-sent.png",
       "label": "送ったあと、ふだが変わったところ",
       "caption": "届いた合図が返ってきてはじめて「おくった」に変わります。押した瞬間に変わるのではありません。届いていないのに届いた顔をされるのがいちばん困るからです。"
     },
     {
       "n": 7,
       "path": "docs/note/images/07-received.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/07-received.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/07-received.png",
       "label": "届いた記事が一覧に並んだところ",
       "caption": "届いた記事は左のふちが青くなります。そして、チェックは入っていません。載せるものは集めた人が選びます。"
     },
     {
       "n": 8,
       "path": "docs/note/images/08-published.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/08-published.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/08-published.png",
       "label": "のせてもらった、に変わったところ",
       "caption": "「のせてもらった」に変わります。掲示するまで待たなくても、自分の記事が採られたことがその場で分かります。"
     },
     {
       "n": 9,
       "path": "docs/note/images/09-desk-panel.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/09-desk-panel.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/09-desk-panel.png",
       "label": "新聞をつくる画面の操作パネル",
       "caption": "左からレイアウト、デザイン、記事を選ぶところ、と並びます。押したものはすぐ下の紙面に出ます。"
     },
     {
       "n": 10,
       "path": "docs/note/images/10-paper.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/10-paper.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/10-paper.png",
       "label": "縦書き三段に組み上がった紙面",
       "caption": "チェックを入れた記事が、そのまま縦書きの新聞になっています。段の中で行が折り返し、次の記事が続きます。この割り付けを手でやっていた、と思うと不思議な気持ちになります。"
     },
     {
       "n": 11,
       "path": "docs/note/images/11-paper-photos.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/11-paper-photos.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/11-paper-photos.png",
       "label": "写真を右に回りこませた紙面",
       "caption": "同じ記事でも、写真を右に回りこませるだけで紙面の印象が変わります。"
     },
     {
       "n": 12,
       "path": "docs/note/images/12-paper-qr.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/12-paper-qr.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/12-paper-qr.png",
       "label": "QRコードの入った紙面",
       "caption": "記事のリンクの欄に動画のURLを貼ると、紙面に刷り込まれます。持ち帰った新聞から、おうちの方が動画を見られます。"
     },
     {
       "n": 13,
       "path": "docs/note/images/13-paper-blackboard.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/13-paper-blackboard.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/13-paper-blackboard.png",
       "label": "黒板のテーマに手書き風のフォントを合わせた紙面",
       "caption": "黒板のテーマに手書き風のフォントを合わせたところです。教室に貼る一枚ならこれもありだと思います。"
     },
     {
       "n": 14,
       "path": "docs/note/images/14-paper-spring-horizontal.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/14-paper-spring-horizontal.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/14-paper-spring-horizontal.png",
       "label": "春のテーマで横書き二段にした紙面",
       "caption": "春のテーマで、横書きの二段にしたところ。低学年の学級だよりならこちらのほうが読みやすいと思います。"
     },
     {
       "n": 15,
       "path": "docs/note/images/15-free-modal.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/15-free-modal.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/15-free-modal.png",
       "label": "自由記述らんを足すところ",
       "caption": "見出しと書いた人と本文を打って追加すると、一覧の先頭に入ります。"
     },
     {
       "n": 16,
       "path": "docs/note/images/16-paper-free.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/16-paper-free.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/16-paper-free.png",
       "label": "編集後記の入った紙面",
       "caption": "右上に編集後記が入りました。子どもの記事と同じように、位置も文字も直せます。"
     },
     {
       "n": 17,
       "path": "docs/note/images/17-mobile-desk.png",
-      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/3917d2f9131eb06d6ceabdd184dcaad5e9bd8ff4/docs/note/images/17-mobile-desk.png",
+      "src": "https://raw.githubusercontent.com/GIGAyama/Digital-Newspaper/f4f628ffb04076b3b5dbcba71a69ea5bc8937d3a/docs/note/images/17-mobile-desk.png",
       "label": "携帯の幅で新聞を組んでいるところ",
       "caption": "三百九十ピクセル幅でも、操作パネルは縦に積まれて全部に手が届きます。組む作業も、その気になれば手もとの端末でできます。"
     }
@@ -140,6 +140,6 @@
     "専門用語「ローカルストレージ」が入っています。「その端末のなかだけに残ります」のように言いかえてください",
     "実際に試した結果として書いている（試していない）（「使ってみて、」）。実際の授業の様子は、出す前にご自身で足してください"
   ],
-  "generatedAt": "2026-11-08T17:04:17.211Z",
-  "generatedAtJst": "2026-11-09 02:04 JST"
+  "generatedAt": "2026-11-15T17:56:54.612Z",
+  "generatedAtJst": "2026-11-16 02:56 JST"
 }
