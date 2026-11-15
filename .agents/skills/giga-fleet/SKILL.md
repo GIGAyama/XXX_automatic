@@ -22,7 +22,7 @@ node tools/fleet-status.mjs --todo    # 作業待ち行列（これがいちば�
 出るのは「違反 → 直し方 → 使う正本の道具」の 3 点セット。
 
 ```
-[Zero-CDN] KANJI_Town: fonts.googleapis.com
+[Zero-CDN] <リポジトリ名>: fonts.googleapis.com
     → standards/fonts/build-fonts.mjs で自己ホスト化（束は 780 字まで）
 
 [ゲート未配備] 24 本: scripts/lib/giga-v5-checks.mjs が無い
