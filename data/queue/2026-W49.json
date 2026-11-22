@@ -1,0 +1,701 @@
+{
+  "weekId": "2026-W49",
+  "generatedAt": "2026-11-22T18:35:51.008Z",
+  "generatedAtJst": "2026-11-23 03:35 JST",
+  "dates": [
+    "2026-11-30",
+    "2026-12-01",
+    "2026-12-02",
+    "2026-12-03",
+    "2026-12-04",
+    "2026-12-05",
+    "2026-12-06"
+  ],
+  "posts": [
+    {
+      "id": "2026-11-30-morning",
+      "date": "2026-11-30",
+      "weekday": "月",
+      "slot": "morning",
+      "slotLabel": "朝",
+      "hour": 7,
+      "minute": 0,
+      "theme": "insight",
+      "themeLabel": "教育×AIの気づき",
+      "repo": "online-manuscript-paper-lite",
+      "body": "AIに原稿用紙ツールを作らせたとき、外見だけ整えて失敗しました。\n\n改行で行頭に句読点が来てしまい、国語のルールに合わなかったからです。ぶら下がりや追い出しなどの禁則処理を厳密に指示して初めて、現場で使える道具になると気づきました。",
+      "hook": "confess",
+      "hashtags": [
+        "原稿用紙",
+        "国語",
+        "GIGAスクール"
+      ],
+      "url": "https://online-manuscript-paper-lite.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "AIに原稿用紙ツールを作らせたとき、外見だけ整えて失敗しました。\n\n改行で行頭に句読点が来てしまい、国語のルールに合わなかったからです。ぶら下がりや追い出しなどの禁則処理を厳密に指示して初めて、現場で使える道具になると気づきました。\n\n#原稿用紙 #国語 #GIGAスクール",
+          "weightedLength": 259
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://online-manuscript-paper-lite.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "AIに原稿用紙ツールを作らせたとき、外見だけ整えて失敗しました。\n\n改行で行頭に句読点が来てしまい、国語のルールに合わなかったからです。ぶら下がりや追い出しなどの禁則処理を厳密に指示して初めて、現場で使える道具になると気づきました。\n\n#原稿用紙 #国語 #GIGAスクール",
+      "media": "media/online-manuscript-paper-lite-card.png",
+      "weightedLength": 259,
+      "alternatives": [
+        {
+          "body": "コード生成で頼んだ初期画面は、外部通信が3箇所も混ざっていました。\n\n学校の回線は外部CDNを塞ぐことが多く、これでは教室で真っ白になります。依存コードを0にして同梱するよう指示を直して、安定して動く教材づくりを意識するようになりました。",
+          "thread": [],
+          "hook": "number"
+        },
+        {
+          "body": "AIに丸投げせず、1秒ごとの保存処理をあえて細かく指定しました。\n\n児童の端末はメモリ不足でタブが不意に落ちることがあるからです。画面を閉じる直前の文字まで確定保存する設計を伝えることで、授業で安心して使える形になると感じています。",
+          "thread": [],
+          "hook": "reason"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "「ぶら下がりや追い出し」という国語指導のリアルな専門用語と失敗談から入っており、現場の教員が納得できる内容です。",
+      "reprise": null
+    },
+    {
+      "id": "2026-11-30-evening",
+      "date": "2026-11-30",
+      "weekday": "月",
+      "slot": "evening",
+      "slotLabel": "夜",
+      "hour": 21,
+      "minute": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "Werewolf",
+      "body": "学期末のレクで、同数投票になったときに子ども同士で揉めませんか。\n\nそこで作ったのが1台で完結する人狼アプリです。話し合いのタイマーや投票の判定を機械が引き受けるので、トラブルを防ぎながら4〜12人でスムーズに対戦できると思います。",
+      "hook": "question",
+      "hashtags": [
+        "人狼ゲーム",
+        "学級活動",
+        "PWA"
+      ],
+      "url": "https://werewolf.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "学期末のレクで、同数投票になったときに子ども同士で揉めませんか。\n\nそこで作ったのが1台で完結する人狼アプリです。話し合いのタイマーや投票の判定を機械が引き受けるので、トラブルを防ぎながら4〜12人でスムーズに対戦できると思います。\n\n#人狼ゲーム #学級活動 #PWA",
+          "weightedLength": 254
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://werewolf.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "学期末のレクで、同数投票になったときに子ども同士で揉めませんか。\n\nそこで作ったのが1台で完結する人狼アプリです。話し合いのタイマーや投票の判定を機械が引き受けるので、トラブルを防ぎながら4〜12人でスムーズに対戦できると思います。\n\n#人狼ゲーム #学級活動 #PWA",
+      "media": "media/Werewolf-card.png",
+      "weightedLength": 254,
+      "alternatives": [
+        {
+          "body": "お楽しみ会の学級レク、司会進行に担任がつきっきりになる場面。\n\nそこで作ったのが端末1台を回して遊べる人狼ゲームです。AIによる読み上げと効果音で進行が進み、全漢字にふりがなもあるので、先生の手を離れて子どもたちだけで楽しめると思います。",
+          "thread": [],
+          "hook": "scene"
+        },
+        {
+          "body": "1台の端末を囲むだけで、司会もカード準備もゼロで遊べる設計にしました。\n\nお楽しみ会などの時間に役立つ人狼アプリです。名前の外部送信がなくオフラインで動くため、学期末の忙しい時期でも準備に2分かけず教室で安全に実施できると感じています。",
+          "thread": [],
+          "hook": "number"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "学期末レクで子ども同士が揉めがちな「同数投票のトラブル」という具体的な困りごとから入っており、引き込まれます。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-01-morning",
+      "date": "2026-12-01",
+      "weekday": "火",
+      "slot": "morning",
+      "slotLabel": "朝",
+      "hour": 7,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "KEISAN-BLOCK",
+      "body": "プリントのひき算で手が止まった子に、「じぶんで しきを いれる」を使っています。\n\nつまずいた式をその場で入力し、ブロックを動かしながら一緒に手順を確かめるためです。「10からひく」か「ばらからひく」かを作戦別に整理して確認できると感じています。",
+      "hook": "scene",
+      "hashtags": [
+        "算数ブロック",
+        "繰り下がり",
+        "個別指導"
+      ],
+      "url": "https://keisan-block.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "プリントのひき算で手が止まった子に、「じぶんで しきを いれる」を使っています。\n\nつまずいた式をその場で入力し、ブロックを動かしながら一緒に手順を確かめるためです。「10からひく」か「ばらからひく」かを作戦別に整理して確認できると感じています。\n\n#算数ブロック #繰り下がり #個別指導",
+          "weightedLength": 277
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://keisan-block.giga-school.com/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "プリントのひき算で手が止まった子に、「じぶんで しきを いれる」を使っています。\n\nつまずいた式をその場で入力し、ブロックを動かしながら一緒に手順を確かめるためです。「10からひく」か「ばらからひく」かを作戦別に整理して確認できると感じています。\n\n#算数ブロック #繰り下がり #個別指導",
+      "media": "media/KEISAN-BLOCK-card.png",
+      "weightedLength": 277,
+      "alternatives": [
+        {
+          "body": "正解のあとに表示される説明の4行を、あえて5秒間消えない設計にしています。\n\n1年生の繰り上がりや繰り下がりで、さくらんぼ計算の手順を声に出して確かめるためです。すぐに次へ進ませず発声させることで、計算の筋道がしっかり定着すると思います。",
+          "thread": [],
+          "hook": "number"
+        },
+        {
+          "body": "以前は答えの入力だけを急がせてしまい、手順の定着を見落としていました。\n\nいまは電子黒板にせつめいモードで大きく映し、手順ごとに答えを見せながら発問しています。ブロックの移動と式の書き込みが視覚的に一致して、理解が深まりやすいと感じています。",
+          "thread": [],
+          "hook": "confess"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "算数プリントで手が止まった子への個別対応という教室の情景が鮮明で、明日の授業ですぐに試したくなります。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-01-evening",
+      "date": "2026-12-01",
+      "weekday": "火",
+      "slot": "evening",
+      "slotLabel": "夜",
+      "hour": 21,
+      "minute": 0,
+      "theme": "pain",
+      "themeLabel": "困りごと→解決",
+      "repo": "Digital-Newspaper",
+      "body": "昔は記事の回収と切り貼りで放課後まるごと。いまは合言葉で数分で集まります。\n\n端末同士を直接つなぐ仕組みにしたので、サーバー登録やログイン設定がいりません。文字もこまめに保存され、タブが不意に閉じても原稿が消えずに済むと感じています。",
+      "hook": "contrast",
+      "hashtags": [
+        "学級新聞",
+        "クラス新聞",
+        "校務効率化"
+      ],
+      "url": "https://digital-newspaper.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "昔は記事の回収と切り貼りで放課後まるごと。いまは合言葉で数分で集まります。\n\n端末同士を直接つなぐ仕組みにしたので、サーバー登録やログイン設定がいりません。文字もこまめに保存され、タブが不意に閉じても原稿が消えずに済むと感じています。\n\n#学級新聞 #クラス新聞 #校務効率化",
+          "weightedLength": 267
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://digital-newspaper.giga-school.com/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "昔は記事の回収と切り貼りで放課後まるごと。いまは合言葉で数分で集まります。\n\n端末同士を直接つなぐ仕組みにしたので、サーバー登録やログイン設定がいりません。文字もこまめに保存され、タブが不意に閉じても原稿が消えずに済むと感じています。\n\n#学級新聞 #クラス新聞 #校務効率化",
+      "media": "media/Digital-Newspaper-card.png",
+      "weightedLength": 267,
+      "alternatives": [
+        {
+          "body": "学級新聞づくりで、写真データが重すぎて保存できなくなる場面。\n\n以前は児童のアカウント管理や共有ドライブの設定に追われていました。いまは端末内完結の新聞アプリを使い、10文字の合言葉で記事を集めてA4印刷まで進められると思います。",
+          "thread": [],
+          "hook": "scene"
+        },
+        {
+          "body": "新聞づくりの単元で、児童のアカウント登録やログイン準備に悩んでいませんか。\n\n以前は設定作業だけで授業が潰れていました。いまは静的ファイルを配るだけで動き、写真を縮小保存してA4紙面に組めるので、手軽に印刷まで完結できると思います。",
+          "thread": [],
+          "hook": "question"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "放課後まるまるかかっていた回収作業と数分での完了という対比が、多忙な教員の心に強く響きます。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-02-morning",
+      "date": "2026-12-02",
+      "weekday": "水",
+      "slot": "morning",
+      "slotLabel": "朝",
+      "hour": 7,
+      "minute": 0,
+      "theme": "intro",
+      "themeLabel": "アプリ紹介",
+      "repo": "KANJI_Town",
+      "body": "朝学習の10分間、漢字ドリルを適当になぞって終わらせてしまう場面。\n\nそこで作ったのが書き順や交差を100点満点で厳密に判定する漢字アプリです。正しく書けると町が発展する仕組みで、学期末の反復練習も飽きずに取り組めるようになると思います。",
+      "hook": "scene",
+      "hashtags": [
+        "漢字学習",
+        "国語",
+        "GIGAスクール"
+      ],
+      "url": "https://kanji-town.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "朝学習の10分間、漢字ドリルを適当になぞって終わらせてしまう場面。\n\nそこで作ったのが書き順や交差を100点満点で厳密に判定する漢字アプリです。正しく書けると町が発展する仕組みで、学期末の反復練習も飽きずに取り組めるようになると思います。\n\n#漢字学習 #国語 #GIGAスクール",
+          "weightedLength": 262
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://kanji-town.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "朝学習の10分間、漢字ドリルを適当になぞって終わらせてしまう場面。\n\nそこで作ったのが書き順や交差を100点満点で厳密に判定する漢字アプリです。正しく書けると町が発展する仕組みで、学期末の反復練習も飽きずに取り組めるようになると思います。\n\n#漢字学習 #国語 #GIGAスクール",
+      "media": "media/KANJI_Town-card.png",
+      "weightedLength": 262,
+      "alternatives": [
+        {
+          "body": "紙の小テストでは丸つけに放課後30分。いまはその場で正誤が分かります。\n\n筆順ミスは上限69点になる判定を入れた漢字アプリです。新出漢字と復習が必要な字が毎日の出題に自動配分されるので、個別チェックの負担を大幅に減らせると感じています。",
+          "thread": [],
+          "hook": "contrast"
+        },
+        {
+          "body": "学期末のまとめの時期、形は整っているのに書き順が怪しい子はいませんか。\n\nそこで作ったのが自分だけの町を育てる漢字学習ツールです。4桁の数字で「マイドリル」を一斉配信できるので、苦手な字の反復チェックを手間なく教室で行えると思います。",
+          "thread": [],
+          "hook": "question"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "「朝学習で漢字ドリルを適当になぞって終わらせる」という担任なら誰しも目にする光景を切り取った導入が秀逸です。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-02-evening",
+      "date": "2026-12-02",
+      "weekday": "水",
+      "slot": "evening",
+      "slotLabel": "夜",
+      "hour": 21,
+      "minute": 0,
+      "theme": "howto",
+      "themeLabel": "教材づくりの小ネタ",
+      "repo": "Shared-Folder-Sync",
+      "body": "親フォルダで消した古い課題が、共有フォルダに残り続けて困っていませんか。\n\nGASのWebアプリを使えば、追加や更新だけでなく削除データも自動で子フォルダに反映できます。冬休み前の端末データ整理がワンクリックで済むようになると思います。",
+      "hook": "question",
+      "hashtags": [
+        "GoogleAppsScript",
+        "GoogleDrive",
+        "教材管理"
+      ],
+      "url": "https://shared-folder-sync.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "親フォルダで消した古い課題が、共有フォルダに残り続けて困っていませんか。\n\nGASのWebアプリを使えば、追加や更新だけでなく削除データも自動で子フォルダに反映できます。冬休み前の端末データ整理がワンクリックで済むようになると思います。\n\n#GoogleAppsScript #GoogleDrive #教材管理",
+          "weightedLength": 270
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://shared-folder-sync.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "親フォルダで消した古い課題が、共有フォルダに残り続けて困っていませんか。\n\nGASのWebアプリを使えば、追加や更新だけでなく削除データも自動で子フォルダに反映できます。冬休み前の端末データ整理がワンクリックで済むようになると思います。\n\n#GoogleAppsScript #GoogleDrive #教材管理",
+      "media": "media/Shared-Folder-Sync-card.png",
+      "weightedLength": 270,
+      "alternatives": [
+        {
+          "body": "教材フォルダを更新した際、児童用の共有フォルダへ手作業で配り直していました。\n\nGASを使えば、親フォルダの変更を子フォルダへ自動反映できます。親フォルダのIDと同期先を設定するだけで、不要になった課題の削除まで連動して整理できると思います。",
+          "thread": [],
+          "hook": "confess"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "共有フォルダに残る古い課題という冬休み前の端末データ整理で誰もが直面する悩みに的確に触れています。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-03-morning",
+      "date": "2026-12-03",
+      "weekday": "木",
+      "slot": "morning",
+      "slotLabel": "朝",
+      "hour": 7,
+      "minute": 0,
+      "theme": "update",
+      "themeLabel": "アップデート報告",
+      "repo": "Quoridor",
+      "body": "対戦パズルで、相手のゴールを完全に塞いで閉じ込めるトラブルがありました。\n\nそこで、道を完全に塞ぐカベの配置をシステム側で自動禁止するように直しました。ルールを巡る言い争いが起きず、休み時間の5分でも安心して子ども同士で遊べると思います。",
+      "hook": "confess",
+      "hashtags": [
+        "ボードゲーム",
+        "学級レク",
+        "GIGAスクール"
+      ],
+      "url": "https://quoridor.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "対戦パズルで、相手のゴールを完全に塞いで閉じ込めるトラブルがありました。\n\nそこで、道を完全に塞ぐカベの配置をシステム側で自動禁止するように直しました。ルールを巡る言い争いが起きず、休み時間の5分でも安心して子ども同士で遊べると思います。\n\n#ボードゲーム #学級レク #GIGAスクール",
+          "weightedLength": 274
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://quoridor.giga-school.com/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "対戦パズルで、相手のゴールを完全に塞いで閉じ込めるトラブルがありました。\n\nそこで、道を完全に塞ぐカベの配置をシステム側で自動禁止するように直しました。ルールを巡る言い争いが起きず、休み時間の5分でも安心して子ども同士で遊べると思います。\n\n#ボードゲーム #学級レク #GIGAスクール",
+      "media": "media/Quoridor-card.png",
+      "weightedLength": 274,
+      "alternatives": [
+        {
+          "body": "押し間違いによる揉め事を防ぐため、カベの配置を2段階操作に直しました。\n\n1回目で下見、2回目で確定する仕様です。手番が変わると自動で「あるく」に戻る設計も入れたので、端末1台を机の真ん中に置いて低学年でも落ち着いて対戦できると思います。",
+          "thread": [],
+          "hook": "number"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "休み時間のボードゲームで起こる「道を完全に塞いで閉じ込めるトラブル」というリアルな児童の姿から解決策へ繋がっています。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-03-evening",
+      "date": "2026-12-03",
+      "weekday": "木",
+      "slot": "evening",
+      "slotLabel": "夜",
+      "hour": 21,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "School_plan_note",
+      "body": "週案の準備物洗い出しに毎週30分かかっていませんか。わたしはタスク画面でAIの提案をまず確認し、必要な実験器具だけを残す使い方をしています。ゼロから思い出す時間が省け、放課後5分で来週の確認が終わると思います。",
+      "hook": "question",
+      "hashtags": [
+        "週案",
+        "校務支援",
+        "小学校教員"
+      ],
+      "url": "https://school-plan-note.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "週案の準備物洗い出しに毎週30分かかっていませんか。わたしはタスク画面でAIの提案をまず確認し、必要な実験器具だけを残す使い方をしています。ゼロから思い出す時間が省け、放課後5分で来週の確認が終わると思います。\n\n#週案 #校務支援 #小学校教員",
+          "weightedLength": 234
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "使ってみたい方はこちらからどうぞ。登録は要りません。\nhttps://school-plan-note.giga-school.com/",
+          "weightedLength": 76
+        }
+      ],
+      "text": "週案の準備物洗い出しに毎週30分かかっていませんか。わたしはタスク画面でAIの提案をまず確認し、必要な実験器具だけを残す使い方をしています。ゼロから思い出す時間が省け、放課後5分で来週の確認が終わると思います。\n\n#週案 #校務支援 #小学校教員",
+      "media": "media/School_plan_note-card.png",
+      "weightedLength": 234,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "2026-12-04-morning",
+      "date": "2026-12-04",
+      "weekday": "金",
+      "slot": "morning",
+      "slotLabel": "朝",
+      "hour": 7,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "Linker-Clipper",
+      "body": "シートの編集権限を先生方に配るのをやめました。管理の手間や誤削除を防ぐため、GASの代理実行であいことば送信する作りにしています。個人情報を一切通さないため、学校独自のアカウント内で安心してリンクを集約できると思います。",
+      "hook": "reason",
+      "hashtags": [
+        "Chrome拡張機能",
+        "GoogleAppsScript",
+        "校内共有"
+      ],
+      "url": "https://linker-clipper.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "シートの編集権限を先生方に配るのをやめました。管理の手間や誤削除を防ぐため、GASの代理実行であいことば送信する作りにしています。個人情報を一切通さないため、学校独自のアカウント内で安心してリンクを集約できると思います。\n\n#Chrome拡張機能 #GoogleAppsScript #校内共有",
+          "weightedLength": 262
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://linker-clipper.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "シートの編集権限を先生方に配るのをやめました。管理の手間や誤削除を防ぐため、GASの代理実行であいことば送信する作りにしています。個人情報を一切通さないため、学校独自のアカウント内で安心してリンクを集約できると思います。\n\n#Chrome拡張機能 #GoogleAppsScript #校内共有",
+      "media": "media/Linker-Clipper-card.png",
+      "weightedLength": 262,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "2026-12-04-evening",
+      "date": "2026-12-04",
+      "weekday": "金",
+      "slot": "evening",
+      "slotLabel": "夜",
+      "hour": 21,
+      "minute": 0,
+      "theme": "insight",
+      "themeLabel": "教育×AIの気づき",
+      "repo": "online-100square-calculation",
+      "body": "計算アプリの開発で、タイマーの秒数表示をあえて隠せる設定を入れました。\n\n数字が刻まれるのを見るだけで焦って手が止まる子がいるからです。一律のスピードを求めるのではなく、個人のペースに合わせた画面の配慮が必要だと開発を通して学びました。",
+      "hook": "reason",
+      "hashtags": [
+        "100マス計算",
+        "算数",
+        "AI手書き"
+      ],
+      "url": "https://online-100square-calculation.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "計算アプリの開発で、タイマーの秒数表示をあえて隠せる設定を入れました。\n\n数字が刻まれるのを見るだけで焦って手が止まる子がいるからです。一律のスピードを求めるのではなく、個人のペースに合わせた画面の配慮が必要だと開発を通して学びました。\n\n#100マス計算 #算数 #AI手書き",
+          "weightedLength": 264
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "アプリはこちらです。ブラウザで開くだけで使えます。\nhttps://online-100square-calculation.giga-school.com/",
+          "weightedLength": 74
+        }
+      ],
+      "text": "計算アプリの開発で、タイマーの秒数表示をあえて隠せる設定を入れました。\n\n数字が刻まれるのを見るだけで焦って手が止まる子がいるからです。一律のスピードを求めるのではなく、個人のペースに合わせた画面の配慮が必要だと開発を通して学びました。\n\n#100マス計算 #算数 #AI手書き",
+      "media": "media/online-100square-calculation-card.png",
+      "weightedLength": 264,
+      "alternatives": [
+        {
+          "body": "AIに計算ドリルを作らせたとき、全問解き終わる速さばかりを競わせて失敗しました。\n\n焦って雑に解く子が増えてしまったからです。実力の伸びを測るなら初回正答率を指標に据えるべきだと気づき、間違えた問題のやり直しを重視する設計に改めました。",
+          "thread": [],
+          "hook": "confess"
+        },
+        {
+          "body": "タブレットで数字を入力する際、画面の半分が内蔵キーボードで隠れてしまいました。\n\nAIに相談し、readonlyを併用して独自テンキーと手書きのみを動かす仕様に調整しました。画面の制約を考慮した入力設計が、子どもの集中を守る鍵になると実感しています。",
+          "thread": [],
+          "hook": "number"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "タイマーの秒数を見るだけで焦って手が止まる子への配慮という、教室の子どもを丁寧に見取った温かい気づきが素晴らしいです。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-05-morning",
+      "date": "2026-12-05",
+      "weekday": "土",
+      "slot": "morning",
+      "slotLabel": "朝",
+      "hour": 7,
+      "minute": 0,
+      "theme": "howto",
+      "themeLabel": "教材づくりの小ネタ",
+      "repo": "Digital_textbook",
+      "body": "以前は開いた直後の誤タッチで教材に不要な線が入っていました。そこで起動時はペンではなく選択モードで始まる作りに直しました。これだけで配った直後の『消せません』が減り、最初の1分が落ち着いて始められる工夫になると感じています。",
+      "hook": "contrast",
+      "hashtags": [
+        "PDF書き込み",
+        "GIGAスクール",
+        "教材プリントメーカー"
+      ],
+      "url": "https://digital-textbook.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "以前は開いた直後の誤タッチで教材に不要な線が入っていました。そこで起動時はペンではなく選択モードで始まる作りに直しました。これだけで配った直後の『消せません』が減り、最初の1分が落ち着いて始められる工夫になると感じています。\n\n#PDF書き込み #GIGAスクール #教材プリントメーカー",
+          "weightedLength": 273
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://digital-textbook.giga-school.com/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "以前は開いた直後の誤タッチで教材に不要な線が入っていました。そこで起動時はペンではなく選択モードで始まる作りに直しました。これだけで配った直後の『消せません』が減り、最初の1分が落ち着いて始められる工夫になると感じています。\n\n#PDF書き込み #GIGAスクール #教材プリントメーカー",
+      "media": "media/Digital_textbook-card.png",
+      "weightedLength": 273,
+      "alternatives": [],
+      "pickedBy": null,
+      "pickReason": null,
+      "reprise": null
+    },
+    {
+      "id": "2026-12-05-evening",
+      "date": "2026-12-05",
+      "weekday": "土",
+      "slot": "evening",
+      "slotLabel": "夜",
+      "hour": 21,
+      "minute": 0,
+      "theme": "tips",
+      "themeLabel": "使い方Tips",
+      "repo": "Video-editing_studio",
+      "body": "動画の書き出し保存中、児童に「タブを切り替えずに100%まで待とう」と伝えています。\n\n裏で別のタブを開くと映像処理が飛んでしまうためです。保存時のこの一言を徹底するだけで、せっかく繋いだ動画がエラーで消えるのをしっかり防げると思います。",
+      "hook": "number",
+      "hashtags": [
+        "動画編集",
+        "GIGAスクール",
+        "ICT授業"
+      ],
+      "url": "https://video-editing-studio.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "動画の書き出し保存中、児童に「タブを切り替えずに100%まで待とう」と伝えています。\n\n裏で別のタブを開くと映像処理が飛んでしまうためです。保存時のこの一言を徹底するだけで、せっかく繋いだ動画がエラーで消えるのをしっかり防げると思います。\n\n#動画編集 #GIGAスクール #ICT授業",
+          "weightedLength": 266
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "実物はこちらです。インストールは要りません。\nhttps://video-editing-studio.giga-school.com/",
+          "weightedLength": 68
+        }
+      ],
+      "text": "動画の書き出し保存中、児童に「タブを切り替えずに100%まで待とう」と伝えています。\n\n裏で別のタブを開くと映像処理が飛んでしまうためです。保存時のこの一言を徹底するだけで、せっかく繋いだ動画がエラーで消えるのをしっかり防げると思います。\n\n#動画編集 #GIGAスクール #ICT授業",
+      "media": "media/Video-editing_studio-card.png",
+      "weightedLength": 266,
+      "alternatives": [
+        {
+          "body": "生活科の動画編集で、テロップの文字が画面端で切れて読めなくなる場面。\n\nセーフエリアの表示枠を出して画面構成を整える使い方をしています。枠の内側に文字やイラストを収めるよう声かけするだけで、見やすくまとまった発表動画に仕上がると思います。",
+          "thread": [],
+          "hook": "scene"
+        },
+        {
+          "body": "低学年の動画作成で、漢字表記のツールを使わせて質問攻めになった経験があります。\n\n総ルビ付きでログイン不要のWeb編集ツールを使うと、子どもが自力で作業を進められます。外部送信のない端末内処理なので、個人情報の心配なく扱えると感じています。",
+          "thread": [],
+          "hook": "confess"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "端末での動画保存中にタブを切り替えて消えてしまう事故を防ぐ、明日の教室でそのまま使える声かけの知恵になっています。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-06-morning",
+      "date": "2026-12-06",
+      "weekday": "日",
+      "slot": "morning",
+      "slotLabel": "朝",
+      "hour": 7,
+      "minute": 0,
+      "theme": "making",
+      "themeLabel": "開発の裏側",
+      "repo": "Townmap_Mikke",
+      "body": "町探検のマップアプリで、児童にスプレッドシートの共有権限を一切与えませんでした。\n\n権限のトラブルや数式の誤入力を防ぐためです。GASを自分権限で動かし写真を自動圧縮してセルに収める構成にしたことで、無料のまま安全に協働学習が回るようになりました。",
+      "hook": "reason",
+      "hashtags": [
+        "町探検",
+        "GoogleAppsScript",
+        "協働学習"
+      ],
+      "url": "https://townmap-mikke.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "町探検のマップアプリで、児童にスプレッドシートの共有権限を一切与えませんでした。\n\n権限のトラブルや数式の誤入力を防ぐためです。GASを自分権限で動かし写真を自動圧縮してセルに収める構成にしたことで、無料のまま安全に協働学習が回るようになりました。\n\n#町探検 #GoogleAppsScript #協働学習",
+          "weightedLength": 280
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://townmap-mikke.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "町探検のマップアプリで、児童にスプレッドシートの共有権限を一切与えませんでした。\n\n権限のトラブルや数式の誤入力を防ぐためです。GASを自分権限で動かし写真を自動圧縮してセルに収める構成にしたことで、無料のまま安全に協働学習が回るようになりました。\n\n#町探検 #GoogleAppsScript #協働学習",
+      "media": "media/Townmap_Mikke-card.png",
+      "weightedLength": 280,
+      "alternatives": [
+        {
+          "body": "紙の地図では写真の貼り付けに放課後まるごと。いまは現地でピン留め完了です。\n\n端末側で画像を圧縮してから送信する作りにしたので、クラス全員が一斉に投稿しても回線が重くなりません。集まったピンを指で囲んで比較する話し合いもすぐ行えると思います。",
+          "thread": [],
+          "hook": "contrast"
+        },
+        {
+          "body": "探検で撮った写真をGoogleドライブに集めようとして、共有設定で失敗しました。\n\nリンク設定のミスで閲覧制限がかかるからです。Data URLに圧縮してシート内保存する設計に切り替えたことで、権限管理ゼロで全員の活動を一覧できるようになりました。",
+          "thread": [],
+          "hook": "confess"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "児童に共有権限を渡すと表が壊れるという現場の切実なリスクを避けるための設計思想が伝わります。",
+      "reprise": null
+    },
+    {
+      "id": "2026-12-06-evening",
+      "date": "2026-12-06",
+      "weekday": "日",
+      "slot": "evening",
+      "slotLabel": "夜",
+      "hour": 21,
+      "minute": 0,
+      "theme": "pain",
+      "themeLabel": "困りごと→解決",
+      "repo": "SchoolPlan_Editor",
+      "body": "学期末の行事ラッシュで授業カットが重なり、単元時数の過不足が見えなくなる場面。\n\n以前は指導要録と指導計画を手計算で突き合わせていました。いまは週案ツールで年度末の過不足をシミュレーションし、未指導の再配分案をすぐ確かめられると感じています。",
+      "hook": "scene",
+      "hashtags": [
+        "時数管理",
+        "校務支援",
+        "週案"
+      ],
+      "url": "https://schoolplan-editor.giga-school.com/",
+      "steps": [
+        {
+          "kind": "main",
+          "label": "本文",
+          "text": "学期末の行事ラッシュで授業カットが重なり、単元時数の過不足が見えなくなる場面。\n\n以前は指導要録と指導計画を手計算で突き合わせていました。いまは週案ツールで年度末の過不足をシミュレーションし、未指導の再配分案をすぐ確かめられると感じています。\n\n#時数管理 #校務支援 #週案",
+          "weightedLength": 267
+        },
+        {
+          "kind": "link",
+          "label": "リンクの返信",
+          "text": "こちらで公開しています。無料で、そのまま授業で使えます。\nhttps://schoolplan-editor.giga-school.com/",
+          "weightedLength": 80
+        }
+      ],
+      "text": "学期末の行事ラッシュで授業カットが重なり、単元時数の過不足が見えなくなる場面。\n\n以前は指導要録と指導計画を手計算で突き合わせていました。いまは週案ツールで年度末の過不足をシミュレーションし、未指導の再配分案をすぐ確かめられると感じています。\n\n#時数管理 #校務支援 #週案",
+      "media": "media/SchoolPlan_Editor-card.png",
+      "weightedLength": 267,
+      "alternatives": [
+        {
+          "body": "学級通信の時間割づくりに放課後30分。いまは週案からワンクリックで変換されます。\n\n低学年担当のときは「こくご」「1じかんめ」と自動でひらがな化される設計にしました。明日の持ち物連絡もClassroomへそのまま投稿でき、退勤前の負担がぐっと軽くなると思います。",
+          "thread": [],
+          "hook": "contrast"
+        },
+        {
+          "body": "放課後15時過ぎ、マイクに向かって音声入力で1日の授業の成果を記録しています。\n\n以前は手書きで日報をまとめていて放課後がつぶれていました。音声で週案の振り返りを残す形にしてから、日次・週次の記録にかかる時間がわずか5分で済むようになりました。",
+          "thread": [],
+          "hook": "number"
+        }
+      ],
+      "pickedBy": "editor",
+      "pickReason": "行事ラッシュで授業時数が足りなくなる学期末最大の悩みに直球で応えており、教員の手を確実に止めます。",
+      "reprise": null
+    }
+  ]
+}
